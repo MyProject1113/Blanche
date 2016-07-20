@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.board.dao.BoardDao">
+	<!-- 게시물 기본 조회 -->
+	<select id="boardList" resultType="board">
+		/* Board - boardList */
+		select b_num, b_name, b_title, to_char(b_date, 'YYYY-MM-DD') as b_date 
+		from spring_board
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="boardInsert" parameterType="board">
+		/* Board - insertBoard */
+		<selectKey keyProperty="b_num" resultType="int" order="BEFORE">
+			select spring_board_seq.nextval from dual
+		</selectKey>
+		
+		INSERT INTO spring_board
+			(b_num, b_name, b_title, b_content, b_pwd)
+		VALUES
+			(#{b_num}, #{b_name}, #{b_title}, #{b_content}, #{b_pwd})
+	</insert>
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="boardDetail" parameterType="board" resultType="board">
+		/* Board - boardDetail */
+		SELECT b_num, b_name, b_title, b_content, TO_CHAR(b_date, 'YYYY-MM-DD HH24:MI:SS') AS b_date
+		FROM	   spring_board
+		WHERE b_num = #{b_num}
+	</select>
+	
+</mapper>

@@ -1,0 +1,8 @@
+INDEX VERSION 1.3+D:\Blanche\teamProject\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2879961084.index
+2915784494.index
+1526883664.index
+1431630966.index
+1559722601.index
+1487135251.index
+1468895187.index

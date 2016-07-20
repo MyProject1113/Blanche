@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 어노테이션 기반 설정 활성화 -->
+	<context:annotation-config />
+	
+	<mvc:annotation-driven />
+	
+	<!-- 어노테이션으로 표시된 클래스를 자동으로 가져오는 기능(클래스 검색을 실시할 대상 패키지 지정) -->
+	<context:component-scan base-package="com.blanche.**" />
+	
+	<!-- 논리적 뷰를 실제 뷰로 변환하는 기능 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean> -->
+	
+	<!-- 타일즈(tiles) 설정 -->
+  	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles2.TilesViewResolver" />
+
+	<bean id="tilesConfigurer"  class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles/tiles-setting.xml</value>
+			</list>
+		</property>
+	</bean>
+    
+</beans>
