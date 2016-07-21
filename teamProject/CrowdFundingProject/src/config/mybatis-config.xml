@@ -4,6 +4,7 @@
 	<!-- 별칭을 설정 -->
 	<typeAliases>
 		<typeAlias type="com.blanche.board.vo.BoardVO" alias="board" />
+		<typeAlias type="com.blanche.establish.vo.EstablishVO" alias="establish" />
 	</typeAliases>
 	
 	<!-- <mappers>

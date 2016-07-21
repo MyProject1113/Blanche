@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%-- trimDirectiveWhitespaces : 브라우저 소스보기 시 빈줄 들어가는 것 없애기 --%>
 <!DOCTYPE html>
 <html>
 	<head>
