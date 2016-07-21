@@ -8,5 +8,4 @@
 <!-- Footer -->
 	<section id="footer">
 		<p class="copyright">&copy; Untitled. Crafted: <a href="http://designscrazed.org/">HTML5</a>.</p>
-		<p>footer</p>
 	</section>
