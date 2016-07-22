@@ -6,7 +6,7 @@
 		<nav class="links">
 			<ul>
 				<li><a href="#" class="current-page-item">프로젝트 둘러보기</a></li>
-				<li><a href="#">프로젝트 올리기</a></li>
+				<li><a href="/board/boardList.do">프로젝트 올리기</a></li>
 				<li><a href="#">고객지원</a></li>
 				<li><a href="#">도움말</a></li>
 				<!-- <li><a href="#">로그인</a></li> -->
