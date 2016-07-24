@@ -35,6 +35,16 @@ public class EstablishController {
 	public String applicationForm() {
 		logger.info("applicationForm 호출 성공");
 		
-		return "establish/applicationForm";	// View Name => 파일명 아님!!!
+		return "establish/applicationForm";
+	}
+
+	/****************************************************************
+	 * 상세 내용 작성하기 폼 출력하기
+	 ****************************************************************/
+	@RequestMapping(value="/applicationDetailForm.do")
+	public String applicationDetailForm() {
+		logger.info("applicationDetailForm 호출 성공");
+		
+		return "establish/applicationDetailForm";
 	}
 }

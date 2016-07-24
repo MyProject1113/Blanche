@@ -18,6 +18,7 @@
 				$('#app_btn').click(function(e) {
 					if($("input[name='agree']:checked").val() == "Y") {
 						location.href="/establish/applicationForm.do";
+						//location.href="/establish/applicationDetailForm.do";
 					} else {
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 						return;

@@ -8,9 +8,21 @@
 				<li><a href="#" class="current-page-item">프로젝트 둘러보기</a></li>
 				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
 				<li><a href="#">고객지원</a></li>
-				<li><a href="#">도움말</a></li>
+				<li><a href="#">도움말</a>
+					<ul>
+						<li><a href="#">Sliders</a></li>
+						<li><a href="#">Galleries</a></li>
+						<li><a href="#">Apps</a></li>
+						<li><a href="#">Extensions</a></li>
+					</ul>
+				</li>
+			      
 				<!-- <li><a href="#">로그인</a></li> -->
 			</ul>
+			
+			
+
+
 		</nav>
 		<nav class="main">
 			<ul>
