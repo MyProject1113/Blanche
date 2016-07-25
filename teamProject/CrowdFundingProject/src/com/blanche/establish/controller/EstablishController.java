@@ -47,4 +47,14 @@ public class EstablishController {
 		
 		return "establish/applicationDetailForm";
 	}
+
+	/****************************************************************
+	 * 컨텐츠 상세 내용 출력하기
+	 ****************************************************************/
+	@RequestMapping(value="/contentDetail.do")
+	public String contentDetail() {
+		logger.info("contentDetail 호출 성공");
+		
+		return "establish/contentDetail";
+	}
 }
