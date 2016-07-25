@@ -40,10 +40,10 @@
 				<tiles:insertAttribute name="body" />
 			</div>
 			
-			<section id="sidebar">
+			<%-- <section id="sidebar">
 			<!-- Footer -->
 				<tiles:insertAttribute name="footer" />
-			</section>
+			</section> --%>
 		</div>
 	</body>
 </html>
