@@ -156,4 +156,16 @@ public class BoardController {
 		
 		return "redirect:" + url;
 	}
+	
+	
+	@RequestMapping(value="/payment.do")
+	public String introList(Model model) {
+		logger.info("introList 호출 성공");
+		
+		/*List<BoardVO> boardList = boardService.introList();
+		model.addAttribute("intro", boardList);*/
+		
+		return "board/payment";	// View Name => 파일명 아님!!!
+	}
+
 }

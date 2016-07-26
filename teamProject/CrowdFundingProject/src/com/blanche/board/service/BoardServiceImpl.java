@@ -65,4 +65,12 @@ public class BoardServiceImpl implements BoardService {
 		result = boardDao.boardDelete(b_num);
 		return result;
 	}
+	
+	// 프로젝트 둘러보기
+	@Override
+	public List<BoardVO> introList(){
+		List<BoardVO> myList = null;
+		myList = boardDao.introList();
+		return myList;
+	}
 }

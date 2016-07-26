@@ -48,4 +48,10 @@ public class BoardDaoImpl implements BoardDao {
 	public int boardDelete(int b_num) {
 		return session.delete("boardDelete");
 	}
+	
+	// 프로젝트 둘러보기
+	@Override
+	public List<BoardVO> introList() {
+		return session.selectList("introlist");
+	}
 }
