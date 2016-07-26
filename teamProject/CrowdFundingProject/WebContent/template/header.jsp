@@ -5,10 +5,10 @@
 		<h1><a href="/index.jsp">(주)너와 나의 연결고리</a></h1>
 		<nav class="links">
 			<ul>
-				<li><a href="#" class="current-page-item">프로젝트 둘러보기</a></li>
+				<li><a href="/board/payment.do" class="current-page-item">프로젝트 둘러보기</a></li>
 				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
 				<li><a href="#">고객지원</a></li>
-				<li><a href="#">도움말</a>
+				<li><a href="/cc/faq.do">도움말</a>
 					<ul>
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
