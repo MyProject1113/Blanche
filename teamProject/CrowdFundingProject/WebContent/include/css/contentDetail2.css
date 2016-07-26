@@ -1900,8 +1900,8 @@ to{transform:rotate(360deg);-moz-transform:rotate(360deg);-webkit-transform:rota
 }
 /* .yoke{color:#433;cursor:pointer;position:relative;font-weight:500;-webkit-transition:color 120ms ease-out;-moz-transition:color 120ms ease-out;-ms-transition:color 120ms ease-out;-o-transition:color 120ms ease-out;transition:color 120ms ease-out} */
 .yoke{color:#433;cursor:pointer;position:relative;font-weight:500;-webkit-transition:color 120ms ease-out;-moz-transition:color 120ms ease-out;-ms-transition:color 120ms ease-out;-o-transition:color 120ms ease-out;transition:color 120ms ease-out;padding-top: 13px;}
-.yoke:hover{color:#3372ee !important}
-.yoke:active{top:1px;color:#3372ee}
+/* .yoke:hover{color:#3372ee !important}
+.yoke:active{top:1px;color:#3372ee} */
 .yoke--theme_blue{color:#6392f2}
 .yoke--theme_creator{border-bottom:1px solid #fa6462;display:inline-block;line-height:20px;-webkit-text-stroke-width:.1px;-webkit-font-smoothing:antialiased}
 .yoke--theme_light{color:#645353}
@@ -3348,3 +3348,6 @@ dl.b-campaign_stats {
     line-height: initial;
 }
 
+hr.detail_form_line {
+    margin-left: 250px;
+}

@@ -60,31 +60,38 @@
 				
 					<div class="b-content-description typeset-proto-v2 js-project_desc" style="margin-top: 28px;">
 					
-						<hr>
-						
-						<h3>▶ 프로젝트 소개</h3>
-						<p><span>프로젝트 소개 글 넣기</span></p>
-						
-						<hr>
-						
-						<h3>&lt;시놉시스&gt;</h3>
-						
-						<blockquote>
-							<p><strong>스산한 바람소리가 파도소리처럼 들려오고    </strong></p>
+						<div id="detail_form_01">
+							<hr class="detail_form_line">
 							
-							<p><strong>하늘의 까마귀 떼가 바다의 물고기 떼처럼 울렁이며 헤엄치는 숲,</strong></p>
+							<h3>▶ 프로젝트 소개</h3>
+							<p><span>프로젝트 소개 글 넣기</span></p>
+						</div>
+						
+						
+						<div id="detail_form_02">
+							<hr class="detail_form_line">
 							
-							<p><strong>이 이상한 숲속에서 바람에 떠밀려 어딘가로 향하는 사람들,  </strong></p>
+							<h3>&lt;시놉시스&gt;</h3>
 							
-							<p><strong>그리고 그 사람들을 필사적으로 막아서는 아이들에 관한 이야기</strong></p>
-						</blockquote>
+							<blockquote>
+								<p><strong>스산한 바람소리가 파도소리처럼 들려오고</strong></p>
+								
+								<p><strong>하늘의 까마귀 떼가 바다의 물고기 떼처럼 울렁이며 헤엄치는 숲,</strong></p>
+								
+								<p><strong>이 이상한 숲속에서 바람에 떠밀려 어딘가로 향하는 사람들,</strong></p>
+								
+								<p><strong>그리고 그 사람들을 필사적으로 막아서는 아이들에 관한 이야기</strong></p>
+							</blockquote>
+						</div>
 						
-						<hr>
+						<div id="detail_form_02">
+							<hr class="detail_form_line">
+							
+							<h3>▶ 후원금은 이렇게 사용됩니다</h3>
+							<p>여러분의 소중한 후원금은 영화의 음악, 색보정, 믹싱, 그래픽등 후반작업과 스탭, 배우분들의 항공료로 사용됩니다:)</p>
+						</div>
 						
-						<h3>▶ 후원금은 이렇게 사용됩니다</h3>
-						<p>여러분의 소중한 후원금은 영화의 음악, 색보정, 믹싱, 그래픽등 후반작업과 스탭, 배우분들의 항공료로 사용됩니다:)</p>
-						
-						<hr>
+						<hr class="detail_form_line">
 					
 					</div>
 					  
