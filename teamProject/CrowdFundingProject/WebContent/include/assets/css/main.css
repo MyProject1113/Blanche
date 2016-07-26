@@ -1880,10 +1880,11 @@
 		border: solid 1px rgba(160, 160, 160, 0.3);
 		border-radius: 0;
 		color: inherit;
-		display: block;
+		/* display: block; */
 		outline: 0;
 		padding: 0 1em;
 		text-decoration: none;
+		/* width: 100%; */
 	}
 	
 	input[type="text"],
@@ -3188,7 +3189,7 @@
 		@media screen and (max-width: 980px) {
 
 			#header .links {
-				display: none;
+				/* display: none; */
 			}
 
 		}

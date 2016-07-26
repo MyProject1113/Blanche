@@ -57,4 +57,14 @@ public class EstablishController {
 		
 		return "establish/contentDetail";
 	}
+
+	/****************************************************************
+	 * 댓글 내용 출력하기
+	 ****************************************************************/
+	@RequestMapping(value="/contentReply.do")
+	public String contentReply() {
+		logger.info("contentReply 호출 성공");
+		
+		return "establish/contentReply";
+	}
 }
