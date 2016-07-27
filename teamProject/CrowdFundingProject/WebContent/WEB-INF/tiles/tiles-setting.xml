@@ -40,7 +40,12 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/usermanage/{1}.jsp" />
 	</definition>
 	
-
+	<definition name="cc/*" extends="planner">
+		<put-attribute name="body" value="/WEB-INF/jsp/cc/{1}.jsp" />
+	</definition>
 	
+	<definition name="intro/*" extends="planner">
+		<put-attribute name="body" value="/WEB-INF/jsp/intro/{1}.jsp" />
+	</definition>
 	
 </tiles-definitions>
