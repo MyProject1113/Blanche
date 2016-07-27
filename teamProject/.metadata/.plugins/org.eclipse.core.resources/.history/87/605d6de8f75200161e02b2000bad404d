@@ -1,0 +1,108 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>약관동의</title>
+<script type="text/javascript" src="/CrowdFundingProject/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="/CrowdFundingProject/include/js/bootstrap.js"></script>
+<script type="text/javascript" src="/CrowdFundingProject/include/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				//체크박스 전체 선택
+				 $("#check").change(function(){
+			            var is_check = $(this).is(":checked");
+			            $(".check1").prop("checked", is_check);
+			         });
+
+				//비동의시 유효성체크
+				$('#next1').click(function(e) {
+					if($("input[name='con_user']:checked").val() == "Y") {
+						 if($("input[name='con_per']:checked").val() == "Y"){
+							 location.href="/ll/join.do";
+						 }else{
+								alert("약관에 동의하지 않으시면 가입하실 수 없습니다.");
+								return;
+							}
+					}else {
+						alert("약관에 동의하지 않으시면 가입하실 수 없습니다.");
+						return;
+					}
+				});
+				
+				$(".view1").click(function(){
+					 window.open("http://google.co.kr");
+				
+			});
+				$(".view2").click(function(){
+					alert("여기다가 쓰면 오반가...")
+				
+			});
+				
+				
+			}); //end ready()
+		</script>
+
+
+</head>
+<body>
+	<div>
+		<form>
+			<table>
+				<tr>
+					<td colspan="2" align="center">약관동의</td>
+				</tr>
+				<tr>
+					<td align="center"><input type="checkbox" id="check" value="Y"/> 
+					<label>약관 및 개인정보 동의 내용을 <br/>확인하였으며 아래 내용에 동의합니다.</label><br><br/><br/></td>
+				</tr>
+				
+				<tr>
+				
+					<td align="center"><input type="checkbox" class="check1" name="con_user" value="Y"/>
+					<label>개인정보 취급방침</label>&nbsp;&nbsp;
+					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">[전문보기]</button>
+
+									<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+ 					 <div class="modal-dialog">
+
+ 							   <!-- Modal content-->
+   					 <div class="modal-content">
+     				 <div class="modal-header">
+  			      <button type="button" class="close" data-dismiss="modal">&times;</button>
+   			     <h4 class="modal-title">Modal Header</h4>
+			      </div>
+  				    <div class="modal-body">
+    			    <p>Some text in the modal.</p>
+   			   </div>
+   			   <div class="modal-footer">
+   			     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+  				  </div>
+
+ 			 </div>
+			</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="center"><input type="checkbox" class="check1" name="con_per" value="Y"/>
+					<label>홈페이지 이용약관</label>&nbsp;&nbsp;<span class="view2"><label>[전문보기]</label><input type="hidden" id="inform2" name="inform2"/></span></td>
+				</tr>
+				<tr>
+					<td><label>*전문 보기 선택시 법정고지사항을 확인할수 있습니다.</label> </td>
+				</tr>
+				<tr>
+					<td align="center"><input type="button" id="next1" name="next1" value="다음"/></td>
+				</tr>
+				
+			
+			</table>
+		</form>
+	</div>
+
+
+</body>
+</html>

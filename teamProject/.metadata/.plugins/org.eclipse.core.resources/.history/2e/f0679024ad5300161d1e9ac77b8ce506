@@ -1,0 +1,50 @@
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
+import org.apache.log4j.Logger;
+
+import com.pension.member.memberController.memberController;
+
+public class SimpleEmail {
+      
+      private static Logger logger = Logger.getLogger(SimpleEmail.class);
+            
+      public void sendEmail(){
+
+                  
+         long beginTime = System.currentTimeMillis();
+         
+         SimpleEmail simpleEmail = new SimpleEmail();
+         //Smtp 서버 연결 설정.(구글 아이디, 비번)
+         simpleEmail.setHostName("smtp.gmail.com");
+         simpleEmail.setSmtpPort(587);
+         simpleEmail.setAuthentication("tmdgurdl8419", "tmdgur1!");
+         String rt = "Failure";
+         
+         try{
+            //Smtp SSL.TLS 설정
+            simpleEmail.setSSL(true);
+            simpleEmail.setTLS(true);
+            
+            //받는 사람 설정
+            simpleEmail.addTo(emailpw.member_email, emailpw.member_name, "utf-8");
+            //보내는 사람 설정
+            simpleEmail.setFrom("tmdgurdl8419@gmail.com","승혁","utf-8");
+            //제목 설정
+            simpleEmail.setSubject("OOO팬션 비밀번호 찾기");
+            //본문 설정
+            simpleEmail.setMsg("찾으신 비밀번호는" + emailpw.member_pw + "입니다.");
+            rt = simpleEmail.send();
+            
+         }catch(EmailException e){
+            logger.warn("Error",e);
+         }finally{
+            long execTime = System.currentTimeMillis() - beginTime;
+            logger.info("exec time : " + execTime + "ms");
+            logger.info("RT Msg : " + rt);
+         }
+         
+
+
+}
+   
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Insert title here</title>
+
+		<style type="text/css">
+			a {
+				text-decoration: none;
+			}
+		</style>
+		
+		<!-- <script type="text/javascript">
+			window.location.href = "/blanche/boardList.do";
+		</script> -->
+
+	</head>
+	<body>
+		<!-- 추후 메뉴 내용이 추가될 것을 고려하여 아래 코드를 추가한다. -->
+		<!-- <a href="/board/boardList.do">[게시판 리스트]</a> &nbsp;&nbsp; -->
+		test
+		<a href="/ll/join.do">[게시판 리스트]</a>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+package com.blanche.ll.controller;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.blanche.board.vo.BoardVO;
+
+
+
+@Controller
+@RequestMapping(value="/ll")
+public class LlController {
+	Logger logger = Logger.getLogger(LlController.class);
+	
+	@RequestMapping(value="/join.do")
+	public String join(Model model) {
+		
+		return "ll/join";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/agree.do")
+	public String agree(Model model) {
+		
+		return "ll/agree";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/login.do")
+	public String login(Model model) {
+		
+		return "ll/login";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/findpw.do")
+	public String findpw(Model model) {
+		
+		return "ll/findpw";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/accredit.do")
+	public String accredit(Model model) {
+		
+		return "ll/accredit";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/joincomp.do")
+	public String joincomp(Model model) {
+		
+		return "ll/joincomp";	// View Name => 파일명 아님!!!
+	}
+}
