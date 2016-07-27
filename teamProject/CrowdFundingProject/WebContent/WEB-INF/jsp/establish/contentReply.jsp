@@ -14,9 +14,18 @@
 		
 		<link rel="stylesheet" href="/include/css/contentDetail2.css" />
 		
+		<style type="text/css">
+			div#blank_reply {
+			    height: 10px;
+			}
+			
+			input#replyInsert {
+			    float: right;
+			}
+		</style>
+		
 	</head>
 	<body>
-		
 		
 		<div class="b-header b-header_centered_yes">
 			<div class="b-header__inner">
@@ -31,17 +40,18 @@
 			<div class="b-nav-local__inner">
 				<ul class="b-menu b-menu_horiz_yes b-menu_stroke_yes b-menu_align_center">
 					<li class="b-menu__item">
-						<!-- <a href="/" data-ps="true" class="b-menu__item__link is-selected"> -->
-						<div class="b-menu__item__link is-selected">
+						<a href="/establish/contentDetail.do" data-ps="true" class="b-menu__item__link">
 							<span>프로젝트 소개</span>
-						<!-- </a> -->
-						</div>
+						</a>
 					</li>
 					
+	
 					<li class="b-menu__item" >
-						<a href="/establish/contentReply.do" data-ps="true" class="b-menu__item__link">
-							<span>댓글 ( <span class="js-channelCounter">0</span> )</span>
-						</a>
+						<!-- <a href="/" data-ps="true" class="b-menu__item__link is-selected"> -->
+						<div class="b-menu__item__link is-selected">
+							<span>댓글 ( <span class="js-channelCounter">54</span> )</span>
+						<!-- </a> -->
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -53,57 +63,24 @@
 			<div class="container">
 			     
 				<div class="b-main" id="project_show_section_js"> 
-					<figure class="b-video js-video">
-						<img class="b-video__poster js-video-poster" src="https://tumblbug-pci.imgix.net/eb663c81ddd2d3fd2824f755e800244404371d1a/ba66876acd8823742bb2b717b5d7a00a5bc39a79/a27a928b0684738485a9fa6a22cec8fb95ca922b/3ae144dbfb85dc4e499bdd329e7c28adc492e371.jpg?ixlib=rb-1.1.0&amp;w=620&amp;h=465&amp;auto=format%2Ccompress&amp;lossless=true&amp;fit=crop&amp;s=f5cfdad5027b866a486d8ab404e8728f" alt="">
-					</figure>
-				
-				
-					<div class="b-content-description typeset-proto-v2 js-project_desc" style="margin-top: 28px;">
 					
-						<div id="detail_form_01">
-							<hr class="detail_form_line">
-							
-							<h3>▶ 프로젝트 소개</h3>
-							<p><span>프로젝트 소개 글 넣기</span></p>
+					<div id="replyContainer">
+						<h1></h1>
+						<div id="comment_write">
+							<form id="comment_form">
+								<div>
+									<label for="r_content">총 10개의 댓글이 있습니다.</label>
+									<textarea name="r_content" id="r_content"></textarea>
+									<div id="blank_reply"></div>
+									<input type="button" id="replyInsert" value="등록" />
+								</div>
+							</form>
 						</div>
-						
-						
-						<div id="detail_form_02">
-							<hr class="detail_form_line">
-							
-							<h3>&lt;시놉시스&gt;</h3>
-							
-							<blockquote>
-								<p><strong>스산한 바람소리가 파도소리처럼 들려오고</strong></p>
-								
-								<p><strong>하늘의 까마귀 떼가 바다의 물고기 떼처럼 울렁이며 헤엄치는 숲,</strong></p>
-								
-								<p><strong>이 이상한 숲속에서 바람에 떠밀려 어딘가로 향하는 사람들,</strong></p>
-								
-								<p><strong>그리고 그 사람들을 필사적으로 막아서는 아이들에 관한 이야기</strong></p>
-							</blockquote>
-						</div>
-						
-						<div id="detail_form_02">
-							<hr class="detail_form_line">
-							
-							<h3>▶ 후원금은 이렇게 사용됩니다</h3>
-							<p>여러분의 소중한 후원금은 영화의 음악, 색보정, 믹싱, 그래픽등 후반작업과 스탭, 배우분들의 항공료로 사용됩니다:)</p>
-						</div>
-						
-						<hr class="detail_form_line">
-					
+						<ul id="comment_list">
+							<!-- 여기에 동적 생성 요소가 들어가게 됩니다. -->
+						</ul>
 					</div>
-					  
-					<div class="b-panel b-panel--theme_clean b-panel--rounded_yes box has-pad-horiz-dot5">
-						<div class="b-panel__head"></div>
-						<div class="b-panel__body">
-							<strong class="box text-size_xs">이 프로젝트의 환불 및 교환 정책</strong>
-							<span class="text-size_xs">마감 직후 곧바로 제작에 착수하기때문에 환불은 불가능 합니다. 파손되거나 불량인 상태의 선물을 받으신 후원자분께는 새 제품으로 무료교환을 약속합니다.</span>
-						</div>
-					</div>
-					
-					<script src="https://d1pqmsyqo4bi9.cloudfront.net/assets/social_share-cf858d6b1ddff9eba590c810cf8290ea.js" type="text/javascript"></script>
+
 				</div>
 				 
 				 
@@ -192,7 +169,7 @@
 				 
 			</div>
 		</div>
-
-
+		
+		
 	</body>
 </html>
