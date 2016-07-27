@@ -84,6 +84,29 @@
 							</blockquote>
 						</div>
 						
+						
+						<div id="detail_form_01">
+							<hr class="detail_form_line">
+							
+							<h3>▶ 프로젝트 계획</h3>
+							<p><span>총 집행금액	5,000,000 원 (목표금액 5,000,000 원)
+											사업비	지역서명 운동 및 순회 설명회	3,000,000원
+											사업비	토론회 및 간담회	500,000원
+											행사홍보비	SNS 서명 홍보	1,000,000원
+											행사홍보비	웹툰, 동영상 제작</span></p>
+						</div>
+						
+						
+						<div id="detail_form_01">
+							<hr class="detail_form_line">
+							
+							<h3>▶ 프로젝트 목표</h3>
+							<p><span>1. 입시 및 채용에서 출신학교 차별 사례 및 제보로 그 근거를 제시합니다
+											2. 정부의 스펙, 학벌초월 채용 약속에 대한 지속적인 모니터링을 진행합니다.
+											3. 출신학교 차별을 금지하는 법률을 개정합니다.</span></p>
+						</div>
+						
+						
 						<div id="detail_form_02">
 							<hr class="detail_form_line">
 							
