@@ -187,6 +187,7 @@
 					ฐ่มยน๘ศฃ
 				</td>
 				<td colspan="2">
+					<input type="text">
 				</td>
 			</tr>
 		</table>
