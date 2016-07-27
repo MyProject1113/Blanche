@@ -162,6 +162,7 @@
 					</span>
 			</td>
 		</tr>
+		</table>
 		
 		<table>
 			<tr>
@@ -192,6 +193,7 @@
 			</tr>
 		</table>
 		
+		<table>
 		<tr>
 			<td colspan="3">
 			<textarea rows="10" cols="50" name="area2"></textarea>
