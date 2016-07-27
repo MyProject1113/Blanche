@@ -17,9 +17,9 @@
 		<put-attribute name="footer" value="/template/footer.jsp" />
 	</definition>
 	
-	<!-- <definition name="board/*" extends="content">
+	<definition name="board/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/board/{1}.jsp" />
-	</definition> -->
+	</definition>
 	
 	<definition name="establish/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/establish/{1}.jsp" />
