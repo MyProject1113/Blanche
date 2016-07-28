@@ -14,6 +14,12 @@ public class UserServiceImp implements UserService {
 	private UserMapper userMapper;
 	
 	@Override
+	public UserMainVO userAccess(UserMainVO param) {
+		// TODO Auto-generated method stub
+		return userMapper.userAccess(param);
+	}
+	
+	@Override
 	public UserMainVO userData(UserMainVO param) {
 		return userMapper.userData(param);
 	}

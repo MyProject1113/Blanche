@@ -12,6 +12,11 @@ public class UserMapperImpl implements UserMapper {
 	private SqlSession session;
 	
 	@Override
+	public UserMainVO userAccess(UserMainVO param) {
+		return (UserMainVO) session.selectOne("userAccess");
+	}
+	
+	@Override
 	public UserMainVO userData(UserMainVO param) {
 		return (UserMainVO) session.selectOne("userData");
 	}

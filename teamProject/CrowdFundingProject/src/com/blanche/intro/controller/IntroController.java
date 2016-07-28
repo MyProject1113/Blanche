@@ -47,4 +47,34 @@ public class IntroController {
 		
 		return "intro/reward";
 	}
+	
+	/********************************************
+	 * 후원자 정보입력 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/receiveInfo.do")
+	public String receiveInfo() {
+		logger.info("receiveInfo 호출 성공");
+		
+		return "intro/receiveInfo";
+	}
+	
+	/********************************************
+	 * 결제 정보입력 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/payment.do")
+	public String payment() {
+		logger.info("payment 호출 성공");
+		
+		return "intro/payment";
+	}
+	
+	/********************************************
+	 * 결제 정보확인 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/pay_success.do")
+	public String pay_success() {
+		logger.info("pay_success 호출 성공");
+		
+		return "intro/pay_success";
+	}
 }

@@ -8,16 +8,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="/include/js/common.js"></script>
 <script type="text/javascript">
 $(function() {
 	$("#commit").click(function() {
-		if(!chkSubmit($("#won"), "후원할 금액을")) {
+		if(!chkSubmit($("#project_invest"), "후원할 금액을")) {
 			return;
 		}else {
-			location.href="";
+			location.href="/intro/receiveInfo.do";
 			}
-		})
-	})
+		});
+	});
 </script>
 <style type="text/css">
 	#title {
@@ -31,29 +32,33 @@ $(function() {
 		
 	}
 	
-	.show_me_the_money{
+	#show_me_the_money{
 		width: 70%;
 		heigth: 200px;
 		float: center;
-		border: solid 2px;
 		margin: 5px;
+		vertical-align: none;
 	}
 </style>
 </head>
 <body>
 	<h2 id="title">금액 선택</h2>
 	<h3>후원할 금액을 입력해 주세요.</h3>
-	
-	<c:forEach begin="1" end="6">
-	<div class="show_me_the_money">
-			<input type="text" id="won" name="won">
-			<span>원 이상</br></span>
-	</div>
-	</c:forEach>
+		<table id="show_me_the_money">
+			<tr>
+				<td>
+				<input type="text" id="project_invest" name="project_invest">
+				</td>
+				<td>
+					<h3>원 이상</h3>
+				</td>
+			</tr>
+		</table>
 	
 	<table>
 		<tr>
-			<input type="button" value="다음 단계">
+			<!-- <a href="/intro/receiveInfo.do" class="c-pledge_button js-show-pledge-button">다음 단계</a>  -->	
+		<input type="button" value="다음 단계" name="commit" id="commit">
 			<input type="button" value="취소">
 		</tr>
 	</table>
