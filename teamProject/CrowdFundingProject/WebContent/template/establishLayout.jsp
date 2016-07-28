@@ -31,7 +31,7 @@
 			
 	</head>
 	<body>	
-	<!-- Wrapper -->
+		<!-- Wrapper -->
 		<div id="wrapper">
 			<!-- Header -->
 			<header>
@@ -42,8 +42,10 @@
 			<div id="main">
 				<tiles:insertAttribute name="body" />
 			</div>
+		</div>
 			
-			<!-- Footer -->
+		<!-- Footer -->
+		<div>
 			<footer>
 				<tiles:insertAttribute name="footer" />
 			</footer>
