@@ -8,7 +8,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+	$("#commit").click(function() {
+		if(!chkSubmit($("#won"), "후원할 금액을")) {
+			return;
+		}else {
+			location.href="";
+			}
+		})
+	})
+</script>
 <style type="text/css">
 	#title {
 			font-size: 25px;
@@ -31,21 +41,21 @@
 </style>
 </head>
 <body>
-	<h2 id="title">리워드 & 금액 선택</h2>
-	<h3>받으실 리워드를 선택해 주세요.</h3>
+	<h2 id="title">금액 선택</h2>
+	<h3>후원할 금액을 입력해 주세요.</h3>
 	
 	<c:forEach begin="1" end="6">
 	<div class="show_me_the_money">
-		<input type="radio"  name="select">
-			<span id="money">&nbsp;&nbsp;&nbsp;&nbsp;10,000,000,000</span>
+			<input type="text" id="won" name="won">
 			<span>원 이상</br></span>
-			<label>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				선물을 선택하지 않고, 밀어만 줍니다.</br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				선택자 수: 
-			</label>
 	</div>
 	</c:forEach>
+	
+	<table>
+		<tr>
+			<input type="button" value="다음 단계">
+			<input type="button" value="취소">
+		</tr>
+	</table>
 </body>
 </html>
