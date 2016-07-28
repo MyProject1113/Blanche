@@ -1,0 +1,7 @@
+package com.blanche.user.main.service;
+
+import com.blanche.user.main.vo.UserMainVO;
+
+public interface UserService {
+	public UserMainVO userData(UserMainVO param);
+}

@@ -1,0 +1,371 @@
+package com.blanche.board.main.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.blanche.board.attach.service.AttachService;
+import com.blanche.board.attach.vo.BoardAttachVO;
+import com.blanche.board.common.constant.BoardConstant;
+import com.blanche.board.common.file.FileUploadUtil;
+import com.blanche.board.info.service.InfoService;
+import com.blanche.board.info.vo.BoardInfoVO;
+import com.blanche.board.main.service.BoardService;
+import com.blanche.board.main.vo.BoardMainVO;
+import com.blanche.user.main.service.UserService;
+import com.blanche.user.main.vo.UserMainVO;
+
+@Controller
+@RequestMapping(value = "/board/{boardUri}")
+public class BoardController implements BoardConstant {
+	private static Logger logger = Logger.getLogger(BoardController.class);
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private InfoService infoService;
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private AttachService attachService;
+	
+	/** 게시판 전체 조회
+	 * @param	String $boardUri from PathVariable
+	 * @return	BoardMainDTO $boardList <br />
+	 * 			BoardMainDTO $boardParam <br />
+	 *			BoardInfoDTO $infoData
+	 */
+	@RequestMapping(value="/list.do", method=RequestMethod.GET)
+	public ModelAndView boardList(@PathVariable("boardUri") String boardUri) {
+		logger.info("boardList 호출 성공");
+		
+		BoardInfoVO infoData = new BoardInfoVO();
+		infoData.setBdinf_uri(boardUri);
+		infoData = infoService.infoDetail(infoData);
+		
+		ModelAndView mav = new ModelAndView();
+		if (infoData != null) {
+			BoardMainVO boardParam = new BoardMainVO();
+			boardParam.setBdinf_index(infoData.getBdinf_index());
+			boardParam.setBoardUri(infoData.getBdinf_uri());
+			List<BoardMainVO> boardList = boardService.boardList(boardParam);
+			int listCount = boardService.boardListCount(boardParam);
+			boardParam.setListCount(listCount);
+			mav.addObject("boardList", boardList);
+			mav.addObject("boardParam", boardParam);
+			mav.addObject("infoData", infoData);
+			mav.setViewName(VIEW_NORMAL_LIST);
+		} else {
+			mav.addObject("result", ERROR_BOARD_FAIL);
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		System.out.println(infoData.getBdinf_index());
+		System.out.println(infoData.getBdinf_uri());
+		
+		return mav;
+	}
+	
+	/** 게시판 전체 조회
+	 * @param	String $boardUri from PathVariable
+	 * @param	BoardMainVO $param
+	 * @return	BoardMainDTO $boardList <br />
+	 * 			BoardMainDTO $boardParam <br />
+	 *			BoardInfoDTO $infoData
+	 */
+	@RequestMapping(value="/list.do", method=RequestMethod.POST)
+	public ModelAndView boardList(@PathVariable("boardUri") String boardUri, @ModelAttribute BoardMainVO param) {
+		logger.info("boardList 호출 성공");
+		
+		BoardInfoVO infoData = new BoardInfoVO();
+		infoData.setBdinf_uri(boardUri);
+		infoData.setBdinf_index(param.getBdinf_index());
+		infoData = infoService.infoDetail(infoData);
+		
+		ModelAndView mav = new ModelAndView();
+		if (infoData != null) {
+			param.setBd_index(0);
+			param.setBdinf_index(infoData.getBdinf_index());
+			param.setUs_index(0);
+			param.setBoardUri(infoData.getBdinf_uri());
+			List<BoardMainVO> boardList = boardService.boardList(param);
+			int listCount = boardService.boardListCount(param);
+			param.setListCount(listCount);
+			mav.addObject("boardList", boardList);
+			mav.addObject("boardParam", param);
+			mav.addObject("infoData", infoData);
+			mav.setViewName(VIEW_NORMAL_LIST);
+		} else {
+			mav.addObject("result", ERROR_BOARD_FAIL);
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 상세 보기
+	 * @param	BoardMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return	BoardMainDTO $boardData <br />
+	 * 			BoardMainDTO $boardParam <br />
+	 * 			BoardAttachDTO $attachList
+	 */
+	@RequestMapping(value="/detail.do", method=RequestMethod.POST)
+	public ModelAndView boardDetail(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+		logger.info("boardDetail 호출 성공");
+		
+		boardService.boardCheck(param);
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		BoardMainVO boardData = boardService.boardDetail(param);
+		if (userData != null) {
+			if (boardData.getUs_index() == userData.getUs_index()) {
+				boardData.setEditable(true);
+			}
+		}
+		ModelAndView mav = new ModelAndView();
+		if (boardData != null) {
+			BoardAttachVO attachParam = new BoardAttachVO();
+			attachParam.setBd_index(param.getBd_index());
+			List<BoardAttachVO> attachList = attachService.attachList(attachParam);
+			mav.addObject("boardData", boardData);
+			mav.addObject("boardParam", param);
+			mav.addObject("attachList", attachList);
+			mav.setViewName(VIEW_NORMAL_DETAIL);
+		} else {
+			mav.addObject("result", ERROR_DETAIL_FAIL);
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 작성창 호출
+	 * @param	BoardMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return	UserMainDTO $userData <br />
+	 * 			BoardMainDTO $boardParam
+	 */
+	@RequestMapping(value="/write.do", method=RequestMethod.POST)
+	public ModelAndView boardWrite(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+		logger.info("boardWrite 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			userData = userService.userData(userData);
+			mav.addObject("userData", userData);
+			mav.addObject("boardParam", param);
+			mav.setViewName(VIEW_NORMAL_WRITE);
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 작성
+	 * @param	BoardMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO and MultipartFile
+	 * @return	BoardMainDTO $boardParam
+	 */
+	@RequestMapping(value="/insert.do", method=RequestMethod.POST)
+	public ModelAndView boardInsert(@ModelAttribute BoardMainVO param, HttpServletRequest request) throws Exception {
+		logger.info("boardInsert 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			param.setBd_index(0);
+			param.setUs_index(userData.getUs_index());
+			if (param.getBd_step() == 0) {
+				param.setPage(1);
+			} else {
+				boardService.boardReplyIndent(param);
+			}
+			int result = boardService.boardInsert(param);
+			if (result == 1) {
+				if (param.getAttachUpload() != null) {
+					for (MultipartFile fileData : param.getAttachUpload()) {
+						String bdatt_path = FileUploadUtil.fileUpload(fileData, request);
+						if (bdatt_path != null && !bdatt_path.equals("")) {
+							BoardAttachVO attachParam = new BoardAttachVO();
+							attachParam.setBd_index(param.getBd_index());
+							attachParam.setBdatt_path(bdatt_path);
+							attachService.attachInsert(attachParam);
+						}
+					}
+				}
+				param.setSearch("");
+				param.setKeyword("");
+				mav.addObject("boardParam", param);
+				mav.setViewName(VIEW_RETURN_LIST);
+			} else {
+				mav.addObject("result", ERROR_INSERT_FAIL);
+				mav.setViewName(VIEW_RETURN_ERROR);
+			}
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 수정창 호출
+	 * @param	BoardMainVO $param 
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return	BoardMainDTO $boardData <br />
+	 * 			BoardMainDTO $boardParam <br />
+	 * 			BoardAttachDTO $attachList
+	 */
+	@RequestMapping(value="/edit.do", method=RequestMethod.POST)
+	public ModelAndView boardEdit(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+		logger.info("boardEdit 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			BoardMainVO boardData = boardService.boardDetail(param);
+			BoardAttachVO attachParam = new BoardAttachVO();
+			attachParam.setBd_index(param.getBd_index());
+			List<BoardAttachVO> attachList = attachService.attachList(attachParam);
+			mav.addObject("boardData", boardData);
+			mav.addObject("boardParam", param);
+			mav.addObject("attachList", attachList);
+			mav.setViewName(VIEW_NORMAL_EDIT);
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 수정
+	 * @param	BoardMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO and MultipartFile
+	 * @return	BoardMainDTO $boardParam
+	 */
+	@RequestMapping(value="/update.do", method=RequestMethod.POST)
+	public ModelAndView boardUpdate(@ModelAttribute BoardMainVO param, HttpServletRequest request) throws Exception {
+		logger.info("boardUpdate 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			int result = boardService.boardUpdate(param);
+			if (result == 1) {
+				if (param.getAttachDelete() != null) {
+					for (Integer fileIndex : param.getAttachDelete()) {
+						if (fileIndex != null) {
+							BoardAttachVO attachParam = new BoardAttachVO();
+							attachParam.setBdatt_index(fileIndex);
+							attachParam.setBd_index(param.getBd_index());
+							attachService.attachDelete(attachParam);
+						}
+					}
+				}
+				if (param.getAttachUpload() != null) {
+					for (MultipartFile fileData : param.getAttachUpload()) {
+						String bdatt_path = FileUploadUtil.fileUpload(fileData, request);
+						if (bdatt_path != null && !bdatt_path.equals("")) {
+							BoardAttachVO attachParam = new BoardAttachVO();
+							attachParam.setBd_index(param.getBd_index());
+							attachParam.setBdatt_path(bdatt_path);
+							attachService.attachInsert(attachParam);
+						}
+					}
+				}
+				mav.addObject("boardParam", param);
+				mav.setViewName(VIEW_RETURN_LIST);
+			} else {
+				mav.addObject("result", ERROR_UPDATE_FAIL);
+				mav.setViewName(VIEW_RETURN_ERROR);
+			}
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 본문 삭제
+	 * @param	BoardMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO (
+	 * @return	BoardMainDTO $boardParam
+	 */
+	@RequestMapping(value="/delete.do", method=RequestMethod.POST)
+	public ModelAndView boardDelete(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+		logger.info("boardDelete 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			int replyCount = boardService.boardReplyCount(param);
+			System.out.println("replyCount : " + replyCount);
+			if (replyCount > 0) {
+				mav.addObject("result", ERROR_DELETE_CANT);
+				mav.setViewName(VIEW_RETURN_ERROR);
+			} else {
+				param.setUs_index(userData.getUs_index());
+				int result = boardService.boardDelete(param);
+				if (result == 1) {
+					mav.addObject("boardParam", param);
+					mav.setViewName(VIEW_RETURN_LIST);
+				} else {
+					mav.addObject("result", ERROR_DELETE_FAIL);
+					mav.setViewName(VIEW_RETURN_ERROR);
+				}
+			}
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+	
+	/** 게시판 답변 작성창 호출
+	 * @param	BoardMainVO $param 
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return	String
+	 */
+	@RequestMapping(value="/reply.do", method=RequestMethod.POST)
+	public ModelAndView boardReply(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+		logger.info("boardReply 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			userData = userService.userData(userData);
+			BoardMainVO boardOrigin = boardService.boardDetail(param);
+			param.setBd_parent(param.getBd_index());
+			param.setBd_step(param.getBd_step() + 1);
+			param.setBd_indent(param.getBd_indent() + 1);
+			mav.addObject("userData", userData);
+			mav.addObject("boardOrigin", boardOrigin);
+			mav.addObject("boardParam", param);
+			mav.setViewName(VIEW_NORMAL_WRITE);
+		} else {
+			mav.addObject("result", ERROR_LOGON_FAIL);
+			mav.setViewName(VIEW_RETURN_LOGIN);
+		}
+		
+		return mav;
+	}
+}

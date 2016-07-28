@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.board.comment.dao.CommentMapper">
+	<!-- 댓글 전체 조회 -->
+	<select id="commentList" parameterType="boardCommentVO" resultType="boardCommentVO">
+		/* BoardCommentDAO - commentList */
+		SELECT	bdcmt_index
+			,	bdcmt_content
+			,	TO_CHAR(bdcmt_regdate, 'YYYY/MM/DD HH24:MI:SS') as bdcmt_regdate
+			,	TO_CHAR(bdcmt_modidate, 'YYYY/MM/DD HH24:MI:SS') as bdcmt_modidate
+			,	(SELECT us_nickname FROM usermain WHERE us_index = rs.us_index) as nickname
+			,	DECODE(us_index, #{us_index}, 1, 0) as editable
+		FROM 	(
+				SELECT	rownum as rnum
+					,	cmt.*
+				FROM	(
+						SELECT	*
+						FROM	boardcomment
+						WHERE	bd_index = #{bd_index} 
+								AND
+								bdcmt_delete = 0
+						ORDER BY
+								bdcmt_index desc
+						) cmt
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="commentInsert" parameterType="boardCommentVO">
+		/* BoardCommentDAO - commentInsert */
+		INSERT INTO boardcomment (
+			bdcmt_index, bd_index, us_index, bdcmt_content
+		) VALUES (
+			boardcomment_seq.nextval, #{bd_index}, #{us_index}, #{bdcmt_content}
+		)
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="commentUpdate" parameterType="boardCommentVO">
+		/* BoardCommentDAO - commentUpdate */
+		UPDATE	boardcomment
+		SET		bdcmt_content = #{bdcmt_content}
+			,	bdcmt_modidate = sysdate
+		WHERE	bdcmt_index = #{bdcmt_index}
+				AND
+				us_index = #{us_index}
+				AND
+				bdcmt_delete = 0
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="commentDelete" parameterType="boardCommentVO">
+		/* BoardCommentDAO - commentDelete */
+		UPDATE	boardcomment
+		SET		bdcmt_delete = 1
+			,	bdcmt_modidate = sysdate
+		WHERE	bdcmt_index = #{bdcmt_index}
+				AND
+				us_index = #{us_index}
+	</update>
+	
+	<!-- 댓글 개수 조회 -->
+	<select id="commentListCount" parameterType="boardCommentVO" resultType="int">
+		/* BoardCommentDAO - commentListCount */
+		SELECT	count(bdcmt_index)
+		FROM	boardcomment
+		WHERE	bd_index = #{bd_index}
+				AND
+				bdcmt_delete = 0
+	</select>
+</mapper>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.board.main.dao.BoardMapper">
+	<!-- 게시판 전체 조회 -->
+	<select id="boardList" parameterType="boardMainVO" resultType="boardMainVO">
+		/* BoardMainDAO - boardList */
+		SELECT 	bd_index
+			,	bdinf_index
+			,	bd_title
+			,	bd_root
+			,	bd_parent
+			,	bd_step
+			,	bd_indent
+			,	bd_check
+			,	CASE WHEN (SYSDATE - bd_regdate) <![CDATA[<]]> 1 THEN
+					TO_CHAR(bd_regdate, 'HH24:MI:SS')
+				ELSE
+					TO_CHAR(bd_regdate, 'YYYY/MM/DD')
+				END AS bd_regdate
+			, 	num
+			,	(SELECT bdinf_title FROM boardinfo WHERE bdinf_index = rs.bdinf_index) AS boardTitle
+			,	(SELECT bdinf_uri FROM boardinfo WHERE bdinf_index = rs.bdinf_index) AS boardUri
+			,	(SELECT us_nickname FROM usermain WHERE us_index = rs.us_index) AS nickname
+			,	(SELECT COUNT(bdcmt_index) FROM boardcomment WHERE bd_index = rs.bd_index) AS commentCount
+			,	(<![CDATA[LENGTH(REPLACE(bd_content, '<img ', '<')) - LENGTH(REPLACE(bd_content, '<img ', ''))]]>) AS pictureCount 
+			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bd_index = rs.bd_index) AS attachCount
+		FROM 	(
+				SELECT	ROWNUM AS rnum
+					,	bd.*
+				FROM	(
+						SELECT	ROW_NUMBER() OVER(PARTITION BY bd_indent ORDER BY bd_index) AS num,
+								boardmain.*
+						FROM	boardmain
+						<include refid="boardSearch" />
+						ORDER BY
+								bd_root DESC
+							,	bd_step ASC
+							,	bd_indent ASC
+						) bd
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}
+	</select>
+	
+	<!-- 게시판 검색 조건 -->
+	<sql id="boardSearch">
+		<where>
+			bd_delete = 0
+			<if test="bdinf_index > 0">
+				AND
+				bdinf_index = #{bdinf_index}
+			</if>
+			<if test="us_index > 0">
+				AND
+				us_index = #{us_index}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="search == 'title'">
+						AND 
+						bd_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'content'">
+						AND
+						bd_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'both'">
+						AND (
+							bd_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+							OR
+							bd_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+						)
+					</when>
+					<when test="search == 'writer'">
+						AND
+						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 게시판 상세 조회 -->
+	<select id="boardDetail" parameterType="boardMainVO" resultType="boardMainVO">
+		/* BoardMainDAO - boardDetail */
+		SELECT 	bd_index
+			,	bdinf_index
+			,	us_index
+			,	bd_title
+			,	bd_content
+			,	bd_root
+			,	bd_parent
+			,	bd_step
+			,	bd_indent
+			,	bd_check
+			,	TO_CHAR(bd_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bd_regdate
+			,	TO_CHAR(bd_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bd_modidate
+			,	(SELECT us_nickname FROM usermain WHERE us_index = boardmain.us_index) AS nickname
+			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bd_index = boardmain.bd_index) AS attachCount
+		FROM 	boardmain
+		WHERE	bd_index = #{bd_index}
+				AND
+				bd_delete = 0
+	</select>
+	
+	<!-- 게시물 조회수 증가 -->
+	<update id="boardCheck" parameterType="boardMainVO">
+		/* BoardMainDAO - boardCheck */
+		UPDATE	boardmain
+		SET		bd_check = bd_check + 1 
+		WHERE	bd_index = #{bd_index}
+	</update>
+	
+	<!-- 게시물 본문 작성 -->
+	<insert id="boardInsert" parameterType="boardMainVO">
+		/* BoardMainDAO - boardInsert */
+		<selectKey keyProperty="bd_index" resultType="int" order="BEFORE">
+			SELECT boardmain_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO boardmain (
+			bd_index, bdinf_index, us_index, bd_title
+			<if test="bd_content != null and bd_content != ''">
+				, bd_content
+			</if>
+			, bd_root, bd_parent, bd_step, bd_indent
+		)
+		VALUES (
+			#{bd_index}, #{bdinf_index}, #{us_index}, #{bd_title}
+			<if test="bd_content != null and bd_content != ''">
+				, #{bd_content}
+			</if>
+			<choose>
+				<when test="bd_step > 0">
+					, #{bd_root}, #{bd_parent}, #{bd_step}, #{bd_indent}
+				</when>
+				<otherwise>
+					, #{bd_index}, 0, 0, 0
+				</otherwise>
+			</choose>
+		)
+	</insert>
+	
+	<!-- 게시물 본문 수정 -->
+	<update id="boardUpdate" parameterType="boardMainVO">
+		/* BoardMainDAO - boardUpdate */
+		UPDATE	boardmain
+		SET		bd_title = #{bd_title}
+				<choose>
+					<when test="bd_content != null and bd_content != ''">
+			,			bd_content = #{bd_content}
+					</when>
+					<otherwise>
+			,			bd_content = null
+					</otherwise>
+				</choose>
+			,	bd_modidate = sysdate	
+		WHERE	bd_index = #{bd_index}
+				AND
+				us_index = #{us_index}
+				AND
+				bd_delete = 0
+	</update>
+	
+	<!-- 게시물 본문 삭제 -->
+	<update id="boardDelete" parameterType="boardMainVO">
+		/* BoardMainDAO - boardDelete */
+		UPDATE	boardmain
+		SET		bd_delete = 1
+			,	bd_modidate = sysdate
+		WHERE	bd_index = #{bd_index}
+				AND
+				us_index = #{us_index}
+	</update>
+	
+	<!-- 게시물 개수 조회 -->
+	<select id="boardListCount" parameterType="boardMainVO" resultType="int">
+		/* BoardMainDAO - boardListCount */
+		SELECT	count(bd_index)
+		FROM	boardmain
+		<include refid="boardSearch" />
+	</select>
+	
+	<!-- 게시물 답변 개수 조회 -->
+	<select id="boardReplyCount" parameterType="boardMainVO" resultType="int">
+		SELECT	count(bd_index)
+		FROM	boardmain
+		WHERE	bd_parent = #{bd_index}
+				AND
+				bd_delete = 0
+	</select>
+	
+	<!-- 게시물 답변 위치 증가 -->
+	<update id="boardReplyIndent" parameterType="boardMainVO">
+		/* BoardMainDAO - boardReplyIndent */
+		UPDATE	boardmain
+		SET		bd_step = bd_step + 1
+		WHERE	bd_root = #{bd_root}
+				AND
+				bd_step >= #{bd_step}
+	</update>
+</mapper>

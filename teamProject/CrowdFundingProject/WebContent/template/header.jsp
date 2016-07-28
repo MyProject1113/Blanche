@@ -8,8 +8,11 @@
 				<li><a href="/intro/intro.do" class="current-page-item">프로젝트 둘러보기</a></li>
 				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
 				<li><a href="#">고객지원</a></li>
-				<li><a href="/cc/faq.do">도움말</a>
+				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
+						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/board/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
