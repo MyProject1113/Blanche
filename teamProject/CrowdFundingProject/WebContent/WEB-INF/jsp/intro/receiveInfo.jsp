@@ -13,26 +13,25 @@
 
 	$(function() {
 		$("#commit").click(function() {
-			 if(!chkSubmit($("#name"), "받는 분을")) {
+			 if(!chkSubmit($("#sponser_name"), "받는 분을")) {
 				return;
 			}
 			else if(!chkSubmit($("#phone"), "연락처를")) {
 				return;
 			}
-			else if(!chkSubmit($("#email"), "이메일을")) {
+			else if(!chkSubmit($("#sponser_email"), "이메일을")) {
 				return;
 			}
-			else if(!chkSubmit($("#addr1"), "우편번호를")) {
+			else if(!chkSubmit($("#sponser_addnum"), "우편번호를")) {
 				return;
 			}
-			else if(!chkSubmit($("#addr2"), "상세주소를")) {
+			else if(!chkSubmit($("#sponser_add"), "상세주소를")) {
 				return;
 			}	
 
 			if($("input[name='agree1']:checked").val() == "on") {
 
 				  if($("input[id='agree2']:checked").val() == "on") {
-
 						location.href="/intro/payment.do";
 					} else {
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
@@ -44,7 +43,7 @@
 			}
 		});
 		
-		$("#search").click(
+		$("#postSearch").click(
 				function() {
 			        new daum.Postcode({
 			            oncomplete: function(data) {
@@ -78,11 +77,11 @@
 			                }
 
 			                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-			                $('#postcode').val(data.zonecode); //5자리 새우편번호 사용
-			                $('#address').val(fullAddr);
+			                $('#sponser_addnum').val(data.zonecode); //5자리 새우편번호 사용
+			                $('#sponser_add').val(fullAddr);
 
 			                // 커서를 상세주소 필드로 이동한다.
-			                $('#address').focus();
+			                $('#sponser_add').focus();
 			            }
 			        }).open();
 			    })
@@ -135,7 +134,7 @@
 				받는분
 			</td>
 			<td colspan="2">
-				<input type="text" id="name" name="name">
+				<input type="text" id="sponser_name" name="sponser_name">
 				</br>
 			</td>
 		<tr>
@@ -153,7 +152,7 @@
 				이메일
 			</td>
 			<td colspan="2">
-				<input type="text" id="email" name="email">
+				<input type="text" id="sponser_email" name="sponser_email">
 				</br>
 			</td>
 		<tr>
@@ -162,13 +161,13 @@
 				주소
 			</td>
 			<td colspan="2">
-			<input type="button" id="search" name="search" value="우편번호 검색">
-			<input type="text" id="postcode" name="postcode">
+			<input type="button" id="postSearch" name="postSearch" value="우편번호 검색">
+			<input type="text" id="sponser_addnum" name="sponser_addnum">
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="text" id="address" name="address">
+				<input type="text" id="sponser_add" name="sponser_add">
 			</td>
 		</tr>
 		<tr></tr>
@@ -178,7 +177,7 @@
 				배송메모
 			</td>
 			<td colspan="2">
-				<textarea rows="5" cols="54" id="post" name="post"></textarea>
+				<textarea rows="5" cols="54" id="sponser_memo" name="sponser_memo"></textarea>
 			</td>
 		</tr>
 		</table>
