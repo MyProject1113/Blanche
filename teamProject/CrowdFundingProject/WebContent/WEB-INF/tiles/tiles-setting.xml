@@ -17,9 +17,12 @@
 		<put-attribute name="footer" value="/template/footer.jsp" />
 	</definition>
 	
-	<!-- <put-attribute name="" value="" /> 에서 name은 *.do 형식의 도메인 이름이 아니라 *.jsp 형식의 리턴받는 뷰단의 이름 -->
-	<definition name="board/*" extends="content">
-		<put-attribute name="body" value="/WEB-INF/jsp/board/{1}.jsp" />
+	<!-- <definition name="" value="" /> 에서 name은 *.do 형식의 도메인 이름이 아니라 *.jsp 형식의 리턴받는 뷰단의 이름 -->
+	<definition name="board/default/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/default/{1}.jsp" />
+	</definition>
+	<definition name="board/mypage/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/mypage/{1}.jsp" />
 	</definition>
 	
 	<definition name="establish/*" extends="content">

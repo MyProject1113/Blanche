@@ -3,19 +3,19 @@ package com.blanche.board.common.constant;
 public interface BoardConstant {
 	public static final String SESSION_USER_DATA = "blancheUser";
 
-	public static final String VIEW_NORMAL_LIST = "board/listForm";
-	public static final String VIEW_NORMAL_DETAIL = "board/detailForm";
-	public static final String VIEW_NORMAL_WRITE = "board/writeForm";
-	public static final String VIEW_NORMAL_EDIT = "board/editForm";
+	public static final String VIEW_NORMAL_LIST = "board/default/listForm";
+	public static final String VIEW_NORMAL_DETAIL = "board/default/detailForm";
+	public static final String VIEW_NORMAL_WRITE = "board/default/writeForm";
+	public static final String VIEW_NORMAL_EDIT = "board/default/editForm";
 	
-	public static final String VIEW_MYPAGE_LIST = "board/mylistForm";
-	public static final String VIEW_MYPAGE_DETAIL = "board/myarticleForm";
+	public static final String VIEW_MYPAGE_LIST = "board/mypage/mylistForm";
+	public static final String VIEW_MYPAGE_DETAIL = "board/mypage/myarticleForm";
 
-	public static final String VIEW_RETURN_LIST = "board/returnList";
-	public static final String VIEW_RETURN_ERROR = "board/returnError";
-	public static final String VIEW_RETURN_LOGIN = "board/returnError";
+	public static final String VIEW_RETURN_LIST = "board/common/returnList";
+	public static final String VIEW_RETURN_ERROR = "board/common/returnError";
+	public static final String VIEW_RETURN_LOGIN = "board/common/returnError";
 	
-	public static final String VIEW_IMAGE_UPLOAD = "board/imageUpload";
+	public static final String VIEW_IMAGE_UPLOAD = "board/common/imageUpload";
 	
 	public static final String ERROR_BOARD_FAIL = "해당하는 게시판이 존재하지 않습니다.";
 	public static final String ERROR_DETAIL_FAIL = "해당하는 게시물이 존재하지 않습니다.";

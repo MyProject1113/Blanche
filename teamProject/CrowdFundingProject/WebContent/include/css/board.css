@@ -19,6 +19,9 @@
 	width: 900px;
 	padding: 5px;
 }
+#boardContainer input[type="button"] {
+	max-height: 20px;
+}
 #boardContainer .boardTable {
 	width: 100%;
 	border: 1px solid black;
@@ -38,6 +41,7 @@
 	max-width: 240px;
 	border: 1px solid black;
 	background-color: lightgrey;
+	text-align: center;
 }
 #boardTitle {
 	width: 100%;
@@ -85,10 +89,12 @@
 	text-align: center;
 }
 #boardSearch #search {
+	display: inline-block;
 	width: 100px;
 	height: 24px;
 }
 #boardSearch #keyword {
+	display: inline-block;
 	width: 200px;
 	height: 24px;
 }
