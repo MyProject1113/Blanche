@@ -51,4 +51,20 @@ public class UserController implements Constant {
 		
 		return mav;
 	}
+	
+	/** 접속해제
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $blancheUser
+	 */
+	@RequestMapping(value="/exit.do", method=RequestMethod.POST)
+	public ModelAndView userExit(HttpServletRequest request) {
+		logger.info("userExit 호출 성공");
+		
+		request.getSession().setAttribute(SESSION_USER_DATA, null);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/loginForm");
+		
+		return mav;
+	}
 }

@@ -34,6 +34,15 @@
 				});
 				$("#formLogin").submit();
 			});
+			
+			/* 접속해제 버튼 클릭 시 처리 이벤트 */
+			$("#logoutBtn").click(function() {
+				$("#formLogout").attr({
+					"method" : "post",
+					"action" : "/user/exit.do"
+				});
+				$("#formLogout").submit();
+			});
 		});
 	</script>
 </head>
@@ -49,7 +58,10 @@
 		</form>
 	</c:when>
 	<c:otherwise>
-		${sessionScope.blancheUser.us_nickname}님. 환영합니다.
+		<form name="formLogout" id="formLogout">
+			${sessionScope.blancheUser.us_nickname}님. 환영합니다.<br />
+			<input type="button" name="logoutBtn" id="logoutBtn" value="접속해제">
+		</form>
 	</c:otherwise>
 </c:choose>
 </body>
