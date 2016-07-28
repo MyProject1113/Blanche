@@ -67,4 +67,14 @@ public class EstablishController {
 		
 		return "establish/contentReply";
 	}
+
+	/********************************************
+	 * 프로젝트 밀어주기 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/reward.do")
+	public String reward() {
+		logger.info("reward 호출 성공");
+		
+		return "redirect:/intro/reward.do";
+	}
 }

@@ -28,4 +28,23 @@ public class IntroController {
 		return "intro/intro";	// View Name => 파일명 아님!!!
 	}
 
+	/********************************************
+	 * 프로젝트 상세 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/introDetail.do")
+	public String introDetail() {
+		logger.info("introList 호출 성공");
+		
+		return "redirect:/establish/contentDetail.do";
+	}
+
+	/********************************************
+	 * 프로젝트 밀어주기 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/reward.do")
+	public String reward() {
+		logger.info("reward 호출 성공");
+		
+		return "intro/reward";
+	}
 }

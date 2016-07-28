@@ -31,6 +31,7 @@
     <!--
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
-    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Oracle11g" password="java1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl11" username="javauser"/>
+    <!-- <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Oracle11g" password="java1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@127.0.0.1:1521:orcl11" username="javauser"/> -->
+    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/Oracle11g" password="hrd401" type="javax.sql.DataSource" url="jdbc:oracle:thin:@172.16.9.179:1521:orcl11" username="blanche"/>
     
 </Context>

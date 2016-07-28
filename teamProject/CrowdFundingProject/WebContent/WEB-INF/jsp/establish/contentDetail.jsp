@@ -154,7 +154,7 @@
 					</dl>
 					
 					  
-					<a href="/tanglewoodfilm/pledge" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
+					<a href="/intro/reward.do" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
 					
 					<p class="b-pledge_blurb js-pledge_blurb">결제는 2016년 8월 14일 자정까지 최소 4,000,000원이 모여야만 다함께 진행됩니다</p>
 					
