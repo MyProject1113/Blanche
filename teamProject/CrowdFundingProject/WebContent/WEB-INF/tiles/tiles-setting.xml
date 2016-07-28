@@ -25,6 +25,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/board/mypage/{1}.jsp" />
 	</definition>
 	
+	<definition name="user/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/user/{1}.jsp" />
+	</definition>
+	
 	<definition name="establish/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/establish/{1}.jsp" />
 	</definition>

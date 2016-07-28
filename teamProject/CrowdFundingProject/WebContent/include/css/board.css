@@ -1,26 +1,21 @@
 ﻿@CHARSET "UTF-8";
-/* 공통 부분 */
-* {
-	margin: 0px;
-	padding: 0px;
-}
-.left {
-	text-align: left;
-}
-.center {
-	text-align: center;
-}
-.right {
-	text-align: right;
-}
-
 /* 게시판 */
 #boardContainer {
 	width: 900px;
 	padding: 5px;
 }
 #boardContainer input[type="button"] {
-	max-height: 20px;
+	width: 60px;
+	height: 24px;
+	line-height: initial;
+	letter-spacing: initial;
+}
+#boardContainer table,
+#boardContainer thead,
+#boardContainer tbody,
+#boardContainer tr,
+#boardContainer td {
+	vertical-align: middle;
 }
 #boardContainer .boardTable {
 	width: 100%;
@@ -42,6 +37,15 @@
 	border: 1px solid black;
 	background-color: lightgrey;
 	text-align: center;
+}
+#boardContainer .left {
+	text-align: left;
+}
+#boardContainer .center {
+	text-align: center;
+}
+#boardContainer .right {
+	text-align: right;
 }
 #boardTitle {
 	width: 100%;

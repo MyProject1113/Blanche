@@ -1,8 +1,10 @@
-package com.blanche.board.common.constant;
+package com.blanche.common.constant;
 
-public interface BoardConstant {
+public interface Constant {
+	/* 회원 관련 상수 */
 	public static final String SESSION_USER_DATA = "blancheUser";
 
+	/* 게시판 관련 상수 */
 	public static final String VIEW_NORMAL_LIST = "board/default/listForm";
 	public static final String VIEW_NORMAL_DETAIL = "board/default/detailForm";
 	public static final String VIEW_NORMAL_WRITE = "board/default/writeForm";

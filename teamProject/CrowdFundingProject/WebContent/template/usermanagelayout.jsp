@@ -30,20 +30,23 @@
 		<script src="/include/assets/js/main.js"></script>
 			
 	</head>
-	<body>	
+	<body>
 	<!-- Wrapper -->
 		<div id="wrapper">
-			<tiles:insertAttribute name="header" />
+			<!-- Header -->
+			<header>
+				<tiles:insertAttribute name="header" />
+			</header>
 			
-		<!-- Main -->
+			<!-- Main -->
 			<div id="main">
 				<tiles:insertAttribute name="body" />
 			</div>
 			
-			<section id="sidebar">
 			<!-- Footer -->
+			<footer>
 				<tiles:insertAttribute name="footer" />
-			</section>
+			</footer>
 		</div>
 	</body>
 </html>

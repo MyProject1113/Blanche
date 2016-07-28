@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.board.attach.vo.BoardAttachVO;
-import com.blanche.board.common.constant.BoardConstant;
 import com.blanche.board.common.file.FileUploadUtil;
+import com.blanche.common.constant.Constant;
 
 @RestController
 @RequestMapping(value="/board/attach")
-public class AttachController implements BoardConstant {
+public class AttachController implements Constant {
 	private static Logger logger = Logger.getLogger(AttachController.class);
 	
 	/** 첨부파일 전송
