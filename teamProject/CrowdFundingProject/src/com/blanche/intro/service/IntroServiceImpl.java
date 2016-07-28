@@ -1,5 +1,5 @@
 package com.blanche.intro.service;
 
-public class IntroService {
+public class IntroServiceImpl {
 
 }

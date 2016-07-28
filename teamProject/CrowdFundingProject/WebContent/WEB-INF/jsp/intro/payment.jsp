@@ -7,8 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="/include/js/common.js"></script>
 <script type="text/javascript">
 	$(function() {
+
 		$("#pay").change(function() {
 			if($("#pay").val()=="card"){
 				$("#cardInfo").show();
@@ -18,12 +20,62 @@
 				$("#cardInfo").hide();
 				$("#bankInfo").show();	
 			}
-		})
-		
+		});
 	
-		
-		
-	})
+		$("#commit").click(function() {
+					if($("#pay").val()=="card"){
+					if(!chkSubmit($("#c_num"), "카드 번호를")){
+						return;
+					}
+					else if(!chkSubmit($("#c_date"), "카드 유효 날짜를")){
+						return;
+					}
+					else if(!chkSubmit($("#c_pw"), "카드 비밀번호를")){
+						return;
+					}
+
+					if(!chkSubmit($("#cancel_name"), "예금자 명을")){
+						return;
+					}
+					
+					if(!chkSubmit($("#cancel"), "환불 계좌 번호를")){
+						return;
+					}
+					
+					if($("input[id='agree']:checked").val() == "on") {
+						alert("결제가 완료되었습니다.");
+						location.href="/intro/pay_success.do";
+					}
+					else{
+						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
+						return;
+					}
+			}
+			else if($("#pay").val()=="bank"){
+					if(!chkSubmit($("#b_name"), "입금자 명을")){
+						return;
+					}
+					
+					if(!chkSubmit($("#cancel_name"), "예금자 명을")){
+						return;
+					}
+					
+					if(!chkSubmit($("#cancel"), "환불 계좌 번호를")){
+						return;
+					}
+										
+					if($("input[id='agree']:checked").val() == "on") {
+						alert("결제가 완료되었습니다.");
+						location.href="/intro/pay_success.do";
+					}
+					else{
+						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
+						return;
+					}
+			}
+		});
+
+	});
 </script>
 <style>
 	#title {
@@ -67,9 +119,8 @@
 			</td>
 			<td colspan="2">
 				<select id="pay">
-					<option value="card" selected="selected">신용카드</option>
+					<option value="card">신용카드</option>
 					<option value="bank">무통장입금</option>
-					<option value="phone">휴대폰 결제</option>
 				</select>
 			</td>
 		</tr>
@@ -81,7 +132,7 @@
 				카드 번호
 			</td>
 			<td colspan="2">
-				<input type="text">
+				<input type="text" name="c_num" id="c_num">
 			</td>
 		</tr>
 		<tr>
@@ -89,7 +140,7 @@
 				카드 날짜
 			</td>
 			<td colspan="2">
-				<input type="text">
+				<input type="text" name="c_date" id="c_date">
 			</td>
 		</tr>
 		<tr>
@@ -97,7 +148,7 @@
 				카드 비밀번호
 			</td>
 			<td colspan="2">
-				<input type="password">
+				<input type="password" name="c_pw" id="c_pw">
 			</td>
 		</tr>
 		</table>
@@ -109,10 +160,10 @@
 			</td>
 			<td colspan="2">
 				<select>
-					<option>농협</option>
-					<option>하나은행</option>
-					<option>신한은행</option>
-					<option>국민은행</option>
+					<option>농협 000-000-000000</option>
+					<option>하나은행 000-000-000000</option>
+					<option>신한은행 000-000-000000</option>
+					<option>국민은행 000-000-000000</option>
 				</select>
 			</td>
 		</tr>
@@ -121,20 +172,7 @@
 				입금자명
 			</td>
 			<td colspan="2">
-				<input type="text">
-			</td>
-		</tr>
-		<tr>
-			<td id="text">
-				입금 계좌번호
-			</td>
-			<td colspan="2">
-				<select>
-					<option>000-000-000000</option>
-					<option>111-111-111111</option>
-					<option>222-222-222222</option>
-					<option>333-333-333333</option>
-				</select>
+				<input type="text" name="b_name" id="b_name">
 			</td>
 		</tr>
 		<tr>
@@ -146,24 +184,7 @@
 			</td>
 		</tr>
 		</table>
-		
-		<table>
-		<tr>
-			<td colspan="3">
-				<span id="text">약관 동의</span>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3">
-			<textarea rows="10" cols="50" name="area1"></textarea>
-				&nbsp;
-				<input type="checkbox" name="agree1">
-					<span>위의 사항에 동의합니다.
-					</span>
-			</td>
-		</tr>
-		</table>
-		
+
 		<table>
 			<tr>
 				<td colspan="3">
@@ -176,11 +197,17 @@
 				</td>
 				<td colspan="2">
 					<select>
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>	
+						<option>농협</option>
+						<option>하나은행</option>
+						<option>신한은행</option>
+						<option>국민은행</option>	
 					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>예금자 명</td>
+				<td colspan="2">
+					<input type="text" id="cancel_name" name="cancel_name">
 				</td>
 			</tr>
 			<tr>
@@ -188,7 +215,7 @@
 					계좌번호
 				</td>
 				<td colspan="2">
-					<input type="text">
+					<input type="text" name="cancel" id="cancel">
 				</td>
 			</tr>
 		</table>
@@ -198,7 +225,7 @@
 			<td colspan="3">
 			<textarea rows="10" cols="50" name="area2"></textarea>
 				&nbsp;		
-				<input type="checkbox" name="agree2">
+				<input type="checkbox" name="agree" id="agree">
 					<span>위의 사항에 동의합니다.</span>
 			</td>
 		</tr>
