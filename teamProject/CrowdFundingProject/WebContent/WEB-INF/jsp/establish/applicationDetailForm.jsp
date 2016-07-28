@@ -12,6 +12,33 @@
 		<script src="../js/html5shiv.js"></script>
 		<![endif]-->
 		
+		<script type="text/javascript" src="/include/js/common.js"></script>
+		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				/* 저장 버튼 클릭 시 처리 이벤트 */
+				$("#commit_btn").click(function() {
+					if (!chkSubmit($("#app_topic"), "주제소개를")) return;
+					else if (!chkSubmit($("#app_fund"), "목표자금을")) return;
+					else if (!chkSubmit($("#app_field"), "분야를")) return;
+					else if (!chkSubmit($("#request_phone_1"), "연락처를")) return;
+					else if (!chkSubmit($("#request_phone_2"), "연락처를")) return;
+					else if (!chkSubmit($("#request_phone_3"), "연락처를")) return;
+					else {
+						
+						$("#app_phone").val($("#request_phone_1").val() + "-" + $("#request_phone_2").val() + "-" + $("#request_phone_3").val());
+						$("#us_index").val(2);
+						
+						$("#new_project_request").attr({
+							"method":"POST",
+							"action":"/establish/applicationInsert.do"
+						});
+						$("#new_project_request").submit();
+					}
+				});
+			});
+		</script>
+		
 	</head>
 	<body>
 		
