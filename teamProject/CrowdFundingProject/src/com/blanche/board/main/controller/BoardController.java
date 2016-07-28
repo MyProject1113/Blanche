@@ -16,18 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.board.attach.service.AttachService;
 import com.blanche.board.attach.vo.BoardAttachVO;
-import com.blanche.board.common.constant.BoardConstant;
 import com.blanche.board.common.file.FileUploadUtil;
 import com.blanche.board.info.service.InfoService;
 import com.blanche.board.info.vo.BoardInfoVO;
 import com.blanche.board.main.service.BoardService;
 import com.blanche.board.main.vo.BoardMainVO;
+import com.blanche.common.constant.Constant;
 import com.blanche.user.main.service.UserService;
 import com.blanche.user.main.vo.UserMainVO;
 
 @Controller
 @RequestMapping(value = "/board/{boardUri}")
-public class BoardController implements BoardConstant {
+public class BoardController implements Constant {
 	private static Logger logger = Logger.getLogger(BoardController.class);
 	
 	@Autowired
@@ -72,9 +72,6 @@ public class BoardController implements BoardConstant {
 			mav.addObject("result", ERROR_BOARD_FAIL);
 			mav.setViewName(VIEW_RETURN_ERROR);
 		}
-		
-		System.out.println(infoData.getBdinf_index());
-		System.out.println(infoData.getBdinf_uri());
 		
 		return mav;
 	}
@@ -135,6 +132,7 @@ public class BoardController implements BoardConstant {
 				boardData.setEditable(true);
 			}
 		}
+		
 		ModelAndView mav = new ModelAndView();
 		if (boardData != null) {
 			BoardAttachVO attachParam = new BoardAttachVO();
@@ -317,7 +315,6 @@ public class BoardController implements BoardConstant {
 		ModelAndView mav = new ModelAndView();
 		if (userData != null) {
 			int replyCount = boardService.boardReplyCount(param);
-			System.out.println("replyCount : " + replyCount);
 			if (replyCount > 0) {
 				mav.addObject("result", ERROR_DELETE_CANT);
 				mav.setViewName(VIEW_RETURN_ERROR);

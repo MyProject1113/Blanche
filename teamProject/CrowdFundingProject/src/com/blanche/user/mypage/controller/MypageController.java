@@ -14,14 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.board.attach.service.AttachService;
 import com.blanche.board.attach.vo.BoardAttachVO;
-import com.blanche.board.common.constant.BoardConstant;
 import com.blanche.board.main.service.BoardService;
 import com.blanche.board.main.vo.BoardMainVO;
+import com.blanche.common.constant.Constant;
 import com.blanche.user.main.vo.UserMainVO;
 
 @Controller
 @RequestMapping(value = "/mypage")
-public class MypageController implements BoardConstant{
+public class MypageController implements Constant{
 	private static Logger logger = Logger.getLogger(MypageController.class);
 	
 	@Autowired

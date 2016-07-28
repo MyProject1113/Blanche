@@ -6,12 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%
-	UserMainVO user = new UserMainVO();
-	user.setUs_index(2);
-	session.setAttribute("blancheUser", user);
-%>
-<script type="text/javascript" src="/include/js/jquery-1.12.2.js"></script>
+<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		// 기본 댓글 목록 불러오기

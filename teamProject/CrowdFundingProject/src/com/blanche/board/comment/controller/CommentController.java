@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blanche.board.comment.service.CommentService;
 import com.blanche.board.comment.vo.BoardCommentVO;
-import com.blanche.board.common.constant.BoardConstant;
 import com.blanche.board.main.controller.BoardController;
+import com.blanche.common.constant.Constant;
 import com.blanche.user.main.vo.UserMainVO;
 
 @RestController
 @RequestMapping(value="/board/comment")
-public class CommentController implements BoardConstant {
+public class CommentController implements Constant {
 	private static Logger logger = Logger.getLogger(BoardController.class);
 	
 	@Autowired
