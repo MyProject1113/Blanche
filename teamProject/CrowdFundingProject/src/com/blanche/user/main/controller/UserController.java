@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.common.constant.Constant;
+import com.blanche.user.accredit.service.AccreditService;
+import com.blanche.user.accredit.vo.UserAccreditVO;
 import com.blanche.user.common.util.EncryptionUtil;
 import com.blanche.user.common.util.IPConfigUtil;
 import com.blanche.user.main.service.UserService;
@@ -29,7 +31,10 @@ public class UserController implements Constant {
 	@Autowired
 	private UserService userService;
 	
-	/** 접속창 호출
+	@Autowired
+	private AccreditService accreditService;
+	
+	/** 회원 접속창
 	 */
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public ModelAndView userLogin() {
@@ -38,10 +43,12 @@ public class UserController implements Constant {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/loginForm");
 		
+		System.out.println(EncryptionUtil.getAccredit());
+		
 		return mav;
 	}
 	
-	/** 접속
+	/** 회원 접속
 	 * @param	UserMainVO $param
 	 * @param	HttpServletRequest $request
 	 * @return UserMainVO $blancheUser
@@ -59,7 +66,7 @@ public class UserController implements Constant {
 		return mav;
 	}
 	
-	/** 접속해제
+	/** 회원 접속해제
 	 * @param	HttpServletRequest $request
 	 * @return UserMainVO $blancheUser
 	 */
@@ -75,10 +82,10 @@ public class UserController implements Constant {
 		return mav;
 	}
 	
-	/** 약관동의창
+	/** 회원 약관동의창
 	 */
 	@RequestMapping(value="/policies.do")
-	public ModelAndView userPolicies() {
+	public ModelAndView userPolicies(HttpServletRequest request) {
 		logger.info("userPolicies 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("user/policiesForm");
@@ -86,63 +93,86 @@ public class UserController implements Constant {
 		return mav;
 	}
 	
-	/** 회원가입창
+	/** 회원 가입창
 	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
 	 * @return UserMainVO $userData
 	 */
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
-	public ModelAndView userJoin(@ModelAttribute UserMainVO param) {
+	public ModelAndView userJoin(@ModelAttribute UserMainVO param, HttpServletRequest request) {
 		logger.info("userJoin 호출 성공");
 		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("userData", param);
-		mav.setViewName("user/joinForm");
-		
-		return mav;
-	}
-	
-	/** 회원가입
-	 * @param	UserMainVO $param
-	 * @return UserMainVO $userData
-	 */
-	@RequestMapping(value="/info.do", method=RequestMethod.POST)
-	public ModelAndView userInfo(@ModelAttribute UserMainVO param) {
-		logger.info("userInfo 호출 성공");
-		
-		int result = userService.userInsert(param);
-		
-		ModelAndView mav = new ModelAndView();
-		if (result == 1) {
+		if (userData == null) {
 			mav.addObject("userData", param);
-			mav.setViewName("user/infoForm");
+			mav.setViewName("user/joinForm");
 		} else {
-			mav.addObject("result", "회원가입에 실패하였습니다.");
+			mav.addObject("result", "로그인 상태에서는 회원가입이 불가능합니다.");
 			mav.setViewName(VIEW_RETURN_ERROR);
 		}
 		
 		return mav;
 	}
 	
-	/** 회원가입
+	/** 회원 가입
 	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return UserMainVO $userData
+	 */
+	@RequestMapping(value="/info.do", method=RequestMethod.POST)
+	public ModelAndView userInfo(@ModelAttribute UserMainVO param, HttpServletRequest request) {
+		logger.info("userInfo 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData == null) {
+			int result = userService.userInsert(param);
+			UserAccreditVO accreditParam = new UserAccreditVO();
+			accreditParam.setUs_index(param.getUs_index());
+			accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
+			accreditParam.setUsacd_type(0);
+			accreditService.accreditInsert(accreditParam);
+			
+			if (result == 1) {
+				mav.addObject("userData", param);
+				mav.setViewName("user/infoForm");
+			} else {
+				mav.addObject("result", "회원가입에 실패하였습니다.");
+				mav.setViewName(VIEW_RETURN_ERROR);
+			}
+		} else {
+			mav.addObject("result", "로그인 상태에서는 회원가입이 불가능합니다.");
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		return mav;
+	}
+	
+	/** 회원 조회
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
 	 * @param String
 	 */
 	@RequestMapping(value="/check.do", method=RequestMethod.POST)
-	public ResponseEntity<String> userCheck(@RequestBody UserMainVO param) {
+	public ResponseEntity<String> userCheck(@RequestBody UserMainVO param, HttpServletRequest request) {
 		logger.info("userCheck 호출 성공");
 		
 		ResponseEntity<String> entity = null;
-		try { 
-			int result = 0;
-			if (param.getUs_email() != null && !param.getUs_email().equals("")) {
-				result = userService.userCheck(param);
-			} else if (param.getUs_nickname() != null && !param.getUs_nickname().equals("")) {
-				result = userService.userCheck(param);
-			}
-			if (result > 0) {
-				entity = new ResponseEntity<String>("FIND", HttpStatus.OK);
-			} else {
-				entity = new ResponseEntity<String>(HttpStatus.OK);
+		try {
+			UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+			if (userData == null) {
+				int result = 0;
+				if (param.getUs_email() != null && !param.getUs_email().equals("")) {
+					result = userService.userCheck(param);
+				} else if (param.getUs_nickname() != null && !param.getUs_nickname().equals("")) {
+					result = userService.userCheck(param);
+				}
+				if (result > 0) {
+					entity = new ResponseEntity<String>("FIND", HttpStatus.OK);
+				} else {
+					entity = new ResponseEntity<String>(HttpStatus.OK);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
