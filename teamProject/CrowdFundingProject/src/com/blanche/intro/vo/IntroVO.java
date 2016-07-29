@@ -3,7 +3,7 @@ package com.blanche.intro.vo;
 public class IntroVO {
 	private String sponser_add;	//배송 주소
 	private String sponser_addnum;	//배송 우편 번호
-	private int project_invest;	// 프로젝트 투자 금액
+	private long project_invest;	// 프로젝트 투자 금액
 	private String sponser_p_method;	// 결제 방법
 	private String sponser_p_confirm;	//결제 확인 유무
 	private String usact_bank;	//환불 은행명
@@ -11,7 +11,14 @@ public class IntroVO {
 	private String sponser_name;	//리워드 받는 사람명
 	private String sponser_memo;	//리워드 배송메모
 	private String sponser_email;		//리워드 이메일주소
+	private String phone; //리워드 연락처
 	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public String getSponser_add() {
 		return sponser_add;
 	}
@@ -24,10 +31,10 @@ public class IntroVO {
 	public void setSponser_addnum(String sponser_addnum) {
 		this.sponser_addnum = sponser_addnum;
 	}
-	public int getProject_invest() {
+	public long getProject_invest() {
 		return project_invest;
 	}
-	public void setProject_invest(int project_invest) {
+	public void setProject_invest(long project_invest) {
 		this.project_invest = project_invest;
 	}
 	public String getSponser_p_method() {
