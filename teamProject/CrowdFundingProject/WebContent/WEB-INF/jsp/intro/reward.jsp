@@ -12,7 +12,7 @@
 <script type="text/javascript">
 $(function() {
 	$("#commit").click(function() {
-		if(!chkSubmit($("#won"), "후원할 금액을")) {
+		if(!chkSubmit($("#project_invest"), "후원할 금액을")) {
 			return;
 		}else {
 			location.href="/intro/receiveInfo.do";
@@ -47,7 +47,7 @@ $(function() {
 		<table id="show_me_the_money">
 			<tr>
 				<td>
-				<input type="text" id="won" name="won">
+				<input type="text" id="project_invest" name="project_invest">
 				</td>
 				<td>
 					<h3>원 이상</h3>

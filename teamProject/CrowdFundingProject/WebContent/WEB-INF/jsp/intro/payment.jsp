@@ -10,7 +10,6 @@
 <script type="text/javascript" src="/include/js/common.js"></script>
 <script type="text/javascript">
 	$(function() {
-
 		$("#pay").change(function() {
 			if($("#pay").val()=="card"){
 				$("#cardInfo").show();
@@ -18,7 +17,13 @@
 			}
 			else if($("#pay").val()=="bank"){
 				$("#cardInfo").hide();
-				$("#bankInfo").show();	
+				$("#bankInfo").show();
+				
+				var date = new Date();
+				date.setDate(date.getDate() + 7);
+				
+				var dateString = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 " + date.getDay() + "일";
+				$("#b_limitdate").val(dateString);
 			}
 		});
 	
@@ -33,12 +38,8 @@
 					else if(!chkSubmit($("#c_pw"), "카드 비밀번호를")){
 						return;
 					}
-
-					if(!chkSubmit($("#cancel_name"), "예금자 명을")){
-						return;
-					}
 					
-					if(!chkSubmit($("#cancel"), "환불 계좌 번호를")){
+					if(!chkSubmit($("#usact_number"), "환불 계좌 번호를")){
 						return;
 					}
 					
@@ -52,15 +53,7 @@
 					}
 			}
 			else if($("#pay").val()=="bank"){
-					if(!chkSubmit($("#b_name"), "입금자 명을")){
-						return;
-					}
-					
-					if(!chkSubmit($("#cancel_name"), "예금자 명을")){
-						return;
-					}
-					
-					if(!chkSubmit($("#cancel"), "환불 계좌 번호를")){
+					if(!chkSubmit($("#usact_number"), "환불 계좌 번호를")){
 						return;
 					}
 										
@@ -172,7 +165,7 @@
 				입금자명
 			</td>
 			<td colspan="2">
-				<input type="text" name="b_name" id="b_name">
+				<input type="text" name="b_name" id="b_name" readonly="readonly">
 			</td>
 		</tr>
 		<tr>
@@ -180,7 +173,7 @@
 				입금 기한일
 			</td>
 			<td colspan="2">
-				<input type="text">
+				<input type="text" readonly="readonly" id="b_limitdate" >
 			</td>
 		</tr>
 		</table>
@@ -207,7 +200,7 @@
 			<tr>
 				<td>예금자 명</td>
 				<td colspan="2">
-					<input type="text" id="cancel_name" name="cancel_name">
+					<input type="text" id="cancel_name" name="cancel_name" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -215,7 +208,7 @@
 					계좌번호
 				</td>
 				<td colspan="2">
-					<input type="text" name="cancel" id="cancel">
+					<input type="text" name="usact_number" id="usact_number">
 				</td>
 			</tr>
 		</table>
