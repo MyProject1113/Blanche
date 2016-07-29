@@ -10,10 +10,8 @@
 				<li><a href="#">고객지원</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/user/login.do">홍길동 접속</a></li>		<!-- 홍길동 계정으로 접속하기 위한 임시 로그인창 -->
+						<li><a href="/user/login.do">로그인 테스트</a></li>		<!-- 홍길동 계정으로 접속하기 위한 임시 로그인창 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
-						<li><a href="/board/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
-						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>

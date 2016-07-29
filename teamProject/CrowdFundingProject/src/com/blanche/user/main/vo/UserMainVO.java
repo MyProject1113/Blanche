@@ -1,5 +1,7 @@
 package com.blanche.user.main.vo;
 
+import com.blanche.user.common.util.EncryptionUtil;
+
 public class UserMainVO {
 	private int		us_index		= 0;	// 회원일련번호
 	private String	us_email		= "";	// 이메일
@@ -11,6 +13,9 @@ public class UserMainVO {
 	private String	us_joindate		= "";	// 가입일
 	private String	us_modidate1	= "";	// 회원정보변경일
 	private String	us_modidate2	= "";	// 비밀번호변경일
+	
+	private String agreeDate1	= ""; // 개인정보이용약관 동의일
+	private String agreeDate2	= ""; // 홈페이지이용약관 동의일
 	
 	public int getUs_index() {
 		return us_index;
@@ -28,7 +33,7 @@ public class UserMainVO {
 		return us_password;
 	}
 	public void setUs_password(String us_password) {
-		this.us_password = us_password;
+		this.us_password = EncryptionUtil.getSHA256(us_password);
 	}
 	public String getUs_name() {
 		return us_name;
@@ -71,5 +76,18 @@ public class UserMainVO {
 	}
 	public void setUs_modidate2(String us_modidate2) {
 		this.us_modidate2 = us_modidate2;
+	}
+	
+	public String getAgreeDate1() {
+		return agreeDate1;
+	}
+	public void setAgreeDate1(String agreeDate1) {
+		this.agreeDate1 = agreeDate1;
+	}
+	public String getAgreeDate2() {
+		return agreeDate2;
+	}
+	public void setAgreeDate2(String agreeDate2) {
+		this.agreeDate2 = agreeDate2;
 	}
 }

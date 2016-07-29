@@ -20,4 +20,14 @@ public class UserMapperImpl implements UserMapper {
 	public UserMainVO userData(UserMainVO param) {
 		return (UserMainVO) session.selectOne("userData");
 	}
+	
+	@Override
+	public int userInsert(UserMainVO param) {
+		return session.insert("userInsert");
+	}
+	
+	@Override
+	public int userCheck(UserMainVO param) {
+		return (int) session.selectOne("userCheck");
+	}
 }

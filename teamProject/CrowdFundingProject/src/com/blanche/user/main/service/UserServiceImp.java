@@ -23,4 +23,14 @@ public class UserServiceImp implements UserService {
 	public UserMainVO userData(UserMainVO param) {
 		return userMapper.userData(param);
 	}
+	
+	@Override
+	public int userInsert(UserMainVO param) {
+		return userMapper.userInsert(param);
+	}
+	
+	@Override
+	public int userCheck(UserMainVO param) {
+		return userMapper.userCheck(param);
+	}
 }
