@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.usermanage.dao.UserManageDao">
+<update id="pwChange" parameterType="userMainVO">
+		Update	userMain
+		SET		us_password = #{us_password}
+		WHERE	us_index = #{us_index}
+</update>
+
+<update id="phChange" parameterType="userMainVO">
+		Update	userMain
+		SET		us_phone = #{us_phone}
+		WHERE	us_index = #{us_index}
+</update>
+
+</mapper>
