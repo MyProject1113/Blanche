@@ -1,14 +1,18 @@
 package com.blanche.usermanage.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.blanche.common.constant.Constant;
+import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.usermanage.email.email;
+import com.blanche.usermanage.service.UserManageService;
 
 
 
@@ -16,6 +20,9 @@ import com.blanche.usermanage.email.email;
 @RequestMapping(value="/usermanage")
 public class UserManageController {
 	Logger logger = Logger.getLogger(UserManageController.class);
+	
+	@Autowired
+	private UserManageService userManageService;
 	
 	@RequestMapping(value="/join.do")
 	public String join(Model model) {
@@ -58,13 +65,31 @@ public class UserManageController {
 	}
 	
 	@RequestMapping(value="/pwchange.do")
-	public String myPage1(Model model) {
-		
+	public String myPage1( Model model) {
+
+		return "usermanage/pwchange";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/pwchangeBtn.do")
+	public String pwChange(@RequestParam("con") String con, Model model,  HttpServletRequest request) {
+		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		userMainVO.setUs_password(con);
+		userManageService.pwChange(userMainVO);
+
 		return "usermanage/pwchange";	// View Name => 파일명 아님!!!
 	}
 	
 	@RequestMapping(value="/phchange.do")
-	public String myPage2(Model model) {
+	public String myPage2( Model model) {
+
+		return "usermanage/phchange";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/phchangeBtn.do")
+	public String phChange(@RequestParam("us_phone") String us_phone ,Model model , HttpServletRequest request) {
+		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		userMainVO.setUs_phone(us_phone);
+		userManageService.phChange(userMainVO);
 		
 		return "usermanage/phchange";	// View Name => 파일명 아님!!!
 	}
