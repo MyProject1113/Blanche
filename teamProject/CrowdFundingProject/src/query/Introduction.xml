@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.establish.dao.IntroductionDao">
+
+	<!-- 프로젝트 소개 내용 등록 -->
+	<insert id="introductionInsert" parameterType="introduction">
+		/* Introduction - introductionInsert */
+		INSERT INTO introduction
+			(intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, appro_index)
+		VALUES
+			(introduction_seq.nextval, #{intro_title}, #{intro_subtitle}, #{intro_image}, #{intro_startDate}, #{intro_endDate},
+			 #{intro_details}, #{intro_synopsis}, #{intro_plan}, #{intro_purpose}, #{intro_effect}, #{intro_refund}, #{appro_index})
+	</insert>
+	
+	<!-- 기획자 정보 내용 등록 -->
+	<insert id="plannerInsert" parameterType="planner">
+		/* Introduction - plannerInsert */
+		INSERT INTO planner
+			(plan_index, plan_image, plan_name, plan_area, plan_account, intro_index)
+		VALUES
+			(planner_seq.nextval, #{plan_image}, #{plan_name}, #{plan_area}, #{plan_account}, introduction_seq.currval)
+	</insert>
+	
+</mapper>

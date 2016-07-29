@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-		<title>Insert title here</title>
+		<title>프로젝트 상세보기</title>
 		
 		<!--[if lt IE 9]>
 		<script src="../js/html5shiv.js"></script>
@@ -186,7 +186,7 @@
 									<div class="u-clear"></div> 
 									
 									<li class="b-profile_card__contacts">
-										<a href="/help_requests/new?page_url=https%3A%2F%2Fwww.tumblbug.com%2Ftanglewoodfilm&amp;project=3320" class="b-profile_card__contact_button js-newMessage">문의하기</a>
+										<a href="/aaa/list.do" class="b-profile_card__contact_button js-newMessage">문의하기</a>
 									</li>
 									
 									<div class="u-clear"></div>

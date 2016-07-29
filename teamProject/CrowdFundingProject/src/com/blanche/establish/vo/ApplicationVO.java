@@ -1,7 +1,7 @@
 package com.blanche.establish.vo;
 
 /** 개설신청 **/
-public class ApplicationVO {
+public class ApplicationVO extends ApprovalVO {
 	private int 		app_index;				// 신청번호
 	private String 	app_topic		= "";	// 주제소개
 	private String 	app_fund		= "";	// 목표자금

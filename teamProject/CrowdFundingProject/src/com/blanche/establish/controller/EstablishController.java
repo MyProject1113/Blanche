@@ -13,7 +13,9 @@ import com.blanche.establish.service.ApplicationService;
 import com.blanche.establish.service.IntroductionService;
 import com.blanche.establish.vo.ApplicationVO;
 import com.blanche.establish.vo.ApprovalVO;
+import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroductionVO;
+import com.blanche.establish.vo.PlannerVO;
 
 /* 컨트롤러 */
 @Controller
@@ -23,6 +25,8 @@ public class EstablishController {
 
 	@Autowired
 	private ApplicationService applicationService;	// 인터페이스 구현체 생성
+	
+	@Autowired
 	private IntroductionService introductionService;
 	
 	/****************************************************************
@@ -63,13 +67,35 @@ public class EstablishController {
 	/****************************************************************
 	 * 컨텐츠 상세 내용 출력하기
 	 ****************************************************************/
-	@RequestMapping(value="/contentDetail.do")
-	public String contentDetail() {
+	@RequestMapping(value="/contentDetail.do"/*, method=RequestMethod.GET*/)
+	public String boardDetail(@ModelAttribute IntroductionVO ivo, PlannerVO pvo, /*DonationVO dvo,*/ Model model) {
 		logger.info("contentDetail 호출 성공");
+		
+		
+		/* 프로젝트 소개 정보 */
+		IntroductionVO introDetail = new IntroductionVO();
+		//introDetail = introductionService.introductionDetail(ivo);
+		
+		if (introDetail != null && (!introDetail.equals(""))) {
+			introDetail.setIntro_details(introDetail.getIntro_details().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_synopsis(introDetail.getIntro_synopsis().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_plan(introDetail.getIntro_plan().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_purpose(introDetail.getIntro_purpose().toString().replaceAll("\n", "<br>"));
+		}
+		
+		model.addAttribute("introDetail", introDetail);
+		
+		/* 기획자 정보 */
+		PlannerVO plannerDetail = new PlannerVO();
+		//plannerDetail = introductionService.plannerDetail(pvo);
+		
+		model.addAttribute("plannerDetail", plannerDetail);
+		
+		
 		
 		return "establish/contentDetail";
 	}
-
+	
 	/****************************************************************
 	 * 댓글 내용 출력하기
 	 ****************************************************************/
@@ -122,17 +148,28 @@ public class EstablishController {
 	 * 프로젝트 상세 쓰기 구현하기
 	 ****************************************************************/
 	@RequestMapping(value="/introductionInsert.do", method=RequestMethod.POST)
-	public String introductionInsert(@ModelAttribute IntroductionVO ivo) {
+	public String introductionInsert(@ModelAttribute IntroductionVO ivo, PlannerVO pvo) {
 		logger.info("introductionInsert 호출 성공");
 		
 		int result = 0;
 		String url = "";
 		
-		result = introductionService.introductionInsert(ivo);
+		result = introductionService.introductionInsert(ivo, pvo);
 		if (result == 1) {
 			url = "/establish/success.do";
 		}
 		
 		return "redirect:" + url;
 	}
+
+	/********************************************
+	 * 프로젝트 문의하기 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/inquire.do")
+	public String inquire() {
+		logger.info("inquire 호출 성공");
+		
+		return "redirect:";
+	}
+
 }

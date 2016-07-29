@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.establish.dao.ApplicationDao">
+
+	<!-- 개설신청 내용 등록 -->
+	<insert id="applicationInsert" parameterType="application">
+		/* Application - applicationInsert */
+		INSERT INTO application
+			(app_index, app_topic, app_fund, app_field, app_reference, app_phone, us_index)
+		VALUES
+			(application_seq.nextval, #{app_topic}, #{app_fund}, #{app_field}, #{app_reference}, #{app_phone}, #{us_index})
+	</insert>
+	
+	<!-- 승인 내용 등록 -->
+	<insert id="approvalInsert" parameterType="approval">
+		/* Application - approvalInsert */
+		INSERT INTO approval
+			(appro_index, appro_check, app_index, us_index)
+		VALUES
+			(approval_seq.nextval, #{appro_check}, application_seq.currval, #{us_index})
+	</insert>
+	
+	
+	<!-- 개설신청 상세 보기를 위한 조회 -->
+	<select id="applicationDetail" parameterType="application" resultType="application">
+		/* Application - applicationDetail */
+		<!-- SELECT app_index, app_topic, app_fund, app_field, app_reference, app_phone, us_index
+		FROM application
+		WHERE app_index = #{app_index}
+		ORDER BY app_index asc -->
+		
+		SELECT app.app_index, app_topic, app_fund, app_field, app_reference, app_phone, app.us_index, appro_index, appro_check
+		FROM application app inner join approval appro
+		ON app.us_index = appro.us_index
+		WHERE app.app_index = #{app_index}
+		ORDER BY app_index asc
+	</select>
+	
+</mapper>

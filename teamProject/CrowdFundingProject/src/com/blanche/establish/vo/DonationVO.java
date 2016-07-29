@@ -6,8 +6,6 @@ public class DonationVO {
 	private int 		dona_report;				// 모금현황
 	private String 	dona_fund			= "";	// 투자받은 금액
 	private int 		dona_count;				// 후원자 수
-	private String	dona_startDate	= "";	// 프로젝트 시작일
-	private String 	dona_endDate		= "";	// 프로젝트 종료일
 	private int 		dona_dday;					// 남은 시간
 	private int 		app_index;					// 신청번호
 	private int 		intro_index;					// 프로젝트 번호
@@ -42,22 +40,6 @@ public class DonationVO {
 
 	public void setDona_count(int dona_count) {
 		this.dona_count = dona_count;
-	}
-
-	public String getDona_startDate() {
-		return dona_startDate;
-	}
-
-	public void setDona_startDate(String dona_startDate) {
-		this.dona_startDate = dona_startDate;
-	}
-
-	public String getDona_endDate() {
-		return dona_endDate;
-	}
-
-	public void setDona_endDate(String dona_endDate) {
-		this.dona_endDate = dona_endDate;
 	}
 
 	public int getDona_dday() {
