@@ -16,6 +16,8 @@
 		<typeAlias type="com.blanche.establish.vo.ApplicationVO" alias="application" />
 		<typeAlias type="com.blanche.establish.vo.ApprovalVO" alias="approval" />
 		<typeAlias type="com.blanche.establish.vo.IntroductionVO" alias="introduction" />
+		
+		<typeAlias type="com.blanche.intro.vo.IntroVO" alias="intro" />
 	</typeAliases>
 	
 	<!-- <mappers>
