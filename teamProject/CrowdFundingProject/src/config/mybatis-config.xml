@@ -7,7 +7,9 @@
 		<typeAlias type="com.blanche.board.main.vo.BoardMainVO" alias="boardMainVO" />
 		<typeAlias type="com.blanche.board.comment.vo.BoardCommentVO" alias="boardCommentVO" />
 		<typeAlias type="com.blanche.board.attach.vo.BoardAttachVO" alias="boardAttachVO" />
+		
 		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
+		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
 		
 		<!-- 개설신청 -->
 		<typeAlias type="com.blanche.establish.vo.EstablishVO" alias="establish" />

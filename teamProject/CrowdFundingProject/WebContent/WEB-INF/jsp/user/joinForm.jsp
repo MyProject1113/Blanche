@@ -96,14 +96,18 @@
 			$("#joinBtn").click(function(){
 				if (!checkSubmit($("#us_email"), 60, "이메일")) {
 					return;		
-				} else if(!checkSubmit($("#us_password"), 100, "비밀번호")) {
+				} else if (!checkSubmit($("#us_password"), 100, "비밀번호")) {
 					return;
-				} else if(!checkSubmit($("#us_name"), 30, "이름")) {
+				} else if (!checkSubmit($("#us_name"), 30, "이름")) {
 					return;	
-				} else if(!checkSubmit($("#us_nickname"), 30, "닉네임")) {
+				} else if (!checkSubmit($("#us_nickname"), 30, "닉네임")) {
 					return;	
-				} else if(!checkSubmit($("#us_phone"), 11, "연락처")) {
+				} else if (!checkSubmit($("#us_phone"), 11, "연락처")) {
 					return;
+				} else if ($("#userEmailCheck").html() != "") {
+					alert($("#userEmailCheck").html());
+				} else if ($("#userNicknameCheck").html() != "") {
+					alert($("#userNicknameCheck").html());
 				}
 				$("#formJoin").attr({
 					"method" : "post",
