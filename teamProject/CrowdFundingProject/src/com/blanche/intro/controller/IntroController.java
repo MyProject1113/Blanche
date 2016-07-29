@@ -1,11 +1,15 @@
 package com.blanche.intro.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.intro.service.IntroService;
+import com.blanche.intro.vo.IntroVO;
 
 /* 컨트롤러 */
 @Controller
@@ -13,6 +17,7 @@ import com.blanche.intro.service.IntroService;
 public class IntroController {
 	Logger logger = Logger.getLogger(IntroController.class);
 	
+	@Autowired
 	private IntroService introService; // 인터페이스 구현체 생성
 
 	/********************************************
@@ -52,29 +57,76 @@ public class IntroController {
 	 * 후원자 정보입력 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/receiveInfo.do")
-	public String receiveInfo() {
+	public ModelAndView receiveInfo(@ModelAttribute IntroVO param) {
 		logger.info("receiveInfo 호출 성공");
 		
-		return "intro/receiveInfo";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("introData", param);
+		mav.setViewName("intro/receiveInfo");
+		
+		return mav;
 	}
 	
 	/********************************************
 	 * 결제 정보입력 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/payment.do")
-	public String payment() {
+	public ModelAndView payment(@ModelAttribute IntroVO param) {
 		logger.info("payment 호출 성공");
 		
-		return "intro/payment";
+		int result=1;
+		
+		ModelAndView mav = new ModelAndView();
+		logger.info("receiveInfo result = " + result);
+		if (result >0 ) {
+			mav.addObject("introData", param);
+			mav.setViewName("intro/payment");
+		} else {
+			mav.addObject("result", "등록에 문제가 있어, 완료하지 못하였습니다.");
+			mav.setViewName("intro/returnError");
+		}
+		return mav;
+		
 	}
 	
 	/********************************************
 	 * 결제 정보확인 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/pay_success.do")
-	public String pay_success() {
+	public ModelAndView pay_success(@ModelAttribute IntroVO param) {
 		logger.info("pay_success 호출 성공");
 		
-		return "intro/pay_success";
+		introService.pay_success(param);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("introData", param);
+		mav.setViewName("intro/pay_success");
+		
+		return mav;		
 	}
+	
+	/********************************************
+	 *  후원자 정보 DB 입력
+	 * *******************************************/
+/*
+	@RequestMapping(value="/payment_su.do")
+	public ModelAndView payment_su(@ModelAttribute IntroVO param) {
+		logger.info("payment_su 호출 성공");
+		
+		String resultStr = "";
+		int result = introService.payment_su(param);
+		
+		if(result > 0) resultStr = "등록 완료이 완료되었습니다.";
+		else resultStr = "등록에 문제가 있어 완료하지 못하였습니다.";
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("introData", param);
+		mav.addObject("result", resultStr);
+		mav.setViewName("result");
+		
+		return mav;
+		
+	}
+*/	
 }
+

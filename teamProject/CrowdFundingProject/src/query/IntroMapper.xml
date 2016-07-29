@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.intro.dao.IntroDao">
+	<insert id="pay_success" parameterType="intro">
+		/* Mapper - pay_success */
+		INSERT INTO SPONSER
+  			(SPONSER_INDEX, SPONSER_ADD, SPONSER_ADDNUM, SPONSER_P_METHOD,
+  			SPONSER_NAME, SPONSER_EMAIL, SPONSER_PHONE, SPONSER_MEMO,
+  			 SPONSER_INVEST, US_INDEX, 
+  			USACT_INDEX, SPONSER_P_CONFIRM)
+			VALUES
+  			(99, #{sponser_add}, #{sponser_addnum}, #{sponser_p_method},
+  			#{sponser_name}, #{sponser_email}, #{phone}, #{sponser_memo},
+  			 #{project_invest},
+ 			 32, 99, 'y')
+	</insert>
+</mapper>
