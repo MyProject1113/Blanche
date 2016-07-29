@@ -12,8 +12,15 @@
 $(function(){
 	$("#switch").click(function(){
 		if(!chkSubmit($("#us_passwd"),"비밀번호를"))return;	
-		if(!chkSubmit($("con"),"비밀번호 재입력을"))return;	
-
+		if(!chkSubmit($("#con"),"비밀번호 재입력을"))return;	
+		else {
+			$("#pwChangeFrm").attr({  
+				"method" : "post",
+				"action" : "/usermanage/pwchangeBtn.do"
+			});
+			$("#pwChangeFrm").submit();
+			alert("변경이 완료되었습니다.");
+		}
 	});
 	$("#pwch").click(function(){
 		location.href="/usermanage/pwchange.do";
@@ -36,7 +43,7 @@ $(function(){
 </head>
 <body>
 	<div>
-		<form>
+		<form id="pwChangeFrm">
 		<h1>My Page</h1>
 		<br/>
 		<input type="button" id="pwch" name="pwch" value="비밀번호 변경"/>
