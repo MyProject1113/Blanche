@@ -8,7 +8,7 @@
 			,	us_email
 			,	us_name
 			,	us_nickname
-		FROM 	usermain
+		FROM		usermain
 		WHERE	us_email = #{us_email}
 					AND
 					us_password = #{us_password}
@@ -22,7 +22,39 @@
 			,	us_email
 			,	us_name
 			,	us_nickname
-		FROM 	usermain
+		FROM		usermain
 		WHERE	us_index = #{us_index}
+	</select>
+	
+	<!-- 회원 정보 입력-->
+	<insert id="userInsert" parameterType="userMainVO">
+		/* UserMainDAO - userInsert */
+		<selectKey keyProperty="us_index" resultType="int" order="BEFORE">
+			SELECT usermain_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO usermain (
+			us_index, us_email, us_password, us_name, us_nickname, us_rank, us_phone
+		)
+		VALUES (
+			#{us_index}, #{us_email}, #{us_password}, #{us_name}, #{us_nickname}, 0, #{us_phone}
+		)
+	</insert>
+	
+	<!-- 회원 정보 확인 -->
+	<select id="userCheck" parameterType="userMainVO" resultType="int">
+		/* UserMainDAO - userCheck */
+		SELECT	COUNT(us_index)
+		FROM		usermain
+		<where>
+			1 = 1
+			<if test="us_email != null and us_email != ''">
+				AND
+				us_email = #{us_email}
+			</if>
+			<if test="us_nickname != null and us_nickname != ''">
+				AND
+				us_nickname = #{us_nickname}
+			</if>
+		</where>
 	</select>
 </mapper>
