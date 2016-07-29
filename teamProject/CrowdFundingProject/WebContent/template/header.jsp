@@ -10,7 +10,7 @@
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/user/login.do">로그인 테스트</a></li>		<!-- 홍길동 계정으로 접속하기 위한 임시 로그인창 -->
+						<!-- <li><a href="/user/login.do">로그인 테스트</a></li>	 -->	<!-- 홍길동 계정으로 접속하기 위한 임시 로그인창 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
@@ -72,7 +72,7 @@
 		<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="#" class="button big fit">Log In</a></li>
+					<li><a href="/user/login.do" class="button big fit">Log In</a></li>
 				</ul>
 			</section>
 
