@@ -1,5 +1,9 @@
 package com.blanche.intro.service;
 
-public class IntroService {
+import com.blanche.intro.vo.IntroVO;
 
+public interface IntroService {
+	
+	public int pay_success(IntroVO param);
+	
 }
