@@ -14,9 +14,15 @@ $(function() {
 	$("#commit").click(function() {
 		if(!chkSubmit($("#project_invest"), "후원할 금액을")) {
 			return;
-		}else {
-			location.href="/intro/receiveInfo.do";
-			}
+		}
+		
+		if(confirm('후원 하시겠습니까?')) {
+			$("#reward").attr({
+				"method" : "post",
+				"action" : "/intro/receiveInfo.do"
+			})
+			$("#reward").submit();
+		}
 		});
 	});
 </script>
@@ -44,6 +50,7 @@ $(function() {
 <body>
 	<h2 id="title">금액 선택</h2>
 	<h3>후원할 금액을 입력해 주세요.</h3>
+	<form id="reward" name="reward">
 		<table id="show_me_the_money">
 			<tr>
 				<td>
@@ -54,13 +61,12 @@ $(function() {
 				</td>
 			</tr>
 		</table>
-	
-	<table>
-		<tr>
-			<!-- <a href="/intro/receiveInfo.do" class="c-pledge_button js-show-pledge-button">다음 단계</a>  -->	
-		<input type="button" value="다음 단계" name="commit" id="commit">
-			<input type="button" value="취소">
-		</tr>
-	</table>
+		<table>
+			<tr>
+				<input type="button" value="다음 단계" name="commit" id="commit">
+				<input type="button" value="취소">
+			</tr>
+		</table>
+	</form>
 </body>
 </html>

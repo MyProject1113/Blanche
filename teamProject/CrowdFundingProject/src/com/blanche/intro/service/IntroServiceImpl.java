@@ -1,5 +1,21 @@
 package com.blanche.intro.service;
 
-public class IntroServiceImpl {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.blanche.intro.dao.IntroDao;
+import com.blanche.intro.vo.IntroVO;
+
+@Service
+@Transactional
+public class IntroServiceImpl implements IntroService {
+	
+	@Autowired
+	private IntroDao introDao;
+	
+	@Override
+	public int pay_success(IntroVO param){
+		return introDao.pay_success(param);
+	}
 }

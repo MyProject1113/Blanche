@@ -10,12 +10,13 @@
 <script type="text/javascript" src="/include/js/common.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#pay").change(function() {
-			if($("#pay").val()=="card"){
+		
+		$("#sponser_p_method").change(function() {
+			if($("#sponser_p_method").val()=="신용카드"){
 				$("#cardInfo").show();
 				$("#bankInfo").hide();
 			}
-			else if($("#pay").val()=="bank"){
+			else if($("#sponser_p_method").val()=="무통장입금"){
 				$("#cardInfo").hide();
 				$("#bankInfo").show();
 				
@@ -28,7 +29,7 @@
 		});
 	
 		$("#commit").click(function() {
-					if($("#pay").val()=="card"){
+					if($("#sponser_p_method").val()=="신용카드"){
 					if(!chkSubmit($("#c_num"), "카드 번호를")){
 						return;
 					}
@@ -44,22 +45,32 @@
 					}
 					
 					if($("input[id='agree']:checked").val() == "on") {
-						alert("결제가 완료되었습니다.");
-						location.href="/intro/pay_success.do";
+						if(confirm('결제를 진행하시겠습니까?')) {
+							$("#payment").attr({
+								"method" : "post",
+								"action" : "/intro/pay_success.do"
+							});
+							$("#payment").submit();
+						}
 					}
 					else{
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 						return;
 					}
 			}
-			else if($("#pay").val()=="bank"){
+			else if($("#sponser_p_method").val()=="무통장입금"){
 					if(!chkSubmit($("#usact_number"), "환불 계좌 번호를")){
 						return;
 					}
 										
 					if($("input[id='agree']:checked").val() == "on") {
-						alert("결제가 완료되었습니다.");
-						location.href="/intro/pay_success.do";
+						if(confirm('결제를 진행하시겠습니까?')) {
+							$("#payment").attr({
+								"method" : "post",
+								"action" : "/intro/pay_success.do"
+							});
+							$("#payment").submit();
+						}
 					}
 					else{
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
@@ -100,6 +111,14 @@
 <body>
 	<h2 id="title">리워드 & 금액 결제</h2>
 	<h3>리워드 결제 정보</h3>
+	<form id="payment" name="payment" method="post">
+	<input type="hidden" name="project_invest" id="project_invest" value="${introData.project_invest}" />
+	<input type="hidden" id="sponser_name" name="sponser_name" value="${introData.sponser_name }">
+	<input type="hidden" id="phone" name="phone" value="${introData.phone }">
+	<input type="hidden" id="sponser_email" name="sponser_email" value="${introData.sponser_email }">
+	<input type="hidden" id="sponser_addnum" name="sponser_addnum" value="${introData.sponser_addnum }">
+	<input type="hidden" id="sponser_add" name="sponser_add" value="${introData.sponser_add }">
+	<input type="hidden" id="sponser_memo" name="sponser_memo" value="${introData.sponser_memo }">
 	<table>
 	   <colgroup>
    			<col width="25%">
@@ -111,9 +130,9 @@
 				결제 방법
 			</td>
 			<td colspan="2">
-				<select id="pay">
-					<option value="card">신용카드</option>
-					<option value="bank">무통장입금</option>
+				<select name="sponser_p_method" id="sponser_p_method">
+					<option value="신용카드" selected>신용카드</option>
+					<option value="무통장입금">무통장입금</option>
 				</select>
 			</td>
 		</tr>
@@ -165,7 +184,7 @@
 				입금자명
 			</td>
 			<td colspan="2">
-				<input type="text" name="b_name" id="b_name" readonly="readonly">
+				<input type="text" name="b_name" id="b_name" readonly="readonly"  value="${introData.sponser_name }">
 			</td>
 		</tr>
 		<tr>
@@ -200,7 +219,7 @@
 			<tr>
 				<td>예금자 명</td>
 				<td colspan="2">
-					<input type="text" id="cancel_name" name="cancel_name" readonly="readonly">
+					<input type="text" id="cancel_name" name="cancel_name" readonly="readonly"  value="${introData.sponser_name }">
 				</td>
 			</tr>
 			<tr>
@@ -212,7 +231,7 @@
 				</td>
 			</tr>
 		</table>
-		
+		</form>
 		<table>
 		<tr>
 			<td colspan="3">

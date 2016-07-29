@@ -41,6 +41,14 @@
 				alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 				return;
 			}
+			
+			if(confirm('결제 정보 입력 페이지로 이동합니다.')){
+				$("#receiveInfo").attr({
+					"method" : "post",
+					"action"	: "/intro/payment.do"
+				})
+				$("#receiveInfo").submit();
+			}
 		});
 		
 		$("#postSearch").click(
@@ -123,6 +131,8 @@
 <body>
 	<h2 id="title">리워드 & 금액 선택</h2>
 	<h3>리워드 수령 정보</h3>
+	<form id="receiveInfo" name="receiveInfo">
+	<input type="hidden" name="project_invest" id="project_invest" value="${introData.project_invest}" />
 	<table>
 	   <colgroup>
    			<col width="25%">
@@ -217,5 +227,8 @@
 			</td>
 		</tr>
 	</table>
+	</form>
+	
+	<input type="hidden" id="project_invest">
 </body>
 </html>
