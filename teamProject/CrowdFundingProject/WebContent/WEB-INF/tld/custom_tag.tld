@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+    
+    <description>paging 처리를 위한 사용자 정의 태그</description>
+    <display-name>customTag</display-name>
+    <tlib-version>1.2</tlib-version>
+    <short-name>customTag</short-name>
+    
+    <tag>
+    	<name>paging</name>	<!-- 호출 시 사용 이름 -->
+    	<tag-class>com.blanche.common.page.PagingTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<!-- 생략 가능 -->
+    	<attribute>
+    		<name>page</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>	<!-- 표현언어 허용여부 -->
+    		<type>int</type>
+    	</attribute>
+    	<attribute>
+    		<name>total</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>	
+    		<type>int</type>
+    	</attribute>
+    	<attribute>
+    		<name>list_size</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>	
+    		<type>int</type>
+    	</attribute>
+    	<attribute>
+    		<name>page_size</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>	
+    		<type>int</type>
+    	</attribute>
+    </tag>
+    
+</taglib>

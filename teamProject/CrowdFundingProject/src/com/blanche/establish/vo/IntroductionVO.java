@@ -14,7 +14,17 @@ public class IntroductionVO {
 	private String 	intro_purpose		= "";	// 사업목표
 	private String		intro_effect			= "";	// 기대효과
 	private String		intro_refund		= "";	// 환불 및 교환정책
+	private String		intro_project		= "";	// 프로젝트 아이디
+	private int 		app_index;					// 개설 신청 번호
 	private int 		appro_index;				// 승인번호
+
+	// 조건 검색시 사용할 속성
+	private String search = "";
+	private String keyword = "";
+	
+	// 정렬을 위한 속성
+	private String order_by;
+	private String order_sc;
 	
 	public int getIntro_index() {
 		return intro_index;
@@ -112,11 +122,59 @@ public class IntroductionVO {
 		this.intro_refund = intro_refund;
 	}
 
+	public String getIntro_project() {
+		return intro_project;
+	}
+
+	public void setIntro_project(String intro_project) {
+		this.intro_project = intro_project;
+	}
+
+	public int getApp_index() {
+		return app_index;
+	}
+
+	public void setApp_index(int app_index) {
+		this.app_index = app_index;
+	}
+
 	public int getAppro_index() {
 		return appro_index;
 	}
 
 	public void setAppro_index(int appro_index) {
 		this.appro_index = appro_index;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getOrder_by() {
+		return order_by;
+	}
+
+	public void setOrder_by(String order_by) {
+		this.order_by = order_by;
+	}
+
+	public String getOrder_sc() {
+		return order_sc;
+	}
+
+	public void setOrder_sc(String order_sc) {
+		this.order_sc = order_sc;
 	}
 }
