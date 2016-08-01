@@ -96,4 +96,11 @@ public class IntroductionServiceImpl implements IntroductionService {
 		myList = introductionDao.projectMyPageList(us_index);
 		return myList;
 	}
+	
+	@Override
+	public IntroApprovalVO userProgressIntAppro(int us_index) {
+		IntroApprovalVO detail = null;
+		detail = introductionDao.userProgressIntAppro(us_index);
+		return detail;
+	}
 }

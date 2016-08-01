@@ -62,7 +62,7 @@
 												<c:when test="${app.app_field == 'music'}">음악</c:when>
 												<c:when test="${app.app_field == 'photo'}">사진</c:when>
 												<c:when test="${app.app_field == 'book'}">출판</c:when>
-												<c:otherwise>기타</c:otherwise>
+												<c:when test="${app.app_field == 'design'}">디자인</c:when>
 											</c:choose>
 										</td>
 										<td>${app.app_date}</td>

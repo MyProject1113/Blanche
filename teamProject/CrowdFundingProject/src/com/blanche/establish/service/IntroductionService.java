@@ -23,4 +23,5 @@ public interface IntroductionService {
 	public int projectApprovalUpdate(IntroApprovalVO intappvo);
 
 	public List<IntroductionVO> projectMyPageList(int us_index);
+	public IntroApprovalVO userProgressIntAppro(int us_index);
 }

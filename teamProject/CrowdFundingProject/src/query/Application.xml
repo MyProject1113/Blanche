@@ -154,4 +154,23 @@
 	</select>
 	
 	
+	
+	
+	
+	
+	
+	<!-- 승인 여부 조회 -->
+	<select id="userProgressAppro" parameterType="approval" resultType="approval">
+		/* Application - userProgressAppro */
+		SELECT list.*
+		FROM (SELECT appro_index, appro_check, appro_note, app_index, us_index
+				  FROM approval
+		 		  WHERE us_index = #{us_index}
+    			  ORDER BY appro_index DESC) list
+		WHERE rownum BETWEEN 0 AND 1
+	</select>
+	
+	
+	
+	
 </mapper>

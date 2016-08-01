@@ -71,6 +71,7 @@
 							<option value="music">음악</option>
 							<option value="photo">사진</option>
 							<option value="book">출판</option>
+							<option value="design">디자인</option>
 						</select>
 						<p class="app_form_help"></p>
 					</div>

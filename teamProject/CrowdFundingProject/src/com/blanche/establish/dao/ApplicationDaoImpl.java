@@ -78,4 +78,9 @@ public class ApplicationDaoImpl implements ApplicationDao {
 	public List<ApplicationVO> applicationMyPageList(ApplicationVO appvo) {
 		return session.selectList("applicationMyPageList");
 	}
+	
+	@Override
+	public ApprovalVO userProgressAppro(int us_index) {
+		return (ApprovalVO)session.selectOne("userProgressAppro");
+	}
 }
