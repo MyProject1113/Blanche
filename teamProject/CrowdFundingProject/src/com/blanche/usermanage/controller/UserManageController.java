@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.blanche.common.constant.Constant;
 import com.blanche.establish.service.ApplicationService;
+import com.blanche.establish.service.IntroductionService;
 import com.blanche.establish.vo.ApplicationVO;
+import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.usermanage.email.email;
 import com.blanche.usermanage.service.UserManageService;
@@ -31,6 +33,9 @@ public class UserManageController {
 
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private IntroductionService introductionService;
 	
 	@RequestMapping(value="/join.do")
 	public String join(Model model) {
@@ -108,13 +113,21 @@ public class UserManageController {
 		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
 		ApplicationVO appvo = new ApplicationVO();
 		appvo.setUs_index(userMainVO.getUs_index());
-		List<ApplicationVO> applicationList = applicationService.applicationAdminList(appvo);
+		List<ApplicationVO> applicationList = applicationService.applicationMyPageList(appvo);
 		model.addAttribute("applicationList", applicationList);
 		model.addAttribute("data", appvo);
 		
 		
+		List<IntroductionVO> projectList = introductionService.projectMyPageList(userMainVO.getUs_index());
+		logger.info("ssssssssssssssssssssssssssss"+projectList.size());
+		model.addAttribute("projectList", projectList);
+		
+		
 		return "usermanage/design";	// View Name => 파일명 아님!!!
 	}
+	
+	
+	
 	
 	@RequestMapping(value="/invest.do")
 	public String myPage4(Model model) {
