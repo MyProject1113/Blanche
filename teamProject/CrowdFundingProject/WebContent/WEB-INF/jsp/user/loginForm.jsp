@@ -94,7 +94,7 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" name="us_email" id="us_email" /></td>
+					<td><input type="email" name="us_email" id="us_email" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>

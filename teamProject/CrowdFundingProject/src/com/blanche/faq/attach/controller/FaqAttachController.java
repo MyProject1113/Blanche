@@ -1,4 +1,4 @@
-package com.blanche.notice.attach.controller;
+package com.blanche.faq.attach.controller;
 
 import java.util.List;
 
@@ -17,46 +17,46 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.board.common.file.FileUploadUtil;
 import com.blanche.common.constant.Constant;
-import com.blanche.notice.attach.service.NoticeAttachService;
-import com.blanche.notice.attach.vo.NoticeAttachVO;
+import com.blanche.faq.attach.service.FaqAttachService;
+import com.blanche.faq.attach.vo.FaqAttachVO;
 
 @RestController
-@RequestMapping(value="/notice/attach")
-public class NoticeAttachController implements Constant {
-	private static Logger logger = Logger.getLogger(NoticeAttachController.class);
+@RequestMapping(value="/Faq/attach")
+public class FaqAttachController implements Constant {
+	private static Logger logger = Logger.getLogger(FaqAttachController.class);
 	
 	@Autowired
-	private NoticeAttachService noticeAttachService;
+	private FaqAttachService FaqAttachService;
 	
 	/** 첨부파일 전체 조회
 	 * @param	FaqAttachVO $param
-	 * @return	NoticeAttachVO 
+	 * @return	FaqAttachVO 
 	 */
 	@RequestMapping(value="/list.do", method=RequestMethod.POST)
-	public ResponseEntity<List<NoticeAttachVO>> attachList(@RequestBody NoticeAttachVO param) {
+	public ResponseEntity<List<FaqAttachVO>> attachList(@RequestBody FaqAttachVO param) {
 		logger.info("attachList 호출 성공");
 		
-		ResponseEntity<List<NoticeAttachVO>> entity = null;
+		ResponseEntity<List<FaqAttachVO>> entity = null;
 		try {
-			List<NoticeAttachVO> list = noticeAttachService.attachList(param);
-			entity = new ResponseEntity<List<NoticeAttachVO>>(list, HttpStatus.OK);
+			List<FaqAttachVO> list = FaqAttachService.attachList(param);
+			entity = new ResponseEntity<List<FaqAttachVO>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<List<NoticeAttachVO>>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<List<FaqAttachVO>>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 	
 	/** 첨부파일 전송
 	 * @param	FaqAttachVO $param
-	 * @return	NoticeAttachVO $attachParam
+	 * @return	FaqAttachVO $attachParam
 	 */
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
-	public ModelAndView attachUpload(@ModelAttribute NoticeAttachVO param, HttpServletRequest request) throws Exception {
+	public ModelAndView attachUpload(@ModelAttribute FaqAttachVO param, HttpServletRequest request) throws Exception {
 		logger.info("attachUpload 호출 성공");
 		
 		String filePath = FileUploadUtil.fileUpload(param.getUpload(), request);
-		param.setNtatt_path(filePath);
+		param.setFqatt_path(filePath);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("attachParam", param);

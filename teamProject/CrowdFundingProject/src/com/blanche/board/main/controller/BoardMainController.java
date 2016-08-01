@@ -154,6 +154,7 @@ public class BoardMainController implements Constant {
 			mav.addObject("boardData", boardData);
 			mav.addObject("boardParam", param);
 			mav.addObject("attachList", attachList);
+			mav.addObject("infoData", infoData);
 			mav.setViewName("board/default/detailForm");
 		} else {
 			mav.addObject("result", "해당하는 게시물이 존재하지 않습니다.");

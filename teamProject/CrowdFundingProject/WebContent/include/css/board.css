@@ -4,6 +4,19 @@
 	width: 100%;
 	padding: 5px;
 }
+#boardContainer .left {
+	text-align: left;
+}
+#boardContainer .center {
+	text-align: center;
+}
+#boardContainer .right {
+	text-align: right;
+}
+#boardContainer .emphasis {
+	font-size: 1.05em;
+	font-weight: bold;
+}
 #boardContainer form {
 	margin: 0px;
 	padding: 0px;
@@ -33,15 +46,6 @@
 	min-width: 80px;
 	max-width: 240px;
 	text-align: center;
-}
-#boardContainer .left {
-	text-align: left;
-}
-#boardContainer .center {
-	text-align: center;
-}
-#boardContainer .right {
-	text-align: right;
 }
 #boardTitle {
 	width: 100%;

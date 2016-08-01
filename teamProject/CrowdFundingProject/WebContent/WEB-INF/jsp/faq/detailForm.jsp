@@ -27,23 +27,17 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#bdinf_index").val("<c:out value='${boardData.bdinf_index}' />");
-			$("#bd_index").val("<c:out value='${boardData.bd_index}' />");
-			$("#us_index").val("<c:out value='${boardData.us_index}' />");
-			$("#bd_root").val("<c:out value='${boardData.bd_root}' />");
-			$("#bd_parent").val("<c:out value='${boardData.bd_parent}' />");
-			$("#bd_step").val("<c:out value='${boardData.bd_step}' />");
-			$("#bd_indent").val("<c:out value='${boardData.bd_indent}' />");
-			$("#boardUri").val("<c:out value='${boardParam.boardUri}' />");
-			$("#search").val("<c:out value='${boardParam.search}' />");
-			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
-			$("#page").val("<c:out value='${boardParam.page}' />");
+			$("#fq_index").val("<c:out value='${faqData.fq_index}' />");
+			$("#us_index").val("<c:out value='${faqData.us_index}' />");
+			$("#search").val("<c:out value='${faqParam.search}' />");
+			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
+			$("#page").val("<c:out value='${faqParam.page}' />");
 			
 			/* 수정 버튼 클릭 시 처리 이벤트 */
 			$("#boardUpdateBtn").click(function() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/board/" + $("#boardUri").val() + "/edit.do"
+					"action" : "/faq/edit.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -55,7 +49,7 @@
 				}
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/board/" + $("#boardUri").val() + "/delete.do"
+					"action" : "/faq/delete.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -64,7 +58,7 @@
 			$("#boardReplyBtn").click(function() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/board/" + $("#boardUri").val() + "/reply.do"
+					"action" : "/faq/reply.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -73,7 +67,7 @@
 			$("#boardListBtn").click(function() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/board/" + $("#boardUri").val() + "/list.do"
+					"action" : "/faq/list.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -88,7 +82,7 @@
 				}
 				
 				$(this).val("목록 닫기");
-				var bd_index = $(this).parents(".replyDetail").attr("data-num");
+				var fq_index = $(this).parents(".replyDetail").attr("data-num");
 				var attachShow = $(this).parents(".attachInventory").find(".attachShow");
 				
 				$.ajax({
@@ -100,16 +94,16 @@
 					},
 					dataType : "json",
 					data : JSON.stringify({
-						bd_index : bd_index
+						fq_index : fq_index
 					}),
 					success : function(result) {
 						var index = 1;
 						$(result).each(function() {
-							var bdatt_index = this.bdatt_index;
-							var bdatt_path = this.bdatt_path;
-							var bdatt_modidate = this.bdatt_modidate;
+							var fqatt_index = this.fqatt_index;
+							var fqatt_path = this.fqatt_path;
+							var fqatt_modidate = this.fqatt_modidate;
 							var fileName = this.fileName;
-							addNewAttach(attachShow, index, bdatt_index, bdatt_path, bdatt_modidate, fileName);
+							addNewAttach(attachShow, index, fqatt_index, fqatt_path, fqatt_modidate, fileName);
 							index++;
 						});
 					}, error : function() {
@@ -120,11 +114,11 @@
 			
 			// 답변 수정 클릭 시 처리 이벤트
 			$(document).on("click", ".replyUpdateBtn", function() {
-				var bd_index = $(this).parents(".replyDetail").attr("data-num");
-				$("#bd_index").val(bd_index);
+				var fq_index = $(this).parents(".replyDetail").attr("data-num");
+				$("#fq_index").val(fq_index);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/board/" + $("#boardUri").val() + "/edit.do"
+					"action" : "/faq/edit.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -132,20 +126,20 @@
 			// 답변 삭제 클릭 시 처리 이벤트
 			$(document).on("click", ".replyDeleteBtn", function() {
 				if (confirm("선택하신 답변을 삭제하시겠습니까?")) {
-					var bd_index = $(this).parents(".replyDetail").attr("data-num");
-					$("#bd_index").val(bd_index);
+					var fq_index = $(this).parents(".replyDetail").attr("data-num");
+					$("#fq_index").val(fq_index);
 					$("#formBoard").attr({
 						"method" : "post",
-						"action" : "/board/" + $("#boardUri").val() + "/delete.do"
+						"action" : "/faq/delete.do"
 					});
 					$("#formBoard").submit();
 				}
 			});
 		});
 		
-		function addNewAttach(attachShow, index, bdatt_index, bdatt_path, bdatt_modidate, fileName) {
+		function addNewAttach(attachShow, index, fqatt_index, fqatt_path, fqatt_modidate, fileName) {
 			var newSpan = $("<span>");
-			newSpan.attr("data-index", bdatt_index);
+			newSpan.attr("data-index", fqatt_index);
 			newSpan.addClass("attachFile");
 			
 			var indexSpan = $("<span>");
@@ -153,7 +147,7 @@
 			newSpan.append(indexSpan);
 			
 			var dataA = $("<a>");
-			dataA.attr("href", bdatt_path);
+			dataA.attr("href", fqatt_path);
 			newSpan.append(dataA);
 			
 			var nameSpan = $("<span>");
@@ -162,12 +156,14 @@
 			dataA.append(nameSpan);
 			
 			var dateSpan = $("<span>");
-			dateSpan.html(bdatt_modidate);
+			dateSpan.html(fqatt_modidate);
 			dateSpan.addClass("attachDate");
 			newSpan.append(dateSpan);
 			
+			if (index != 1) {
+				attachShow.append($("<br>"));
+			}
 			attachShow.append(newSpan);
-			attachShow.append($("<br>"));
 		}
 	</script>
 </head>
@@ -175,14 +171,8 @@
 <div id="boardContainer">
 	<%-- ==================== 본문 설정 시작 ==================== --%>
 	<form name="formBoard" id="formBoard">
-		<input type="hidden" name="bdinf_index" id="bdinf_index" />
-		<input type="hidden" name="bd_index" id="bd_index" />
+		<input type="hidden" name="fq_index" id="fq_index" />
 		<input type="hidden" name="us_index" id="us_index" />
-		<input type="hidden" name="bd_root" id="bd_root" />
-		<input type="hidden" name="bd_parent" id="bd_parent" />
-		<input type="hidden" name="bd_step" id="bd_step" />
-		<input type="hidden" name="bd_indent" id="bd_indent" />
-		<input type="hidden" name="boardUri" id="boardUri" />
 		<input type="hidden" name="search" id="search" />
 		<input type="hidden" name="keyword" id="keyword" />
 		<input type="hidden" name="page" id="page" />
@@ -201,46 +191,35 @@
 			<tbody>
 				<tr>
 					<td class="columnName center">글번호</td>
-					<td>${boardData.bd_index}&nbsp;(조회수 : ${boardData.bd_check})</td>
+					<td>${faqData.fq_index}&nbsp;(조회수 : ${faqData.fq_check})</td>
 					<td class="columnName center">작성일</td>
-					<td>${boardData.bd_regdate}</td>
+					<td>${faqData.fq_regdate}</td>
 				</tr>
 				<tr>
 					<td class="columnName center">작성자</td>
-					<td>
-						<c:choose>
-							<c:when test="${boardData.us_index == infoData.bdinf_master}">
-								<span class="emphasis">
-									${boardData.nickname} 
-								</span>
-							</c:when>
-							<c:otherwise>
-								${boardData.nickname}
-							</c:otherwise>
-						</c:choose>
-					</td>
+					<td>${faqData.nickname}</td>
 					<td class="columnName center">최종수정일</td>
-					<td>${boardData.bd_modidate}</td>
+					<td>${faqData.fq_modidate}</td>
 				</tr>
 				<tr>
 					<td class="columnName center">제목</td>
-					<td colspan="3">${boardData.bd_title}</td>
+					<td colspan="3">${faqData.fq_title}</td>
 				</tr>
 				<tr>
 					<td class="columnName center">내용</td>
-					<td colspan="3" id="boardContent">${boardData.bd_content}</td>
+					<td colspan="3" id="boardContent">${faqData.fq_content}</td>
 				</tr>
 				<c:if test="${not empty attachList}">
 					<tr>
 						<td class="columnName center">첨부파일</td>
 						<td colspan="3" class="attachInventory">
 							<c:forEach var="attachData" items="${attachList}" varStatus="status">
-								<span class="attachFile" data-index="${attachData.bdatt_index}">
+								<span class="attachFile" data-index="${attachData.fqatt_index}">
 									<span>${status.count}. </span>
-									<a href="${attachData.bdatt_path}">
+									<a href="${attachData.fqatt_path}">
 										<span class="attachName">${attachData.fileName}</span>
 									</a>
-									<span class="attachDate">(등록일자: ${attachData.bdatt_modidate})</span>
+									<span class="attachDate">(등록일자: ${attachData.fqatt_modidate})</span>
 								</span>
 								<br />
 							</c:forEach>
@@ -254,84 +233,13 @@
 	
 	<%-- ==================== 본문 버튼 시작 ==================== --%>
 	<div id="boardButton" class="right">
-		<c:if test="${boardData.editable == 1}">
-			<input type="button" value="수정" name="boardUpdateBtn" id="boardUpdateBtn">
-			<input type="button" value="삭제" name="boardDeleteBtn" id="boardDeleteBtn">
+		<c:if test="${faqParam.editable == 1}">
+			<input type="button" value="수정" name="boardUpdateBtn" id="boardUpdateBtn" />
+			<input type="button" value="삭제" name="boardDeleteBtn" id="boardDeleteBtn" />
 		</c:if>
-		<input type="button" value="답변" name="boardReplyBtn" id="boardReplyBtn">
-		<input type="button" value="목록" name="boardListBtn" id="boardListBtn">
+		<input type="button" value="목록" name="boardListBtn" id="boardListBtn" />
 	</div>
 	<%-- ==================== 본문 버튼 종료 ==================== --%>
-	
-	<%-- ==================== 본문 댓글 시작 ==================== --%>
-	<c:if test="${boardData.boardType == 0}">
-		<jsp:include page="commentForm.jsp" />
-	</c:if>
-	<%-- ==================== 본문 댓글 종료 ==================== --%>
-	
-	<%-- ==================== 본문 답변 시작 ==================== --%>
-	<c:if test="${not empty replyList}">
-		<c:forEach var="replyData" items="${replyList}">
-			<div class="replyDetail" data-num="${replyData.bd_index}">
-				<table class="boardTable">
-					<colgroup>
-						<col width="15%" />
-						<col width="35%" />
-						<col width="15%" />
-						<col width="35%" />
-					</colgroup>
-					<tr>
-						<td class="columnName center">글번호</td>
-						<td>${replyData.bd_index}</td>
-						<td class="columnName center">작성일</td>
-						<td>${replyData.bd_regdate}</td>
-					</tr>
-					<tr>
-						<td class="columnName center">작성자</td>
-						<td>
-							<c:choose>
-								<c:when test="${replyData.us_index == infoData.bdinf_master}">
-									<span class="emphasis">
-										${replyData.nickname} 
-									</span>
-								</c:when>
-								<c:otherwise>
-									${replyData.nickname}
-								</c:otherwise>
-							</c:choose>
-						</td>
-						<td class="columnName center">최종수정일</td>
-						<td>${replyData.bd_modidate}</td>
-					</tr>
-					<tr>
-						<td class="columnName center">제목</td>
-						<td colspan="3">${replyData.bd_title}</td>
-					</tr>
-					<tr>
-						<td class="columnName center">내용</td>
-						<td colspan="3" class="replyContent">${replyData.bd_content}</td>
-					</tr>
-					<c:if test="${replyData.attachCount > 0}">
-						<tr>
-							<td class="columnName center">첨부파일</td>
-							<td class="attachInventory" colspan="3">
-								총 ${replyData.attachCount}개
-								<input type="button" value="목록 열기" name="attachOpen" class="attachOpen" /><br />
-								<span class="attachShow"></span>
-							</td>
-						</tr>
-					</c:if>
-				</table>
-				<div class="replyButton right">
-					<c:if test="${replyData.editable == 1}">
-						<input type="button" value="수정" name="replyUpdateBtn" class="replyUpdateBtn" />
-						<input type="button" value="삭제" name="replyDeleteBtn" class="replyDeleteBtn" />
-					</c:if>
-				</div>
-			</div>
-		</c:forEach>
-	</c:if>
-	<%-- ==================== 본문 답변 종료 ==================== --%>
 </div>
 </body>
 </html>

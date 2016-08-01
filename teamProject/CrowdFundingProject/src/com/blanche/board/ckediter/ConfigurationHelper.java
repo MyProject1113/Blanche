@@ -15,7 +15,6 @@ public class ConfigurationHelper {
 		
 		subList = new ArrayList<String>();
 		subList.add("Source");
-		subList.add("Maximize");
 		list.add(subList);
 		
 		subList = new ArrayList<String>();
@@ -34,6 +33,10 @@ public class ConfigurationHelper {
 		subList.add("Replace");
 		subList.add("Undo");
 		subList.add("Redo");
+		subList.add("-");
+		subList.add("Table");
+		subList.add("NumberedList");
+		subList.add("BulletedList");
 		list.add(subList);
 		
 		subList = new ArrayList<String>();

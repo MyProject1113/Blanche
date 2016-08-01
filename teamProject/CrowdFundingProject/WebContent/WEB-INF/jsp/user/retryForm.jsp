@@ -33,17 +33,79 @@
 		#formRetry #findBtn {
 			width: 40%;
 		}
+		
+			#loader{
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 99999;
+				background-color: #000;
+				opacity: 0.7;
+				display:none;
+			}
+			#loader .blink {
+				font-size: 20px;
+				font-weight: bold;
+				margin: 10% 20%;
+				text-align: center;
+				-webkit-animation: mymove 1s infinite;
+				animation: mymove 1s infinite;
+			} 
+			@webkit-keyframes mymove {
+				0% { color: white; }
+				50% { color: black; }
+			}
+			@keyframes mymove {
+				0% { color: white; }
+				50% { color: black; }
+			}
 	</style>
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#us_email").val("<c:out value='${userEmail}' />");
+			$("#us_index").val("<c:out value='${userData.us_index}' />");
+			$("#us_email").val("<c:out value='${userData.us_email}' />");
+			
+			/* 댓글 저장 버튼 클릭 시 처리 이벤트 */
+			$("#retryBtn").click(function() {
+				$.ajax({
+					url : "/user/retry.do",
+					type : "post",
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					dataType : "text",
+					beforeSend: function() { 
+						$('#loader').show();
+					},
+					data : JSON.stringify({
+						us_index : $("#us_index").val()
+					}),
+					success : function(result) {
+						if (result == "SUCCESS") {
+							alert("인증메일이 전송되었습니다. 다시 확인해주십시오.");
+						} else if (result == "COMPLETE") {
+							alert("인증이 이미 완료되어 있습니다.");
+						}
+					},
+					error : function() {
+						alert("시스템 오류 입니다. 관리자에게 문의 하세요.");
+					},
+					complete: function(){
+						$('#loader').hide(); 
+					}
+				});
+			});
 		});
 	</script>
 </head>
 <body>
 <form name="formRetry" id="formRetry">
+	<input type="hidden" name="us_index" id="us_index" />
 	<table>
 		<colgroup>
 			<col width="20%">
@@ -58,10 +120,11 @@
 		</tr>
 		<tr>
 			<td colspan="2" class="center">
-				<input type="button" value="이메일로 재전송" name="retryBtn" id="retryBtn" />
+				<input type="button" value="인증메일 재전송" name="retryBtn" id="retryBtn" />
 			</td>
 		</tr>
 	</table>
 </form>
+<div id="loader"><div class="blink">인증메일을 전송하는 중입니다.</div></div>
 </body>
 </html>

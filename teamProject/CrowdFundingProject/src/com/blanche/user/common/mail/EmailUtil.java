@@ -2,6 +2,7 @@ package com.blanche.user.common.mail;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.log4j.Logger;
@@ -15,7 +16,7 @@ public class EmailUtil {
 		HtmlEmail htmlEmail = new HtmlEmail();
 		
 		// smtp 서버 연결 설정
-		htmlEmail.setCharset("utf=8");
+		htmlEmail.setCharset(EmailConstants.UTF_8);
 		htmlEmail.setHostName("smtp.gmail.com");
 		htmlEmail.setSmtpPort(587);
 		htmlEmail.setAuthentication("prh4099@gmail.com", "vpqmflwm1");
@@ -40,6 +41,7 @@ public class EmailUtil {
 			htmlEmail.setSubject("Blanche 가입 인증번호");
 			
 			// 본문 설정
+			
 			StringBuffer sb = new StringBuffer();
 			sb.append("<p>아래의 주소로 접속하시면 인증이 완료됩니다.</p>");
 			sb.append("<a href=\"");
@@ -50,7 +52,15 @@ public class EmailUtil {
 			sb.append(param.getUsacd_code());
 			sb.append("&usacd_type=");
 			sb.append(param.getUsacd_type());
-			sb.append("\">인증</a>");
+			sb.append("\">");
+			sb.append(ServerURL);
+			sb.append("/user/accredit.do?us_index=");
+			sb.append(param.getUs_index());
+			sb.append("&usacd_code=");
+			sb.append(param.getUsacd_code());
+			sb.append("&usacd_type=");
+			sb.append(param.getUsacd_type());
+			sb.append("</a>");
 			htmlEmail.setHtmlMsg(sb.toString());
 			
 			String rtMsg = htmlEmail.send();

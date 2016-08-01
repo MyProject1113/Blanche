@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.common.constant.Constant;
+import com.blanche.user.access.service.UserAccessService;
+import com.blanche.user.access.vo.UserAccessVO;
 import com.blanche.user.accredit.service.UserAccreditService;
 import com.blanche.user.accredit.vo.UserAccreditVO;
+import com.blanche.user.common.mail.EmailUtil;
+import com.blanche.user.common.util.EncryptionUtil;
+import com.blanche.user.common.util.IPConfigUtil;
 import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
 
@@ -27,6 +32,9 @@ public class UserMainController implements Constant {
 	
 	@Autowired
 	private UserMainService userMainService;
+	
+	@Autowired
+	private UserAccessService userAccessService;
 	
 	@Autowired
 	private UserAccreditService userAccreditService;
@@ -56,10 +64,14 @@ public class UserMainController implements Constant {
 		ModelAndView mav = new ModelAndView();
 		if (param != null) {
 			if (param.getAccreditState() == 0) {
+				UserAccessVO accessParam = new UserAccessVO();
+				accessParam.setUs_index(param.getUs_index());
+				accessParam.setUsacc_ip(IPConfigUtil.getIP());
+				userAccessService.accessInsert(accessParam);
 				request.getSession().setAttribute(SESSION_USER_DATA, param);
 				mav.setViewName("user/loginForm");
 			} else {
-				mav.addObject("userEmail", param.getUs_email());
+				mav.addObject("userData", param);
 				mav.setViewName("user/retryForm");
 			}
 		} else {
@@ -133,16 +145,14 @@ public class UserMainController implements Constant {
 		if (userData == null) {
 			int result = userMainService.userInsert(param);
 			if (result == 1) {
-				/*
 				UserAccreditVO accreditParam = new UserAccreditVO();
 				accreditParam.setUs_index(param.getUs_index());
 				accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
 				accreditParam.setUsacd_type(0);
 				accreditParam.setUserName(param.getUs_name());
 				accreditParam.setUserEmail(param.getUs_email());
-				puserAccreditMaper.accreditInsert(accreditParam);
 				EmailUtil.sendAccredit(accreditParam, request);
-				*/
+				userAccreditService.accreditInsert(accreditParam);
 				mav.addObject("userData", param);
 				mav.setViewName("user/infoForm");
 			} else {
@@ -157,30 +167,26 @@ public class UserMainController implements Constant {
 		return mav;
 	}
 	
-	/** 회원 조회
+	/** 회원 중복 확인
 	 * @param	UserMainVO $param
-	 * @param	HttpServletRequest $request for UserMainVO
 	 * @return String
 	 */
 	@RequestMapping(value="/check.do", method=RequestMethod.POST)
-	public ResponseEntity<String> userCheck(@RequestBody UserMainVO param, HttpServletRequest request) {
+	public ResponseEntity<String> userCheck(@RequestBody UserMainVO param) {
 		logger.info("userCheck 호출 성공");
 		
 		ResponseEntity<String> entity = null;
 		try {
-			UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
-			if (userData == null) {
-				int result = 0;
-				if (param.getUs_email() != null && !param.getUs_email().equals("")) {
-					result = userMainService.userCheck(param);
-				} else if (param.getUs_nickname() != null && !param.getUs_nickname().equals("")) {
-					result = userMainService.userCheck(param);
-				}
-				if (result > 0) {
-					entity = new ResponseEntity<String>("FIND", HttpStatus.OK);
-				} else {
-					entity = new ResponseEntity<String>(HttpStatus.OK);
-				}
+			int result = 0;
+			if (param.getUs_email() != null && !param.getUs_email().equals("")) {
+				result = userMainService.userCheck(param);
+			} else if (param.getUs_nickname() != null && !param.getUs_nickname().equals("")) {
+				result = userMainService.userCheck(param);
+			}
+			if (result > 0) {
+				entity = new ResponseEntity<String>("FIND", HttpStatus.OK);
+			} else {
+				entity = new ResponseEntity<String>(HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,6 +225,46 @@ public class UserMainController implements Constant {
 		
 		return mav;
 	}
+	
+	/** 회원 인증 재전송
+	 * @param	UserAccreditVO $param
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $userData
+	 */
+	@RequestMapping(value="/retry.do", method=RequestMethod.POST)
+	public ResponseEntity<String> userRetry(@RequestBody UserMainVO param, HttpServletRequest request) {
+		logger.info("userRetry 호출 성공");
+		
+		ResponseEntity<String> entity = null;
+		try {
+			param = userMainService.userData(param);
+			UserAccreditVO accreditParam = new UserAccreditVO();
+			accreditParam.setUs_index(param.getUs_index());
+			int result = userAccreditService.accreditDelete(accreditParam);
+			if (result == 1) {
+				accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
+				accreditParam.setUsacd_type(0);
+				accreditParam.setUserName(param.getUs_name());
+				accreditParam.setUserEmail(param.getUs_email());
+				EmailUtil.sendAccredit(accreditParam, request);
+				result = userAccreditService.accreditInsert(accreditParam);
+				if (result == 1) {
+					entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+				}
+			} else {
+				entity = new ResponseEntity<String>("COMPLETE", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (entity == null) {
+				entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			}
+		}
+		return entity;
+	}
+	
+	/* 추후에 삭제할 것들 */
 	
 	@RequestMapping(value="/findpw.do")
 	public String findpw(Model model) {

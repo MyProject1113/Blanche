@@ -15,7 +15,10 @@ public class IPConfigUtil {
 			ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes(); 
 			HttpServletRequest hsr = sra.getRequest();
 			IP = hsr.getHeader("X-FORWARDED-FOR");
-			if (IP == null) {
+			if (IP == null || IP.length() == 0) {
+				 IP = hsr.getHeader("WL-Proxy-Client-IP");
+     		}
+			if (IP == null || IP.length() == 0) {
 				IP = hsr.getRemoteAddr();
 			}
 		} catch (Exception e) {
