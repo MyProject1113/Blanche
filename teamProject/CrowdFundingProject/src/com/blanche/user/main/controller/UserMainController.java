@@ -86,7 +86,7 @@ public class UserMainController implements Constant {
 	 * @param	HttpServletRequest $request
 	 * @return UserMainVO $blancheUser
 	 */
-	@RequestMapping(value="/exit.do", method=RequestMethod.POST)
+	@RequestMapping(value="/exit.do")
 	public ModelAndView userExit(HttpServletRequest request) {
 		logger.info("userExit 호출 성공");
 		
