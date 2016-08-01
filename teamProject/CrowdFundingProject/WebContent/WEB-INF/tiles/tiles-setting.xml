@@ -40,7 +40,7 @@
 	
 	<definition name="establish/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/establish/{1}.jsp" />
-	</definition>
+	</definition> 
 	
 	<definition name="cc/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/cc/{1}.jsp" />
@@ -49,6 +49,7 @@
 	<definition name="usermanage/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/usermanage/{1}.jsp" />
 	</definition>
+
 	
 	<definition name="intro/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/intro/{1}.jsp" />

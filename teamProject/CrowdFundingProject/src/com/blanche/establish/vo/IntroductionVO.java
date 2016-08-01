@@ -1,7 +1,7 @@
 package com.blanche.establish.vo;
 
 /** 프로젝트 소개 **/
-public class IntroductionVO {
+public class IntroductionVO extends IntroApprovalVO {
 	private int			intro_index;					// 프로젝트 번호
 	private String 	intro_title			= "";	// 제목
 	private String 	intro_subtitle		= "";	// 소제목

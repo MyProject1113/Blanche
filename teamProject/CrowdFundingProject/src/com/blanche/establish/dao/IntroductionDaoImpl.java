@@ -79,4 +79,9 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	public List<IntroductionVO> projectMyPageList(int us_index) {
 		return session.selectList("projectMyPageList");
 	}
+	
+	@Override
+	public IntroApprovalVO userProgressIntAppro(int us_index) {
+		return (IntroApprovalVO)session.selectOne("userProgressIntAppro");
+	}
 }

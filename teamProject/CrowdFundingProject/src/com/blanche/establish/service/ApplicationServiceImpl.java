@@ -99,4 +99,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 		myList = applicationDao.applicationMyPageList(appvo);
 		return myList;
 	}
+	
+	@Override
+	public ApprovalVO userProgressAppro(int us_index) {
+		ApprovalVO detail = null;
+		detail = applicationDao.userProgressAppro(us_index);
+		return detail;
+	}
 }

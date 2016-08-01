@@ -2,6 +2,8 @@ package com.blanche.establish.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
+import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.common.page.Paging;
 
 /* 컨트롤러 */
@@ -27,12 +30,100 @@ import com.blanche.common.page.Paging;
 @RequestMapping(value="/establish")
 public class EstablishController {
 	Logger logger = Logger.getLogger(EstablishController.class);
-
+	
 	@Autowired
 	private ApplicationService applicationService;	// 인터페이스 구현체 생성
 	
 	@Autowired
 	private IntroductionService introductionService;
+
+	/****************************************************************
+	 * 회원 진행 상태 확인
+	 ****************************************************************/
+	/*@ResponseBody	// 현재 요청값을 브라우저에 바로 출력
+	@RequestMapping(value="/userProgressCheck.do", method=RequestMethod.GET)*/
+	@RequestMapping(value="/userProgressCheck.do")
+	public String userProgressCheck(HttpServletRequest request) {
+		logger.info("userProgressCheck 호출 성공");
+
+		// 아래 변수에는 입력 성공에 대한 상태값 저장 (1 or 0)
+		//int result = 0;
+		int appro_check = 0, intapp_check = 0;
+		
+		// 회원 등급 가져오기
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
+			
+			if (userData.getUs_rank() == 0) {
+				logger.info("일반회원 모드");
+				
+				ApprovalVO appro = applicationService.userProgressAppro(userData.getUs_index());	// 개설 승인 테이블에서 승인여부(appro_check) 가져오기
+				
+				if (appro != null) {
+					appro_check = appro.getAppro_check();
+					logger.info("appro_check : " + appro_check);
+					
+					if (appro_check == 0) {
+						logger.info("개설 신청 중 => 진행중인 프로젝트가 있습니다.");
+						
+						return "redirect:/establish/warning.do?msg=1";
+						
+					} else if (appro_check == 1) {
+						logger.info("개설 신청이 완료");
+						
+						IntroApprovalVO intAppro = introductionService.userProgressIntAppro(userData.getUs_index());	// 프로젝트 승인 테이블에서 승인여부(intapp_check) 가져오기
+						if (intAppro != null) {
+							intapp_check = intAppro.getIntapp_check();
+							logger.info("intapp_check : " + intapp_check);
+							
+							// 0:진행중, 1:수정요청, 2:수정승인, 3:삭제요청, 4:기간만료
+							if (intapp_check < 4) {
+								logger.info("프로젝트 진행중");
+								return "redirect:/establish/warning.do?msg=2";
+								
+							} else {
+								logger.info("프로젝트 기간만료 됨");
+							}
+							
+						} else {
+							logger.info("해당되는 프로젝트 없음!!!");
+							return "redirect:/establish/applicationDetailForm.do?app_index=" + appro.getApp_index();
+						}
+					}
+				} else {
+					logger.info("해당되는 회원 없음!!!");
+				}
+				
+			} else if (userData.getUs_rank() == 3) {
+				logger.info("관리자 모드");
+				return "redirect:/establish/applicationAdminList.do";
+			}
+			
+		} else {
+			logger.info("로그인이 안된 상태");
+		}
+		
+		//logger.info("result = " + result);
+		
+		return "establish/notice";
+	}
+
+	/****************************************************************
+	 * 경고 페이지 이동하기
+	 ****************************************************************/
+	@RequestMapping(value="/warning.do", method=RequestMethod.GET)
+	public String warning(@RequestParam("msg") int msg, Model model) {
+		logger.info("warning 호출 성공");
+		
+		logger.info("warning msg : " + msg);
+		
+		model.addAttribute("warningMsg", msg);
+		
+		return "establish/warning";
+	}
+
+	
 	
 	/****************************************************************
 	 * 글목록 구현하기
@@ -48,8 +139,16 @@ public class EstablishController {
 	 * 개설 신청하기 폼 출력하기
 	 ****************************************************************/
 	@RequestMapping(value="/applicationForm.do")
-	public String applicationForm() {
+	public String applicationForm(HttpServletRequest request, Model model) {
 		logger.info("applicationForm 호출 성공");
+		
+		// 회원번호 가져오기
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			logger.info("회원번호 : " + userData.getUs_index());
+		}
+
+		model.addAttribute("us_index", userData.getUs_index());
 		
 		return "establish/applicationForm";
 	}
@@ -58,7 +157,7 @@ public class EstablishController {
 	 * 상세 내용 작성하기 폼 출력하기
 	 ****************************************************************/
 	@RequestMapping(value="/applicationDetailForm.do", method=RequestMethod.GET)
-	public String applicationDetailForm(@RequestParam("app_index") int index, Model model) {
+	public String applicationDetailForm(@RequestParam("us_index") int index, Model model) {
 		logger.info("applicationDetailForm 호출 성공");
 		
 		ApplicationVO appDetail = new ApplicationVO();

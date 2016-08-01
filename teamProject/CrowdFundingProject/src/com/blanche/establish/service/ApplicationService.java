@@ -19,4 +19,5 @@ public interface ApplicationService {
 	public int approvalUpdate(ApprovalVO approvo);
 	public int applicationDelete(int app_index);
 	public List<ApplicationVO> applicationMyPageList(ApplicationVO appvo);
+	public ApprovalVO userProgressAppro(int us_index);
 }

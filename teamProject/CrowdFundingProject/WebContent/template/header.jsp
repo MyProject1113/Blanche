@@ -7,7 +7,8 @@
 		<nav class="links">
 			<ul>
 				<li><a href="/intro/intro.do" class="current-page-item">프로젝트 둘러보기</a></li>
-				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
+				<!-- <li><a href="/establish/notice.do">프로젝트 올리기</a></li> -->
+				<li><a href="/establish/userProgressCheck.do">프로젝트 올리기</a></li>
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>

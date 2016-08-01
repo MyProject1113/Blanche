@@ -20,4 +20,5 @@ public interface IntroductionDao {
 	public List<IntroductionVO> projectAdminList(IntroductionVO ivo);
 	public int projectApprovalUpdate(IntroApprovalVO intappvo);
 	public List<IntroductionVO> projectMyPageList(int us_index);
+	public IntroApprovalVO userProgressIntAppro(int us_index);
 }
