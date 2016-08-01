@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.faq.attach.dao.FaqAttachMapper">
+	<!-- 첨부파일 전체 조회 -->
+	<select id="attachList" parameterType="faqAttachVO" resultType="faqAttachVO">
+		/* FaqAttachDAO - attachList */
+		SELECT 	fqatt_index
+			,	fqatt_path
+			,	TO_CHAR(fqatt_regdate, 'YYYY/MM/DD HH24:MI:SS') AS fqatt_regdate
+			,	TO_CHAR(fqatt_modidate, 'YYYY/MM/DD HH24:MI:SS') AS fqatt_modidate
+		FROM 	faqattach
+		WHERE	fq_index = #{fq_index}
+				AND
+				fqatt_delete = 0
+	</select>
+	
+	<!-- 첨부파일 전송 -->
+	<insert id="attachInsert" parameterType="faqAttachVO">
+		/* FaqAttachDAO - attachInsert */
+		INSERT INTO faqattach (
+			fqatt_index, fq_index, fqatt_path
+		) VALUES (
+			faqattach_seq.nextval, #{fq_index}, #{fqatt_path}
+		)
+	</insert>
+	
+	<!-- 첨부파일 삭제 -->
+	<update id="attachDelete" parameterType="faqAttachVO">
+		/* FaqAttachDAO - attachDelete */
+		UPDATE	faqattach
+		SET		fqatt_delete = 1
+			,	fqatt_modidate = sysdate
+		WHERE	fqatt_index = #{fqatt_index}
+				AND
+				fq_index = #{fq_index}
+	</update>
+</mapper>
