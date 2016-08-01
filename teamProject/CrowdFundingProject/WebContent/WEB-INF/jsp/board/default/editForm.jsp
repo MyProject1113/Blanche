@@ -97,13 +97,13 @@
 	<%-- ==================== 글수정 입력창 시작 ==================== --%>
 	<div id="boardWrite">
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
-			<input type="hidden" name="bdinf_index" id="bdinf_index">
-			<input type="hidden" name="bd_index" id="bd_index">
-			<input type="hidden" name="us_index" id="us_index">
-			<input type="hidden" name="boardUri" id="boardUri">
-			<input type="hidden" name="search" id="search">
-			<input type="hidden" name="keyword" id="keyword">
-			<input type="hidden" name="page" id="page">
+			<input type="hidden" name="bdinf_index" id="bdinf_index" />
+			<input type="hidden" name="bd_index" id="bd_index" />
+			<input type="hidden" name="us_index" id="us_index" />
+			<input type="hidden" name="boardUri" id="boardUri" />
+			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="keyword" id="keyword" />
+			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">
 				<colgroup>
 					<col width="15%">
@@ -134,12 +134,12 @@
 					</tr>
 					<tr>
 						<td rowspan="2" class="columnName center">첨부파일</td>
-						<td colspan="3" id="attachInventory">
+						<td colspan="3" class="attachInventory">
 							<c:if test="${not empty attachList}">
 								<c:forEach var="attachData" items="${attachList}">
 									<span class="attachFile" data-index="${attachData.bdatt_index}">
-										<input type="hidden" name="attachDelete" class="attachDelete">
-										<input type="button" name="attachDeleteBtn" class="attachDeleteBtn" value="파일 삭제">
+										<input type="hidden" name="attachDelete" class="attachDelete" />
+										<input type="button" name="attachDeleteBtn" class="attachDeleteBtn" value="파일 삭제" />
 										<span class="attachName">${attachData.fileName}</span>
 										<span class="attachDate">(등록일자: ${attachData.bdatt_modidate})</span>
 									</span>
@@ -162,8 +162,8 @@
 	
 	<%-- ==================== 글수정 버튼 시작 ==================== --%>
 	<div id="boardButton" class="right">
-		<input type="button" value="수정" name="boardUpdateBtn" id="boardUpdateBtn"/>
-		<input type="button" value="취소" name="boardCancelBtn" id="boardCancelBtn"/>
+		<input type="button" value="수정" name="boardUpdateBtn" id="boardUpdateBtn" />
+		<input type="button" value="취소" name="boardCancelBtn" id="boardCancelBtn" />
 	</div>
 	<%-- ==================== 글수정 버튼 종료 ==================== --%>
 </div>

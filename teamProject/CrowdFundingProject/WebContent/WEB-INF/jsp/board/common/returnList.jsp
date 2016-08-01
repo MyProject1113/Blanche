@@ -41,11 +41,11 @@
 </head>
 <body>
 <form name="formBoard" id="formBoard">
-	<input type="hidden" name="bdinf_index" id="bdinf_index">
-	<input type="hidden" name="boardUri" id="boardUri">
-	<input type="hidden" name="search" id="search">
-	<input type="hidden" name="keyword" id="keyword">
-	<input type="hidden" name="page" id="page">
+	<input type="hidden" name="bdinf_index" id="bdinf_index" />
+	<input type="hidden" name="boardUri" id="boardUri" />
+	<input type="hidden" name="search" id="search" />
+	<input type="hidden" name="keyword" id="keyword" />
+	<input type="hidden" name="page" id="page" />
 </form>
 </body>
 </html>

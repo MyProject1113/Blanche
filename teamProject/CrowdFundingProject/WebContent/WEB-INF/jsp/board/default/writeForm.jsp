@@ -88,15 +88,15 @@
 	<%-- ==================== 글작성 입력창 시작 ==================== --%>
 	<div id="boardWrite">
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
-			<input type="hidden" name="bdinf_index" id="bdinf_index">
-			<input type="hidden" name="bd_root" id="bd_root">
-			<input type="hidden" name="bd_parent" id="bd_parent">
-			<input type="hidden" name="bd_step" id="bd_step">
-			<input type="hidden" name="bd_indent" id="bd_indent">
-			<input type="hidden" name="boardUri" id="boardUri">
-			<input type="hidden" name="search" id="search">
-			<input type="hidden" name="keyword" id="keyword">
-			<input type="hidden" name="page" id="page">
+			<input type="hidden" name="bdinf_index" id="bdinf_index" />
+			<input type="hidden" name="bd_root" id="bd_root" />
+			<input type="hidden" name="bd_parent" id="bd_parent" />
+			<input type="hidden" name="bd_step" id="bd_step" />
+			<input type="hidden" name="bd_indent" id="bd_indent" />
+			<input type="hidden" name="boardUri" id="boardUri" />
+			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="keyword" id="keyword" />
+			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">
 				<colgroup>
 					<col width="15%">
@@ -130,7 +130,7 @@
 	
 	<%-- ==================== 글작성 버튼 시작 ==================== --%>
 	<div id="boardButton" class="right">
-		<input type="button" value="저장" name="boardInsertBtn" id="boardInsertBtn"/>
+		<input type="button" value="저장" name="boardInsertBtn" id="boardInsertBtn" />
 		<input type="button" value="목록" name="boardListBtn" id="boardListBtn" />
 	</div>
 	<%-- ==================== 글작성 버튼 종료 ==================== --%>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blanche.user.main.dao.UserMapper">
+<mapper namespace="com.blanche.user.main.dao.UserMainMapper">
 	<!-- 회원 접속 -->
 	<select id="userAccess" parameterType="userMainVO" resultType="userMainVO">
 		/* UserMainDAO - userAccess */
@@ -8,6 +8,9 @@
 			,	us_email
 			,	us_name
 			,	us_nickname
+			,	us_rank
+			,	us_phone
+			,	(SELECT COUNT(usacd_index) FROM useraccredit WHERE us_index = usermain.us_index) AS accreditState
 		FROM		usermain
 		WHERE	us_email = #{us_email}
 					AND
@@ -15,13 +18,14 @@
 	</select>
 	
 	<!-- 회원 정보 조회 -->
-	<!-- 추후에 출력 결과 수정 필요 -->
 	<select id="userData" parameterType="userMainVO" resultType="userMainVO">
 		/* UserMainDAO - userData */
 		SELECT 	us_index
 			,	us_email
 			,	us_name
 			,	us_nickname
+			,	us_rank
+			,	us_phone
 		FROM		usermain
 		WHERE	us_index = #{us_index}
 	</select>

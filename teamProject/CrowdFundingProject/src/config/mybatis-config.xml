@@ -8,6 +8,9 @@
 		<typeAlias type="com.blanche.board.comment.vo.BoardCommentVO" alias="boardCommentVO" />
 		<typeAlias type="com.blanche.board.attach.vo.BoardAttachVO" alias="boardAttachVO" />
 		
+		<typeAlias type="com.blanche.notice.main.vo.NoticeMainVO" alias="noticeMainVO" />
+		<typeAlias type="com.blanche.notice.attach.vo.NoticeAttachVO" alias="noticeAttachVO" />
+		
 		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
 		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
 		
@@ -16,6 +19,7 @@
 		<typeAlias type="com.blanche.establish.vo.ApplicationVO" alias="application" />
 		<typeAlias type="com.blanche.establish.vo.ApprovalVO" alias="approval" />
 		<typeAlias type="com.blanche.establish.vo.IntroductionVO" alias="introduction" />
+		<typeAlias type="com.blanche.establish.vo.PlannerVO" alias="planner" />
 		
 		<typeAlias type="com.blanche.intro.vo.IntroVO" alias="intro" />
 	</typeAliases>

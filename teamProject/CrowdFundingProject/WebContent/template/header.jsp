@@ -10,7 +10,9 @@
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
+						<li><a href="/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>

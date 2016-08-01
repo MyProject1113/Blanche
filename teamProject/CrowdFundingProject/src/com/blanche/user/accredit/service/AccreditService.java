@@ -1,7 +1,0 @@
-package com.blanche.user.accredit.service;
-
-import com.blanche.user.accredit.vo.UserAccreditVO;
-
-public interface AccreditService  {
-	public int accreditInsert(UserAccreditVO param);
-}

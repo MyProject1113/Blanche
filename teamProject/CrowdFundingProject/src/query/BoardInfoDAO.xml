@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blanche.board.info.dao.InfoMapper">
+<mapper namespace="com.blanche.board.info.dao.BoardInfoMapper">
 	<!-- 게시판 정보 상세 조회 -->
 	<select id="infoDetail" parameterType="boardInfoVO" resultType="boardInfoVO">
 		/* BoardInfoDAO - infoDetail */
 		SELECT 	bdinf_index
 			,	bdinf_title
 			,	bdinf_uri
+			,	bdinf_type
+			,	bdinf_master
 		FROM 	boardinfo
 		<where>
 			<if test="bdinf_uri != null and bdinf_uri != ''">
@@ -23,10 +25,10 @@
 	<insert id="infoInsert" parameterType="boardInfoVO">
 		/* BoardInfoDAO - infoInsert */
 		INSERT INTO boardinfo (
-			bdinf_index, bdinf_title, bdinf_uri, bdinf_type
+			bdinf_index, bdinf_title, bdinf_uri, bdinf_type, bdinf_master
 		)
 		VALUES (
-			boardinfo_seq.nextval, #{bdinf_title}, #{bdinf_uri}, #{bdinf_type}
+			boardinfo_seq.nextval, #{bdinf_title}, #{bdinf_uri}, #{bdinf_type}, #{bdinf_master}
 		)
 	</insert>
 </mapper>

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.blanche.board.common.entity.DefaultDTO;
+import com.blanche.board.common.vo.DefaultVO;
 
-public class BoardMainVO extends DefaultDTO {
+public class BoardMainVO extends DefaultVO {
 	private int 	bd_index		= 0;		// 본문일련번호
 	private int 	bdinf_index		= 0;		// 목록일련번호
 	private int 	us_index		= 0;		// 회원일련번호
@@ -23,13 +23,16 @@ public class BoardMainVO extends DefaultDTO {
 	
 	private int 	num				= 0;		// 글번호
 	private String	boardTitle		= "";		// 게시판이름
+	private String	boardUri		= "";		// 게시판식별자
+	private int		boardType		= 0;		// 게시판종류
+	private int		parent		= 0;		// 부모글 일련번호
+	private int		replyCount	= 0;		// 답변 개수
 	private int		commentCount	= 0;		// 댓글 개수
 	private int		pictureCount	= 0;		// 그림파일 개수
 	private int		attachCount		= 0;		// 첨부파일 개수
-	private String	boardUri		= "";		// 게시판식별자
 	
 	private List<MultipartFile> attachUpload	= null;	// 첨부파일 전송
-	private List<Integer> attachDelete			= null; // 첨부파일 삭제
+	private List<Integer> attachDelete			= null;	// 첨부파일 삭제
 	
 	public int getBd_index() {
 		return bd_index;
@@ -122,6 +125,30 @@ public class BoardMainVO extends DefaultDTO {
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
 	}
+	public String getBoardUri() {
+		return boardUri;
+	}
+	public void setBoardUri(String boardUri) {
+		this.boardUri = boardUri;
+	}
+	public int getBoardType() {
+		return boardType;
+	}
+	public void setBoardType(int boardType) {
+		this.boardType = boardType;
+	}
+	public int getParent() {
+		return parent;
+	}
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -139,12 +166,6 @@ public class BoardMainVO extends DefaultDTO {
 	}
 	public void setAttachCount(int attachCount) {
 		this.attachCount = attachCount;
-	}
-	public String getBoardUri() {
-		return boardUri;
-	}
-	public void setBoardUri(String boardUri) {
-		this.boardUri = boardUri;
 	}
 	
 	public List<MultipartFile> getAttachUpload() {

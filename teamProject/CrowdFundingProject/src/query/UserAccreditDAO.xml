@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blanche.user.accredit.dao.AccreditMapper">
-	<!-- 인증 정보 입력-->
+<mapper namespace="com.blanche.user.accredit.dao.UserAccreditMapper">
+	<!-- 인증 정보 입력 -->
 	<insert id="accreditInsert" parameterType="userAccreditVO">
 		/* UserAccreditDAO - accreditInsert */
 		INSERT INTO useraccredit (
@@ -12,10 +12,23 @@
 		)
 	</insert>
 	
-	<!-- 인증 정보 삭제-->
+	<!-- 인증 정보 삭제 -->
+	<delete id="accreditRemovo" parameterType="userAccreditVO">
+		/* UserAccreditDAO - accreditDelete */
+		DELETE FROM
+					useraccredit
+		WHERE 	us_index = #{us_index}
+					AND
+					usacd_code like #{usacd_code}
+					AND
+					usacd_type = #{usacd_type}
+	</delete>
+	
+	<!-- 인증 정보 삭제 -->
 	<delete id="accreditDelete" parameterType="userAccreditVO">
 		/* UserAccreditDAO - accreditDelete */
-		DELETE FROM useraccredit
-		WHERE usacd_index = #{usacd_index}
-	</delete>
+		DELETE FROM
+					useraccredit
+		WHERE 	us_index = #{us_index}
+	</delete>	
 </mapper>

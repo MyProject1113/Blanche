@@ -23,10 +23,10 @@
 	<![endif]-->
 	
 	<style type="text/css">
-		#formJoin .center {
+		#formInfo .center {
 			text-align: center;
 		}
-		#formJoin #goBtn {
+		#formInfo #goBtn {
 			width: 80%;
 		} 
 	</style>
@@ -41,7 +41,7 @@
 </script>
 </head>
 <body>
-<form name="formJoin" id="formJoin">
+<form name="formInfo" id="formInfo">
 	<table>
 		<colgroup>
 			<col width="20%">
@@ -65,6 +65,9 @@
 		<tr>
 			<td>연락처</td>
 			<td>${userData.us_phone}</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="center">이메일로 인증메일이 발송되었습니다.</td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">

@@ -3,19 +3,21 @@ package com.blanche.user.main.vo;
 import com.blanche.user.common.util.EncryptionUtil;
 
 public class UserMainVO {
-	private int		us_index		= 0;	// 회원일련번호
-	private String	us_email		= "";	// 이메일
-	private String	us_password		= "";	// 비밀번호
+	private int		us_index			= 0;	// 회원일련번호
+	private String	us_email			= "";	// 이메일
+	private String	us_password	= "";	// 비밀번호
 	private String	us_name			= "";	// 이름
-	private String	us_nickname		= "";	// 별칭
+	private String	us_nickname	= "";	// 별칭
 	private int		us_rank			= 0;	// 등급
 	private String	us_phone		= "";	// 연락처
 	private String	us_joindate		= "";	// 가입일
 	private String	us_modidate1	= "";	// 회원정보변경일
 	private String	us_modidate2	= "";	// 비밀번호변경일
 	
-	private String agreeDate1	= ""; // 개인정보이용약관 동의일
-	private String agreeDate2	= ""; // 홈페이지이용약관 동의일
+	private String	agreeDate1		= "";	// 개인정보이용약관 동의일
+	private String	agreeDate2		= "";	// 홈페이지이용약관 동의일
+	
+	private int		accreditState 	= 0;	// 인증 상태
 	
 	public int getUs_index() {
 		return us_index;
@@ -89,5 +91,12 @@ public class UserMainVO {
 	}
 	public void setAgreeDate2(String agreeDate2) {
 		this.agreeDate2 = agreeDate2;
+	}
+	
+	public int getAccreditState() {
+		return accreditState;
+	}
+	public void setAccreditState(int accreditState) {
+		this.accreditState = accreditState;
 	}
 }

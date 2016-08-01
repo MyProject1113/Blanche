@@ -100,63 +100,124 @@
 	<%-- ==================== 게시판 목록 시작 ==================== --%>
 	<div id="boardList">
 		<table class="boardTable">
-			<colgroup>
-				<col width="10%" />
-				<col width="50%" />
-				<col width="15%" />
-				<col width="13%" />
-				<col width="12%" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th class="columnName">번호</th>
-					<th class="columnName">제목</th>
-					<th class="columnName">작성자</th>
-					<th class="columnName">작성일</th>
-					<th class="columnName">조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${not empty boardList}">
-						<c:forEach var="boardData" items="${boardList}">
-							<tr data-num="${boardData.bd_index}">
-								<td class="center">
-									<c:if test="${boardData.bd_step == 0}">
-										${boardData.num}
-									</c:if>
-								</td>
-								<td class="left">
-									<c:if test="${boardData.bd_step > 0}">
-										<c:forEach begin="1" end="${boardData.bd_indent}">
-											&nbsp;&nbsp;
-										</c:forEach>
-										<img src="/image/re.gif" />
-									</c:if>
-									<span class="goDetail">${boardData.bd_title}</span>
-									<c:if test="${boardData.commentCount > 0}">
-										<span class="commentCount">(${boardData.commentCount})</span>
-									</c:if>
-									<c:if test="${boardData.pictureCount > 0}">
-										<img class="pictureImage" src="/image/picture.png" />
-									</c:if>
-									<c:if test="${boardData.attachCount > 0}">
-										<img class="attachImage" src="/image/file.png" />
-									</c:if>
-								</td>
-								<td class="center">${boardData.nickname}</td>
-								<td class="center">${boardData.bd_regdate}</td>
-								<td class="center">${boardData.bd_check}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
+			<c:choose>
+				<c:when test="${infoData.bdinf_type != 1}">
+					<colgroup>
+						<col width="10%" />
+						<col width="50%" />
+						<col width="15%" />
+						<col width="13%" />
+						<col width="12%" />
+					</colgroup>
+					<thead>
 						<tr>
-							<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<th class="columnName">번호</th>
+							<th class="columnName">제목</th>
+							<th class="columnName">작성자</th>
+							<th class="columnName">작성일</th>
+							<th class="columnName">조회수</th>
 						</tr>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${not empty boardList}">
+								<c:forEach var="boardData" items="${boardList}">
+									<tr data-num="${boardData.bd_index}">
+										<td class="center">
+											<c:if test="${boardData.bd_step == 0}">
+												${boardData.num}
+											</c:if>
+										</td>
+										<td class="left">
+											<c:if test="${boardData.bd_step > 0}">
+												<c:forEach begin="1" end="${boardData.bd_indent}">
+													&nbsp;&nbsp;
+												</c:forEach>
+												<img src="/image/re.gif" />
+											</c:if>
+											<span class="goDetail">${boardData.bd_title}</span>
+											<c:if test="${boardData.commentCount > 0}">
+												<span class="commentCount">(${boardData.commentCount})</span>
+											</c:if>
+											<c:if test="${boardData.pictureCount > 0}">
+												<img class="pictureImage" src="/image/picture.png" />
+											</c:if>
+											<c:if test="${boardData.attachCount > 0}">
+												<img class="attachImage" src="/image/file.png" />
+											</c:if>
+										</td>
+										<td class="center">${boardData.nickname}</td>
+										<td class="center">${boardData.bd_regdate}</td>
+										<td class="center">${boardData.bd_check}</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</c:when>
+				<c:otherwise>
+					<colgroup>
+						<col width="10%" />
+						<col width="50%" />
+						<col width="15%" />
+						<col width="13%" />
+						<col width="12%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th class="columnName">번호</th>
+							<th class="columnName">제목</th>
+							<th class="columnName">작성자</th>
+							<th class="columnName">작성일</th>
+							<th class="columnName">답변</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${not empty boardList}">
+								<c:forEach var="boardData" items="${boardList}">
+									<tr data-num="${boardData.bd_index}">
+										<td class="center">
+											<c:if test="${boardData.bd_step == 0}">
+												${boardData.num}
+											</c:if>
+										</td>
+										<td class="left">
+											<span class="goDetail">${boardData.bd_title}</span>
+											<c:if test="${boardData.pictureCount > 0}">
+												<img class="pictureImage" src="/image/picture.png" />
+											</c:if>
+											<c:if test="${boardData.attachCount > 0}">
+												<img class="attachImage" src="/image/file.png" />
+											</c:if>
+										</td>
+										<td class="center">${boardData.nickname}</td>
+										<td class="center">${boardData.bd_regdate}</td>
+										<c:choose>
+											<c:when test="${boardData.replyCount > 0}">
+												<td class="center">답변완료</td>
+											</c:when>
+											<c:otherwise>
+												<td class="center"></td>
+											</c:otherwise>
+										</c:choose>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</c:otherwise>
+			</c:choose>
 		</table>
 	</div>
 	<%-- ==================== 게시판 목록 종료 ==================== --%>
@@ -219,7 +280,7 @@
 		<form name="formBoard" id="formBoard">
 			<input type="hidden" name="bdinf_index" id="bdinf_index" />
 			<input type="hidden" name="bd_index" id="bd_index" />
-			<input type="hidden" name="boardUri" id="boardUri">
+			<input type="hidden" name="boardUri" id="boardUri" />
 			<select name="search" id="search">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
@@ -227,7 +288,7 @@
 				<option value="writer">작성자</option>
 			</select>
 			<input type="text" name="keyword" id="keyword" />
-			<input type="hidden" name="page" id="page">
+			<input type="hidden" name="page" id="page" />
 			<input type="button" value="검색" name="boardSearchBtn" id="boardSearchBtn" />
 		</form>
 	</div>

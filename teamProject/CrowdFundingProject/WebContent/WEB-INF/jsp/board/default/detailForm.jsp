@@ -77,24 +77,115 @@
 				});
 				$("#formBoard").submit();
 			});
+			
+			// 답변 첨부파일 목록 열기 클릭 시 처리 이벤트
+			$(document).on("click", ".attachOpen", function() {
+				$(".attachOpen").not(this).val("목록 열기");
+				$(".attachShow").html("");
+				if ($(this).val() != "목록 열기") {
+					$(this).val("목록 열기");
+					return;
+				}
+				
+				$(this).val("목록 닫기");
+				var bd_index = $(this).parents(".replyDetail").attr("data-num");
+				var attachShow = $(this).parents(".attachInventory").find(".attachShow");
+				
+				$.ajax({
+					url : "/board/attach/list.do",
+					type : "post",
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					dataType : "json",
+					data : JSON.stringify({
+						bd_index : bd_index
+					}),
+					success : function(result) {
+						var index = 1;
+						$(result).each(function() {
+							var bdatt_index = this.bdatt_index;
+							var bdatt_path = this.bdatt_path;
+							var bdatt_modidate = this.bdatt_modidate;
+							var fileName = this.fileName;
+							addNewAttach(attachShow, index, bdatt_index, bdatt_path, bdatt_modidate, fileName);
+							index++;
+						});
+					}, error : function() {
+						alert("첨부파일 목록을 불러오는데 실패하였습니다. 잠시 후에 다시 시도해 주세요.");
+					}
+				});
+			});
+			
+			// 답변 수정 클릭 시 처리 이벤트
+			$(document).on("click", ".replyUpdateBtn", function() {
+				var bd_index = $(this).parents(".replyDetail").attr("data-num");
+				$("#bd_index").val(bd_index);
+				$("#formBoard").attr({
+					"method" : "post",
+					"action" : "/board/" + $("#boardUri").val() + "/edit.do"
+				});
+				$("#formBoard").submit();
+			});
+			
+			// 답변 삭제 클릭 시 처리 이벤트
+			$(document).on("click", ".replyDeleteBtn", function() {
+				if (confirm("선택하신 답변을 삭제하시겠습니까?")) {
+					var bd_index = $(this).parents(".replyDetail").attr("data-num");
+					$("#bd_index").val(bd_index);
+					$("#formBoard").attr({
+						"method" : "post",
+						"action" : "/board/" + $("#boardUri").val() + "/delete.do"
+					});
+					$("#formBoard").submit();
+				}
+			});
 		});
+		
+		function addNewAttach(attachShow, index, bdatt_index, bdatt_path, bdatt_modidate, fileName) {
+			var newSpan = $("<span>");
+			newSpan.attr("data-index", bdatt_index);
+			newSpan.addClass("attachFile");
+			
+			var indexSpan = $("<span>");
+			indexSpan.html(index + ". ");
+			newSpan.append(indexSpan);
+			
+			var dataA = $("<a>");
+			dataA.attr("href", bdatt_path);
+			newSpan.append(dataA);
+			
+			var nameSpan = $("<span>");
+			nameSpan.html(fileName);
+			nameSpan.addClass("attachName");
+			dataA.append(nameSpan);
+			
+			var dateSpan = $("<span>");
+			dateSpan.html(bdatt_modidate);
+			dateSpan.addClass("attachDate");
+			newSpan.append(dateSpan);
+			
+			attachShow.append(newSpan);
+			attachShow.append($("<br>"));
+		}
 	</script>
 </head>
 <body>
 <div id="boardContainer">
 	<%-- ==================== 본문 설정 시작 ==================== --%>
 	<form name="formBoard" id="formBoard">
-		<input type="hidden" name="bdinf_index" id="bdinf_index">
-		<input type="hidden" name="bd_index" id="bd_index">
-		<input type="hidden" name="us_index" id="us_index">
-		<input type="hidden" name="bd_root" id="bd_root">
-		<input type="hidden" name="bd_parent" id="bd_parent">
-		<input type="hidden" name="bd_step" id="bd_step">
-		<input type="hidden" name="bd_indent" id="bd_indent">
-		<input type="hidden" name="boardUri" id="boardUri">
-		<input type="hidden" name="search" id="search">
-		<input type="hidden" name="keyword" id="keyword">
-		<input type="hidden" name="page" id="page">
+		<input type="hidden" name="bdinf_index" id="bdinf_index" />
+		<input type="hidden" name="bd_index" id="bd_index" />
+		<input type="hidden" name="us_index" id="us_index" />
+		<input type="hidden" name="bd_root" id="bd_root" />
+		<input type="hidden" name="bd_parent" id="bd_parent" />
+		<input type="hidden" name="bd_step" id="bd_step" />
+		<input type="hidden" name="bd_indent" id="bd_indent" />
+		<input type="hidden" name="boardUri" id="boardUri" />
+		<input type="hidden" name="search" id="search" />
+		<input type="hidden" name="keyword" id="keyword" />
+		<input type="hidden" name="page" id="page" />
 	</form>
 	<%-- ==================== 본문 설정 종료 ==================== --%>
 	
@@ -112,7 +203,7 @@
 					<td class="columnName center">글번호</td>
 					<td>${boardData.bd_index}&nbsp;(조회수 : ${boardData.bd_check})</td>
 					<td class="columnName center">작성일</td>
-					<td>${boardData.bd_regdate}&nbsp;</td>
+					<td>${boardData.bd_regdate}</td>
 				</tr>
 				<tr>
 					<td class="columnName center">작성자</td>
@@ -131,7 +222,7 @@
 				<c:if test="${not empty attachList}">
 					<tr>
 						<td class="columnName center">첨부파일</td>
-						<td colspan="3" id="attachInventory">
+						<td colspan="3" class="attachInventory">
 							<c:forEach var="attachData" items="${attachList}" varStatus="status">
 								<span class="attachFile" data-index="${attachData.bdatt_index}">
 									<span>${status.count}. </span>
@@ -152,7 +243,7 @@
 	
 	<%-- ==================== 본문 버튼 시작 ==================== --%>
 	<div id="boardButton" class="right">
-		<c:if test="${boardData.editable}">
+		<c:if test="${boardData.editable == 1}">
 			<input type="button" value="수정" name="boardUpdateBtn" id="boardUpdateBtn">
 			<input type="button" value="삭제" name="boardDeleteBtn" id="boardDeleteBtn">
 		</c:if>
@@ -162,8 +253,63 @@
 	<%-- ==================== 본문 버튼 종료 ==================== --%>
 	
 	<%-- ==================== 본문 댓글 시작 ==================== --%>
-	<jsp:include page="commentForm.jsp" />
+	<c:if test="${boardData.boardType == 0}">
+		<jsp:include page="commentForm.jsp" />
+	</c:if>
 	<%-- ==================== 본문 댓글 종료 ==================== --%>
+	
+	<%-- ==================== 본문 답변 시작 ==================== --%>
+	<c:if test="${not empty replyList}">
+		<c:forEach var="replyData" items="${replyList}">
+			<div class="replyDetail" data-num="${replyData.bd_index}">
+				<table class="boardTable">
+					<colgroup>
+						<col width="15%" />
+						<col width="35%" />
+						<col width="15%" />
+						<col width="35%" />
+					</colgroup>
+					<tr>
+						<td class="columnName center">글번호</td>
+						<td>${replyData.bd_index}</td>
+						<td class="columnName center">작성일</td>
+						<td>${replyData.bd_regdate}</td>
+					</tr>
+					<tr>
+						<td class="columnName center">작성자</td>
+						<td>${replyData.nickname}</td>
+						<td class="columnName center">최종수정일</td>
+						<td>${replyData.bd_modidate}</td>
+					</tr>
+					<tr>
+						<td class="columnName center">제목</td>
+						<td colspan="3">${replyData.bd_title}</td>
+					</tr>
+					<tr>
+						<td class="columnName center">내용</td>
+						<td colspan="3" class="replyContent">${replyData.bd_content}</td>
+					</tr>
+					<c:if test="${replyData.attachCount > 0}">
+						<tr>
+							<td class="columnName center">첨부파일</td>
+							<td class="attachInventory" colspan="3">
+								총 ${replyData.attachCount}개
+								<input type="button" value="목록 열기" name="attachOpen" class="attachOpen" /><br />
+								<span class="attachShow"></span>
+							</td>
+						</tr>
+					</c:if>
+				</table>
+				<div class="replyButton right">
+					<c:if test="${replyData.editable == 1}">
+						<input type="button" value="수정" name="replyUpdateBtn" class="replyUpdateBtn" />
+						<input type="button" value="삭제" name="replyDeleteBtn" class="replyDeleteBtn" />
+					</c:if>
+				</div>
+			</div>
+		</c:forEach>
+	</c:if>
+	<%-- ==================== 본문 답변 종료 ==================== --%>
 </div>
 </body>
 </html>

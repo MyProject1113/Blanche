@@ -209,7 +209,7 @@
 		<form name="formBoard" id="formBoard">
 			<input type="hidden" name="bdinf_index" id="bdinf_index" />
 			<input type="hidden" name="bd_index" id="bd_index" />
-			<input type="hidden" name="boardUri" id="boardUri">
+			<input type="hidden" name="boardUri" id="boardUri" />
 			<select name="search" id="search">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
@@ -217,7 +217,7 @@
 				<option value="writer">작성자</option>
 			</select>
 			<input type="text" name="keyword" id="keyword" />
-			<input type="hidden" name="page" id="page">
+			<input type="hidden" name="page" id="page" />
 			<input type="button" value="검색" name="boardSearchBtn" id="boardSearchBtn" />
 		</form>
 	</div>

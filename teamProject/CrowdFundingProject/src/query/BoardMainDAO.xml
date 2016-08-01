@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blanche.board.main.dao.BoardMapper">
-	<!-- 게시판 전체 조회 -->
+<mapper namespace="com.blanche.board.main.dao.BoardMainMapper">
+	<!-- 게시물 전체 조회 -->
 	<select id="boardList" parameterType="boardMainVO" resultType="boardMainVO">
 		/* BoardMainDAO - boardList */
 		SELECT 	bd_index
@@ -12,18 +12,19 @@
 			,	bd_step
 			,	bd_indent
 			,	bd_check
-			,	CASE WHEN (SYSDATE - bd_regdate) <![CDATA[<]]> 1 THEN
+			,	(CASE WHEN (SYSDATE - bd_regdate) <![CDATA[<]]> 1 THEN
 					TO_CHAR(bd_regdate, 'HH24:MI:SS')
 				ELSE
 					TO_CHAR(bd_regdate, 'YYYY/MM/DD')
-				END AS bd_regdate
+				END) AS bd_regdate
 			, 	num
 			,	(SELECT bdinf_title FROM boardinfo WHERE bdinf_index = rs.bdinf_index) AS boardTitle
 			,	(SELECT bdinf_uri FROM boardinfo WHERE bdinf_index = rs.bdinf_index) AS boardUri
 			,	(SELECT us_nickname FROM usermain WHERE us_index = rs.us_index) AS nickname
-			,	(SELECT COUNT(bdcmt_index) FROM boardcomment WHERE bd_index = rs.bd_index) AS commentCount
+			,	(SELECT COUNT(bd_index) FROM boardmain WHERE bd_delete = 0 AND bd_parent = rs.bd_index) AS replyCount
+			,	(SELECT COUNT(bdcmt_index) FROM boardcomment WHERE bdcmt_delete = 0 AND bd_index = rs.bd_index) AS commentCount
 			,	(<![CDATA[LENGTH(REPLACE(bd_content, '<img ', '<')) - LENGTH(REPLACE(bd_content, '<img ', ''))]]>) AS pictureCount 
-			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bd_index = rs.bd_index) AS attachCount
+			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bdatt_delete = 0 AND bd_index = rs.bd_index) AS attachCount
 		FROM 	(
 				SELECT	ROWNUM AS rnum
 					,	bd.*
@@ -42,7 +43,7 @@
 		WHERE	rnum <![CDATA[>=]]> #{startRow}
 	</select>
 	
-	<!-- 게시판 검색 조건 -->
+	<!-- 게시물 검색 조건 -->
 	<sql id="boardSearch">
 		<where>
 			bd_delete = 0
@@ -53,6 +54,10 @@
 			<if test="us_index > 0">
 				AND
 				us_index = #{us_index}
+			</if>
+			<if test="boardType == 1">
+				AND
+				bd_root = bd_index
 			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
@@ -80,7 +85,7 @@
 		</where>
 	</sql>
 	
-	<!-- 게시판 상세 조회 -->
+	<!-- 게시물 상세 조회 -->
 	<select id="boardDetail" parameterType="boardMainVO" resultType="boardMainVO">
 		/* BoardMainDAO - boardDetail */
 		SELECT 	bd_index
@@ -96,7 +101,12 @@
 			,	TO_CHAR(bd_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bd_regdate
 			,	TO_CHAR(bd_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bd_modidate
 			,	(SELECT us_nickname FROM usermain WHERE us_index = boardmain.us_index) AS nickname
-			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bd_index = boardmain.bd_index) AS attachCount
+			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bdatt_delete = 0 AND bd_index = boardmain.bd_index) AS attachCount
+			,	(CASE WHEN us_index = #{us_index} THEN
+					1
+				ELSE
+					0
+				END) AS editable
 		FROM 	boardmain
 		WHERE	bd_index = #{bd_index}
 				AND
@@ -178,6 +188,36 @@
 		SELECT	count(bd_index)
 		FROM	boardmain
 		<include refid="boardSearch" />
+	</select>
+	
+	<!-- 게시물 답변 조회 -->
+	<select id="boardReplyList" parameterType="boardMainVO" resultType="boardMainVO">
+		/* BoardMainDAO - boardReplyList */
+		SELECT 	bd_index
+			,	bdinf_index
+			,	us_index
+			,	bd_title
+			,	bd_content
+			,	bd_root
+			,	bd_parent
+			,	bd_step
+			,	bd_indent
+			,	bd_check
+			,	TO_CHAR(bd_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bd_regdate
+			,	TO_CHAR(bd_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bd_modidate
+			,	(SELECT us_nickname FROM usermain WHERE us_index = boardmain.us_index) AS nickname 
+			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bdatt_delete = 0 AND bd_index = boardmain.bd_index) AS attachCount
+			,	(CASE WHEN us_index = #{us_index} THEN
+					1
+				ELSE
+					0
+				END) AS editable
+		FROM 	boardmain
+		WHERE	bd_parent = #{bd_index}
+				AND
+				bd_delete = 0
+		ORDER BY
+				bd_index ASC
 	</select>
 	
 	<!-- 게시물 답변 개수 조회 -->

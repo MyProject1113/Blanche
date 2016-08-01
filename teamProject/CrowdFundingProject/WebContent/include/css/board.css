@@ -1,25 +1,23 @@
 ﻿@CHARSET "UTF-8";
 /* 게시판 */
 #boardContainer {
-	width: 900px;
+	width: 100%;
 	padding: 5px;
 }
+#boardContainer form {
+	margin: 0px;
+	padding: 0px;
+}
 #boardContainer input[type="button"] {
-	width: 60px;
+	width: 90px;
 	height: 24px;
 	line-height: initial;
 	letter-spacing: initial;
 }
-#boardContainer table,
-#boardContainer thead,
-#boardContainer tbody,
-#boardContainer tr,
-#boardContainer td {
-	vertical-align: middle;
-}
 #boardContainer .boardTable {
+	margin: 5px;
+	padding: 0px;
 	width: 100%;
-	border: 1px solid black;
 	border-collapse: collapse;
 }
 #boardContainer .boardTable th,
@@ -34,8 +32,6 @@
 	width: 80px;
 	min-width: 80px;
 	max-width: 240px;
-	border: 1px solid black;
-	background-color: lightgrey;
 	text-align: center;
 }
 #boardContainer .left {
@@ -55,9 +51,6 @@
 }
 #boardList {
 	margin: 5px;
-}
-#boardList tr {
-	border: 1px solid black;
 }
 #boardList .commentCount,
 #boardList .commentUpdateCount {
@@ -107,16 +100,10 @@
 	height: 24px;
 	text-align: center;
 }
-#boardDetail td {
-	border: 1px solid black;
-}
 #boardDetail #boardContent {
 	width: 100%;
 	height: 300px;
 	vertical-align: top;
-}
-#boardWrite td {
-	border: 1px solid black;
 }
 #boardWrite input[type="text"] {
 	width: 100%;
@@ -131,10 +118,32 @@
 	height: 200px;
 	vertical-align: top;
 }
+.replyDetail {
+	margin-top: 20px;
+}
+.replyDetail .replyContent {
+	width: 100%;
+	height: 200px;
+	vertical-align: top;
+}
+.replyDetail .attachOpen {
+	padding: 0px 20px;
+	width: 120px;
+}
+.replyButton {
+	margin: 5px 0px;
+}
 #commentWrite #bdcmt_content {
 	width: 100%;
 	height: 60px;
 	resize: none;
+}
+#commentWrite table,
+#commentWrite thead,
+#commentWrite tbody,
+#commentWrite tr,
+#commentWrite td {
+	vertical-align: middle;
 }
 #commentWrite input[type="button"] {
 	width: 100%;
@@ -153,10 +162,8 @@
 #commentList p {
 	margin: 5px;
 }
-.commentItem {
-	border: 1px solid black;
-}
 .commentItem .commentWriter .commentNickname {
+	margin: 0px 10px;
 	color: #222;
 	font-weight: bold;
 	font-size: 1.2em;
@@ -185,20 +192,21 @@
 #commentButton .disable {
 	color: grey;
 }
-#attachInventory a {
+.attachInventory a {
 	text-decoration: none;
 }
-#attachInventory .attachName {
+.attachInventory .attachName {
 	font-size: 1em;
 }
-#attachInventory .attachDate {
+.attachInventory .attachDate {
+	margin: 0px 10px;
 	font-size: 0.8em;
 	font-style: italic;
 }
-#attachInventory .attachDelete {
+.attachInventory .attachDelete {
 	text-decoration: line-through;
 }
-#attachInventory .attachDeleteBtn {
+.attachInventory .attachDeleteBtn {
 	margin: 2px 0px;
 	padding: 2px 6px;
 }

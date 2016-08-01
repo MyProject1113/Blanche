@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.blanche.board.attach.dao.AttachMapper">
+<mapper namespace="com.blanche.board.attach.dao.BoardAttachMapper">
 	<!-- 첨부파일 전체 조회 -->
 	<select id="attachList" parameterType="boardAttachVO" resultType="boardAttachVO">
 		/* BoardAttachDAO - attachList */
@@ -15,7 +15,7 @@
 	</select>
 	
 	<!-- 첨부파일 전송 -->
-	<insert id="attachInsert" parameterType="boardCommentVO">
+	<insert id="attachInsert" parameterType="boardAttachVO">
 		/* BoardAttachDAO - attachInsert */
 		INSERT INTO boardattach (
 			bdatt_index, bd_index, bdatt_path
@@ -25,9 +25,9 @@
 	</insert>
 	
 	<!-- 첨부파일 삭제 -->
-	<update id="attachDelete" parameterType="boardCommentVO">
+	<update id="attachDelete" parameterType="boardAttachVO">
 		/* BoardAttachDAO - attachDelete */
-		Update	boardattach
+		UPDATE	boardattach
 		SET		bdatt_delete = 1
 			,	bdatt_modidate = sysdate
 		WHERE	bdatt_index = #{bdatt_index}

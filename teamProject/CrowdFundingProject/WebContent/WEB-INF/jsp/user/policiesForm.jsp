@@ -40,33 +40,31 @@
 		$(function() {
 			/* 체크박스 전체 선택 */
 			$("#checkall").change(function(){
-				var is_check = $(this).is(":checked");
-				$("#check1").prop("checked", is_check);
-				$("#check2").prop("checked", is_check);
+				var isCheck = $(this).is(":checked");
+				$("#check1").prop("checked", isCheck);
+				$("#check2").prop("checked", isCheck);
 				$("#check1").change();
 				$("#check2").change();
 			});
 			
 			/* 체크박스 선택 */
 			$("#check1").change(function(){
-				var is_check = $(this).is(":checked");
-				if (is_check == true) {
+				var isCheck = $(this).is(":checked");
+				if (isCheck == true) {
 					$("#agreeDate1").val(new Date());
 				} else {
 					$("#agreeDate1").val("");
 				}
-				console.log($("#agreeDate1").val());
 			});
 			
 			/* 체크박스 선택 */
 			$("#check2").change(function(){
-				var is_check = $(this).is(":checked");
-				if (is_check == true) {
+				var isCheck = $(this).is(":checked");
+				if (isCheck == true) {
 					$("#agreeDate2").val(new Date());
 				} else {
 					$("#agreeDate2").val("");
 				}
-				console.log($("#agreeDate2").val());
 			});
 			
 			/* 동의 버튼 클릭 시 이벤트 */
@@ -105,27 +103,27 @@
 	</script>
 </head>
 <body>
-	<form name="formAgree" id="formAgree">
-		<input type="hidden" name="agreeDate1" id="agreeDate1" />
-		<input type="hidden" name="agreeDate2" id="agreeDate2" /> 
-		<table>
-			<colgroup>
-				<col width="100%">
-			</colgroup>
-			<tr>
-				<td>
-					<input type="checkbox" name="checkall" id="checkall" value="Y" />
-					<label>약관 및 개인정보 동의 내용을 확인하였으며 아래 내용에 동의합니다.</label> 
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="check1" id="check1" value="Y" />
-					<label>개인정보 취급방침 동의</label>
-			</tr>
-			<tr>
-				<td>
-					<textarea readonly>
+<form name="formAgree" id="formAgree">
+	<input type="hidden" name="agreeDate1" id="agreeDate1" />
+	<input type="hidden" name="agreeDate2" id="agreeDate2" /> 
+	<table>
+		<colgroup>
+			<col width="100%">
+		</colgroup>
+		<tr>
+			<td>
+				<input type="checkbox" name="checkall" id="checkall" value="Y" />
+				<label>약관 및 개인정보 동의 내용을 확인하였으며 아래 내용에 동의합니다.</label> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" name="check1" id="check1" value="Y" />
+				<label>개인정보 취급방침 동의</label>
+		</tr>
+		<tr>
+			<td>
+				<textarea readonly>
 1. 수집하는 개인정보의 항목 및 수집방법 
 - 이용자는 회원가입을 하지 않더라도 원하는 정보를 검색하거나 컨텐츠 보기, 컨텐츠 공유 등 대부분의 회사 서비스 이용이 가능합니다.
 - 이용자가 전체 기업정보, 즐겨찾기 등록, 투자이력 열람 등의 회원제 기반으로 제공되는 서비스를 이용하고자 하는 경우에는 회원가입이 필요합니다.
@@ -230,18 +228,18 @@
 현 개인정보취급방침 내용상 추가, 삭제 및 수정이 있을 시에는 개정 최소 7일전부터 홈페이지를 통해 고지합니다. 다만 개인정보의 수집 및 활용, 제3자 제공 등과 같이 이용자 권리의 중요한 변경이 있을 경우에는 최소 30일 전에 고지합니다.
 개인정보관리책임자 및 담당자의 연락처
 귀하께서는 회사의 서비스를 이용하시며 발생하는 모든 개인정보보호 관련 민원을 개인정보관리책임자 혹은 담당부서로 신고하실 수 있습니다. 회사는 이용자들의 신고사항에 대해 신속하게 충분한 답변을 드릴 것입니다.
-				</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="checkbox" name="check2" id="check2" value="Y" />
-					<label>홈페이지 이용약관 동의</label>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<textarea readonly>
+			</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" name="check2" id="check2" value="Y" />
+				<label>홈페이지 이용약관 동의</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<textarea readonly>
 제 1 장 총칙 
 
 제1조 (목적) 
@@ -419,15 +417,15 @@
 
 부칙 
 제1조 이 약관은 2015년 12월 1일부터 적용됩니다.
-					</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td class="center">
-					<input type="button" name="agreeBtn" id="agreeBtn" value="동의" />
-				</td>
-			</tr>
-		</table>
-	</form>
+				</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="center">
+				<input type="button" name="agreeBtn" id="agreeBtn" value="동의" />
+			</td>
+		</tr>
+	</table>
+</form>
 </body>
 </html>

@@ -61,16 +61,16 @@
 <div id="boardContainer">
 	<%-- ==================== 본문 설정 시작 ==================== --%>
 	<form name="formBoard" id="formBoard">
-		<input type="hidden" name="bd_index" id="bd_index">
-		<input type="hidden" name="us_index" id="us_index">
-		<input type="hidden" name="bd_root" id="bd_root">
-		<input type="hidden" name="bd_parent" id="bd_parent">
-		<input type="hidden" name="bd_step" id="bd_step">
-		<input type="hidden" name="bd_indent" id="bd_indent">
-		<input type="hidden" name="boardUri" id="boardUri">
-		<input type="hidden" name="search" id="search">
-		<input type="hidden" name="keyword" id="keyword">
-		<input type="hidden" name="page" id="page">
+		<input type="hidden" name="bd_index" id="bd_index" />
+		<input type="hidden" name="us_index" id="us_index" /> 
+		<input type="hidden" name="bd_root" id="bd_root" />
+		<input type="hidden" name="bd_parent" id="bd_parent" />
+		<input type="hidden" name="bd_step" id="bd_step" />
+		<input type="hidden" name="bd_indent" id="bd_indent" />
+		<input type="hidden" name="boardUri" id="boardUri" />
+		<input type="hidden" name="search" id="search" />
+		<input type="hidden" name="keyword" id="keyword" />
+		<input type="hidden" name="page" id="page" />
 	</form>
 	<%-- ==================== 본문 설정 종료 ==================== --%>
 	
@@ -88,7 +88,7 @@
 					<td class="columnName center">글번호</td>
 					<td>${boardData.bd_index}&nbsp;(조회수 : ${boardData.bd_check})</td>
 					<td class="columnName center">작성일</td>
-					<td>${boardData.bd_regdate}&nbsp;</td>
+					<td>${boardData.bd_regdate}</td>
 				</tr>
 				<tr>
 					<td class="columnName center">작성자</td>
@@ -107,7 +107,7 @@
 				<c:if test="${not empty attachList}">
 					<tr>
 						<td class="columnName center">첨부파일</td>
-						<td colspan="3" id="attachInventory">
+						<td colspan="3" class="attachInventory">
 							<c:forEach var="attachData" items="${attachList}" varStatus="status">
 								<span class="attachFile" data-index="${attachData.bdatt_index}">
 									<span>${status.count}. </span>
@@ -128,8 +128,8 @@
 	
 	<%-- ==================== 본문 버튼 시작 ==================== --%>
 	<div id="boardButton" class="right">
-		<input type="button" value="본문" name="boardDetailBtn" id="boardDetailBtn">
-		<input type="button" value="목록" name="boardListBtn" id="boardListBtn">
+		<input type="button" value="본문" name="boardDetailBtn" id="boardDetailBtn" />
+		<input type="button" value="목록" name="boardListBtn" id="boardListBtn" />
 	</div>
 	<%-- ==================== 본문 버튼 종료 ==================== --%>
 	

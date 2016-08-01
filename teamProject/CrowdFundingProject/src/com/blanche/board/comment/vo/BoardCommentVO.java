@@ -1,8 +1,8 @@
 package com.blanche.board.comment.vo;
 
-import com.blanche.board.common.entity.DefaultDTO;
+import com.blanche.board.common.vo.DefaultVO;
 
-public class BoardCommentVO extends DefaultDTO {
+public class BoardCommentVO extends DefaultVO {
 	private int		bdcmt_index		= 0;	// 댓글일련번호
 	private int		bd_index		= 0;	// 본문일련번호
 	private int		us_index		= 0;	// 회원일련번호

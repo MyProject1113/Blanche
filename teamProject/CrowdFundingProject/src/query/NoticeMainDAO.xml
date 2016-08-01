@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.notice.main.dao.NoticeMainMapper">
+	<!-- 공지게시물 전체 조회 -->
+	<select id="noticeList" parameterType="noticeMainVO" resultType="noticeMainVO">
+		/* NoticeMainDAO - noticeList */
+		SELECT 	nt_index
+			,	nt_title
+			,	nt_important
+			,	nt_check
+			,	(CASE WHEN (SYSDATE - nt_regdate) <![CDATA[<]]> 1 THEN
+					TO_CHAR(nt_regdate, 'HH24:MI:SS')
+				ELSE
+					TO_CHAR(nt_regdate, 'YYYY/MM/DD')
+				END) AS nt_regdate
+			, 	num
+			,	(SELECT us_nickname FROM usermain WHERE us_index = rs.us_index) AS nickname
+			,	(<![CDATA[LENGTH(REPLACE(nt_content, '<img ', '<')) - LENGTH(REPLACE(nt_content, '<img ', ''))]]>) AS pictureCount 
+			,	(SELECT COUNT(ntatt_index) FROM noticeattach WHERE ntatt_delete = 0 AND nt_index = rs.nt_index) AS attachCount
+		FROM 	(
+				SELECT	ROWNUM AS rnum
+					,	nt.*
+				FROM	(
+						SELECT	ROW_NUMBER() OVER(PARTITION BY nt_important ORDER BY nt_index) AS num,
+								noticemain.*
+						FROM	noticemain
+						<include refid="noticeSearch" />
+						ORDER BY
+								nt_important DESC
+							,	nt_index DESC
+						) nt
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}
+	</select>
+	
+	<!-- 공지게시물 검색 조건 -->
+	<sql id="noticeSearch">
+		<where>
+			nt_delete = 0
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="search == 'title'">
+						AND 
+						nt_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'content'">
+						AND
+						nt_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'both'">
+						AND (
+							nt_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+							OR
+							nt_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+						)
+					</when>
+					<when test="search == 'writer'">
+						AND
+						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 공지게시물 상세 조회 -->
+	<select id="noticeDetail" parameterType="noticeMainVO" resultType="noticeMainVO">
+		/* NoticeMainDAO - noticeDetail */
+		SELECT 	nt_index
+			,	us_index
+			,	nt_title
+			,	nt_content
+			,	nt_important
+			,	nt_check
+			,	TO_CHAR(nt_regdate, 'YYYY/MM/DD HH24:MI:SS') AS nt_regdate
+			,	TO_CHAR(nt_modidate, 'YYYY/MM/DD HH24:MI:SS') AS nt_modidate
+			,	(SELECT us_nickname FROM usermain WHERE us_index = noticemain.us_index) AS nickname
+			,	(SELECT COUNT(ntatt_index) FROM noticeattach WHERE ntatt_delete = 0 AND nt_index = noticemain.nt_index) AS attachCount
+		FROM 	noticemain
+		WHERE	nt_index = #{nt_index}
+				AND
+				nt_delete = 0
+	</select>
+	
+	<!-- 공지게시물 조회수 증가 -->
+	<update id="noticeCheck" parameterType="noticeMainVO">
+		/* NoticeMainDAO - noticeCheck */
+		UPDATE	noticemain
+		SET		nt_check = nt_check + 1 
+		WHERE	nt_index = #{nt_index}
+	</update>
+	
+	<!-- 공지게시물 본문 작성 -->
+	<insert id="noticeInsert" parameterType="noticeMainVO">
+		/* NoticeMainDAO - noticeInsert */
+		<selectKey keyProperty="nt_index" resultType="int" order="BEFORE">
+			SELECT noticemain_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO noticemain (
+			nt_index, us_index, nt_title
+			<if test="nt_content != null and nt_content != ''">
+				, nt_content
+			</if>
+			<if test="nt_important > 0">
+				, nt_important
+			</if>
+		)
+		VALUES (
+			#{nt_index}, #{us_index}, #{nt_title}
+			<if test="nt_content != null and nt_content != ''">
+				, #{nt_content}
+			</if>
+			<if test="nt_important > 0">
+				, #{nt_important}
+			</if>
+		)
+	</insert>
+	
+	<!-- 공지게시물 본문 수정 -->
+	<update id="noticeUpdate" parameterType="noticeMainVO">
+		/* NoticeMainDAO - noticeUpdate */
+		UPDATE	noticemain
+		SET		nt_title = #{nt_title}
+				<choose>
+					<when test="nt_content != null and nt_content != ''">
+			,			nt_content = #{nt_content}
+					</when>
+					<otherwise>
+			,			nt_content = null
+					</otherwise>
+				</choose>
+			,	nt_important = #{nt_important}
+			,	nt_modidate = sysdate	
+		WHERE	nt_index = #{nt_index}
+				AND
+				nt_delete = 0
+	</update>
+	
+	<!-- 공지게시물 본문 삭제 -->
+	<update id="noticeDelete" parameterType="noticeMainVO">
+		/* NoticeMainDAO - noticeDelete */
+		UPDATE	noticemain
+		SET		nt_delete = 1
+			,	nt_modidate = sysdate
+		WHERE	nt_index = #{nt_index}
+	</update>
+	
+	<!-- 공지게시물 개수 조회 -->
+	<select id="noticeListCount" parameterType="noticeMainVO" resultType="int">
+		/* NoticeMainDAO - noticeListCount */
+		SELECT	count(nt_index)
+		FROM	noticemain
+		<include refid="noticeSearch" />
+	</select>
+</mapper>

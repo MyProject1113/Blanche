@@ -38,11 +38,14 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			/* 홍길동 계정으로 접속하기 위한 임시 설정 */
-			$("#us_email").val("javauser@oracle.com");
-			$("#us_password").val("1");
+			/* 엔터키 입력 시 처리 이벤트 */
+			$("#us_password").keydown(function(event) {
+				if (event.keyCode == 13) {
+					$("#loginBtn").click();
+				}
+			});
 			
-			/* 접속 버튼 클릭 시 처리 이벤트 */
+			/* 로그인 버튼 클릭 시 처리 이벤트 */
 			$("#loginBtn").click(function() {
 				if (!chkSubmit($("#us_email"), "이메일을")) {
 					return;
@@ -66,7 +69,7 @@
 				location.href="/user/find.do";
 			});
 			
-			/* 접속해제 버튼 클릭 시 처리 이벤트 */
+			/* 로그아웃 버튼 클릭 시 처리 이벤트 */
 			$("#logoutBtn").click(function() {
 				$("#formLogout").attr({
 					"method" : "post",
@@ -114,7 +117,7 @@
 	<c:otherwise>
 		<form name="formLogout" id="formLogout">
 			${sessionScope.blancheUser.us_nickname}님. 환영합니다.<br />
-			<input type="button" name="logoutBtn" id="logoutBtn" value="접속해제">
+			<input type="button" name="logoutBtn" id="logoutBtn" value="로그아웃">
 		</form>
 	</c:otherwise>
 </c:choose>
