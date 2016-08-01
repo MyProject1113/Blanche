@@ -146,7 +146,18 @@
 												<img class="attachImage" src="/image/file.png" />
 											</c:if>
 										</td>
-										<td class="center">${boardData.nickname}</td>
+										<td class="center">
+											<c:choose>
+												<c:when test="${boardData.us_index == infoData.bdinf_master}">
+													<span class="emphasis">
+														${boardData.nickname}
+													</span>
+												</c:when>
+												<c:otherwise>
+													${boardData.nickname}
+												</c:otherwise>
+											</c:choose>
+										</td>
 										<td class="center">${boardData.bd_regdate}</td>
 										<td class="center">${boardData.bd_check}</td>
 									</tr>
@@ -196,7 +207,18 @@
 												<img class="attachImage" src="/image/file.png" />
 											</c:if>
 										</td>
-										<td class="center">${boardData.nickname}</td>
+										<td class="center">
+											<c:choose>
+												<c:when test="${boardData.us_index == infoData.bdinf_master}">
+													<span class="emphasis">
+														${boardData.nickname}
+													</span>
+												</c:when>
+												<c:otherwise>
+													${boardData.nickname}
+												</c:otherwise>
+											</c:choose>
+										</td>
 										<td class="center">${boardData.bd_regdate}</td>
 										<c:choose>
 											<c:when test="${boardData.replyCount > 0}">

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.user.access.dao.UserAccessMapper">
+	<!-- 접속 정보 입력 -->
+	<insert id="accessInsert" parameterType="userAccessVO">
+		/* UserAccessDAO - accessInsert */
+		INSERT INTO useraccess (
+			usacc_index, us_index, usacc_ip
+		)
+		VALUES (
+			useraccess_seq.NEXTVAL, #{us_index}, #{usacc_ip}
+		)
+	</insert>
+</mapper>

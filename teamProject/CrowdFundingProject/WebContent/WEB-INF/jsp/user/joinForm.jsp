@@ -133,7 +133,7 @@
 		<tr>
 			<td>이메일</td>
 			<td>
-				<input type="text" name="us_email" id="us_email" />
+				<input type="email" name="us_email" id="us_email" />
 				<span id="userEmailCheck"></span>
 			</td>
 		</tr>

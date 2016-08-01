@@ -30,6 +30,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/notice/{1}.jsp" />
 	</definition>
 	
+	<definition name="faq/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/faq/{1}.jsp" />
+	</definition>
+	
 	<definition name="user/*" extends="content">
 		<put-attribute name="body" value="/WEB-INF/jsp/user/{1}.jsp" />
 	</definition>

@@ -49,7 +49,7 @@ public class NoticeAttachVO {
 	public void setNtatt_modidate(String ntatt_modidate) {
 		this.ntatt_modidate = ntatt_modidate;
 	}
-
+	
 	public String getFileName() {
 		String fileName = "";
 		int dot = ntatt_path.lastIndexOf("/") + 1;
@@ -60,7 +60,7 @@ public class NoticeAttachVO {
 		}
 		return fileName;
 	}
-
+	
 	public String getCKEditorFuncNum() {
 		return CKEditorFuncNum;
 	}

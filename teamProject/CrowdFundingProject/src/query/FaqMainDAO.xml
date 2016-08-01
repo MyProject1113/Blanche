@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.faq.main.dao.FaqMainMapper">
+	<!-- 공지게시물 전체 조회 -->
+	<select id="faqList" parameterType="faqMainVO" resultType="faqMainVO">
+		/* FaqMainDAO - faqList */
+		SELECT 	fq_index
+			,	fq_title
+			,	fq_check
+			,	(CASE WHEN (SYSDATE - fq_regdate) <![CDATA[<]]> 1 THEN
+					TO_CHAR(fq_regdate, 'HH24:MI:SS')
+				ELSE
+					TO_CHAR(fq_regdate, 'YYYY/MM/DD')
+				END) AS fq_regdate
+			, 	num
+			,	(SELECT us_nickname FROM usermain WHERE us_index = rs.us_index) AS nickname
+			,	(<![CDATA[LENGTH(REPLACE(fq_content, '<img ', '<')) - LENGTH(REPLACE(fq_content, '<img ', ''))]]>) AS pictureCount 
+			,	(SELECT COUNT(fqatt_index) FROM faqattach WHERE fqatt_delete = 0 AND fq_index = rs.fq_index) AS attachCount
+		FROM 	(
+				SELECT	ROWNUM AS rnum
+					,	fq.*
+				FROM	(
+						SELECT	ROW_NUMBER() OVER(PARTITION BY fq_delete ORDER BY fq_index) AS num,
+								faqmain.*
+						FROM	faqmain
+						<include refid="faqSearch" />
+						ORDER BY
+								fq_index DESC
+						) fq
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}
+	</select>
+	
+	<!-- 공지게시물 검색 조건 -->
+	<sql id="faqSearch">
+		<where>
+			fq_delete = 0
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="search == 'title'">
+						AND 
+						fq_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'content'">
+						AND
+						fq_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="search == 'both'">
+						AND (
+							fq_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+							OR
+							fq_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+						)
+					</when>
+					<when test="search == 'writer'">
+						AND
+						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
+					</when>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 공지게시물 상세 조회 -->
+	<select id="faqDetail" parameterType="faqMainVO" resultType="faqMainVO">
+		/* FaqMainDAO - faqDetail */
+		SELECT 	fq_index
+			,	us_index
+			,	fq_title
+			,	fq_content
+			,	fq_check
+			,	TO_CHAR(fq_regdate, 'YYYY/MM/DD HH24:MI:SS') AS fq_regdate
+			,	TO_CHAR(fq_modidate, 'YYYY/MM/DD HH24:MI:SS') AS fq_modidate
+			,	(SELECT us_nickname FROM usermain WHERE us_index = faqmain.us_index) AS nickname
+			,	(SELECT COUNT(fqatt_index) FROM faqattach WHERE fqatt_delete = 0 AND fq_index = faqmain.fq_index) AS attachCount
+		FROM 	faqmain
+		WHERE	fq_index = #{fq_index}
+				AND
+				fq_delete = 0
+	</select>
+	
+	<!-- 공지게시물 조회수 증가 -->
+	<update id="faqCheck" parameterType="faqMainVO">
+		/* FaqMainDAO - faqCheck */
+		UPDATE	faqmain
+		SET		fq_check = fq_check + 1 
+		WHERE	fq_index = #{fq_index}
+	</update>
+	
+	<!-- 공지게시물 본문 작성 -->
+	<insert id="faqInsert" parameterType="faqMainVO">
+		/* FaqMainDAO - faqInsert */
+		<selectKey keyProperty="fq_index" resultType="int" order="BEFORE">
+			SELECT faqmain_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO faqmain (
+			fq_index, us_index, fq_title
+			<if test="fq_content != null and fq_content != ''">
+				, fq_content
+			</if>
+		)
+		VALUES (
+			#{fq_index}, #{us_index}, #{fq_title}
+			<if test="fq_content != null and fq_content != ''">
+				, #{fq_content}
+			</if>
+		)
+	</insert>
+	
+	<!-- 공지게시물 본문 수정 -->
+	<update id="faqUpdate" parameterType="faqMainVO">
+		/* FaqMainDAO - faqUpdate */
+		UPDATE	faqmain
+		SET		fq_title = #{fq_title}
+				<choose>
+					<when test="fq_content != null and fq_content != ''">
+			,			fq_content = #{fq_content}
+					</when>
+					<otherwise>
+			,			fq_content = null
+					</otherwise>
+				</choose>
+			,	fq_modidate = sysdate	
+		WHERE	fq_index = #{fq_index}
+				AND
+				fq_delete = 0
+	</update>
+	
+	<!-- 공지게시물 본문 삭제 -->
+	<update id="faqDelete" parameterType="faqMainVO">
+		/* FaqMainDAO - faqDelete */
+		UPDATE	faqmain
+		SET		fq_delete = 1
+			,	fq_modidate = sysdate
+		WHERE	fq_index = #{fq_index}
+	</update>
+	
+	<!-- 공지게시물 개수 조회 -->
+	<select id="faqListCount" parameterType="faqMainVO" resultType="int">
+		/* FaqMainDAO - faqListCount */
+		SELECT	count(fq_index)
+		FROM	faqmain
+		<include refid="faqSearch" />
+	</select>
+</mapper>

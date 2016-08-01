@@ -29,7 +29,7 @@ public class NoticeAttachController implements Constant {
 	private NoticeAttachService noticeAttachService;
 	
 	/** 첨부파일 전체 조회
-	 * @param	NoticeAttachVO $param
+	 * @param	FaqAttachVO $param
 	 * @return	NoticeAttachVO 
 	 */
 	@RequestMapping(value="/list.do", method=RequestMethod.POST)
@@ -48,7 +48,7 @@ public class NoticeAttachController implements Constant {
 	}
 	
 	/** 첨부파일 전송
-	 * @param	NoticeAttachVO $param
+	 * @param	FaqAttachVO $param
 	 * @return	NoticeAttachVO $attachParam
 	 */
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)

@@ -6,6 +6,7 @@
 		/* BoardMainDAO - boardList */
 		SELECT 	bd_index
 			,	bdinf_index
+			,	us_index
 			,	bd_title
 			,	bd_root
 			,	bd_parent

@@ -13,7 +13,7 @@
 	</insert>
 	
 	<!-- 인증 정보 삭제 -->
-	<delete id="accreditRemovo" parameterType="userAccreditVO">
+	<delete id="accreditRemove" parameterType="userAccreditVO">
 		/* UserAccreditDAO - accreditDelete */
 		DELETE FROM
 					useraccredit

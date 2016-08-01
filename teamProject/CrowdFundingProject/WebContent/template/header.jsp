@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Header -->
 	<header id="header">
 		<h1><a href="/index.jsp">(주)너와 나의 연결고리</a></h1>
@@ -10,9 +11,8 @@
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/faq/list.do">게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
-						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
@@ -73,7 +73,18 @@
 		<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="/user/login.do" class="button big fit">Log In</a></li>
+					<c:choose>
+						<c:when test="${empty sessionScope.blancheUser}">
+							<li><a href="/user/login.do" class="button big fit">Log In</a></li>
+						</c:when>
+						<c:otherwise>
+							<form name="formLogout" id="formLogout">
+								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
+								<li><li><a href="/user/exit.do" class="button big fit">Log Out</a></li></li>
+								
+							</form>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</section>
 
