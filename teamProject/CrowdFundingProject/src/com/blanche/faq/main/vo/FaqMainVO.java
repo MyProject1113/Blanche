@@ -12,7 +12,6 @@ public class FaqMainVO extends DefaultVO {
 	private String 	fq_title		= "";		// 제목
 	private String 	fq_content		= "";		// 내용
 	private int 	fq_check		= 0;		// 조회수
-	private int 	fq_important		= 0;		// 강조여부
 	private int 	fq_delete		= 0;		// 삭제여부
 	private String 	fq_regdate		= "";		// 등록일
 	private String 	fq_modidate		= "";		// 수정일
@@ -53,12 +52,6 @@ public class FaqMainVO extends DefaultVO {
 	}
 	public void setFq_check(int fq_check) {
 		this.fq_check = fq_check;
-	}
-	public int getFq_important() {
-		return fq_important;
-	}
-	public void setFq_important(int fq_important) {
-		this.fq_important = fq_important;
 	}
 	public int getFq_delete() {
 		return fq_delete;

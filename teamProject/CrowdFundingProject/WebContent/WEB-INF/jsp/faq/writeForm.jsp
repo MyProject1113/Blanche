@@ -30,20 +30,9 @@
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#fq_important").val(0);
 			$("#search").val("<c:out value='${faqParam.search}' />");
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
-			
-			/* 중요 체크박스 클릭 시 이벤트 */
-			$("#important").change(function(){
-				var isCheck = $(this).is(":checked");
-				if (isCheck == true) {
-					$("#fq_important").val(1);
-				} else {
-					$("#fq_important").val(0);
-				}
-			});
 			
 			/* 첨부파일 동적 추가 */
 			$(document).on("change", "input.attachUpload", function() {

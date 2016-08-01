@@ -31,7 +31,6 @@
 		$(function() {
 			$("#fq_index").val("<c:out value='${faqData.fq_index}' />");
 			$("#us_index").val("<c:out value='${faqData.us_index}' />");
-			$("#fq_important").val("<c:out value='${faqData.fq_important}' />");
 			if ($("#fq_important").val() == 1) {
 				$("#important").prop("checked", true);
 			} else {
@@ -40,16 +39,6 @@
 			$("#search").val("<c:out value='${faqParam.search}' />");
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
-			
-			/* 중요 체크박스 클릭 시 이벤트 */
-			$("#important").change(function(){
-				var isCheck = $(this).is(":checked");
-				if (isCheck == true) {
-					$("#fq_important").val(1);
-				} else {
-					$("#fq_important").val(0);
-				}
-			});
 			
 			/* 첨부파일 동적 추가 */
 			$(document).on("change", "input.attachUpload", function() {

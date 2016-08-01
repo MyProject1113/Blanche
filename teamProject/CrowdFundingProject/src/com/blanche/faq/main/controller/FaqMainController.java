@@ -133,7 +133,7 @@ public class FaqMainController implements Constant {
 			}
 			faqMainService.faqCheck(param);
 			FaqAttachVO attachParam = new FaqAttachVO();
-			attachParam.setNt_index(param.getNt_index());
+			attachParam.setFq_index(param.getFq_index());
 			List<FaqAttachVO> attachList = faqAttachService.attachList(attachParam);
 			mav.addObject("faqData", faqData);
 			mav.addObject("faqParam", param);
@@ -196,7 +196,7 @@ public class FaqMainController implements Constant {
 		}
 		if (userData != null) {
 			if (userData.getUs_rank() == ADMIN_ID_RANK) {
-				param.setNt_index(0);
+				param.setFq_index(0);
 				param.setUs_index(userData.getUs_index());
 				int result = faqMainService.faqInsert(param);
 				if (result == 1) {
@@ -205,8 +205,8 @@ public class FaqMainController implements Constant {
 							String bdatt_path = FileUploadUtil.fileUpload(fileData, request);
 							if (bdatt_path != null && !bdatt_path.equals("")) {
 								FaqAttachVO attachParam = new FaqAttachVO();
-								attachParam.setNt_index(param.getNt_index());
-								attachParam.setNtatt_path(bdatt_path);
+								attachParam.setFq_index(param.getFq_index());
+								attachParam.setFqatt_path(bdatt_path);
 								faqAttachService.attachInsert(attachParam);
 							}
 						}
@@ -251,7 +251,7 @@ public class FaqMainController implements Constant {
 			if (userData.getUs_rank() == ADMIN_ID_RANK) {
 				FaqMainVO faqData = faqMainService.faqDetail(param);
 				FaqAttachVO attachParam = new FaqAttachVO();
-				attachParam.setNt_index(param.getNt_index());
+				attachParam.setFq_index(param.getFq_index());
 				List<FaqAttachVO> attachList = faqAttachService.attachList(attachParam);
 				mav.addObject("faqData", faqData);
 				mav.addObject("faqParam", param);
@@ -291,8 +291,8 @@ public class FaqMainController implements Constant {
 						for (Integer fileIndex : param.getAttachDelete()) {
 							if (fileIndex != null) {
 								FaqAttachVO attachParam = new FaqAttachVO();
-								attachParam.setNtatt_index(fileIndex);
-								attachParam.setNt_index(param.getNt_index());
+								attachParam.setFqatt_index(fileIndex);
+								attachParam.setFq_index(param.getFq_index());
 								faqAttachService.attachDelete(attachParam);
 							}
 						}
@@ -302,8 +302,8 @@ public class FaqMainController implements Constant {
 							String bdatt_path = FileUploadUtil.fileUpload(fileData, request);
 							if (bdatt_path != null && !bdatt_path.equals("")) {
 								FaqAttachVO attachParam = new FaqAttachVO();
-								attachParam.setNt_index(param.getNt_index());
-								attachParam.setNtatt_path(bdatt_path);
+								attachParam.setFq_index(param.getFq_index());
+								attachParam.setFqatt_path(bdatt_path);
 								faqAttachService.attachInsert(attachParam);
 							}
 						}

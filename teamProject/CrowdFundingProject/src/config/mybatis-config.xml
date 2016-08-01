@@ -3,16 +3,17 @@
 <configuration>
 	<!-- 별칭을 설정 -->
 	<typeAliases>
+		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
+		<typeAlias type="com.blanche.user.access.vo.UserAccessVO" alias="userAccessVO" />
+		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
 		<typeAlias type="com.blanche.board.info.vo.BoardInfoVO" alias="boardInfoVO" />
 		<typeAlias type="com.blanche.board.main.vo.BoardMainVO" alias="boardMainVO" />
 		<typeAlias type="com.blanche.board.comment.vo.BoardCommentVO" alias="boardCommentVO" />
 		<typeAlias type="com.blanche.board.attach.vo.BoardAttachVO" alias="boardAttachVO" />
-		
 		<typeAlias type="com.blanche.notice.main.vo.NoticeMainVO" alias="noticeMainVO" />
 		<typeAlias type="com.blanche.notice.attach.vo.NoticeAttachVO" alias="noticeAttachVO" />
-		
-		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
-		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
+		<typeAlias type="com.blanche.faq.main.vo.FaqMainVO" alias="faqMainVO" />
+		<typeAlias type="com.blanche.faq.attach.vo.FaqAttachVO" alias="faqAttachVO" />
 		
 		<!-- 개설신청 -->
 		<typeAlias type="com.blanche.establish.vo.ApplicationVO" alias="application" />

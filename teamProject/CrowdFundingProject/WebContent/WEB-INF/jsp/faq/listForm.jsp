@@ -92,7 +92,7 @@
 <body>
 <div id="boardContainer">
 	<div id="boardTitle">
-		<h3>공지게시판</h3>
+		<h3>질문게시판</h3>
 	</div>
 	
 	<%-- ==================== 게시판 목록 시작 ==================== --%>
@@ -120,14 +120,7 @@
 						<c:forEach var="faqData" items="${faqList}">
 							<tr data-num="${faqData.fq_index}">
 								<td class="center">
-									<c:choose>
-										<c:when test="${faqData.fq_important == 0}">
-											${faqData.num}
-										</c:when>
-										<c:otherwise>
-											공지
-										</c:otherwise>
-									</c:choose>
+									${faqData.num}
 								</td>
 								<td class="left">
 									<span class="goDetail">${faqData.fq_title}</span>
