@@ -1,0 +1,11 @@
+package com.blanche.user.accredit.service;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AccreditServiceImpl implements AccreditService {
+	@Autowired
+	private SqlSession session;
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="main" template="/template/mainLayout.jsp">
+		<put-attribute name="title" value="사이트" />
+		<put-attribute name="header" value="/template/header.jsp" />
+		<put-attribute name="body" value="/template/main.jsp" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+	</definition>
+	
+	<!-- 기본 화면 설정 -->
+	<definition name="content" template="/template/contentLayout.jsp">
+		<put-attribute name="title" value="기본" />
+		<put-attribute name="header" value="/template/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+	</definition>
+	
+	<!-- <definition name="" value="" /> 에서 name은 *.do 형식의 도메인 이름이 아니라 *.jsp 형식의 리턴받는 뷰단의 이름 -->
+	<definition name="board/default/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/default/{1}.jsp" />
+	</definition>
+	<definition name="board/mypage/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/mypage/{1}.jsp" />
+	</definition>
+	
+	<definition name="establish/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/establish/{1}.jsp" />
+	</definition>
+	
+	<definition name="cc/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/cc/{1}.jsp" />
+	</definition>
+	
+	<definition name="usermanage/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/usermanage/{1}.jsp" />
+	</definition>
+	
+	<definition name="intro/*" extends="content">
+		<put-attribute name="body" value="/WEB-INF/jsp/intro/{1}.jsp" />
+	</definition>
+	
+</tiles-definitions>

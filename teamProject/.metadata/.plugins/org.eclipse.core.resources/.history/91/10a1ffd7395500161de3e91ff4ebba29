@@ -1,0 +1,31 @@
+package com.blanche.user.main.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.blanche.user.main.dao.UserMapper;
+import com.blanche.user.main.vo.UserMainVO;
+
+@Service
+@Transactional
+public class UserServiceImp implements UserService {
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Override
+	public UserMainVO userAccess(UserMainVO param) {
+		// TODO Auto-generated method stub
+		return userMapper.userAccess(param);
+	}
+	
+	@Override
+	public UserMainVO userData(UserMainVO param) {
+		return userMapper.userData(param);
+	}
+	
+	@Override
+	public int userInsert(UserMainVO param) {
+		return userMapper.userInsert(param);
+	}
+}

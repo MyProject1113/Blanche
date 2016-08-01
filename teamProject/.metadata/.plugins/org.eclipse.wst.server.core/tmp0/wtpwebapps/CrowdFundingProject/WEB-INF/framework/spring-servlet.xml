@@ -17,15 +17,23 @@
 	<context:component-scan base-package="com.blanche.**" />
 	
 	<!-- 논리적 뷰를 실제 뷰로 변환하는 기능 -->
+	<!-- template 표현을 위해 tiles를 사용할 때는 사용하지 않음 -->
 	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean> -->
 	
-	<!-- 타일즈(tiles) 설정 -->
+	<!-- 첨부파일을 위한 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="5242880" />
+	</bean>
+	
+	<!-- 타일즈(tiles) 설정 - 1 -->
+	<!-- tiles만을 사용할 때 -->
+	<!--
   	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles2.TilesViewResolver" />
-
 	<bean id="tilesConfigurer"  class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
 			<list>
@@ -33,5 +41,24 @@
 			</list>
 		</property>
 	</bean>
-    
+     -->
+     
+     	<!-- 타일즈(tiles) 설정 - 2 -->
+	<!-- tiles와 일반뷰를 동시에 사용할 때 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles/tiles-setting.xml</value>
+			</list>
+		</property>
+	</bean>	
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
+		<property name="order" value="1" />
+	</bean>
+	<bean id="viewResolver" 	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>
 </beans>

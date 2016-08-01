@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원가입</title>
+<script type="text/javascript" src="/include/js/common.js"></script>
+<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#switch").click(function(){
+		if(!chkSubmit($("#us_phone"),"비밀번호를"))return;	
+
+	});
+	
+	$("#pwch").click(function(){
+		location.href="/usermanage/pwchange.do";
+	});
+	$("#phch").click(function(){
+		location.href="/usermanage/phchange.do";
+	});
+	$("#fundch").click(function(){
+		location.href="/usermanage/design.do";
+	});
+	$("#invch").click(function(){
+		location.href="/usermanage/invest.do";
+	});
+	
+});
+
+
+</script>
+
+
+
+</head>
+<body>
+	<div>
+		<form>
+		<h1>My Page</h1>
+		<br/>
+		<input type="button" id="pwch" name="pwch" value="비밀번호 변경"/>
+		<input type="button" id="phch" name="phch" value="연락처 변경"/>
+		<input type="button" id="fundch" name="fundch" value="기획정보"/>
+		<input type="button" id="invch" name="invch" value="투자정보"/>
+			<table>
+				<tr>
+					<td colspan="3" align="center">연락처 변경</td>
+				</tr>
+				<tr>
+					<td>연락처</td>
+					<td><input type="text" id="us_phone" name="us_phone"/></td>
+				</tr>
+				<tr>
+					<td colspan="3" align="center"><input type="button" id="switch" name="switch" value="변경"/></td>
+				</tr>
+			
+			</table>
+		</form>
+	</div>
+
+
+</body>
+</html>

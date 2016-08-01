@@ -1,0 +1,13 @@
+package com.blanche.user.accredit.service;
+
+import com.blanche.user.accredit.vo.UserAccreditVO;
+
+public class AccreditServiceImpl implements AccreditService {
+
+	@Override
+	public int accreditInsert(UserAccreditVO param) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

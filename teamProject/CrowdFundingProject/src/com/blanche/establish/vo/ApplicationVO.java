@@ -1,22 +1,23 @@
 package com.blanche.establish.vo;
 
 /** 개설신청 **/
-public class ApplicationVO {
+public class ApplicationVO extends ApprovalVO {
 	private int 		app_index;				// 신청번호
 	private String 	app_topic		= "";	// 주제소개
 	private String 	app_fund		= "";	// 목표자금
 	private String 	app_field			= "";	// 분야
 	private String 	app_reference	= "";	// 참고
 	private String 	app_phone		= "";	// 연락처
+	private String 	app_date		= "";	// 연락처
 	private int 		us_index;				// 회원일련번호
 
-	/*// 조건 검색시 사용할 속성
+	// 조건 검색시 사용할 속성
 	private String search = "";
 	private String keyword = "";
 	
 	// 정렬을 위한 속성
 	private String order_by;
-	private String order_sc;*/
+	private String order_sc;
 		
 	public int getApp_index() {
 		return app_index;
@@ -66,6 +67,14 @@ public class ApplicationVO {
 		this.app_phone = app_phone;
 	}
 
+	public String getApp_date() {
+		return app_date;
+	}
+
+	public void setApp_date(String app_date) {
+		this.app_date = app_date;
+	}
+
 	public int getUs_index() {
 		return us_index;
 	}
@@ -74,7 +83,7 @@ public class ApplicationVO {
 		this.us_index = us_index;
 	}
 
-	/*public String getSearch() {
+	public String getSearch() {
 		return search;
 	}
 
@@ -104,5 +113,5 @@ public class ApplicationVO {
 
 	public void setOrder_sc(String order_sc) {
 		this.order_sc = order_sc;
-	}*/
+	}
 }

@@ -1,0 +1,7 @@
+package com.blanche.common.constant;
+
+public interface Constant {
+	/* 회원 관련 상수 */
+	public static final String SESSION_USER_DATA = "blancheUser";
+	public static final int ADMIN_ID_RANK = 0;		// 추후에 3으로 수정 필요.
+}

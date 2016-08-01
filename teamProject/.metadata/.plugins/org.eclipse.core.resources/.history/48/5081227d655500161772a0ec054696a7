@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.user.main.dao.UserMapper">
+	<!-- 인증 정보 입력-->
+	<insert id="accreditInsert" parameterType="userAccreditVO">
+		/* UserAccreditDAO - accreditInsert */
+		INSERT INTO useraccredit (
+			usacd_index, us_index, usacd_code, usacd_type
+		)
+		VALUES (
+			useraccredit_seq.NEXTVAL, #{us_index}, #{usacd_code}, #{usacd_type}
+		)
+	</insert>
+	
+	<!-- 인증 정보 삭제-->
+	<delete id="accreditDelete" parameterType="userAccreditVO">
+		/* UserAccreditDAO - accreditDelete */
+		DELETE FROM useraccredit
+		WHERE usacd_index = #{usacd_index}
+	</delete>
+</mapper>

@@ -1,12 +1,17 @@
 package com.blanche.establish.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.blanche.establish.dao.IntroductionDao;
+import com.blanche.establish.vo.DonationVO;
+import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
+import com.blanche.establish.vo.PlannerVO;
 
 @Service
 @Transactional
@@ -16,11 +21,79 @@ public class IntroductionServiceImpl implements IntroductionService {
 	@Autowired
 	private IntroductionDao introductionDao;
 	
-	// 프로젝트 소개 입력 구현
+	// 프로젝트 소개, 기획자 정보 입력 구현
 	@Override
-	public int introductionInsert(IntroductionVO ivo) {
-		int result = 0;
-		result = introductionDao.introductionInsert(ivo);
+	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo) {
+		int result = 0, result1 = 0, result2 = 0;
+
+		result1 = introductionDao.introductionInsert(ivo);
+		result2 = introductionDao.plannerInsert(pvo);
+
+		if ((result1 == 1) && (result2 == 1))
+			result = 1;
+		
 		return result;
+	}
+	
+	// 프로젝트 소개 상세 구현
+	@Override
+	public IntroductionVO introductionDetail(IntroductionVO ivo) {
+		IntroductionVO detail = null;
+		detail = introductionDao.introductionDetail(ivo);
+		return detail;
+	}
+	
+	// 기획자 정보 상세 구현
+	@Override
+	public PlannerVO plannerDetail(PlannerVO pvo) {
+		PlannerVO detail = null;
+		detail = introductionDao.plannerDetail(pvo);
+		return detail;
+	}
+
+	// 기부현황 상세 구현
+	@Override
+	public DonationVO donationDetail(DonationVO dvo) {
+		DonationVO detail = null;
+		detail = introductionDao.donationDetail(dvo);
+		return detail;
+	}
+	
+	
+	
+	
+	
+
+	@Override
+	public String usermainEmail(int index) {
+		String email = "";
+		email = introductionDao.usermainEmail(index);
+		return email;
+	}
+	
+	
+	// 글목록 구현
+	@Override
+	public List<IntroductionVO> projectAdminList(IntroductionVO ivo) {
+		List<IntroductionVO> myList = null;
+		myList = introductionDao.projectAdminList(ivo);
+		return myList;
+	}
+
+	// 글수정 구현
+	@Override
+	public int projectApprovalUpdate(IntroApprovalVO intappvo) {
+		int result = 0;
+		result = introductionDao.projectApprovalUpdate(intappvo);
+		return result;
+	}
+	
+	
+	// MyPage 글목록 구현
+	@Override
+	public List<IntroductionVO> projectMyPageList(int us_index) {
+		List<IntroductionVO> myList = null;
+		myList = introductionDao.projectMyPageList(us_index);
+		return myList;
 	}
 }

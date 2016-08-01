@@ -1,0 +1,14 @@
+package com.blanche.user.accredit.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.blanche.user.accredit.dao.AccreditMapper;
+
+@Service
+@Transactional
+public interface AccreditService {
+	@Autowired
+	private AccreditMapper accreditMapper;
+}

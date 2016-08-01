@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-		<title>Insert title here</title>
+		<title>프로젝트 상세보기</title>
 		
 		<!--[if lt IE 9]>
 		<script src="../js/html5shiv.js"></script>
@@ -16,16 +16,15 @@
 		
 	</head>
 	<body>
-		
-		
+		<!-- 타이틀 -->
 		<div class="b-header b-header_centered_yes">
 			<div class="b-header__inner">
-				<h1 class="headline">단편영화 &lt;헝클어진 숲&gt;</h1>
-				<p class="deck text-size_xl">오월의 단편영화 프로젝트</p>
+				<h1 class="headline">${introDetail.intro_title}</h1>
+				<p class="deck text-size_xl">${introDetail.intro_subtitle}</p>
 			</div>
 		</div>
 		 
-		 
+		<!-- 탭 메뉴 -->
 		<div class="i-nav-local is-hidden"></div>
 		<nav class="b-nav-local in-nav-local js-nav-local">
 			<div class="b-nav-local__inner">
@@ -48,10 +47,10 @@
 		</nav>
 		
 		
-				
+		<!-- 본문 -->
 		<div class="b-content b-content--clean">
 			<div class="container">
-			     
+			    <!-- 프로젝트 이미지 -->
 				<div class="b-main" id="project_show_section_js"> 
 					<figure class="b-video js-video">
 						<img class="b-video__poster js-video-poster" src="https://tumblbug-pci.imgix.net/eb663c81ddd2d3fd2824f755e800244404371d1a/ba66876acd8823742bb2b717b5d7a00a5bc39a79/a27a928b0684738485a9fa6a22cec8fb95ca922b/3ae144dbfb85dc4e499bdd329e7c28adc492e371.jpg?ixlib=rb-1.1.0&amp;w=620&amp;h=465&amp;auto=format%2Ccompress&amp;lossless=true&amp;fit=crop&amp;s=f5cfdad5027b866a486d8ab404e8728f" alt="">
@@ -64,7 +63,7 @@
 							<hr class="detail_form_line">
 							
 							<h3>▶ 프로젝트 소개</h3>
-							<p><span>프로젝트 소개 글 넣기</span></p>
+							<p><span>${introDetail.intro_details}</span></p>
 						</div>
 						
 						
@@ -74,21 +73,24 @@
 							<h3>&lt;시놉시스&gt;</h3>
 							
 							<blockquote>
-								<p><strong>스산한 바람소리가 파도소리처럼 들려오고</strong></p>
-								
-								<p><strong>하늘의 까마귀 떼가 바다의 물고기 떼처럼 울렁이며 헤엄치는 숲,</strong></p>
-								
-								<p><strong>이 이상한 숲속에서 바람에 떠밀려 어딘가로 향하는 사람들,</strong></p>
-								
-								<p><strong>그리고 그 사람들을 필사적으로 막아서는 아이들에 관한 이야기</strong></p>
+								<p>${introDetail.intro_synopsis}</p>
 							</blockquote>
 						</div>
 						
-						<div id="detail_form_02">
+						
+						<div id="detail_form_01">
 							<hr class="detail_form_line">
 							
-							<h3>▶ 후원금은 이렇게 사용됩니다</h3>
-							<p>여러분의 소중한 후원금은 영화의 음악, 색보정, 믹싱, 그래픽등 후반작업과 스탭, 배우분들의 항공료로 사용됩니다:)</p>
+							<h3>▶ 프로젝트 계획</h3>
+							<p><span>${introDetail.intro_plan}</span></p>
+						</div>
+						
+						
+						<div id="detail_form_01">
+							<hr class="detail_form_line">
+							
+							<h3>▶ 프로젝트 목표</h3>
+							<p><span>${introDetail.intro_purpose}</span></p>
 						</div>
 						
 						<hr class="detail_form_line">
@@ -96,44 +98,39 @@
 					</div>
 					  
 					<div class="b-panel b-panel--theme_clean b-panel--rounded_yes box has-pad-horiz-dot5">
-						<div class="b-panel__head"></div>
-						<div class="b-panel__body">
-							<strong class="box text-size_xs">이 프로젝트의 환불 및 교환 정책</strong>
-							<span class="text-size_xs">마감 직후 곧바로 제작에 착수하기때문에 환불은 불가능 합니다. 파손되거나 불량인 상태의 선물을 받으신 후원자분께는 새 제품으로 무료교환을 약속합니다.</span>
-						</div>
+						<strong class="box text-size_xs">이 프로젝트의 환불 및 교환 정책</strong>
+						<span class="text-size_xs">${introDetail.intro_refund}</span>
 					</div>
-					
-					<script src="https://d1pqmsyqo4bi9.cloudfront.net/assets/social_share-cf858d6b1ddff9eba590c810cf8290ea.js" type="text/javascript"></script>
 				</div>
 				 
 				 
 				 
-				 
+				<!-- 기획자 정보 -->
 				<div class="b-sidebar" role="complementary" >
 				   
 					<dl class="b-campaign_stats"> 
-						<dt class="b-campaign_stats__title">목표 4,000,000원 중 2% 모임</dt> 
+						<dt class="b-campaign_stats__title">목표 ${donationDetail.dona_purpose} 중 ${donationDetail.dona_report}% 모임</dt> 
 						<dd class="b-campaign_stats__value"> 
-							<span class="b-campaign_stats__value-figure">81,000</span><span class="b-campaign_stats__value-unit">원</span>
+							<span class="b-campaign_stats__value-figure">${donationDetail.dona_fund}</span><span class="b-campaign_stats__value-unit">원</span>
 						</dd> 
 						
 						
 						<dt class="b-campaign_stats__title">남은 시간</dt>
 						<dd class="b-campaign_stats__value">
-							<span class="b-campaign_stats__value-figure">21</span><span class="b-campaign_stats__value-unit">일</span>
+							<span class="b-campaign_stats__value-figure">${donationDetail.dona_dday}</span><span class="b-campaign_stats__value-unit">일</span>
 						</dd>
 						
 						
 						<dt class="b-campaign_stats__title">후원자</dt>
 						<dd class="b-campaign_stats__value">
-							<span class="b-campaign_stats__value-figure">5</span><span class="b-campaign_stats__value-unit">명</span>
+							<span class="b-campaign_stats__value-figure">${donationDetail.dona_count}</span><span class="b-campaign_stats__value-unit">명</span>
 						</dd>
 					</dl>
 					
 					  
-					<a href="/tanglewoodfilm/pledge" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
+					<a href="/intro/reward.do" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
 					
-					<p class="b-pledge_blurb js-pledge_blurb">결제는 2016년 8월 14일 자정까지 최소 4,000,000원이 모여야만 다함께 진행됩니다</p>
+					<p class="b-pledge_blurb js-pledge_blurb">결제는 ${donationDetail.dona_endDate} 자정까지 최소 ${donationDetail.dona_purpose}원이 모여야만 다함께 진행됩니다</p>
 					
 					
 					<div data-scroll='sticky' data-top-offset='13' data-bottom-offset='39'  data-remote-body='.b-sidebar' >
@@ -152,8 +149,8 @@
 										<div class="b-profile_card__name_area">
 											<div class="b-profile_card__name_area__middle">
 												<div class="b-profile_card__name_area__inner">
-													<span class="[ yoke yoke--theme_creator ]">오월</span>
-													<p class="b-profile_card__location"><i class="b-fontello b-fontello--location "></i> 제주</p>
+													<span class="[ yoke yoke--theme_creator ]">${plannerDetail.plan_name}</span>
+													<p class="b-profile_card__location"><i class="b-fontello b-fontello--location "></i> ${plannerDetail.plan_area}</p>
 												</div>
 											</div>
 										</div>
@@ -163,7 +160,7 @@
 									<div class="u-clear"></div> 
 									
 									<li class="b-profile_card__contacts">
-										<a href="/help_requests/new?page_url=https%3A%2F%2Fwww.tumblbug.com%2Ftanglewoodfilm&amp;project=3320" class="b-profile_card__contact_button js-newMessage">문의하기</a>
+										<a href="/${introDetail.intro_project}/list.do" class="b-profile_card__contact_button js-newMessage">문의하기</a>
 									</li>
 									
 									<div class="u-clear"></div>
@@ -180,8 +177,7 @@
 								
 								<div class="b-panel__body">
 									<p class="ui-present-card__description">
-									저희 영화를 후원해주셔서 감사합니다!! 앤딩크래딧에 Special Thanks To 로 기재해드리며, 감사한 마음을 담아 영화 포스터와 함께
-									영화 스틸 컷, 그리고 아름다운 제주풍경이 담긴 엽서 세트를 드립니다!! 다시 한번 감사드립니다:)
+									${introDetail.intro_effect}
 									</p>
 								</div><!--.b-panel__body-->
 							</li><!--.b-panel-->

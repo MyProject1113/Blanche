@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 별칭을 설정 -->
+	<typeAliases>
+		<typeAlias type="com.blanche.board.info.vo.BoardInfoVO" alias="boardInfoVO" />
+		<typeAlias type="com.blanche.board.main.vo.BoardMainVO" alias="boardMainVO" />
+		<typeAlias type="com.blanche.board.comment.vo.BoardCommentVO" alias="boardCommentVO" />
+		<typeAlias type="com.blanche.board.attach.vo.BoardAttachVO" alias="boardAttachVO" />
+		
+		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
+		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
+		
+		<!-- 개설신청 -->
+		<typeAlias type="com.blanche.establish.vo.EstablishVO" alias="establish" />
+		<typeAlias type="com.blanche.establish.vo.ApplicationVO" alias="application" />
+		<typeAlias type="com.blanche.establish.vo.ApprovalVO" alias="approval" />
+		<typeAlias type="com.blanche.establish.vo.IntroductionVO" alias="introduction" />
+	</typeAliases>
+	
+	<!-- <mappers>
+		<mapper resource="query/Board.xml" />
+	</mappers> -->
+</configuration>

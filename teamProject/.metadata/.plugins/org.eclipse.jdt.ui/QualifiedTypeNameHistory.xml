@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.blanche.user.main.controller.UserController"/>
+<fullyQualifiedTypeName name="com.blanche.user.main.vo.UserMainVO"/>
+<fullyQualifiedTypeName name="com.blanche.common.constant.Constant"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
+<fullyQualifiedTypeName name="com.blanche.user.common.util.IPConfigUtil"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="com.blanche.user.accredit.vo.UserAccreditVO"/>
+<fullyQualifiedTypeName name="com.blanche.user.common.util.EncryptionUtil"/>
+<fullyQualifiedTypeName name="com.blanche.user.accredit.service.AccreditService"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.blanche.user.accredit.dao.AccreditMapper"/>
+<fullyQualifiedTypeName name="com.blanche.user.accredit.service.UserAccreditService"/>
+<fullyQualifiedTypeName name="org.apache.commons.mail.HtmlEmail"/>
+</qualifiedTypeNameHistroy>

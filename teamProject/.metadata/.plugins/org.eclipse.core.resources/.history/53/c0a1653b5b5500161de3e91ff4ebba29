@@ -1,0 +1,222 @@
+package com.blanche.user.main.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.blanche.common.constant.Constant;
+import com.blanche.user.common.util.EncryptionUtil;
+import com.blanche.user.common.util.IPConfigUtil;
+import com.blanche.user.main.service.UserService;
+import com.blanche.user.main.vo.UserMainVO;
+
+@RestController
+@RequestMapping(value = "/user")
+public class UserController implements Constant {
+	private static Logger logger = Logger.getLogger(UserController.class);
+	
+	@Autowired
+	private UserService userService;
+	
+	/** 접속창 호출
+	 */
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
+	public ModelAndView userLogin() {
+		logger.info("userLogin 호출 성공");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/loginForm");
+		
+		return mav;
+	}
+	
+	/** 접속
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $blancheUser
+	 */
+	@RequestMapping(value="/access.do", method=RequestMethod.POST)
+	public ModelAndView userAccess(@ModelAttribute UserMainVO param, HttpServletRequest request) {
+		logger.info("userAccess 호출 성공");
+		
+		param = userService.userAccess(param);
+		request.getSession().setAttribute(SESSION_USER_DATA, param);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/loginForm");
+		
+		return mav;
+	}
+	
+	/** 접속해제
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $blancheUser
+	 */
+	@RequestMapping(value="/exit.do", method=RequestMethod.POST)
+	public ModelAndView userExit(HttpServletRequest request) {
+		logger.info("userExit 호출 성공");
+		
+		request.getSession().setAttribute(SESSION_USER_DATA, null);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/loginForm");
+		
+		return mav;
+	}
+	
+	/** 약관동의창
+	 */
+	@RequestMapping(value="/policies.do")
+	public ModelAndView userPolicies(HttpServletRequest request) {
+		logger.info("userPolicies 호출 성공");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/policiesForm");
+		
+		return mav;
+	}
+	
+	/** 회원가입창
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return UserMainVO $userData
+	 */
+	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	public ModelAndView userJoin(@ModelAttribute UserMainVO param, HttpServletRequest request) {
+		logger.info("userJoin 호출 성공");
+		
+		ModelAndView mav = new ModelAndView();
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		if (userData == null) {
+			mav.addObject("userData", param);
+			mav.setViewName("user/joinForm");
+		} else {
+			mav.addObject("result", "로그인 상태에서는 회원가입이 불가능합니다.");
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		return mav;
+	}
+	
+	/** 회원가입
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @return UserMainVO $userData
+	 */
+	@RequestMapping(value="/info.do", method=RequestMethod.POST)
+	public ModelAndView userInfo(@ModelAttribute UserMainVO param, HttpServletRequest request) {
+		logger.info("userInfo 호출 성공");
+		
+		int result = userService.userInsert(param);
+		
+		System.out.println(EncryptionUtil.getAccredit());
+		
+		ModelAndView mav = new ModelAndView();
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		if (userData == null) {
+			if (result == 1) {
+				mav.addObject("userData", param);
+				mav.setViewName("user/infoForm");
+			} else {
+				mav.addObject("result", "회원가입에 실패하였습니다.");
+				mav.setViewName(VIEW_RETURN_ERROR);
+			}
+		} else {
+			mav.addObject("result", "로그인 상태에서는 회원가입이 불가능합니다.");
+			mav.setViewName(VIEW_RETURN_ERROR);
+		}
+		
+		return mav;
+	}
+	
+	/** 회원가입
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request for UserMainDTO
+	 * @param String
+	 */
+	@RequestMapping(value="/check.do", method=RequestMethod.POST)
+	public ResponseEntity<String> userCheck(@RequestBody UserMainVO param, HttpServletRequest request) {
+		logger.info("userCheck 호출 성공");
+		
+		ResponseEntity<String> entity = null;
+		try { 
+			UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+			if (userData == null) {
+				int result = 0;
+				if (param.getUs_email() != null && !param.getUs_email().equals("")) {
+					result = userService.userCheck(param);
+				} else if (param.getUs_nickname() != null && !param.getUs_nickname().equals("")) {
+					result = userService.userCheck(param);
+				}
+				if (result > 0) {
+					entity = new ResponseEntity<String>("FIND", HttpStatus.OK);
+				} else {
+					entity = new ResponseEntity<String>(HttpStatus.OK);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (entity == null) {
+				entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			}
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value="/findpw.do")
+	public String findpw(Model model) {
+		
+		return "user/recycle/findpw";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/accredit.do")
+	public String accredit(Model model) {
+		
+		return "user/recycle/accredit";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/joincomp.do")
+	public String joincomp(Model model) {
+		//int result;
+		//email.sendEmail();		
+		
+		//result = email.result; 
+		
+		return "user/recycle/joincomp";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/pwchange.do")
+	public String myPage1(Model model) {
+		
+		return "user/recycle/pwchange";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/phchange.do")
+	public String myPage2(Model model) {
+		
+		return "user/recycle/phchange";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/design.do")
+	public String myPage3(Model model) {
+		
+		return "user/recycle/design";	// View Name => 파일명 아님!!!
+	}
+	
+	@RequestMapping(value="/invest.do")
+	public String myPage4(Model model) {
+		
+		return "user/recycle/invest";	// View Name => 파일명 아님!!!
+	}
+}

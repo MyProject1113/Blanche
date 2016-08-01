@@ -1,0 +1,20 @@
+package com.blanche.user.accredit.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.blanche.user.accredit.dao.AccreditMapper;
+import com.blanche.user.accredit.vo.UserAccreditVO;
+
+@Service
+@Transactional
+public class AccreditServiceImpl implements AccreditService {
+	@Autowired
+	private AccreditMapper accreditMapper;
+	
+	@Override
+	public int accreditInsert(UserAccreditVO param) {
+		return accreditMapper.accreditInsert(param);
+	}
+}

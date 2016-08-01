@@ -7,9 +7,12 @@
 			<ul>
 				<li><a href="/intro/intro.do" class="current-page-item">프로젝트 둘러보기</a></li>
 				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
-				<li><a href="#">고객지원</a></li>
-				<li><a href="/cc/faq.do">도움말</a>
+				<li><a href="/cc/faq.do">고객센터</a></li>
+				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
+						<li><a href="/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
@@ -70,7 +73,7 @@
 		<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="#" class="button big fit">Log In</a></li>
+					<li><a href="/user/login.do" class="button big fit">Log In</a></li>
 				</ul>
 			</section>
 

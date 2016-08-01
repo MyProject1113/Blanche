@@ -9,3 +9,25 @@
 1469589812652	Rename resource 'myPage4.jsp'
 1469591368547	Rename resource 'email.java'
 1469591543994	Rename resource 'SimpleEmail.java'
+1469674644501	Rename resource 'login.jsp'
+1469676016760	Rename package 'com.blanche.user.common.UserConstant'
+1469676116649	Delete element
+1469676129925	Rename package 'com.blanche.board.common.constant'
+1469676137538	Rename type 'BoardConstant'
+1469751019455	Move 10 resources to 'user'
+1469751029919	Delete element
+1469751124031	Delete element
+1469752428603	Delete element
+1469752512849	Rename resource 'join.jsp'
+1469752975696	Move 7 resources to 'recycle'
+1469752977192	Move 'accredit.jsp' to 'recycle'
+1469755691550	Rename resource 'agreeForm.jsp'
+1469758610554	Copy file
+1469760062682	Delete element
+1469776614783	Rename package 'com.blanche.user.accredit'
+1469776657875	Rename package 'com.blanche.accredit.dao'
+1469776932543	Rename package 'com.blanche.accredit.service'
+1469776937519	Rename package 'com.blanche.accredit.vo'
+1469778100140	Rename type 'AccreditVO'
+1469779405220	Delete element
+1469779757899	Copy file

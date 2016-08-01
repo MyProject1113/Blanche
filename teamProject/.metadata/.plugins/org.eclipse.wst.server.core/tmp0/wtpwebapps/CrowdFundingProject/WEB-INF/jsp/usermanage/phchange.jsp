@@ -12,7 +12,14 @@
 $(function(){
 	$("#switch").click(function(){
 		if(!chkSubmit($("#us_phone"),"비밀번호를"))return;	
-
+		else {
+			$("#phChangeFrm").attr({  
+				"method" : "post",
+				"action" : "/usermanage/phchangeBtn.do"
+			});
+			$("#phChangeFrm").submit();
+			alert("변경이 완료되었습니다.");
+		}
 	});
 	
 	$("#pwch").click(function(){
@@ -38,7 +45,7 @@ $(function(){
 </head>
 <body>
 	<div>
-		<form>
+		<form id="phChangeFrm">
 		<h1>My Page</h1>
 		<br/>
 		<input type="button" id="pwch" name="pwch" value="비밀번호 변경"/>

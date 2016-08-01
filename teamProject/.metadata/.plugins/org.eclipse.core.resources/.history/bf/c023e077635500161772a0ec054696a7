@@ -1,0 +1,7 @@
+package com.blanche.user.accredit.dao;
+
+import com.blanche.user.accredit.vo.UserAccreditVO;
+
+public interface AccreditMapper {
+	private int accreditInsert(UserAccreditVO param);
+}

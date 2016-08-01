@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,28 +13,38 @@
 		<script src="../js/html5shiv.js"></script>
 		<![endif]-->
 		
+		<style type="text/css">
+			label.app_form_label_data {
+			    color: red;
+			    font-size: 1.1em;
+			    font-style: italic;
+			    margin-left: 1em;
+			    margin-top: -0.5em;
+			}
+		</style>
+		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				/* 저장 버튼 클릭 시 처리 이벤트 */
 				$("#commit_btn").click(function() {
-					if (!chkSubmit($("#app_topic"), "주제소개를")) return;
-					else if (!chkSubmit($("#app_fund"), "목표자금을")) return;
-					else if (!chkSubmit($("#app_field"), "분야를")) return;
-					else if (!chkSubmit($("#request_phone_1"), "연락처를")) return;
-					else if (!chkSubmit($("#request_phone_2"), "연락처를")) return;
-					else if (!chkSubmit($("#request_phone_3"), "연락처를")) return;
+					if (!chkSubmit($("#intro_title"), "제목을")) return;
+					else if (!chkSubmit($("#intro_refund"), "환불 및 교환정책을")) return;
+					else if (!chkSubmit($("#plan_name"), "기획자 이름을")) return;
+					else if (!chkSubmit($("#plan_area"), "프로젝트 실행 지역을")) return;
+					else if (!chkSubmit($("#plan_account"), "계좌번호를")) return;
 					else {
 						
-						$("#app_phone").val($("#request_phone_1").val() + "-" + $("#request_phone_2").val() + "-" + $("#request_phone_3").val());
-						$("#us_index").val(2);
+						/* alert("승인번호 : " + $("#appro_index").val()); */
 						
-						$("#new_project_request").attr({
+						/* $("#intro_project").val("${applicationDetail.us_index}"); */
+						
+						$("#new_project_detail").attr({
 							"method":"POST",
-							"action":"/establish/applicationInsert.do"
+							"action":"/establish/introductionInsert.do"
 						});
-						$("#new_project_request").submit();
+						$("#new_project_detail").submit();
 					}
 				});
 			});
@@ -49,96 +60,118 @@
 				<h2>프로젝트 상세 내용 작성하기</h2>
 				
 				<form class="new_project_detail" id="new_project_detail">
+				
+					<input type="hidden" id="appro_index" name="appro_index" value="${applicationDetail.appro_index}" />
+					<input type="hidden" id="intro_project" name="intro_project" />
+				
+				
 					<div class="app_form_detail">
-						<label class="app_detail_label text-strong" for="project_request_detail_01">프로젝트 명</label>
-						<input type="text" class="app_detail_item" id="project_request_detail_01" name="project_request_detail_01" />
+						<label class="app_detail_label text-strong" for="intro_title">프로젝트 명</label>
+						<input type="text" class="app_detail_item" id="intro_title" name="intro_title" />
 						<p class="app_detail_help"></p>
 					</div>
 					
 					<div class="app_form_detail">
-						<label class="app_detail_label text-strong" for="project_request_detail_02">주제</label>
-						<input type="text" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_detail_label text-strong" for="intro_subtitle">주제</label>
+						<input type="text" class="app_detail_item" id="intro_subtitle" name="intro_subtitle" />
 						<p class="app_detail_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_03">분야</label>
-						<select class="app_form_item" id="project_request_question_03" name="project_request_question_03"><option value="">분야 선택</option>
-							<option value="27">만화</option>
-							<option value="44">영화 ∙ 공연</option>
-							<option value="50">요리</option>
-							<option value="51">게임</option>
-							<option value="54">음악</option>
-							<option value="56">사진</option>
-							<option value="57">출판</option>
-						</select>
+						<label class="app_form_label" for="app_field">분야</label>
+						<label class="app_form_label_data">
+							<c:choose>
+								<c:when test="${applicationDetail.app_field == 'webtoon'}">만화</c:when>
+								<c:when test="${applicationDetail.app_field == 'movie'}">영화 ∙ 공연</c:when>
+								<c:when test="${applicationDetail.app_field == 'cooking'}">요리</c:when>
+								<c:when test="${applicationDetail.app_field == 'game'}">게임</c:when>
+								<c:when test="${applicationDetail.app_field == 'music'}">음악</c:when>
+								<c:when test="${applicationDetail.app_field == 'photo'}">사진</c:when>
+								<c:when test="${applicationDetail.app_field == 'book'}">출판</c:when>
+								<c:otherwise>기타</c:otherwise>
+							</c:choose>
+						</label>
+						
+						
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_02">목표 금액</label>
-						<input class="app_form_item" id="project_request_question_02" name="project_request_question_02" type="number" />&nbsp;만원
+						<label class="app_form_label" for="app_fund">목표 금액</label>
+						<label class="app_form_label_data">${applicationDetail.app_fund} 만원</label>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">메인 이미지</label>
-						<input type="file" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_form_label" for="intro_image">메인 이미지</label>
+						<input type="file" class="app_detail_item" id="intro_image" name="intro_image" />
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_detail">
-						<label class="app_detail_label text-strong" for="project_request_detail_02">프로젝트 기간</label>
-						<input type="date" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" /> ~ 
-						<input type="date" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_detail_label text-strong" for="intro_date">프로젝트 기간</label>
+						<input type="date" class="app_detail_item" id="intro_startDate" name="intro_startDate" /> ~ 
+						<input type="date" class="app_detail_item" id="intro_endDate" name="intro_endDate" />
 						<p class="app_detail_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">프로젝트 소개</label>
-						<textarea class="app_form_item" cols="40" id="project_request_question_04" name="project_request_question_04" placeholder="" rows="3"></textarea>
+						<label class="app_form_label" for="intro_details">프로젝트 소개</label>
+						<textarea class="app_form_item" cols="40" id="intro_details" name="intro_details" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">Synopsis</label>
-						<textarea class="app_form_item" cols="40" id="project_request_question_04" name="project_request_question_04" placeholder="" rows="3"></textarea>
+						<label class="app_form_label" for="intro_synopsis">Synopsis</label>
+						<textarea class="app_form_item" cols="40" id="intro_synopsis" name="intro_synopsis" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">Purpose</label>
-						<textarea class="app_form_item" cols="40" id="project_request_question_04" name="project_request_question_04" placeholder="" rows="3"></textarea>
+						<label class="app_form_label" for="intro_plan">프로젝트 계획</label>
+						<textarea class="app_form_item" cols="40" id="intro_plan" name="intro_plan" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">기획자 사진</label>
-						<input type="file" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_form_label" for="intro_purpose">프로젝트 목표</label>
+						<textarea class="app_form_item" cols="40" id="intro_purpose" name="intro_purpose" placeholder="" rows="3"></textarea>
+						<p class="app_form_help"></p>
+					</div>
+					
+					<div class="app_form_question">
+						<label class="app_form_label" for="intro_refund">환불 및 교환정책</label>
+						<input type="text" class="app_detail_item" id="intro_refund" name="intro_refund" />
+						<p class="app_form_help"></p>
+					</div>
+					
+					<div class="app_form_question">
+						<label class="app_form_label" for="plan_image">기획자 사진</label>
+						<input type="file" class="app_detail_item" id="plan_image" name="plan_image" />
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_detail">
-						<label class="app_detail_label text-strong" for="project_request_detail_02">기획자 이름</label>
-						<input type="text" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_detail_label text-strong" for="plan_name">기획자 이름</label>
+						<input type="text" class="app_detail_item" id="plan_name" name="plan_name" />
 						<p class="app_detail_help"></p>
 					</div>
 					
 					<div class="app_form_detail">
-						<label class="app_detail_label text-strong" for="project_request_detail_02">프로젝트 실행 지역</label>
-						<input type="text" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_detail_label text-strong" for="plan_area">프로젝트 실행 지역</label>
+						<input type="text" class="app_detail_item" id="plan_area" name="plan_area" />
 						<p class="app_detail_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">프로젝트 성공 시 투자자들에게의 혜택</label>
-						<textarea class="app_form_item" cols="40" id="project_request_question_04" name="project_request_question_04" placeholder="" rows="3"></textarea>
+						<label class="app_form_label" for="intro_effect">프로젝트 성공 시 투자자들에게의 혜택</label>
+						<textarea class="app_form_item" cols="40" id="intro_effect" name="intro_effect" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_question">
-						<label class="app_form_label" for="project_request_question_04">프로젝트 성공 시 입금될 계좌번호</label>
-						<input type="text" class="app_detail_item" id="project_request_detail_02" name="project_request_detail_02" />
+						<label class="app_form_label" for="plan_account">프로젝트 성공 시 입금될 계좌번호</label>
+						<input type="text" class="app_detail_item" id="plan_account" name="plan_account" />
 						<p class="app_form_help"></p>
 					</div>
 					

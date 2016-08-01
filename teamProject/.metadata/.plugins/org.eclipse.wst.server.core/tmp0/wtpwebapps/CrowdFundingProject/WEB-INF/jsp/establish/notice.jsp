@@ -15,11 +15,20 @@
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				
+				/* alert("회원번호 : ${sessionScope.blancheUser.us_index}"); */
+				/* alert("회원ID : ${sessionScope.blancheUser.us_email}"); */
+				
+				
 				$('#app_btn').click(function(e) {
 					if($("input[name='agree']:checked").val() == "Y") {
-						//location.href="/establish/applicationForm.do";
-						//location.href="/establish/applicationDetailForm.do";
-						location.href="/establish/contentDetail.do";
+						location.href="/establish/applicationForm.do";
+						//location.href="/establish/applicationDetailForm.do?app_index=3";
+						//location.href="/establish/contentDetail.do";
+						//location.href="/establish/applicationAdminList.do";
+						//location.href="/establish/projectAdminList.do";
+						//location.href="/establish/applicationMyPage.do?us_index=23";
+						//location.href="/establish/contentReply.do";
 					} else {
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 						return;

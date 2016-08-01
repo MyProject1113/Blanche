@@ -112,11 +112,9 @@
 		<c:forEach begin="1" end="6">
         <div class="row">
             <div class="col-md-4 portfolio-item">
-                <a href="">
                     <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                </a>
                 <h3>
-                    <a href="#">Project Name</a>
+                    <a href="/intro/introDetail.do">Project Name</a>
                 </h3>
                 <table id="pj_text">
 					<tr>

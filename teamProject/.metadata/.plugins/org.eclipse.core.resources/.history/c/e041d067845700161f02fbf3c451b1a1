@@ -1,0 +1,66 @@
+package com.blanche.user.common.mail;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
+import org.apache.log4j.Logger;
+
+import com.blanche.user.accredit.vo.UserAccreditVO;
+
+public class EmailUtil {
+	private static Logger logger = Logger.getLogger(EmailUtil.class);
+	
+	public static boolean sendAccredit(UserAccreditVO param, HttpServletRequest request) {
+		SimpleEmail simpleEmail = new SimpleEmail();
+		
+		// smtp 서버 연결 설정
+		simpleEmail.setHostName("smtp.gmail.com");
+		simpleEmail.setSmtpPort(587);
+		simpleEmail.setAuthentication("prh4099@gmail.com", "vpqmflwm1");
+		boolean result = false;
+		
+		try {
+			String requestURL = request.getRequestURL().toString();
+			String requestURI = request.getRequestURI();
+			String ServerURL = requestURL.substring(0, requestURL.indexOf(requestURI));
+			
+			// smtp SSL, TLS 설정
+			simpleEmail.setSSL(true);
+			simpleEmail.setTLS(true);
+			
+			// 받는사람 설정
+			simpleEmail.addTo(param.getUserEmail(), param.getUserName(), "utf-8");
+			
+			// 보내는 사람 설정
+			simpleEmail.setFrom("admin@blanche.com", "운영자", "utf-8");
+			
+			// 제목 설정 
+			simpleEmail.setSubject("Blanche 가입 인증번호");
+			
+			// 본문 설정
+			StringBuffer sb = new StringBuffer();
+			sb.append("<p>아래의 주소로 접속하시면 인증이 완료됩니다.</p>");
+			sb.append("<a href=\"");
+			sb.append(ServerURL);
+			sb.append("/user/accredit.do?us_index=");
+			sb.append(param.getUs_index());
+			sb.append("&usacd_code=");
+			sb.append(param.getUsacd_code());
+			sb.append("&usacd_type=");
+			sb.append(param.getUsacd_type());
+			sb.append("\">인증</a>");
+			simpleEmail.setMsg(sb.toString());
+			
+			String rtMsg = simpleEmail.send();
+			logger.info(rtMsg);
+			
+			result = true;
+		} catch(EmailException e){
+			logger.warn("Error", e);
+			
+			result = false;
+		}
+		return result;
+	}
+}

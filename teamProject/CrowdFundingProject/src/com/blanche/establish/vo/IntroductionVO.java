@@ -2,17 +2,29 @@ package com.blanche.establish.vo;
 
 /** 프로젝트 소개 **/
 public class IntroductionVO {
-	private int			intro_index;				// 프로젝트 번호
-	private String 	intro_title		= "";	// 제목
-	private String 	intro_subtitle	= "";	// 소제목
-	private String 	intro_image		= "";	// 프로젝트 이미지
-	private String 	intro_details	= "";	// 프로젝트 소개
-	private String 	intro_synopsis	= "";	// 영화/공연 시놉시스
-	private String 	intro_plan		= "";	// 사업계획
-	private String 	intro_purpose	= "";	// 사업목표
-	private String		intro_effect		= "";	// 기대효과
-	private String		intro_refund	= "";	// 환불 및 교환정책
-	private int 		appro_index;			// 승인번호
+	private int			intro_index;					// 프로젝트 번호
+	private String 	intro_title			= "";	// 제목
+	private String 	intro_subtitle		= "";	// 소제목
+	private String 	intro_image			= "";	// 프로젝트 이미지
+	private String		intro_startDate	= "";	// 프로젝트 시작일
+	private String 	intro_endDate		= "";	// 프로젝트 종료일
+	private String 	intro_details		= "";	// 프로젝트 소개
+	private String 	intro_synopsis		= "";	// 영화/공연 시놉시스
+	private String 	intro_plan			= "";	// 사업계획
+	private String 	intro_purpose		= "";	// 사업목표
+	private String		intro_effect			= "";	// 기대효과
+	private String		intro_refund		= "";	// 환불 및 교환정책
+	private String		intro_project		= "";	// 프로젝트 아이디
+	private int 		app_index;					// 개설 신청 번호
+	private int 		appro_index;				// 승인번호
+
+	// 조건 검색시 사용할 속성
+	private String search = "";
+	private String keyword = "";
+	
+	// 정렬을 위한 속성
+	private String order_by;
+	private String order_sc;
 	
 	public int getIntro_index() {
 		return intro_index;
@@ -44,6 +56,22 @@ public class IntroductionVO {
 
 	public void setIntro_image(String intro_image) {
 		this.intro_image = intro_image;
+	}
+
+	public String getIntro_startDate() {
+		return intro_startDate;
+	}
+
+	public void setIntro_startDate(String intro_startDate) {
+		this.intro_startDate = intro_startDate;
+	}
+
+	public String getIntro_endDate() {
+		return intro_endDate;
+	}
+
+	public void setIntro_endDate(String intro_endDate) {
+		this.intro_endDate = intro_endDate;
 	}
 
 	public String getIntro_details() {
@@ -94,11 +122,59 @@ public class IntroductionVO {
 		this.intro_refund = intro_refund;
 	}
 
+	public String getIntro_project() {
+		return intro_project;
+	}
+
+	public void setIntro_project(String intro_project) {
+		this.intro_project = intro_project;
+	}
+
+	public int getApp_index() {
+		return app_index;
+	}
+
+	public void setApp_index(int app_index) {
+		this.app_index = app_index;
+	}
+
 	public int getAppro_index() {
 		return appro_index;
 	}
 
 	public void setAppro_index(int appro_index) {
 		this.appro_index = appro_index;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getOrder_by() {
+		return order_by;
+	}
+
+	public void setOrder_by(String order_by) {
+		this.order_by = order_by;
+	}
+
+	public String getOrder_sc() {
+		return order_sc;
+	}
+
+	public void setOrder_sc(String order_sc) {
+		this.order_sc = order_sc;
 	}
 }

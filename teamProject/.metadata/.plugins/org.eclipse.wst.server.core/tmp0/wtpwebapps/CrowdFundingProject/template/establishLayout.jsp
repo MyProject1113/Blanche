@@ -31,19 +31,23 @@
 			
 	</head>
 	<body>	
-	<!-- Wrapper -->
+		<!-- Wrapper -->
 		<div id="wrapper">
-			<tiles:insertAttribute name="header" />
+			<!-- Header -->
+			<header>
+				<tiles:insertAttribute name="header" />
+			</header>
 			
-		<!-- Main -->
+			<!-- Main -->
 			<div id="main">
 				<tiles:insertAttribute name="body" />
 			</div>
-			
-			<%-- <section id="sidebar">
-			<!-- Footer -->
-				<tiles:insertAttribute name="footer" />
-			</section> --%>
 		</div>
-	</body>
+			
+		<!-- Footer -->
+		<div>
+			<footer>
+				<tiles:insertAttribute name="footer" />
+			</footer>
+		</div>
 </html>

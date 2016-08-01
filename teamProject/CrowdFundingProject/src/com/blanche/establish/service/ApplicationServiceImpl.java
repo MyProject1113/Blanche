@@ -1,5 +1,7 @@
 package com.blanche.establish.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,4 +41,62 @@ public class ApplicationServiceImpl implements ApplicationService {
 		return detail;
 	}
 
+	// 개설신청 목록 구현
+	@Override
+	public List<ApplicationVO> applicationAdminList(ApplicationVO appvo) {
+		List<ApplicationVO> myList = null;
+		myList = applicationDao.applicationAdminList(appvo);
+		return myList;
+	}
+
+	// 승인 목록 구현
+	@Override
+	public List<ApprovalVO> approvalAdminList(ApprovalVO approvo) {
+		List<ApprovalVO> myList = null;
+		myList = applicationDao.approvalAdminList(approvo);
+		return myList;
+	}
+	// 전체 레코드 수 구현
+	@Override
+	public int applicationListCnt(ApplicationVO appvo) {
+		return applicationDao.applicationListCnt(appvo);
+	}
+	
+	
+	
+	
+
+	// 글상세 구현
+	@Override
+	public ApplicationVO applicationAdminDetail(ApplicationVO appvo) {
+		ApplicationVO detail = null;
+		detail = applicationDao.applicationAdminDetail(appvo);
+		return detail;
+	}
+
+	// 글수정 구현
+	@Override
+	public int approvalUpdate(ApprovalVO approvo) {
+		int result = 0;
+		result = applicationDao.approvalUpdate(approvo);
+		return result;
+	}
+	
+	// 글삭제 구현
+	@Override
+	public int applicationDelete(int app_index) {
+		int result = 0;
+		result = applicationDao.applicationDelete(app_index);
+		return result;
+	}
+	
+	
+	
+	// MyPage 글목록 구현
+	@Override
+	public List<ApplicationVO> applicationMyPageList(ApplicationVO appvo) {
+		List<ApplicationVO> myList = null;
+		myList = applicationDao.applicationMyPageList(appvo);
+		return myList;
+	}
 }

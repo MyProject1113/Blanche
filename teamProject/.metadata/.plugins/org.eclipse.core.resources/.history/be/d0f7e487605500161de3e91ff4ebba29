@@ -1,0 +1,5 @@
+package com.blanche.user.accredit.service;
+
+public interface AccreditService  {
+	
+}
