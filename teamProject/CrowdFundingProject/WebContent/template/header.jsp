@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+	#lastAccess {
+		font-size: 0.8em;
+	} 
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#accessList").click(function(){
+			location.href="/user/record.do";
+		});
+	});
+</script>
 <!-- Header -->
 	<header id="header">
 		<h1><a href="/index.jsp">(주)너와 나의 연결고리</a></h1>
@@ -73,21 +85,29 @@
 
 		<!-- Actions -->
 			<section>
-				<ul class="actions vertical">
-					<c:choose>
-						<c:when test="${empty sessionScope.blancheUser}">
+				<c:choose>
+					<c:when test="${empty sessionScope.blancheUser}">
+						<ul class="actions vertical">
 							<li><a href="/user/login.do" class="button big fit">Log In</a></li>
-						</c:when>
-						<c:otherwise>
-							<form name="formLogout" id="formLogout">
+						</ul>
+					</c:when>
+					<c:otherwise>
+						<form name="formLogout" id="formLogout">
+							<ul class="actions vertical">
 								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
-								<li>${sessionScope.blancheUser.us_rank}님. 환영합니다.</li>
-								<li><li><a href="/user/exit.do" class="button big fit">Log Out</a></li></li>
-								
-							</form>
-						</c:otherwise>
-					</c:choose>
-				</ul>
+								<li>회원등급 : ${sessionScope.blancheUser.us_rank}</li>	<!--임시로 추가한 등급 확인용 텍스트 -->
+								<li><a href="/user/exit.do" class="button big fit">Log Out</a></li>
+								<li><a href="/mypage/mylist.do" class="button big fit">내가 쓴 글</a></li>
+								<c:if test="${not empty sessionScope.blancheUser.accessIP}">
+									<li id="lastAccess">
+										<span>최근접속 : ${sessionScope.blancheUser.accessIP} (${sessionScope.blancheUser.accessDate})</span><br />
+										<span id="accessList">[최근 접속 기록 자세히 보기]</span>
+									</li>
+								</c:if>
+							</ul>
+						</form>
+					</c:otherwise>
+				</c:choose>
 			</section>
 
 	</section>
