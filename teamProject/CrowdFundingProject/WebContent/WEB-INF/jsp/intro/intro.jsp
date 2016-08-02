@@ -34,6 +34,13 @@
 				});
 				$("#detailForm").submit();
 			});
+			$("#title").click(function() {
+				$("#app_field").attr({
+					"method" : "get",
+					"action" : "/establish/contentDetail.do"
+				})
+				$("#app_field").submit();	
+			});
 		});
 	</script>
 	
@@ -87,15 +94,18 @@
    <colgroup>
    		<col width="15%">
    		<col width="85%">
-   </colgroup>
+   </colgroup>   
    	<thead class="category">
-			<tr>
+  <form id="ca_array" name="ca_array" method="post">
+   			<tr>
 				<td>
-					<select id="project" name="project">
-							<option value="">미술</option>
-						<c:forEach begin="1" end="5">
-							<option value="">성인</option>
-						</c:forEach>
+					<select id="app_field" name="app_field">
+							<option value="all">전체</option>
+							<option value="movie">영화</option>
+							<option value="music">음악</option>
+							<option value="design">디자인</option>
+							<option value="art">미술</option>
+							<option value="ani">만화</option>
 					</select>
 				</td>
 				<td>
@@ -109,12 +119,14 @@
 	<tbody>	
 		<tr>
 		<td colspan="2">
-		<c:forEach begin="1" end="6">
+		<c:forEach var="intro" items="${introList}" varStatus="status">
+		<input type="hidden" id="intro_index" name="intro_index" value="${intro.intro_index}" />
         <div class="row">
             <div class="col-md-4 portfolio-item">
-                    <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    <img class="img-responsive" src= "${intro.intro_image}" alt="프로젝트 이미지">
                 <h3>
-                    <a href="/intro/introDetail.do">Project Name</a>
+                    <%-- <a href="/intro/introDetail.do" id="title">${intro.intro_title}</a> --%>
+                    <a href="/intro/introDetail.do?intro_index=${intro.intro_index}" id="title">${intro.intro_title}</a>
                 </h3>
                 <table id="pj_text">
 					<tr>
@@ -122,25 +134,26 @@
 							<h4>목표 금액</h4>
 						</td>
 						<td>
-							<h4>원</h4>
+							<h4>${intro.app_fund} 원</h4>
 						</td>
 					</tr>
 					<tr>
 						<td>
-						    <h4>현재 모금된 금액</h4>
+						    <h4>현재까지 모집된 금액</h4>
 						</td>
 						<td>
-							<h4>원</h4>
+							<h4>${intro.sponser_invest} 원</h4>
 						</td>
 					</tr>                     
                 </table>
-                <textarea>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae</textarea>
+                <textarea readonly="readonly">${intro.intro_details}</textarea>
             </div>
         </div>
         </c:forEach>
         </td>
         </tr>
        </tbody>
+       </form>
       </table>
  </body>
  </html>
