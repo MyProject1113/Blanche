@@ -70,14 +70,32 @@
 				<ul class="links">
 					<li>
 						<a href="#">
-							<h3>지구촌 나눔</h3>
-							<p>Global sharing</p>
+							<h3>영화 / 공연</h3>
+							<p>Movie & Performance</p>
 						</a>
 					</li>
 					<li>
 						<a href="#">
-							<h3>영화 / 공연</h3>
-							<p>Movie & Performance</p>
+							<h3>음악</h3>
+							<p>Music</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<h3>디자인</h3>
+							<p>Design</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<h3>출판</h3>
+							<p>Publication</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<h3>요리</h3>
+							<p>Cooking</p>
 						</a>
 					</li>
 				</ul>
@@ -94,7 +112,7 @@
 					<c:otherwise>
 						<form name="formLogout" id="formLogout">
 							<ul class="actions vertical">
-								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
+								<li>[${sessionScope.blancheUser.us_nickname}] 님 환영합니다.</li>
 								<%-- <li>회원등급 : ${sessionScope.blancheUser.us_rank}</li> --%>	<!--임시로 추가한 등급 확인용 텍스트 -->
 								<li>
 									<c:choose>
