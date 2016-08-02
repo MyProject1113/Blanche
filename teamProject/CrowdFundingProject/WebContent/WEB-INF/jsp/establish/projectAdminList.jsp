@@ -31,28 +31,28 @@
 				/* 검색 후 검색 대상과 검색 단어 출력 */
 				if ("<c:out value='${data.keyword}' />" != "") {
 					$("#keyword").val("<c:out value='${data.keyword}' />")
-					$("#search").val("<c:out value='${data.search}' />")
+					$("#searchCombo").val("<c:out value='${data.searchCombo}' />")
 				}
 				
 				$("#keyword_text").show();
 				$("#keyword_check").hide();
 				
 				/* 검색 대상이 변경될 때마다 처리 이벤트 */
-				$("#search").change(function() {
-					if ($("#search").val() == "all") {
+				$("#searchCombo").change(function() {
+					if ($("#searchCombo").val() == "all") {
 						$("#keyword_text").show();
 						$("#keyword_check").hide();
 						
 						$("#keyword").val("전체 데이터 조회합니다.");
 						
-					} else if ($("#search").val() == "us_email") {
+					} else if ($("#searchCombo").val() == "us_email") {
 						$("#keyword_text").show();
 						$("#keyword_check").hide();
 						
 						$("#keyword").val("");
 						$("#keyword").focus();
 						
-					} else if ($("#search").val() == "intapp_check") {
+					} else if ($("#searchCombo").val() == "intapp_check") {
 						$("#keyword_text").hide();
 						$("#keyword_check").show();
 					}
@@ -60,7 +60,7 @@
 				
 				/* 검색 버튼 클릭 시 처리 이벤트 */
 				$("#searchData").click(function() {
-					if ($("#search").val() != "all") {
+					if ($("#searchCombo").val() != "all") {
 						if (!chkSubmit($("#keyword"), "검색어를")) return;
 					}
 					/* goPage(1); */
@@ -68,7 +68,7 @@
 
 				/* 개설신청 리스트 버튼 클릭 시 처리 이벤트 */
 				$("#appBtn").click(function() {
-					location.href = "/establish/applicationAdminList.do";
+					location.href = "/establish/projectAdminList.do";
 				});
 				
 				/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
@@ -222,7 +222,7 @@
 								<label>검색조건</label>
 							</td>
 							<td>
-								<select id="search" name="search">
+								<select id="searchCombo" name="searchCombo">
 									<option value="all">전체</option>
 									<option value="us_email">사용자ID</option>
 									<option value="intapp_check">승인여부</option>

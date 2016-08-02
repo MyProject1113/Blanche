@@ -37,8 +37,11 @@
 					else if (!chkSubmit($("#plan_area"), "프로젝트 실행 지역을")) return;
 					else if (!chkSubmit($("#plan_account"), "계좌번호를")) return;
 					else {
-						
-						/* alert("승인번호 : " + $("#appro_index").val()); */
+						// 'intro_project' 생성
+						var email = "${us_email}";
+						var stringArr = email.split("@");
+						var projectId = stringArr[0] + ${applicationDetail.app_index};
+						$("#intro_project").val(projectId);
 						
 						$("#us_index").val("${applicationDetail.us_index}");
 						
