@@ -23,10 +23,10 @@
 	<![endif]-->
 	
 	<style type="text/css">
-		#formRetry .center {
+		#formFind .center {
 			text-align: center;
 		}
-		#formRetry #retryBtn {
+		#formFind #sendBtn {
 			width: 80%;
 		}
 		#loader{
@@ -63,61 +63,61 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#us_index").val("<c:out value='${userData.us_index}' />");
-			$("#us_email").val("<c:out value='${userData.us_email}' />");
-			
-			/* 인증메일 재전송 버튼 클릭 시 처리 이벤트 */
-			$("#retryBtn").click(function() {
-				$.ajax({
-					url : "/user/retry.do",
-					type : "post",
-					headers : {
-						"Content-Type" : "application/json",
-						"X-HTTP-Method-Override" : "POST"
-					},
-					dataType : "text",
-					beforeSend: function() { 
-						$('#loader').show();
-					},
-					data : JSON.stringify({
-						us_index : $("#us_index").val()
-					}),
-					success : function(result) {
-						if (result == "SUCCESS") {
-							alert("인증메일이 전송되었습니다. 확인해주십시오.");
-						} else if (result == "COMPLETE") {
-							alert("인증이 이미 완료되어 있습니다.");
+			/* 인증메일 전송 버튼 클릭 시 처리 이벤트 */
+			$("#sendBtn").click(function() {
+				if (!chkSubmit($("#us_email"), "이메일을")) {
+					return;
+				} else if (!checkEmail($("#us_email"))) {
+					return;
+				} else {
+					$.ajax({
+						url : "/user/send.do",
+						type : "post",
+						headers : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "POST"
+						},
+						dataType : "text",
+						beforeSend: function() { 
+							$('#loader').show();
+						},
+						data : JSON.stringify({
+							us_email : $("#us_email").val()
+						}),
+						success : function(result) {
+							if (result == "SUCCESS") {
+								alert("인증메일이 전송되었습니다. 확인해주십시오.");
+							}
+						},
+						error : function() {
+							alert("시스템 오류 입니다. 관리자에게 문의 하세요.");
+						},
+						complete: function(){
+							$('#loader').hide(); 
 						}
-					},
-					error : function() {
-						alert("시스템 오류 입니다. 관리자에게 문의 하세요.");
-					},
-					complete: function(){
-						$('#loader').hide(); 
-					}
-				});
+					});
+				}
 			});
 		});
 	</script>
 </head>
 <body>
-<form name="formRetry" id="formRetry">
-	<input type="hidden" name="us_index" id="us_index" />
+<form name="formFind" id="formFind">
 	<table>
 		<colgroup>
 			<col width="20%" />
 			<col width="80%" />
 		</colgroup>
 		<tr>
-			<td colspan="2" class="center">해당 아이디는 아직 인증되지 않았습니다.</td>
+			<td colspan="2" class="center">이메일을 입력하시면, 비밀번호 변경을 위한 인증메일이 발송됩니다.</td>
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="email" name="us_email" id="us_email" readonly /></td>
+			<td><input type="email" name="us_email" id="us_email" /></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">
-				<input type="button" value="인증메일 재전송" name="retryBtn" id="retryBtn" />
+				<input type="button" value="인증메일 전송" name="sendBtn" id="sendBtn" />
 			</td>
 		</tr>
 	</table>

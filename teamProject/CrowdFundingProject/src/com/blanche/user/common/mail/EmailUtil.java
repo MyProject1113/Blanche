@@ -37,13 +37,21 @@ public class EmailUtil {
 			// 보내는 사람 설정
 			htmlEmail.setFrom("admin@blanche.com", "운영자", "utf-8");
 			
-			// 제목 설정 
-			htmlEmail.setSubject("Blanche 가입 인증번호");
+			// 제목 설정
+			if (param.getUsacd_type() != 1) {
+				htmlEmail.setSubject("Blanche 가입 인증번호");
+			} else {
+				htmlEmail.setSubject("Blanche 인증번호");
+			}
 			
 			// 본문 설정
 			
 			StringBuffer sb = new StringBuffer();
-			sb.append("<p>아래의 주소로 접속하시면 인증이 완료됩니다.</p>");
+			if (param.getUsacd_type() != 1) {
+				sb.append("<p>아래의 주소로 접속하시면 인증이 완료됩니다.</p>");
+			} else {
+				sb.append("<p>아래의 주소로 접속하시면 비밀번호를 변경할 수 있니다.</p>");
+			}
 			sb.append("<a href=\"");
 			sb.append(ServerURL);
 			sb.append("/user/accredit.do?us_index=");

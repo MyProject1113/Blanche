@@ -183,7 +183,6 @@ public class BoardMainController implements Constant {
 			mav.setViewName("board/default/writeForm");
 		} else {
 			mav.addObject("loginMessage", "로그인 상태에서만 글을 작성할 수 있습니다.");
-			System.out.print("d");
 			mav.setViewName("board/common/returnLogin");
 		}
 		

@@ -51,7 +51,7 @@
 			$("#check1").change(function(){
 				var isCheck = $(this).is(":checked");
 				if (isCheck == true) {
-					$("#agreeDate1").val(new Date());
+					$("#agreeDate1").val(getNow());
 				} else {
 					$("#agreeDate1").val("");
 				}
@@ -61,7 +61,7 @@
 			$("#check2").change(function(){
 				var isCheck = $(this).is(":checked");
 				if (isCheck == true) {
-					$("#agreeDate2").val(new Date());
+					$("#agreeDate2").val(getNow());
 				} else {
 					$("#agreeDate2").val("");
 				}
@@ -108,7 +108,7 @@
 	<input type="hidden" name="agreeDate2" id="agreeDate2" /> 
 	<table>
 		<colgroup>
-			<col width="100%">
+			<col width="100%" />
 		</colgroup>
 		<tr>
 			<td>

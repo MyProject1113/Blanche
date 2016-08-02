@@ -18,6 +18,8 @@ public class UserMainVO {
 	private String	agreeDate2		= "";	// 홈페이지이용약관 동의일
 	
 	private int		accreditState 	= 0;	// 인증 상태
+	private String accessIP		= "";	// 마지막 접속 IP
+	private String accessDate		= "";	// 마지막 접속 시간
 	
 	public int getUs_index() {
 		return us_index;
@@ -98,5 +100,17 @@ public class UserMainVO {
 	}
 	public void setAccreditState(int accreditState) {
 		this.accreditState = accreditState;
+	}
+	public String getAccessIP() {
+		return accessIP;
+	}
+	public void setAccessIP(String accessIP) {
+		this.accessIP = accessIP;
+	}
+	public String getAccessDate() {
+		return accessDate;
+	}
+	public void setAccessDate(String accessDate) {
+		this.accessDate = accessDate;
 	}
 }

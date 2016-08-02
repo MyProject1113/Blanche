@@ -22,6 +22,11 @@ public class UserMainMapperImpl implements UserMainMapper {
 	}
 	
 	@Override
+	public UserMainVO userFind(UserMainVO param) {
+		return (UserMainVO) session.selectOne("userFind");
+	}
+	
+	@Override
 	public int userInsert(UserMainVO param) {
 		return session.insert("userInsert");
 	}
@@ -29,5 +34,10 @@ public class UserMainMapperImpl implements UserMainMapper {
 	@Override
 	public int userCheck(UserMainVO param) {
 		return (int) session.selectOne("userCheck");
+	}
+	
+	@Override
+	public int userChangePassword(UserMainVO param) {
+		return session.update("userChangePassword");
 	}
 }

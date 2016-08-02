@@ -24,6 +24,11 @@ public class UserMainServiceImp implements UserMainService {
 	}
 	
 	@Override
+	public UserMainVO userFind(UserMainVO param) {
+		return userMainMapper.userFind(param);
+	}
+	
+	@Override
 	public int userInsert(UserMainVO param) {
 		return userMainMapper.userInsert(param);
 	}
@@ -31,5 +36,10 @@ public class UserMainServiceImp implements UserMainService {
 	@Override
 	public int userCheck(UserMainVO param) {
 		return userMainMapper.userCheck(param);
+	}
+	
+	@Override
+	public int userChangePassword(UserMainVO param) {
+		return userMainMapper.userChangePassword(param);
 	}
 }
