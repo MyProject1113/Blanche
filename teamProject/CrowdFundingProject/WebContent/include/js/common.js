@@ -58,7 +58,7 @@ function getNow() {
 }
 
 /* leadingZeros(숫자, 자릿수) */
-function leadingZeros(num, digits) {
+function leadingZero(num, digits) {
 	var zero = "";
 	num = num.toString();
 	if (num.length < digits) {
