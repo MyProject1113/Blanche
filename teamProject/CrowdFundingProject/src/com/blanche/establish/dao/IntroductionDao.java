@@ -23,4 +23,5 @@ public interface IntroductionDao {
 	public IntroApprovalVO userProgressIntAppro(int us_index);
 	public int introApprovalInsert(IntroApprovalVO intappvo);
 	public int getIntroIndex(int app_index);
+	public int projectListCnt(IntroductionVO ivo);
 }

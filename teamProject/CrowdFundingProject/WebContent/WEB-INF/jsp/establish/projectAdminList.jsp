@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%-- <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %> --%>
+<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,17 +28,41 @@
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				/* 검색화면 초기화 */
+				/* $("#keyword_text").show();
+				$("#keyword_check").hide(); */
+				
+				selectEvent("", "", 0);
+				
 				/* 검색 후 검색 대상과 검색 단어 출력 */
 				if ("<c:out value='${data.keyword}' />" != "") {
-					$("#keyword").val("<c:out value='${data.keyword}' />")
-					$("#searchCombo").val("<c:out value='${data.searchCombo}' />")
+					$("#keyword").val("<c:out value='${data.keyword}' />");
+					$("#searchCombo").val("<c:out value='${data.searchCombo}' />");
+					
+					selectEvent($("#searchCombo").val(), $("#keyword").val(), $("#keyword").val());
+				}
+
+				/* 한페이지에 보여줄 레코드 수 조회 후 선택한 값 그대로 유지하도록 */
+				if ("<c:out value='${data.pageSize}' />" != "") {
+					$("#pageSize").val("<c:out value='${data.pageSize}' />");
 				}
 				
-				$("#keyword_text").show();
-				$("#keyword_check").hide();
 				
+
 				/* 검색 대상이 변경될 때마다 처리 이벤트 */
 				$("#searchCombo").change(function() {
+					selectEvent($("#searchCombo").val(), "", 0);
+				});
+				
+				/* 검색 대상 승인 내용이 변경될 때마다 처리 이벤트 */
+				$("#search_check").change(function() {
+					selectEvent($("#searchCombo").val(), "", $("#search_check").val());
+				});
+				
+				
+				
+				/* 검색 대상이 변경될 때마다 처리 이벤트 */
+				/* $("#searchCombo").change(function() {
 					if ($("#searchCombo").val() == "all") {
 						$("#keyword_text").show();
 						$("#keyword_check").hide();
@@ -56,19 +80,24 @@
 						$("#keyword_text").hide();
 						$("#keyword_check").show();
 					}
-				});
+				}); */
 				
 				/* 검색 버튼 클릭 시 처리 이벤트 */
 				$("#searchData").click(function() {
 					if ($("#searchCombo").val() != "all") {
 						if (!chkSubmit($("#keyword"), "검색어를")) return;
 					}
-					/* goPage(1); */
+					goPage(1);
 				});
 
+				/* 한 페이지에 보여줄 레코드 수 변경될 때마다 처리 이벤트 */
+				$("#pageSize").change(function() {
+					goPage(1);
+				});
+				
 				/* 개설신청 리스트 버튼 클릭 시 처리 이벤트 */
 				$("#appBtn").click(function() {
-					location.href = "/establish/projectAdminList.do";
+					location.href = "/establish/applicationAdminList.do";
 				});
 				
 				/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
@@ -84,19 +113,14 @@
 					$("#detailForm").submit();
 				});
 				
-				
-				
-				
+				/* 체크 버튼 전체 선택 시 처리 이벤트 */
 				$("#all_select").change(function() {
 					if($("input[id='all_select']:checked").val() == "Y") {
-						//location.href="/establish/projectAdminList.do";
 						checkboxSelectQue(1,'chk[]');
 					} else {
 						checkboxSelectQue(2,'chk[]');
 					}
 				});
-				
-				
 			});
 
 			/* 정렬 버튼 클릭 시 처리 함수 */
@@ -110,7 +134,18 @@
 				goPage(1);
 			}
 			
-			
+			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 */
+			function goPage(page) {
+				if ($("#searchCombo").val() == "all") {
+					$("#keyword").val("");
+				}
+				$("#page").val(page);
+				$("#f_search").attr({
+					"method":"get",
+					"action":"/establish/projectAdminList.do"
+				});
+				$("#f_search").submit();
+			}
 			
 			function checkboxSelectQue(n,obj) {
 			    var i;
@@ -124,7 +159,6 @@
 			}
 			
 			
-
 			function checkboxSelectReset(obj) {
 			    var i, sum=0, tag=[], str="";
 			    var chk = document.getElementsByName(obj);
@@ -184,7 +218,22 @@
 				});
 			}
 			
-			
+			/* 검색 대상 내용 처리 함수 */
+			function selectEvent(selectObj, keyword, value) {
+				if (selectObj == "intapp_check") {
+					$("#keyword_text").hide();
+					$("#keyword_check").show();
+					
+					$("#search_check").val(value);
+					$("#keyword").val(value);
+					
+				} else {
+					$("#keyword_text").show();
+					$("#keyword_check").hide();
+					
+					$("#keyword").val("전체 데이터를 조회합니다.");
+				}
+			}
 		</script>
 	
 	</head>
@@ -201,11 +250,14 @@
 			<form name="detailForm" id="detailForm">
 				<input type="hidden" name="intro_index" id="intro_index" />
 				<!-- <input type="hidden" name="intapp_index" id="intapp_index" /> -->
+				<input type="hidden" name="page" value="${data.page}" />
+				<input type="hidden" name="pageSize" value="${data.pageSize}" />
 			</form>
 			
 			<%-- ==================== 검색기능 시작 ==================== --%>
 			<div id="boardSearch">
 				<form id="f_search" name="f_search">
+					<input type="hidden" id="page" name="page" value="${data.page}" />
 					<input type="hidden" id="order_by" name="order_by" value="${data.order_by}" />
 					<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc}" />
 					<table summary="검색">
@@ -224,7 +276,6 @@
 							<td>
 								<select id="searchCombo" name="searchCombo">
 									<option value="all">전체</option>
-									<option value="us_email">사용자ID</option>
 									<option value="intapp_check">승인여부</option>
 								</select>
 							</td>
@@ -282,8 +333,10 @@
 							<th><input type="checkbox" class="chk" id="all_select" value="Y" /></th>
 							<th><a href="javascript:setOrder('intapp_index');">신청번호
 								<c:choose>
-									<c:when test="${data.order_sc == 'ASC'}">▲</c:when>
-									<c:when test="${data.order_sc == 'DESC'}">▼</c:when>
+									<%-- <c:when test="${data.order_sc == 'ASC'}">▲</c:when>
+									<c:when test="${data.order_sc == 'DESC'}">▼</c:when> --%>
+									<c:when test="${data.order_by == 'intapp_index' and data.order_sc == 'ASC'}">▲</c:when>
+									<c:when test="${data.order_by == 'intapp_index' and data.order_sc == 'DESC'}">▼</c:when>
 									<c:otherwise>▲</c:otherwise>
 								</c:choose>
 							</a></th>
@@ -335,6 +388,11 @@
 			</div>
 			<%-- ==================== 리스트 종료 ==================== --%>
 			
+			<%-- ================= 페이지 네비게이션 시작 ================= --%>
+			<div id="boardPage">
+				<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}" />
+			</div>
+			<%-- ================= 페이지 네비게이션 종료 ================= --%>
 		</div>
 	</body>
 </html>

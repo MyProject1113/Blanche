@@ -239,30 +239,25 @@ public class EstablishController {
 		logger.info("applicationInsert 호출 성공");
 		
 		int result = 0;
-		String url = "";
-		
+
 		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
 		if (userData != null) {
 			userData = userMainService.userData(userData);
 			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
 		
 			result = applicationService.applicationInsert(appvo, approvo);
-			if (result == 1) {
-				url = "/establish/success.do";
-			}
-			return "redirect:" + url;
-			
-		} else {
-			return "redirect:/establish/success.do?success_num=1";
 		}
+		return "redirect:/establish/success.do?result=" + result;
 	}
 
 	/********************************************
 	 * 개설신청 성공 페이지 이동
 	 * *******************************************/
-	@RequestMapping(value="/success.do")
-	public String success() {
+	@RequestMapping(value="/success.do", method=RequestMethod.GET)
+	public String success(@RequestParam("result") int result, Model model) {
 		logger.info("success 호출 성공");
+		
+		model.addAttribute("result", result);
 		
 		return "establish/success";
 	}
@@ -404,15 +399,15 @@ public class EstablishController {
 		logger.info("applicationDelete 호출 성공");
 		
 		// 아래 변수에는 입력 성공에 대한 상태값 담습니다. (1 or 0)
-		int result = 0;
-		String url = "";
+		int result1 = 0, result2 = 0;
 		
-		result = applicationService.applicationDelete(appvo.getApp_index());
-		if (result == 1) {
-			url = "/establish/applicationAdminList.do";
+		result1 = applicationService.approvalDelete(appvo.getApp_index());
+		result2 = applicationService.applicationDelete(appvo.getApp_index());
+		if (result1 == 1 && result2 == 1) {
+			return "redirect:/establish/applicationAdminList.do";
+		} else {
+			return "redirect:/establish/success.do?result=2";
 		}
-		
-		return "redirect:" + url;
 	}
 	
 	
@@ -426,7 +421,7 @@ public class EstablishController {
 		logger.info("projectAdminList 호출 성공");
 		
 		// 정렬에 대한 기본값 설정
-		if (ivo.getOrder_by() == null) ivo.setOrder_by("intro_index");
+		if (ivo.getOrder_by() == null) ivo.setOrder_by("intapp_index");
 		if (ivo.getOrder_sc() == null) ivo.setOrder_sc("DESC");
 		
 		// 정렬에 대한 데이터 확인
@@ -438,17 +433,17 @@ public class EstablishController {
 		logger.info("keyword = " + ivo.getKeyword());
 		
 		// 페이지 세팅
-		/*Paging.setPage(ivo);*/
+		Paging.setPage(ivo);
 		
 		// 전체 레코드수 구현
-		//int total = applicationService.applicationListCnt(ivo);
-		//logger.info("total = " + total);
+		int total = introductionService.projectListCnt(ivo);
+		logger.info("total = " + total);
 		
 		// 글번호 재설정
 		
 		List<IntroductionVO> projectList = introductionService.projectAdminList(ivo);
 		model.addAttribute("projectList", projectList);
-		//model.addAttribute("total", total);
+		model.addAttribute("total", total);
 		model.addAttribute("data", ivo);
 		
 		return "establish/projectAdminList";

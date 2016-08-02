@@ -56,6 +56,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 		myList = applicationDao.approvalAdminList(approvo);
 		return myList;
 	}
+	
 	// 전체 레코드 수 구현
 	@Override
 	public int applicationListCnt(ApplicationVO appvo) {
@@ -82,7 +83,15 @@ public class ApplicationServiceImpl implements ApplicationService {
 		return result;
 	}
 	
-	// 글삭제 구현
+	// 개설승인 삭제 구현
+	@Override
+	public int approvalDelete(int app_index) {
+		int result = 0;
+		result = applicationDao.approvalDelete(app_index);
+		return result;
+	}
+
+	// 개설신청 삭제 구현
 	@Override
 	public int applicationDelete(int app_index) {
 		int result = 0;

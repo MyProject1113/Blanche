@@ -65,7 +65,13 @@ public class ApplicationDaoImpl implements ApplicationDao {
 		return session.update("approvalUpdate");
 	}
 	
-	// 글삭제 구현
+	// 개설승인 삭제 구현
+	@Override
+	public int approvalDelete(int app_index) {
+		return session.delete("approvalDelete");
+	}
+
+	// 개설신청 삭제 구현
 	@Override
 	public int applicationDelete(int app_index) {
 		return session.delete("applicationDelete");

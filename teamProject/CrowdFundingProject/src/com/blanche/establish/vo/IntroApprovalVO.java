@@ -1,7 +1,9 @@
 package com.blanche.establish.vo;
 
+import com.blanche.common.vo.CommonVO;
+
 /** 댓글 **/
-public class IntroApprovalVO {
+public class IntroApprovalVO extends CommonVO {
 	private int 		intapp_index;			// 프로젝트 승인번호
 	private int 		intapp_check;			// 승인여부	// 0:진행중, 1:수정요청, 2:수정승인, 3:삭제요청, 4:기간만료
 	private String 	intapp_reason	= "";	// 요청이유

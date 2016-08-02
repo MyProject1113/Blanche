@@ -9,14 +9,8 @@
 		     intapp_index, intapp_check, intapp_reason, intapp_note
 		FROM introduction intro INNER JOIN introApproval intApp ON intro.intro_index = intApp.intro_index
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="searchCombo=='intro_index'">
-				<![CDATA[ intro.intro_index LIKE '%' || #{keyword} || '%' ]]>
-			</if>
-			<if test="searchCombo=='intro_title'">
-				<![CDATA[ AND intro_title LIKE '%' || #{keyword} || '%' ]]>
-			</if>
-			<if test="searchCombo=='intro_project'">
-				<![CDATA[ AND intro_project LIKE '%' || #{keyword} || '%' ]]>
+			<if test="searchCombo=='intapp_check'">
+				<![CDATA[ AND intapp_check LIKE '%' || #{keyword} || '%' ]]>
 			</if>
 		</trim>
 	</sql>
@@ -31,22 +25,33 @@
 		(	SELECT list.*, ROWNUM AS RNUM
 			FROM (
 				<include refid="listCommon"></include>
-				<choose>
+				<!-- <choose>
 					<when test="order_sc == 'ASC'">ORDER BY intapp_index ASC</when>
 					<when test="order_sc == 'DESC'">ORDER BY intapp_index DESC</when>
+				</choose> -->
+					
+					
+				<choose>
+					<when test="order_by == 'intapp_index'">ORDER BY intapp_index</when>
 				</choose>
+				<choose>
+					<when test="order_sc == 'ASC'">ASC</when>
+					<when test="order_sc == 'DESC'">DESC</when>
+				</choose>
+				
+				
 			) list
 		)
-		<!-- <where>
+		<where>
 			<if test="start_row != null and start_row != ''">
 				<if test="end_row != null and end_row != ''">
 					RNUM BETWEEN #{start_row} AND #{end_row}
 				</if>
 			</if>
-		</where> -->
+		</where>
 	</select>
 	
-	<!-- <select id="projectListCnt" parameterType="introduction" resultType="int">
+	<select id="projectListCnt" parameterType="introduction" resultType="int">
 		/* Introduction - projectListCnt */
 		SELECT NVL(count(1), 0) FROM
 		(	SELECT list.*, ROWNUM AS RNUM
@@ -55,7 +60,7 @@
 				ORDER BY intapp_index desc
 			) list
 		)
-	</select> -->
+	</select>
 	
 	
 	
@@ -173,6 +178,32 @@
 		FROM	   introduction
 		WHERE app_index = #{app_index}
 	</select>
+	
+	
+	
+	
+	
+	<!-- 프로젝트 개설자 아이디 조회 -->
+	<select id="usermainEmail" parameterType="introduction" resultType="String">
+		/* Introduction - usermainEmail */
+		SELECT us_email 
+		FROM usermain 
+		WHERE us_index = (SELECT us_index FROM application WHERE app_index = #{app_index})
+	</select>
+	
+	
+	
+	
+	
+	<!-- 회원 프로젝트 수정/삭제 요청 수정 -->
+	<update id="projectApprovalUpdate" parameterType="introApproval">
+		/* Introduction - projectApprovalUpdate */
+		UPDATE introApproval
+		SET intapp_check = #{intapp_check}
+			, intapp_note = #{intapp_note}
+		WHERE intapp_index = #{intapp_index}
+	</update>
+	
 	
 	
 	

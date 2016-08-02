@@ -25,9 +25,8 @@
 					else if (!chkSubmit($("#request_phone_2"), "연락처를")) return;
 					else if (!chkSubmit($("#request_phone_3"), "연락처를")) return;
 					else {
-						
 						$("#app_phone").val($("#request_phone_1").val() + "-" + $("#request_phone_2").val() + "-" + $("#request_phone_3").val());
-						$("#us_index").val(2);
+						$("#us_index").val("${us_index}");
 						
 						$("#new_project_request").attr({
 							"method":"POST",

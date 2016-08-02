@@ -120,7 +120,7 @@
 											<a href="/mywrite/list.do" class="button big fit">My Writing</a>
 										</c:when>
 										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
-											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a>
+											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a><br />
 											<a href="/manage/list.do" class="button big fit">게시판 관리</a>
 										</c:when>
 									</c:choose>

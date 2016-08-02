@@ -13,8 +13,8 @@
 		<script src="../js/html5shiv.js"></script>
 		<![endif]-->
 	
-		<link rel="stylesheet" type="text/css" href="/include/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/include/css/board.css">
+		<!-- <link rel="stylesheet" type="text/css" href="/include/css/common.css">
+		<link rel="stylesheet" type="text/css" href="/include/css/board.css"> -->
 		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
@@ -86,6 +86,10 @@
 				
 				<%-- ====================== 버튼 추가 시작 ====================== --%>
 				<table id="boardPwdBut">
+					<colgroup>
+						<col width="75%" />
+						<col width="25%" />
+					</colgroup>
 					<tr>
 						<td id="btd1">
 						</td>
@@ -109,7 +113,7 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<td class="ac">ID</td>
+								<td class="ac">회원일련번호</td>
 								<td>${applicationAdminDetail.us_index}</td>
 								<td class="ac">신청일</td>
 								<td>${applicationAdminDetail.app_date}</td>
