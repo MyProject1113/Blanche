@@ -98,6 +98,7 @@
 								<li>회원등급 : ${sessionScope.blancheUser.us_rank}</li>	<!--임시로 추가한 등급 확인용 텍스트 -->
 								<li><a href="/user/exit.do" class="button big fit">Log Out</a></li>
 								<li><a href="/mypage/mylist.do" class="button big fit">내가 쓴 글</a></li>
+								<li><a href="/usermanage/pwchange.do" class="button big fit">마이페이지</a></li>
 								<c:if test="${not empty sessionScope.blancheUser.accessIP}">
 									<li id="lastAccess">
 										<span>최근접속 : ${sessionScope.blancheUser.accessIP} (${sessionScope.blancheUser.accessDate})</span><br />
