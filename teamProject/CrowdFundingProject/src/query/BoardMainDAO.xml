@@ -13,6 +13,7 @@
 			,	bd_step
 			,	bd_indent
 			,	bd_check
+			,	bd_delete
 			,	(CASE WHEN (SYSDATE - bd_regdate) <![CDATA[<]]> 1 THEN
 					TO_CHAR(bd_regdate, 'HH24:MI:SS')
 				ELSE
@@ -47,7 +48,11 @@
 	<!-- 게시물 검색 조건 -->
 	<sql id="boardSearch">
 		<where>
-			bd_delete = 0
+			0 = 0
+			<if test="bd_delete == 0">
+				AND
+				bd_delete = 0
+			</if>
 			<if test="bdinf_index > 0">
 				AND
 				bdinf_index = #{bdinf_index}
@@ -99,6 +104,7 @@
 			,	bd_step
 			,	bd_indent
 			,	bd_check
+			,	bd_delete
 			,	TO_CHAR(bd_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bd_regdate
 			,	TO_CHAR(bd_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bd_modidate
 			,	(SELECT us_nickname FROM usermain WHERE us_index = boardmain.us_index) AS nickname
@@ -110,8 +116,10 @@
 				END) AS editable
 		FROM 	boardmain
 		WHERE	bd_index = #{bd_index}
-				AND
-				bd_delete = 0
+				<if test="bd_delete == 0">
+					AND
+					bd_delete = 0
+				</if>
 	</select>
 	
 	<!-- 게시물 조회수 증가 -->
@@ -179,8 +187,23 @@
 		SET		bd_delete = 1
 			,	bd_modidate = sysdate
 		WHERE	bd_index = #{bd_index}
-				AND
-				us_index = #{us_index}
+				<if test="us_index > 0">
+					AND
+					us_index = #{us_index}
+				</if>
+	</update>
+	
+	<!-- 게시물 본문 복원 -->
+	<update id="boardRestore" parameterType="boardMainVO">
+		/* BoardMainDAO - boardDelete */
+		UPDATE	boardmain
+		SET		bd_delete = 0
+			,	bd_modidate = sysdate
+		WHERE	bd_index = #{bd_index}
+				<if test="us_index > 0">
+					AND
+					us_index = #{us_index}
+				</if>
 	</update>
 	
 	<!-- 게시물 개수 조회 -->

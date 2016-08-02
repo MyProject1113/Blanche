@@ -169,7 +169,7 @@ public class NoticeMainController implements Constant {
 				mav.addObject("noticeParam", param);
 				mav.setViewName("notice/writeForm");
 			} else {
-				mav.addObject("result", "운영자만 글을 작성할 수 있씁니다.");
+				mav.addObject("result", "운영자만 글을 작성할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
 			}
 		} else {
@@ -220,7 +220,7 @@ public class NoticeMainController implements Constant {
 					mav.setViewName("board/common/returnError");
 				}
 			} else {
-				mav.addObject("result", "운영자만 글을 작성할 수 있씁니다.");
+				mav.addObject("result", "운영자만 글을 작성할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
 			}
 		} else {
@@ -258,7 +258,7 @@ public class NoticeMainController implements Constant {
 				mav.addObject("attachList", attachList);
 				mav.setViewName("notice/editForm");
 			} else {
-				mav.addObject("result", "운영자만 글을 수정할 수 있씁니다.");
+				mav.addObject("result", "운영자만 글을 수정할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
 			}
 		} else {
@@ -315,7 +315,7 @@ public class NoticeMainController implements Constant {
 					mav.setViewName("board/common/returnError");
 				}
 			} else {
-				mav.addObject("result", "운영자만 글을 수정할 수 있씁니다.");
+				mav.addObject("result", "운영자만 글을 수정할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
 			}
 		} else {
@@ -352,7 +352,7 @@ public class NoticeMainController implements Constant {
 					mav.setViewName("board/common/returnError");
 				}
 			} else {
-				mav.addObject("result", "운영자만 글을 삭제할 수 있씁니다.");
+				mav.addObject("result", "운영자만 글을 삭제할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
 			}
 		} else {

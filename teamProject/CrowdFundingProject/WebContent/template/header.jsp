@@ -24,7 +24,6 @@
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/faq/list.do">게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
@@ -32,7 +31,24 @@
 						<li><a href="#">Extensions</a></li>
 					</ul>
 				</li>
-			      
+				<c:if test="${not empty sessionScope.blancheUser}">
+					<li><a href="#">마이페이지</a>
+						<ul>
+							<li><a href="/mypage/list.do">내가 쓴 글</a></li>
+							<li><a href="/usermanage/pwchange.do">비밀번호 변경</a></li>
+							<li><a href="/usermanage/phchange.do">연락처 변경</a></li>
+							<li><a href="/usermanage/design.do">기획정보</a></li>
+							<li><a href="/usermanage/invest.do">투자정보</a></li>
+						</ul>
+					</li>
+					<c:if test="${sessionScope.blancheUser.us_rank == 3}">
+						<li><a href="#">관리자모드</a>
+							<ul>
+								<li><a href="/manage/list.do">게시판 관리</a></li>
+							</ul>
+						</li>
+					</c:if>
+				</c:if>
 				<!-- <li><a href="#">로그인</a></li> -->
 			</ul>
 			
@@ -70,32 +86,14 @@
 				<ul class="links">
 					<li>
 						<a href="#">
+							<h3>지구촌 나눔</h3>
+							<p>Global sharing</p>
+						</a>
+					</li>
+					<li>
+						<a href="#">
 							<h3>영화 / 공연</h3>
 							<p>Movie & Performance</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>음악</h3>
-							<p>Music</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>디자인</h3>
-							<p>Design</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>출판</h3>
-							<p>Publication</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>요리</h3>
-							<p>Cooking</p>
 						</a>
 					</li>
 				</ul>
@@ -112,19 +110,8 @@
 					<c:otherwise>
 						<form name="formLogout" id="formLogout">
 							<ul class="actions vertical">
-								<li>[${sessionScope.blancheUser.us_nickname}] 님 환영합니다.</li>
-								<%-- <li>회원등급 : ${sessionScope.blancheUser.us_rank}</li> --%>	<!--임시로 추가한 등급 확인용 텍스트 -->
-								<li>
-									<c:choose>
-										<c:when test="${sessionScope.blancheUser.us_rank == '0'}">
-											<a href="/user/exit.do" class="button big fit">My Page</a><br />
-											<a href="/mypage/mylist.do" class="button big fit">My Writing</a>
-										</c:when>
-										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
-											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a>
-										</c:when>
-									</c:choose>
-								</li>
+								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
+								<li>회원등급 : ${sessionScope.blancheUser.us_rank}</li>	<!--임시로 추가한 등급 확인용 텍스트 -->
 								<li><a href="/user/exit.do" class="button big fit">Log Out</a></li>
 								<c:if test="${not empty sessionScope.blancheUser.accessIP}">
 									<li id="lastAccess">

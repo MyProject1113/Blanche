@@ -46,6 +46,11 @@ public class BoardMainServiceImpl implements BoardMainService {
 	}
 	
 	@Override
+	public int boardRestore(BoardMainVO param) {
+		return boardMainMapper.boardRestore(param);
+	}
+	
+	@Override
 	public int boardListCount(BoardMainVO param) {
 		return boardMainMapper.boardListCount(param);
 	}

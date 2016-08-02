@@ -21,6 +21,14 @@
 		</where>
 	</select>
 	
+	<!-- 게시판 정보 확인 -->
+	<select id="infoCheck" parameterType="boardInfoVO" resultType="int">
+		/* BoardInfoDAO - infoCheck */
+		SELECT	COUNT(bdinf_index)
+		FROM		boardinfo
+		WHERE	bdinf_type = #{bdinf_type}
+	</select>
+	
 	<!-- 게시판 정보 작성 -->
 	<insert id="infoInsert" parameterType="boardInfoVO">
 		/* BoardInfoDAO - infoInsert */
