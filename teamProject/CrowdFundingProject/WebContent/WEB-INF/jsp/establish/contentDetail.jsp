@@ -24,11 +24,6 @@
 		
 	</head>
 	<body>
-		
-		<form class="project_intro_index" id="project_intro_index">
-			<input type="hidden" id="intro_index" name="intro_index" value="${introDetail.intro_index}" />
-		</form>
-				
 		<!-- 타이틀 -->
 		<div class="b-header b-header_centered_yes">
 			<div class="b-header__inner">
@@ -141,7 +136,7 @@
 					</dl>
 					
 					  
-					<a href="/intro/reward.do" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
+					<a href="/intro/reward.do?intro_index=${introDetail.intro_index}" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
 					
 					<p class="b-pledge_blurb js-pledge_blurb">결제는 ${donationDetail.dona_endDate} 자정까지 최소 ${donationDetail.dona_purpose}원이 모여야만 다함께 진행됩니다</p>
 					
