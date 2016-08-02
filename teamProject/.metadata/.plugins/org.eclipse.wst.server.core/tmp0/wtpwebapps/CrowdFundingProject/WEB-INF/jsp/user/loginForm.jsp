@@ -49,6 +49,8 @@
 			$("#loginBtn").click(function() {
 				if (!chkSubmit($("#us_email"), "이메일을")) {
 					return;
+				} else if (!checkEmail($("#us_email"))) {
+					return;
 				} else if (!chkSubmit($("#us_password"), "비밀번호를")) {
 					return;
 				}
@@ -86,15 +88,15 @@
 		<form name="formLogin" id="formLogin">
 			<table>
 				<colgroup>
-					<col width="20%">
-					<col width="80%">
+					<col width="20%" />
+					<col width="80%" />
 				</colgroup>
 				<tr>
 					<td colspan="2" class="center">로그인</td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" name="us_email" id="us_email" /></td>
+					<td><input type="email" name="us_email" id="us_email" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>

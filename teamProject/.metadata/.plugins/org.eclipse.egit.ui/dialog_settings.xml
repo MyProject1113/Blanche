@@ -2,17 +2,17 @@
 <section name="Workbench">
 	<item value="true" key="CommitDialog.showUntracked"/>
 	<list key="CommitDialog.authorValues">
-		<item value="jacques0930 &lt;jacques0930@gmail.com&gt;"/>
 		<item value="MyProject1113 &lt;monami730@naver.com&gt;"/>
+		<item value="jacques0930 &lt;jacques0930@gmail.com&gt;"/>
 	</list>
 	<list key="CommitDialog.committerValues">
-		<item value="jacques0930 &lt;jacques0930@gmail.com&gt;"/>
 		<item value="MyProject1113 &lt;monami730@naver.com&gt;"/>
+		<item value="jacques0930 &lt;jacques0930@gmail.com&gt;"/>
 	</list>
 	<section name="org.eclipse.egit.ui.internal.push.PushResultDialog.dialogBounds">
-		<item value="668" key="DIALOG_WIDTH"/>
-		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
-		<item value="479" key="DIALOG_HEIGHT"/>
+		<item value="666" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="457" key="DIALOG_HEIGHT"/>
 		<item value="635" key="DIALOG_X_ORIGIN"/>
 		<item value="224" key="DIALOG_Y_ORIGIN"/>
 		<list key="sashWeights">
@@ -21,9 +21,9 @@
 		</list>
 	</section>
 	<section name="org.eclipse.egit.ui.internal.pull.PullResultDialog.dialogBounds">
-		<item value="1014" key="DIALOG_WIDTH"/>
-		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
-		<item value="460" key="DIALOG_HEIGHT"/>
+		<item value="505" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="462" key="DIALOG_X_ORIGIN"/>
 		<item value="219" key="DIALOG_Y_ORIGIN"/>
 	</section>
@@ -35,9 +35,9 @@
 		<item value="171" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.egit.ui.COMMIT_DIALOG_SECTION">
-		<item value="646" key="DIALOG_WIDTH"/>
-		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
-		<item value="679" key="DIALOG_HEIGHT"/>
+		<item value="642" key="DIALOG_WIDTH"/>
+		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
+		<item value="640" key="DIALOG_HEIGHT"/>
 		<item value="647" key="DIALOG_X_ORIGIN"/>
 		<item value="102" key="DIALOG_Y_ORIGIN"/>
 	</section>

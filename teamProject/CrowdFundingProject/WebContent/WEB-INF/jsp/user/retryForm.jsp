@@ -26,41 +26,38 @@
 		#formRetry .center {
 			text-align: center;
 		}
-		#formRetry #loginBtn {
+		#formRetry #retryBtn {
 			width: 80%;
 		}
-		#formRetry #joinBtn,
-		#formRetry #findBtn {
-			width: 40%;
+		#loader{
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 99999;
+			background-color: #000;
+			opacity: 0.7;
+			display:none;
 		}
-		
-			#loader{
-				position: fixed;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				z-index: 99999;
-				background-color: #000;
-				opacity: 0.7;
-				display:none;
-			}
-			#loader .blink {
-				font-size: 20px;
-				font-weight: bold;
-				margin: 10% 20%;
-				text-align: center;
-				-webkit-animation: mymove 1s infinite;
-				animation: mymove 1s infinite;
-			} 
-			@webkit-keyframes mymove {
-				0% { color: white; }
-				50% { color: black; }
-			}
-			@keyframes mymove {
-				0% { color: white; }
-				50% { color: black; }
-			}
+		#loader .blink {
+			font-size: 20px;
+			font-weight: bold;
+			margin: 10% 20%;
+			text-align: center;
+			-webkit-animation: mymove 1s infinite;
+			animation: mymove 1s infinite;
+		} 
+		@webkit-keyframes mymove {
+			0% { color: white; }
+			50% { color: black; }
+			100% { color: white; }
+		}
+		@keyframes mymove {
+			0% { color: white; }
+			50% { color: black; }
+			100% { color: white; }
+		}
 	</style>
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript" src="/include/js/common.js"></script>
@@ -69,7 +66,7 @@
 			$("#us_index").val("<c:out value='${userData.us_index}' />");
 			$("#us_email").val("<c:out value='${userData.us_email}' />");
 			
-			/* 댓글 저장 버튼 클릭 시 처리 이벤트 */
+			/* 인증메일 재전송 버튼 클릭 시 처리 이벤트 */
 			$("#retryBtn").click(function() {
 				$.ajax({
 					url : "/user/retry.do",
@@ -87,7 +84,7 @@
 					}),
 					success : function(result) {
 						if (result == "SUCCESS") {
-							alert("인증메일이 전송되었습니다. 다시 확인해주십시오.");
+							alert("인증메일이 전송되었습니다. 확인해주십시오.");
 						} else if (result == "COMPLETE") {
 							alert("인증이 이미 완료되어 있습니다.");
 						}
@@ -108,15 +105,15 @@
 	<input type="hidden" name="us_index" id="us_index" />
 	<table>
 		<colgroup>
-			<col width="20%">
-			<col width="80%">
+			<col width="20%" />
+			<col width="80%" />
 		</colgroup>
 		<tr>
 			<td colspan="2" class="center">해당 아이디는 아직 인증되지 않았습니다.</td>
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="text" name="us_email" id="us_email" readonly /></td>
+			<td><input type="email" name="us_email" id="us_email" readonly /></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">

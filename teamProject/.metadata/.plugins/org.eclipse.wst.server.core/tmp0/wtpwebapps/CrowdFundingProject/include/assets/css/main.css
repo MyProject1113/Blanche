@@ -2032,7 +2032,7 @@ hr {
 	    margin-right: -15px;
 	}
 
-		input[type="checkbox"] + label,
+		/* input[type="checkbox"] + label,
 		input[type="radio"] + label {
 			text-decoration: none;
 			color: #646464;
@@ -2043,7 +2043,7 @@ hr {
 			padding-left: 2.4em;
 			padding-right: 0.75em;
 			position: relative;
-		}
+		} */
 
 			input[type="checkbox"] + label:before,
 			input[type="radio"] + label:before {
@@ -3533,3 +3533,9 @@ hr {
 			}
 
 		}
+		
+		#requestRadio1{margin-top:7px;
+							  margin-right:5px;}
+		#requestRadio2{margin-left: 15px;
+							  margin-top:8px;
+							  margin-right:5px;}

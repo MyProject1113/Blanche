@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Header -->
 	<header id="header">
 		<h1><a href="/index.jsp">(주)너와 나의 연결고리</a></h1>
 		<nav class="links">
 			<ul>
 				<li><a href="/intro/intro.do" class="current-page-item">프로젝트 둘러보기</a></li>
-				<li><a href="/establish/notice.do">프로젝트 올리기</a></li>
+				<!-- <li><a href="/establish/notice.do">프로젝트 올리기</a></li> -->
+				<li><a href="/establish/userProgressCheck.do">프로젝트 올리기</a></li>
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/notice/list.do">공지게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/faq/list.do">게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
-						<li><a href="/board/faq/list.do">질문게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
@@ -73,7 +74,28 @@
 		<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="/user/login.do" class="button big fit">Log In</a></li>
+					<c:choose>
+						<c:when test="${empty sessionScope.blancheUser}">
+							<li><a href="/user/login.do" class="button big fit">Log In</a></li>
+						</c:when>
+						<c:otherwise>
+							<form name="formLogout" id="formLogout">
+								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
+								<li><%-- ${sessionScope.blancheUser.us_rank}님. 환영합니다. --%>
+									<c:choose>
+										<c:when test="${sessionScope.blancheUser.us_rank == '0'}">
+											<a href="/user/exit.do" class="button big fit">My Page</a>
+										</c:when>
+										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
+											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a>
+										</c:when>
+									</c:choose>
+								</li>
+								<li><a href="/user/exit.do" class="button big fit">Log Out</a></li>
+								
+							</form>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</section>
 

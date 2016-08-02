@@ -10,7 +10,7 @@
 			,	us_nickname
 			,	us_rank
 			,	us_phone
-			,	(SELECT COUNT(usacd_index) FROM useraccredit WHERE us_index = usermain.us_index) AS accreditState
+			,	(SELECT COUNT(usacd_index) FROM useraccredit WHERE us_index = usermain.us_index AND usacd_type = 0) AS accreditState
 		FROM		usermain
 		WHERE	us_email = #{us_email}
 					AND
@@ -28,6 +28,19 @@
 			,	us_phone
 		FROM		usermain
 		WHERE	us_index = #{us_index}
+	</select>
+	
+	<!-- 회원 정보 찾기 -->
+	<select id="userFind" parameterType="userMainVO" resultType="userMainVO">
+		/* UserMainDAO - userData */
+		SELECT 	us_index
+			,	us_email
+			,	us_name
+			,	us_nickname
+			,	us_rank
+			,	us_phone
+		FROM		usermain
+		WHERE	us_email = #{us_email}
 	</select>
 	
 	<!-- 회원 정보 입력-->
@@ -50,7 +63,7 @@
 		SELECT	COUNT(us_index)
 		FROM		usermain
 		<where>
-			1 = 1
+			0 = 0
 			<if test="us_email != null and us_email != ''">
 				AND
 				us_email = #{us_email}
@@ -61,4 +74,13 @@
 			</if>
 		</where>
 	</select>
+	
+	<!-- 회원 비밀번호 변경 -->
+	<update id="userChangePassword" parameterType="userMainVO">
+		/* UserMainDAO - userChangePassword */
+		UPDATE	usermain
+		SET	us_password =#{us_password}
+			,	us_modidate2 = sysdate
+		WHERE	us_index = #{us_index} 
+	</update>
 </mapper>

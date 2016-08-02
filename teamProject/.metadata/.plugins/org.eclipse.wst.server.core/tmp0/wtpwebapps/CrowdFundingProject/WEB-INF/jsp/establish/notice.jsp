@@ -16,19 +16,28 @@
 		<script type="text/javascript">
 			$(function() {
 				
-				/* alert("회원번호 : ${sessionScope.blancheUser.us_index}"); */
-				/* alert("회원ID : ${sessionScope.blancheUser.us_email}"); */
+				/* alert("회원번호 : ${sessionScope.blancheUser.us_index}\n회원ID : ${sessionScope.blancheUser.us_email}"); */
 				
 				
 				$('#app_btn').click(function(e) {
 					if($("input[name='agree']:checked").val() == "Y") {
-						location.href="/establish/applicationForm.do";
+						var login = "${sessionScope.blancheUser.us_index}";
+						if (login != "") {
+							location.href="/establish/applicationForm.do";
+							//location.href="/establish/applicationDetailForm.do?app_index=23";
+							//location.href="/establish/projectMyPage.do?app_index=23";
+						} else {
+							alert("로그인이 필요한 메뉴입니다.\n로그인 후 다시 이용해 주시기 바랍니다.");
+						}
+						
+						//location.href="/establish/applicationForm.do";
 						//location.href="/establish/applicationDetailForm.do?app_index=3";
 						//location.href="/establish/contentDetail.do";
 						//location.href="/establish/applicationAdminList.do";
 						//location.href="/establish/projectAdminList.do";
 						//location.href="/establish/applicationMyPage.do?us_index=23";
 						//location.href="/establish/contentReply.do";
+						//location.href="/establish/projectMyPage.do?us_index=3";
 					} else {
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 						return;

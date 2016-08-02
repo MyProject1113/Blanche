@@ -38,14 +38,14 @@
 				location.href="/user/login.do";
 			});
 		});
-</script>
+	</script>
 </head>
 <body>
 <form name="formInfo" id="formInfo">
 	<table>
 		<colgroup>
-			<col width="20%">
-			<col width="80%">
+			<col width="20%" />
+			<col width="80%" />
 		</colgroup>
 		<tr>
 			<td colspan="2" class="center">회원정보</td>

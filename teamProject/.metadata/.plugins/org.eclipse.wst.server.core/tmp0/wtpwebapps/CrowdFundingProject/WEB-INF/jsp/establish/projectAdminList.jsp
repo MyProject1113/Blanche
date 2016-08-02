@@ -15,8 +15,14 @@
 		<script src="../js/html5shiv.js"></script>
 		<![endif]-->
 	
-		<link rel="stylesheet" type="text/css" href="/include/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/include/css/board.css">
+		<!-- <link rel="stylesheet" type="text/css" href="/include/css/common.css">
+		<link rel="stylesheet" type="text/css" href="/include/css/board.css"> -->
+		
+		<style type="text/css">
+			div#tabBtn {
+			    margin-bottom: 25px;
+			}
+		</style>
 		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
@@ -58,6 +64,11 @@
 						if (!chkSubmit($("#keyword"), "검색어를")) return;
 					}
 					/* goPage(1); */
+				});
+
+				/* 개설신청 리스트 버튼 클릭 시 처리 이벤트 */
+				$("#appBtn").click(function() {
+					location.href = "/establish/applicationAdminList.do";
 				});
 				
 				/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
@@ -178,8 +189,13 @@
 	
 	</head>
 	<body>
+		<div id="tabBtn">
+			<input type="button" value="개설신청" id="appBtn" />
+			<input type="button" value="프로젝트 승인" id="projectBtn" disabled="disabled" />
+		</div>
+		
 		<div class="contentContainer">
-			<div class="contentTit"><h3>게시판 리스트</h3></div>
+			<div class="contentTit"><h3>프로젝트 상태 리스트</h3></div>
 			
 			<%-- ================== 상세 페이지 이동을 위한 FORM ================== --%>
 			<form name="detailForm" id="detailForm">
@@ -194,18 +210,25 @@
 					<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc}" />
 					<table summary="검색">
 						<colgroup>
-							<col width="70%"></col>
-							<col width="30%"></col>
+							<col width="10%"></col>
+							<col width="15%"></col>
+							<col width="40%"></col>
+							<col width="5%"></col>
+							<col width="5%"></col>
+							<col width="25%"></col>
 						</colgroup>
 						<tr>
-							<td id="btd1">
+							<td>
 								<label>검색조건</label>
+							</td>
+							<td>
 								<select id="search" name="search">
 									<option value="all">전체</option>
 									<option value="us_email">사용자ID</option>
 									<option value="intapp_check">승인여부</option>
 								</select>
-								
+							</td>
+							<td>
 								<div id="keyword_text">
 									<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" />
 								</div>
@@ -219,11 +242,13 @@
 										<option value="4">기간만료</option>
 									</select>
 								</div>
-								
+							</td>
+							<td>
 								<input type="button" value="검색" id="searchData" />
 							</td>
-							
-							<td id="btd2">
+							<td>
+							</td>
+							<td>
 							
 								<!-- <input type="button" value="전체선택" onclick="checkboxSelectQue(1,'chk[]')" />
 								<input type="button" value="전체해제" onclick="checkboxSelectQue(2,'chk[]')" />
@@ -233,7 +258,7 @@
 
 								<input type="button" value="초기화" id="resetBtn" onclick="checkboxSelectReset('chk[]')" />
 								<input type="button" value="수정승인" id="updateBtn" onclick="checkboxSelectUpdate('chk[]')" />
-								<input type="button" value="삭제" id="deleteBtn" />
+								<!-- <input type="button" value="삭제" id="deleteBtn" /> -->
 							</td>
 						</tr>
 					</table>
@@ -245,12 +270,12 @@
 			<div id="boardList">
 				<table summary="게시판 리스트">
 					<colgroup>
-						<col width="10%" />
+						<col width="5%" />
 						<col width="10%" />
 						<col width="25%" />
-						<col width="20%" />
-						<col width="15%" />
-						<col width="20%" />
+						<col width="25%" />
+						<col width="10%" />
+						<col width="25%" />
 					</colgroup>
 					<thead>
 						<tr>

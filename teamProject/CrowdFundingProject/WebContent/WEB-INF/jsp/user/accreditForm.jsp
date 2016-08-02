@@ -26,7 +26,8 @@
 		#formAccredit .center {
 			text-align: center;
 		}
-		#formAccredit #goBtn {
+		#formAccredit #goBtn,
+		#formAccredit #changeBtn {
 			width: 80%;
 		} 
 	</style>
@@ -34,27 +35,64 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function(){
+			$("#us_index").val("<c:out value='${accreditData.us_index}' />");
+			
+			/* 로그인창으로 이동 버튼 클릭 시 처리 이벤트 */
 			$("#goBtn").click(function(){
 				location.href="/user/login.do";
+			});
+			
+			/* 비밀번호 변경 버튼 클릭 시 처리 이벤트 */
+			$("#changeBtn").click(function() {
+				if (!chkSubmit($("#us_password"), "비밀번호를")) {
+					return;
+				}
+				$("#formAccredit").attr({
+					"method" : "post",
+					"action" : "/user/changePassword.do"
+				});
+				$("#formAccredit").submit();
 			});
 		});
 </script>
 </head>
 <body>
 <form name="formAccredit" id="formAccredit">
-	<table>
-		<colgroup>
-			<col width="100%">
-		</colgroup>
-		<tr>
-			<td class="center">인증이 완료되었습니다. 다시 로그인을 시도해주십시오.</td>
-		</tr>
-		<tr>
-			<td class="center">
-				<input type="button" name="goBtn" id="goBtn" value="로그인창으로 이동" />
-			</td>
-		</tr>
-	</table>
+	<input type="hidden" name="us_index" id="us_index" />
+	<c:choose>
+		<c:when test="${accreditData.usacd_type == 0}">
+				<table>
+					<colgroup>
+						<col width="100%">
+					</colgroup>
+					<tr>
+						<td class="center">인증이 완료되었습니다. 다시 로그인을 시도해주십시오.</td>
+					</tr>
+					<tr>
+						<td class="center">
+							<input type="button" name="goBtn" id="goBtn" value="로그인창으로 이동" />
+						</td>
+					</tr>
+				</table>
+		</c:when>
+		<c:otherwise>
+			<table>
+				<colgroup>
+					<col width="20%" />
+					<col width="80%" />
+				</colgroup>
+				<tr>
+					<td>비밀번호</td>
+					<td><input type="password" name="us_password" id="us_password" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="center">
+						<input type="button" name="changeBtn" id="changeBtn" value="비밀번호 변경" />
+					</td>
+				</tr>
+			</table>
+		</c:otherwise>
+	</c:choose>
 </form>
 </body>
 </html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.establish.dao.ApplicationDao">
+
+
+
+	<sql id="listCommon">
+		SELECT app.app_index, app_topic, app_fund, app_field, app_reference, app_phone, app_date, app.us_index, appro_index, appro_check, appro_note
+		FROM application app INNER JOIN approval appro
+		ON app.app_index = appro.app_index
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="searchField=='app_topic'">
+				<![CDATA[ app_topic LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+			<if test="searchField=='app_field'">
+				<![CDATA[ AND app_field LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+			<if test="searchField=='appro_check'">
+				<![CDATA[ AND appro_check LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 개설신청/승인 기본 조회 -->
+	<select id="applicationAdminList" parameterType="application" resultType="application">
+		/* Application - applicationAdminList */
+		SELECT app_index, app_topic, app_fund, app_field, app_reference, app_phone, 
+			TO_CHAR(app_date, 'YYYY-MM-DD HH24:MI:SS') AS app_date, us_index, 
+			appro_index, appro_check, appro_note 
+		FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="listCommon"></include>
+				<choose>
+					<when test="order_by == 'app_index'">ORDER BY app_index</when>
+					<when test="order_by == 'app_date'">ORDER BY app_date</when>
+				</choose>
+				<choose>
+					<when test="order_sc == 'ASC'">ASC</when>
+					<when test="order_sc == 'DESC'">DESC</when>
+				</choose>
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="applicationListCnt" parameterType="application" resultType="int">
+		/* Application - applicationListCnt */
+		SELECT NVL(count(1), 0) FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="listCommon"></include>
+				ORDER BY app_index desc
+			) list
+		)
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 상세 페이지를 위한 게시물 조회 -->
+	<select id="applicationAdminDetail" parameterType="application" resultType="application">
+		/* Application - applicationAdminDetail */
+		SELECT app.app_index, app_topic, app_fund, app_field, app_reference, app_phone, app_date, app.us_index, appro_index, appro_check, appro_note
+		FROM application app INNER JOIN approval appro
+		ON app.app_index = appro.app_index
+		WHERE app.app_index = #{app_index}
+	</select>
+	
+	
+	
+	<!-- 게시물 수정 -->
+	<update id="approvalUpdate" parameterType="approval">
+		/* Application - approvalUpdate */
+		UPDATE approval
+		SET appro_check = #{appro_check}
+			, appro_note = #{appro_note}
+		WHERE app_index = #{app_index}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="applicationDelete" parameterType="application">
+		/* Application - applicationDelete */
+		<!-- DELETE FROM spring_board WHERE b_num = #{b_num}
+		
+		DELETE UPDATE_TAB
+		FROM TEST_TAB
+		WHERE TEST_TAB.SEQ = UPDATE_TAB.SEQ AND TEST_TAB.MANAGE = 1 -->
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 개설신청 내용 등록 -->
+	<insert id="applicationInsert" parameterType="application">
+		/* Application - applicationInsert */
+		INSERT INTO application
+			(app_index, app_topic, app_fund, app_field, app_reference, app_phone, us_index)
+		VALUES
+			(application_seq.nextval, #{app_topic}, #{app_fund}, #{app_field}, #{app_reference}, #{app_phone}, #{us_index})
+	</insert>
+	
+	<!-- 승인 내용 등록 -->
+	<insert id="approvalInsert" parameterType="approval">
+		/* Application - approvalInsert */
+		INSERT INTO approval
+			(appro_index, appro_check, app_index, us_index)
+		VALUES
+			(approval_seq.nextval, #{appro_check}, application_seq.currval, #{us_index})
+	</insert>
+	
+	
+	<!-- 개설신청 상세 보기를 위한 조회 -->
+	<select id="applicationDetail" parameterType="application" resultType="application">
+		/* Application - applicationDetail */
+		<!-- SELECT app_index, app_topic, app_fund, app_field, app_reference, app_phone, us_index
+		FROM application
+		WHERE app_index = #{app_index}
+		ORDER BY app_index asc -->
+		
+		SELECT app.app_index, app_topic, app_fund, app_field, app_reference, app_phone, app.us_index, appro_index, appro_check
+		FROM application app inner join approval appro
+		ON app.us_index = appro.us_index
+		WHERE app.app_index = #{app_index}
+		ORDER BY app_index asc
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 게시물 기본 조회 -->
+	<select id="applicationMyPageList" parameterType="application" resultType="application">
+		/* Application - applicationMyPageList */
+		SELECT app.app_index, app_topic, app_fund, app_field, app_reference, app_phone, app_date, 
+					app.us_index, appro_index, appro_check, appro_note
+		FROM APPLICATION app INNER JOIN approval appro
+		ON app.app_index = appro.app_index
+		WHERE app.us_index = #{us_index}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 승인 여부 조회 -->
+	<select id="userProgressAppro" parameterType="approval" resultType="approval">
+		/* Application - userProgressAppro */
+		SELECT list.*
+		FROM (SELECT appro_index, appro_check, appro_note, app_index, us_index
+				  FROM approval
+		 		  WHERE us_index = #{us_index}
+    			  ORDER BY appro_index DESC) list
+		WHERE rownum BETWEEN 0 AND 1
+	</select>
+	
+	
+	
+	
+</mapper>

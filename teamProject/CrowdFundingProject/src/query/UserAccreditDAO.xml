@@ -30,5 +30,7 @@
 		DELETE FROM
 					useraccredit
 		WHERE 	us_index = #{us_index}
+					AND
+					usacd_type = #{usacd_type}
 	</delete>	
 </mapper>

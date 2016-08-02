@@ -207,7 +207,18 @@
 				</tr>
 				<tr>
 					<td class="columnName center">작성자</td>
-					<td>${boardData.nickname}</td>
+					<td>
+						<c:choose>
+							<c:when test="${boardData.us_index == infoData.bdinf_master}">
+								<span class="emphasis">
+									${boardData.nickname} 
+								</span>
+							</c:when>
+							<c:otherwise>
+								${boardData.nickname}
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td class="columnName center">최종수정일</td>
 					<td>${boardData.bd_modidate}</td>
 				</tr>
@@ -277,7 +288,18 @@
 					</tr>
 					<tr>
 						<td class="columnName center">작성자</td>
-						<td>${replyData.nickname}</td>
+						<td>
+							<c:choose>
+								<c:when test="${replyData.us_index == infoData.bdinf_master}">
+									<span class="emphasis">
+										${replyData.nickname} 
+									</span>
+								</c:when>
+								<c:otherwise>
+									${replyData.nickname}
+								</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="columnName center">최종수정일</td>
 						<td>${replyData.bd_modidate}</td>
 					</tr>

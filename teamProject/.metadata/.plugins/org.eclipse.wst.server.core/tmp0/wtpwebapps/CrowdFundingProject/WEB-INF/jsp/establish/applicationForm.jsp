@@ -64,13 +64,11 @@
 					<div class="app_form_question">
 						<label class="app_form_label" for="app_field">Q. 어느 분야라고 볼 수 있을까요?</label>
 						<select class="app_form_item" id="app_field" name="app_field"><option value="">분야 선택</option>
-							<option value="webtoon">만화</option>
 							<option value="movie">영화 ∙ 공연</option>
-							<option value="cooking">요리</option>
-							<option value="game">게임</option>
 							<option value="music">음악</option>
-							<option value="photo">사진</option>
+							<option value="design">디자인</option>
 							<option value="book">출판</option>
+							<option value="cooking">요리</option>
 						</select>
 						<p class="app_form_help"></p>
 					</div>

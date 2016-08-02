@@ -1,12 +1,13 @@
 package com.blanche.user.main.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import com.blanche.user.access.service.UserAccessService;
 import com.blanche.user.access.vo.UserAccessVO;
 import com.blanche.user.accredit.service.UserAccreditService;
 import com.blanche.user.accredit.vo.UserAccreditVO;
+import com.blanche.user.agree.service.UserAgreeService;
+import com.blanche.user.agree.vo.UserAgreeVO;
 import com.blanche.user.common.mail.EmailUtil;
 import com.blanche.user.common.util.EncryptionUtil;
 import com.blanche.user.common.util.IPConfigUtil;
@@ -32,6 +35,9 @@ public class UserMainController implements Constant {
 	
 	@Autowired
 	private UserMainService userMainService;
+	
+	@Autowired
+	private UserAgreeService userAgreeService;
 	
 	@Autowired
 	private UserAccessService userAccessService;
@@ -67,6 +73,11 @@ public class UserMainController implements Constant {
 				UserAccessVO accessParam = new UserAccessVO();
 				accessParam.setUs_index(param.getUs_index());
 				accessParam.setUsacc_ip(IPConfigUtil.getIP());
+				UserAccessVO accessLast = userAccessService.accessLast(accessParam);
+				if (accessLast != null) {
+					param.setAccessIP(accessLast.getUsacc_ip());
+					param.setAccessDate(accessLast.getUsacc_date());
+				}
 				userAccessService.accessInsert(accessParam);
 				request.getSession().setAttribute(SESSION_USER_DATA, param);
 				mav.setViewName("user/loginForm");
@@ -145,6 +156,11 @@ public class UserMainController implements Constant {
 		if (userData == null) {
 			int result = userMainService.userInsert(param);
 			if (result == 1) {
+				UserAgreeVO agreeParam = new UserAgreeVO();
+				agreeParam.setUs_index(param.getUs_index());
+				agreeParam.setUsagr_date1(param.getAgreeDate1());
+				agreeParam.setUsagr_date2(param.getAgreeDate2());
+				userAgreeService.agreeInsert(agreeParam);
 				UserAccreditVO accreditParam = new UserAccreditVO();
 				accreditParam.setUs_index(param.getUs_index());
 				accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
@@ -226,8 +242,8 @@ public class UserMainController implements Constant {
 		return mav;
 	}
 	
-	/** 회원 인증 재전송
-	 * @param	UserAccreditVO $param
+	/** 회원 가입 인증메일 재전송
+	 * @param	UserMainVO $param
 	 * @param	HttpServletRequest $request
 	 * @return UserMainVO $userData
 	 */
@@ -240,10 +256,10 @@ public class UserMainController implements Constant {
 			param = userMainService.userData(param);
 			UserAccreditVO accreditParam = new UserAccreditVO();
 			accreditParam.setUs_index(param.getUs_index());
+			accreditParam.setUsacd_type(0);
 			int result = userAccreditService.accreditDelete(accreditParam);
 			if (result == 1) {
 				accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
-				accreditParam.setUsacd_type(0);
 				accreditParam.setUserName(param.getUs_name());
 				accreditParam.setUserEmail(param.getUs_email());
 				EmailUtil.sendAccredit(accreditParam, request);
@@ -264,51 +280,94 @@ public class UserMainController implements Constant {
 		return entity;
 	}
 	
-	/* 추후에 삭제할 것들 */
-	
-	@RequestMapping(value="/findpw.do")
-	public String findpw(Model model) {
+	/** 회원 접속 기록
+	 * @param	 HttpServletRequest $request for UserMainVO
+	 * @return UserAccessVO $accessList
+	 */
+	@RequestMapping(value="/record.do", method=RequestMethod.GET)
+	public ModelAndView userAccess(HttpServletRequest request) {
+		logger.info("userAccess 호출 성공");
 		
-		return "user/recycle/findpw";	// View Name => 파일명 아님!!!
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			UserAccessVO accessParam = new UserAccessVO();
+			accessParam.setUs_index(userData.getUs_index());
+			List<UserAccessVO> accessList = userAccessService.accessList(accessParam);
+			mav.addObject("accessList", accessList);
+			mav.setViewName("user/recordForm");
+		} else {
+			mav.addObject("result", "로그인 상태에서만 접속기록을 확인할 수 있습니다.");
+			mav.setViewName("board/common/returnError");
+		}
+		
+		return mav;
 	}
 	
-	@RequestMapping(value="/accredit.do")
-	public String accredit(Model model) {
+	/** 회원 비밀번호 찾기창
+	 */
+	@RequestMapping(value="/find.do", method=RequestMethod.GET)
+	public ModelAndView userFind() {
+		logger.info("userFind 호출 성공");
 		
-		return "user/recycle/accredit";	// View Name => 파일명 아님!!!
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/findForm");
+		
+		return mav;
 	}
 	
-	@RequestMapping(value="/joincomp.do")
-	public String joincomp(Model model) {
-		//int result;
-		//email.sendEmail();
+	/** 회원 비밀번호 찾기 인증메일 전송
+	 * @param	UserMainVO $param
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $userData
+	 */
+	@RequestMapping(value="/send.do", method=RequestMethod.POST)
+	public ResponseEntity<String> userSend(@RequestBody UserMainVO param, HttpServletRequest request) {
+		logger.info("userSend 호출 성공");
 		
-		//result = email.result; 
-		
-		return "user/recycle/joincomp";	// View Name => 파일명 아님!!!
+		ResponseEntity<String> entity = null;
+		try {
+			param = userMainService.userFind(param);
+			UserAccreditVO accreditParam = new UserAccreditVO();
+			accreditParam.setUs_index(param.getUs_index());
+			accreditParam.setUsacd_type(1);
+			userAccreditService.accreditDelete(accreditParam);
+			accreditParam.setUsacd_code(EncryptionUtil.getAccredit());
+			accreditParam.setUserName(param.getUs_name());
+			accreditParam.setUserEmail(param.getUs_email());
+			EmailUtil.sendAccredit(accreditParam, request);
+			int result = userAccreditService.accreditInsert(accreditParam);
+			if (result == 1) {
+				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (entity == null) {
+				entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			}
+		}
+		return entity;
 	}
 	
-	@RequestMapping(value="/pwchange.do")
-	public String myPage1(Model model) {
+	/** 회원 비밀번호 변경
+	 * @param	UserMainVO $param
+	 */
+	@RequestMapping(value="/changePassword.do", method=RequestMethod.POST)
+	public ModelAndView userChangePassword(@ModelAttribute UserMainVO param) {
+		logger.info("userChangePassword 호출 성공");
 		
-		return "user/recycle/pwchange";	// View Name => 파일명 아님!!!
-	}
-	
-	@RequestMapping(value="/phchange.do")
-	public String myPage2(Model model) {
+		int result = userMainService.userChangePassword(param);
+		ModelAndView mav = new ModelAndView();
+		if (result == 1) {
+			String loginMessage = "비밀번호 변경에 성공했습니다.";
+			mav.addObject("loginMessage", loginMessage);
+			mav.setViewName("board/common/returnLogin");
+		} else {
+			mav.addObject("result", "비밀번호 변경에 실패했습니다.");
+			mav.setViewName("board/common/returnError");
+		}
 		
-		return "user/recycle/phchange";	// View Name => 파일명 아님!!!
-	}
-	
-	@RequestMapping(value="/design.do")
-	public String myPage3(Model model) {
-		
-		return "user/recycle/design";	// View Name => 파일명 아님!!!
-	}
-	
-	@RequestMapping(value="/invest.do")
-	public String myPage4(Model model) {
-		
-		return "user/recycle/invest";	// View Name => 파일명 아님!!!
+		return mav;
 	}
 }

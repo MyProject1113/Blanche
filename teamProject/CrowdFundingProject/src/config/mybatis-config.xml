@@ -4,6 +4,7 @@
 	<!-- 별칭을 설정 -->
 	<typeAliases>
 		<typeAlias type="com.blanche.user.main.vo.UserMainVO" alias="userMainVO" />
+		<typeAlias type="com.blanche.user.agree.vo.UserAgreeVO" alias="userAgreeVO" />
 		<typeAlias type="com.blanche.user.access.vo.UserAccessVO" alias="userAccessVO" />
 		<typeAlias type="com.blanche.user.accredit.vo.UserAccreditVO" alias="userAccreditVO" />
 		<typeAlias type="com.blanche.board.info.vo.BoardInfoVO" alias="boardInfoVO" />

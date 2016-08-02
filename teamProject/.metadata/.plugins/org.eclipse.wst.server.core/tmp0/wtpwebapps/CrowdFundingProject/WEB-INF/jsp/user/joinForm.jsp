@@ -95,13 +95,15 @@
 			
 			$("#joinBtn").click(function(){
 				if (!checkSubmit($("#us_email"), 60, "이메일")) {
-					return;		
+					return;
+				} else if (!checkEmail($("#us_email"))) {
+					return;
 				} else if (!checkSubmit($("#us_password"), 100, "비밀번호")) {
 					return;
 				} else if (!checkSubmit($("#us_name"), 30, "이름")) {
-					return;	
+					return;
 				} else if (!checkSubmit($("#us_nickname"), 30, "닉네임")) {
-					return;	
+					return;
 				} else if (!checkSubmit($("#us_phone"), 11, "연락처")) {
 					return;
 				} else if ($("#userEmailCheck").html() != "") {
@@ -124,8 +126,8 @@
 	<input type="hidden" name="agreeDate2" id="agreeDate2" /> 
 	<table>
 		<colgroup>
-			<col width="20%">
-			<col width="80%">
+			<col width="20%" />
+			<col width="80%" />
 		</colgroup>
 		<tr>
 			<td colspan="2" class="center">회원가입</td>
@@ -133,7 +135,7 @@
 		<tr>
 			<td>이메일</td>
 			<td>
-				<input type="text" name="us_email" id="us_email" />
+				<input type="email" name="us_email" id="us_email" />
 				<span id="userEmailCheck"></span>
 			</td>
 		</tr>

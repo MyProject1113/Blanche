@@ -31,3 +31,40 @@ function checkSubmit(item, length, name) {
 function stringByteLength(string) {
 	return string.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
 }
+
+/* checkEmail(유효성 대상) */
+function checkEmail(item) {
+	regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	if (!regExp.test(item.val())) {
+		alert("이메일 형식이 맞지 않습니다.");
+		item.focus();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* getNow() */
+function getNow() {
+	var nowDate = new Date();
+	var year = leadingZero(nowDate.getFullYear(), 4);
+	var month = leadingZero((nowDate.getMonth() + 1), 2);
+	var date = leadingZero(nowDate.getDate(), 2);
+	var hour = leadingZero(nowDate.getHours(), 2);
+	var minute = leadingZero(nowDate.getMinutes(), 2);
+	var second = leadingZero(nowDate.getSeconds(), 2);
+	var now = year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+	return now;
+}
+
+/* leadingZeros(숫자, 자릿수) */
+function leadingZero(num, digits) {
+	var zero = "";
+	num = num.toString();
+	if (num.length < digits) {
+		for (i = 0; i < digits - num.length; i++) {
+			zero += "0";
+		}
+	}
+	return zero + num;
+}

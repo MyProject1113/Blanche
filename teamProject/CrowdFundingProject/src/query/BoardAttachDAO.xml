@@ -8,7 +8,7 @@
 			,	bdatt_path
 			,	TO_CHAR(bdatt_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bdatt_regdate
 			,	TO_CHAR(bdatt_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bdatt_modidate
-		FROM 	boardattach
+		FROM		boardattach
 		WHERE	bd_index = #{bd_index}
 				AND
 				bdatt_delete = 0

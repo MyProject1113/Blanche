@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.establish.dao.IntroductionDao">
+
+
+	<sql id="listCommon">
+		SELECT intro.intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+		     intapp_index, intapp_check, intapp_reason, intapp_note
+		FROM introduction intro INNER JOIN introApproval intApp ON intro.intro_index = intApp.intro_index
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="search=='intro_index'">
+				<![CDATA[ intro.intro_index LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+			<if test="search=='intro_title'">
+				<![CDATA[ AND intro_title LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+			<if test="search=='intro_project'">
+				<![CDATA[ AND intro_project LIKE '%' || #{keyword} || '%' ]]>
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 게시물 기본 조회 -->
+	<select id="projectAdminList" parameterType="introduction" resultType="introduction">
+		/* Introduction - projectAdminList */
+		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+		     intapp_index, intapp_check, intapp_reason, intapp_note
+		FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="listCommon"></include>
+				<choose>
+					<when test="order_sc == 'ASC'">ORDER BY intapp_index ASC</when>
+					<when test="order_sc == 'DESC'">ORDER BY intapp_index DESC</when>
+				</choose>
+			) list
+		)
+		<!-- <where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where> -->
+	</select>
+	
+	<!-- <select id="projectListCnt" parameterType="introduction" resultType="int">
+		/* Introduction - projectListCnt */
+		SELECT NVL(count(1), 0) FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="listCommon"></include>
+				ORDER BY intapp_index desc
+			) list
+		)
+	</select> -->
+	
+	
+	
+	
+	
+	
+	<!-- 프로젝트 소개 내용 등록 -->
+	<insert id="introductionInsert" parameterType="introduction">
+		/* Introduction - introductionInsert */
+		INSERT INTO introduction
+			(intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index)
+		VALUES
+			(introduction_seq.nextval, #{intro_title}, #{intro_subtitle}, #{intro_image}, #{intro_startDate}, #{intro_endDate},
+			 #{intro_details}, #{intro_synopsis}, #{intro_plan}, #{intro_purpose}, #{intro_effect}, #{intro_refund}, #{intro_project}, #{app_index}, #{appro_index})
+	</insert>
+	
+	<!-- 기획자 정보 내용 등록 -->
+	<insert id="plannerInsert" parameterType="planner">
+		/* Introduction - plannerInsert */
+		INSERT INTO planner
+			(plan_index, plan_image, plan_name, plan_area, plan_account, intro_index)
+		VALUES
+			(planner_seq.nextval, #{plan_image}, #{plan_name}, #{plan_area}, #{plan_account}, introduction_seq.currval)
+	</insert>
+	
+	<!-- 프로젝트 승인 내용 등록 -->
+	<insert id="introApprovalInsert" parameterType="introApproval">
+		/* Introduction - introApprovalInsert */
+		INSERT INTO introApproval
+			(intapp_index, intapp_check, intapp_reason, intapp_note, intro_index, us_index)
+		VALUES
+			(introApproval_seq.nextval, #{intapp_check}, #{intapp_reason}, #{intapp_note}, introduction_seq.currval, #{us_index})
+	</insert>
+	
+	
+	
+	
+	<!-- 프로젝트 소개 상세 페이지를 위한 조회 -->
+	<select id="introductionDetail" parameterType="introduction" resultType="introduction">
+		/* Introduction - introductionDetail */
+		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate, intro_details,
+			 intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index
+		FROM	   introduction
+		WHERE intro_index = #{intro_index}
+	</select>
+	
+	<!-- 기획자 정보 상세 페이지를 위한 조회 -->
+	<select id="plannerDetail" parameterType="planner" resultType="planner">
+		/* Introduction - plannerDetail */
+		SELECT plan_index, plan_image, plan_name, plan_area, plan_account, intro_index
+		FROM	   planner
+		WHERE intro_index = #{intro_index}
+	</select>
+	
+	<!-- 투자금액과 투자자 수 조회 -->
+	<select id="donationDetail" parameterType="donation" resultType="donation">
+		<!-- SELECT (ROUND((dona_fund / ((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000)), 0) * 100) dona_report, 
+			dona_fund, dona_count, (SELECT (intro_enddate - intro_startdate) dona_dday FROM introduction WHERE intro_index = #{intro_index}) dona_dday
+		FROM (SELECT sum(sponser_invest) dona_fund, count(*) dona_count
+			FROM (SELECT * FROM invest inv inner join sponser spon ON inv.sponser_index = spon.sponser_index WHERE intro_index = #{intro_index})) -->
+			
+		SELECT TO_CHAR(((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000), '999,999,999,999,999') dona_purpose,
+  			(ROUND((dona_fund / ((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000)), 0) * 100) dona_report, 
+  			TO_CHAR(dona_fund, '999,999,999,999,999') dona_fund, dona_count, dona_dday,
+  			TO_CHAR(dona_endDate, 'YYYY"년"MM"월"DD"일"') dona_endDate, intro.intro_index
+		FROM (SELECT count(*) dona_count, sum(sponser_invest) dona_fund, intro_index FROM (SELECT * FROM invest inv inner join sponser spon ON inv.sponser_index = spon.sponser_index WHERE intro_index = #{intro_index}) GROUP BY intro_index) dona
+		INNER JOIN (SELECT (intro_enddate - intro_startdate) dona_dday, intro_endDate AS dona_endDate, intro_index FROM introduction WHERE intro_index = #{intro_index}) intro
+		ON dona.intro_index = intro.intro_index
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 게시물 기본 조회 -->
+	<select id="projectMyPageList" parameterType="introduction" resultType="introduction">
+		/* Introduction - projectMyPageList */
+		SELECT intro.intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+		     intapp_index, intapp_check, intapp_reason, intapp_note
+		FROM introduction intro INNER JOIN introApproval intApp 
+		ON intro.intro_index = intApp.intro_index
+		WHERE intro.app_index = (SELECT app_index FROM application WHERE us_index = #{us_index})
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 승인 여부 조회 -->
+	<select id="userProgressIntAppro" parameterType="introApproval" resultType="introApproval">
+		/* Introduction - userProgressIntAppro */
+		SELECT list.*
+		FROM (SELECT intapp_index, intapp_check, intapp_reason, intapp_note, intro_index, us_index
+				  FROM introApproval
+				  WHERE us_index = #{us_index}
+    			  ORDER BY intapp_index DESC) list
+		WHERE rownum BETWEEN 0 AND 1
+	</select>
+	
+	
+	
+	
+	
+	<!-- 승인 여부 조회 -->
+	<!-- <select id="getIntroIndex" parameterType="introduction" resultType="introduction">
+		/* Introduction - getIntroIndex */
+		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate, intro_details,
+			 intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index
+		FROM	   introduction
+		WHERE app_index = #{app_index}
+	</select> -->
+	
+	
+	
+	
+	
+	
+</mapper>

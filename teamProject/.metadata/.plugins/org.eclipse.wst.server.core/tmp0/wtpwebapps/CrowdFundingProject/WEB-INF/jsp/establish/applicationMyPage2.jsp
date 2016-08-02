@@ -56,14 +56,11 @@
 										<td>${app.app_topic}</td>
 										<td>
 											<c:choose>
-												<c:when test="${app.app_field == 'webtoon'}">만화</c:when>
 												<c:when test="${app.app_field == 'movie'}">영화 ∙ 공연</c:when>
-												<c:when test="${app.app_field == 'cooking'}">요리</c:when>
-												<c:when test="${app.app_field == 'game'}">게임</c:when>
 												<c:when test="${app.app_field == 'music'}">음악</c:when>
-												<c:when test="${app.app_field == 'photo'}">사진</c:when>
+												<c:when test="${app.app_field == 'design'}">디자인</c:when>
 												<c:when test="${app.app_field == 'book'}">출판</c:when>
-												<c:otherwise>기타</c:otherwise>
+												<c:when test="${app.app_field == 'cooking'}">요리</c:when>
 											</c:choose>
 										</td>
 										<td>${app.app_date}</td>
@@ -71,8 +68,8 @@
 											<c:choose>
 												<c:when test="${app.appro_check == '0'}">심사 중</c:when>
 												<c:when test="${app.appro_check == '1'}">기각</c:when>
-												<c:when test="${app.appro_check == '2'}">승인 완료</c:when>
-												<c:otherwise>기간만료</c:otherwise>
+												<c:when test="${app.appro_check == '2'}">승인</c:when>
+												<c:when test="${app.appro_check == '3'}">완료</c:when>
 											</c:choose>
 										</td>
 									</tr>

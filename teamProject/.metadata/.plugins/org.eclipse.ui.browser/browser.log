@@ -1,3 +1,6 @@
 
 7월 29, 2016 15:09:23.51 NEW SESSION
 7월 29, 2016 15:09:23.51 [4032:6520:0729/150923:ERROR:default_component_installer.cc(190)] Failed to read manifest or verify installation for Software Reporter Tool (C:\Users\User\AppData\Local\Google\Chrome\User Data\SwReporter\7.58.1).: 지정된 파일을 찾을 수 없습니다. (0x2)
+
+8월 01, 2016 21:51:23.21 NEW SESSION
+8월 01, 2016 21:51:23.22 [6632:6924:0801/215123:ERROR:ipc_channel_win.cc(482)] pipe error: 995
