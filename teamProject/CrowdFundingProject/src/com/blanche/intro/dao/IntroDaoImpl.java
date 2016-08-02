@@ -1,5 +1,7 @@
 package com.blanche.intro.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,9 @@ public class IntroDaoImpl implements IntroDao{
 	public int pay_success(IntroVO param) {
 		return (int)session.insert("pay_success");
 	}
+	
+	public List<IntroVO> introList(IntroVO param){
+		return session.selectList("introList");
+	}
+
 }

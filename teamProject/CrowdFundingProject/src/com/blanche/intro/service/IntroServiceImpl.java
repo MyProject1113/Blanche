@@ -1,5 +1,7 @@
 package com.blanche.intro.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,4 +20,12 @@ public class IntroServiceImpl implements IntroService {
 	public int pay_success(IntroVO param){
 		return introDao.pay_success(param);
 	}
+	
+	@Override
+	public List<IntroVO> introList(IntroVO param){
+		List<IntroVO> myList = null;
+		myList = introDao.introList(param);
+		return myList;
+	}
+
 }
