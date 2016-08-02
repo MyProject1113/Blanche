@@ -64,4 +64,9 @@ public class BoardMainServiceImpl implements BoardMainService {
 	public int boardReplyIndent(BoardMainVO param) {
 		return boardMainMapper.boardReplyIndent(param);
 	}
+	
+	@Override
+	public int boardRestore(BoardMainVO param) {
+		return boardMainMapper.boardRestore(param);
+	}
 }
