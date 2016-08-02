@@ -37,7 +37,7 @@ public class IPConfigUtil {
 	
 	/*
 	public static String getIP() {
-		// 톰캣에서 따로 설정하지 않으면 IPv4 주소가 아닌 IPv6 주소를 얻음.
+		// 톰캣에서 따로 설정하지 않으면 IPv4 주소가 아닌 IPv6 주소를 얻는다.
 		String IP = null;
 		try {
 			ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes(); 
