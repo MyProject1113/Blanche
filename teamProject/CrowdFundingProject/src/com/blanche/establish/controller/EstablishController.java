@@ -22,6 +22,7 @@ import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
+import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.common.page.Paging;
 
@@ -37,6 +38,9 @@ public class EstablishController {
 	@Autowired
 	private IntroductionService introductionService;
 
+	@Autowired
+	private UserMainService userMainService;
+	
 	/****************************************************************
 	 * 회원 진행 상태 확인
 	 ****************************************************************/
@@ -53,24 +57,24 @@ public class EstablishController {
 		// 회원 등급 가져오기
 		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
 		if (userData != null) {
+			userData = userMainService.userData(userData);
 			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
 			
-			if (userData.getUs_rank() == 0) {
-				logger.info("일반회원 모드");
-				
+			//if (userData.getUs_rank() == 0) {
 				ApprovalVO appro = applicationService.userProgressAppro(userData.getUs_index());	// 개설 승인 테이블에서 승인여부(appro_check) 가져오기
 				
 				if (appro != null) {
 					appro_check = appro.getAppro_check();
 					logger.info("appro_check : " + appro_check);
 					
+					// 0:심사 중, 1:기각, 2:승인, 3:완료
 					if (appro_check == 0) {
 						logger.info("개설 신청 중 => 진행중인 프로젝트가 있습니다.");
 						
 						return "redirect:/establish/warning.do?msg=1";
 						
-					} else if (appro_check == 1) {
-						logger.info("개설 신청이 완료");
+					} else if (appro_check == 2) {
+						logger.info("개설 신청 완료");
 						
 						IntroApprovalVO intAppro = introductionService.userProgressIntAppro(userData.getUs_index());	// 프로젝트 승인 테이블에서 승인여부(intapp_check) 가져오기
 						if (intAppro != null) {
@@ -88,17 +92,16 @@ public class EstablishController {
 							
 						} else {
 							logger.info("해당되는 프로젝트 없음!!!");
+
+							logger.info("app_index : " + appro.getApp_index());
+							
 							return "redirect:/establish/applicationDetailForm.do?app_index=" + appro.getApp_index();
 						}
 					}
 				} else {
 					logger.info("해당되는 회원 없음!!!");
 				}
-				
-			} else if (userData.getUs_rank() == 3) {
-				logger.info("관리자 모드");
-				return "redirect:/establish/applicationAdminList.do";
-			}
+			//}
 			
 		} else {
 			logger.info("로그인이 안된 상태");
@@ -157,7 +160,7 @@ public class EstablishController {
 	 * 상세 내용 작성하기 폼 출력하기
 	 ****************************************************************/
 	@RequestMapping(value="/applicationDetailForm.do", method=RequestMethod.GET)
-	public String applicationDetailForm(@RequestParam("us_index") int index, Model model) {
+	public String applicationDetailForm(@RequestParam("app_index") int index, Model model) {
 		logger.info("applicationDetailForm 호출 성공");
 		
 		ApplicationVO appDetail = new ApplicationVO();
@@ -219,29 +222,39 @@ public class EstablishController {
 	/********************************************
 	 * 프로젝트 밀어주기 페이지 이동
 	 * *******************************************/
-	@RequestMapping(value="/reward.do")
-	public String reward() {
+	@RequestMapping(value="/reward.do", method=RequestMethod.GET)
+	public String reward(@RequestParam("intro_index") int intro_index) {
 		logger.info("reward 호출 성공");
 		
-		return "redirect:/intro/reward.do";
+		logger.info("intro_index : " + intro_index);
+		
+		return "redirect:/intro/reward.do?intro_index=" + intro_index;
 	}
 	
 	/****************************************************************
 	 * 개설신청 구현하기
 	 ****************************************************************/
 	@RequestMapping(value="/applicationInsert.do", method=RequestMethod.POST)
-	public String applicationInsert(@ModelAttribute ApplicationVO appvo, ApprovalVO approvo) {
+	public String applicationInsert(@ModelAttribute ApplicationVO appvo, ApprovalVO approvo, HttpServletRequest request) {
 		logger.info("applicationInsert 호출 성공");
 		
 		int result = 0;
 		String url = "";
 		
-		result = applicationService.applicationInsert(appvo, approvo);
-		if (result == 1) {
-			url = "/establish/success.do";
-		}
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
 		
-		return "redirect:" + url;
+			result = applicationService.applicationInsert(appvo, approvo);
+			if (result == 1) {
+				url = "/establish/success.do";
+			}
+			return "redirect:" + url;
+			
+		} else {
+			return "redirect:/establish/success.do?success_num=1";
+		}
 	}
 
 	/********************************************
@@ -258,15 +271,18 @@ public class EstablishController {
 	 * 프로젝트 상세 쓰기 구현하기
 	 ****************************************************************/
 	@RequestMapping(value="/introductionInsert.do", method=RequestMethod.POST)
-	public String introductionInsert(@ModelAttribute IntroductionVO ivo, PlannerVO pvo) {
+	public String introductionInsert(@RequestParam("app_index") int app_index, @ModelAttribute IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo) {
 		logger.info("introductionInsert 호출 성공");
 		
 		int result = 0;
 		String url = "";
 		
-		result = introductionService.introductionInsert(ivo, pvo);
+		result = introductionService.introductionInsert(ivo, pvo, intappvo);
 		if (result == 1) {
-			url = "/establish/success.do";
+			//url = "/establish/success.do";
+			
+			int intro_index = introductionService.getIntroIndex(app_index);
+			url = "/establish/contentDetail.do?intro_index=" + intro_index;
 		}
 		
 		return "redirect:" + url;
@@ -298,7 +314,7 @@ public class EstablishController {
 		logger.info("order_sc = " + appvo.getOrder_sc());
 		
 		// 검색에 대한 데이터 확인
-		logger.info("search = " + appvo.getSearch());
+		logger.info("searchCombo = " + appvo.getSearch());
 		logger.info("keyword = " + appvo.getKeyword());
 		
 		// 페이지 세팅
@@ -418,7 +434,7 @@ public class EstablishController {
 		logger.info("order_sc = " + ivo.getOrder_sc());
 		
 		// 검색에 대한 데이터 확인
-		logger.info("search = " + ivo.getSearch());
+		logger.info("searchCombo = " + ivo.getSearchCombo());
 		logger.info("keyword = " + ivo.getKeyword());
 		
 		// 페이지 세팅

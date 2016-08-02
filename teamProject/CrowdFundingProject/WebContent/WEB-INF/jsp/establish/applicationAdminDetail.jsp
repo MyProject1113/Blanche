@@ -124,14 +124,11 @@
 								<td class="ac">분야</td>
 								<td>
 									<c:choose>
-										<c:when test="${applicationAdminDetail.app_field == 'webtoon'}">만화</c:when>
 										<c:when test="${applicationAdminDetail.app_field == 'movie'}">영화 ∙ 공연</c:when>
-										<c:when test="${applicationAdminDetail.app_field == 'cooking'}">요리</c:when>
-										<c:when test="${applicationAdminDetail.app_field == 'game'}">게임</c:when>
 										<c:when test="${applicationAdminDetail.app_field == 'music'}">음악</c:when>
-										<c:when test="${applicationAdminDetail.app_field == 'photo'}">사진</c:when>
-										<c:when test="${applicationAdminDetail.app_field == 'book'}">출판</c:when>
 										<c:when test="${applicationAdminDetail.app_field == 'design'}">디자인</c:when>
+										<c:when test="${applicationAdminDetail.app_field == 'book'}">출판</c:when>
+										<c:when test="${applicationAdminDetail.app_field == 'cooking'}">요리</c:when>
 									</c:choose>
 								</td>
 							</tr>
@@ -149,8 +146,8 @@
 									<select id="appro_check" name="appro_check">
 										<option value="0">심사 중</option>
 										<option value="1">기각</option>
-										<option value="2">승인 완료</option>
-										<option value="3">만료</option>
+										<option value="2">승인</option>
+										<option value="3">완료</option>
 									</select>
 								</td>
 							</tr>

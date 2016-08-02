@@ -23,13 +23,14 @@ public class IntroductionServiceImpl implements IntroductionService {
 	
 	// 프로젝트 소개, 기획자 정보 입력 구현
 	@Override
-	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo) {
-		int result = 0, result1 = 0, result2 = 0;
+	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo) {
+		int result = 0, result1 = 0, result2 = 0, result3 = 0;
 
-		result1 = introductionDao.introductionInsert(ivo);
-		result2 = introductionDao.plannerInsert(pvo);
+		result1 = introductionDao.introductionInsert(ivo);	// 프로젝트 소개
+		result2 = introductionDao.plannerInsert(pvo);	// 기획자 정보
+		result3 = introductionDao.introApprovalInsert(intappvo);	// 프로젝트 승인
 
-		if ((result1 == 1) && (result2 == 1))
+		if ((result1 == 1) && (result2 == 1) && (result3 == 1))
 			result = 1;
 		
 		return result;
@@ -97,10 +98,19 @@ public class IntroductionServiceImpl implements IntroductionService {
 		return myList;
 	}
 	
+	//
 	@Override
 	public IntroApprovalVO userProgressIntAppro(int us_index) {
 		IntroApprovalVO detail = null;
 		detail = introductionDao.userProgressIntAppro(us_index);
 		return detail;
+	}
+	
+	//
+	@Override
+	public int getIntroIndex(int app_index) {
+		int result = 0;
+		result = introductionDao.getIntroIndex(app_index);
+		return result;
 	}
 }

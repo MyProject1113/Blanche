@@ -28,6 +28,12 @@ public class IntroductionDaoImpl implements IntroductionDao {
 		return session.insert("plannerInsert", pvo);
 	}
 
+	// 프로젝트 승인 입력 구현
+	@Override
+	public int introApprovalInsert(IntroApprovalVO intappvo) {
+		return session.insert("introApprovalInsert", intappvo);
+	}
+	
 	// 프로젝트 소개 상세 구현
 	@Override
 	public IntroductionVO introductionDetail(IntroductionVO ivo) {
@@ -83,5 +89,11 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	@Override
 	public IntroApprovalVO userProgressIntAppro(int us_index) {
 		return (IntroApprovalVO)session.selectOne("userProgressIntAppro");
+	}
+	
+	//
+	@Override
+	public int getIntroIndex(int app_index) {
+		return (int)session.selectOne("getIntroIndex");
 	}
 }

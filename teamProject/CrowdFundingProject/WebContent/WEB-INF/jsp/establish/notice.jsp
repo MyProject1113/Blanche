@@ -37,6 +37,7 @@
 						//location.href="/establish/projectAdminList.do";
 						//location.href="/establish/applicationMyPage.do?us_index=23";
 						//location.href="/establish/contentReply.do";
+						//location.href="/establish/projectMyPage.do?us_index=3";
 					} else {
 						alert("위 내용을 모두 읽고 이해하셨으면 체크해주세요");
 						return;

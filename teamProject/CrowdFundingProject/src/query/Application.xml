@@ -9,14 +9,14 @@
 		FROM application app INNER JOIN approval appro
 		ON app.app_index = appro.app_index
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="search=='b_title'">
-				<![CDATA[ b_title LIKE '%' || #{keyword} || '%' ]]>
+			<if test="searchCombo=='app_topic'">
+				<![CDATA[ app_topic LIKE '%' || #{keyword} || '%' ]]>
 			</if>
-			<if test="search=='b_content'">
-				<![CDATA[ AND b_content LIKE '%' || #{keyword} || '%' ]]>
+			<if test="searchCombo=='app_field'">
+				<![CDATA[ AND app_field LIKE '%' || #{keyword} || '%' ]]>
 			</if>
-			<if test="search=='b_name'">
-				<![CDATA[ AND b_name LIKE '%' || #{keyword} || '%' ]]>
+			<if test="searchCombo=='appro_check'">
+				<![CDATA[ AND appro_check LIKE '%' || #{keyword} || '%' ]]>
 			</if>
 		</trim>
 	</sql>

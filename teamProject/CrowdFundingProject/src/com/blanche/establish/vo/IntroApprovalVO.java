@@ -7,6 +7,7 @@ public class IntroApprovalVO {
 	private String 	intapp_reason	= "";	// 요청이유
 	private String 	intapp_note		= "";	// 비고
 	private int 		intro_index;				// 프로젝트 번호
+	private int 		us_index;				// 회원일련번호
 	
 	public int getIntapp_index() {
 		return intapp_index;
@@ -46,5 +47,13 @@ public class IntroApprovalVO {
 	
 	public void setIntro_index(int intro_index) {
 		this.intro_index = intro_index;
+	}
+
+	public int getUs_index() {
+		return us_index;
+	}
+
+	public void setUs_index(int us_index) {
+		this.us_index = us_index;
 	}
 }

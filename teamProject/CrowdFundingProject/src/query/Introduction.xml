@@ -9,13 +9,13 @@
 		     intapp_index, intapp_check, intapp_reason, intapp_note
 		FROM introduction intro INNER JOIN introApproval intApp ON intro.intro_index = intApp.intro_index
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="search=='intro_index'">
+			<if test="searchCombo=='intro_index'">
 				<![CDATA[ intro.intro_index LIKE '%' || #{keyword} || '%' ]]>
 			</if>
-			<if test="search=='intro_title'">
+			<if test="searchCombo=='intro_title'">
 				<![CDATA[ AND intro_title LIKE '%' || #{keyword} || '%' ]]>
 			</if>
-			<if test="search=='intro_project'">
+			<if test="searchCombo=='intro_project'">
 				<![CDATA[ AND intro_project LIKE '%' || #{keyword} || '%' ]]>
 			</if>
 		</trim>
@@ -67,10 +67,10 @@
 		/* Introduction - introductionInsert */
 		INSERT INTO introduction
 			(intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
-			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, appro_index)
+			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index)
 		VALUES
 			(introduction_seq.nextval, #{intro_title}, #{intro_subtitle}, #{intro_image}, #{intro_startDate}, #{intro_endDate},
-			 #{intro_details}, #{intro_synopsis}, #{intro_plan}, #{intro_purpose}, #{intro_effect}, #{intro_refund}, #{appro_index})
+			 #{intro_details}, #{intro_synopsis}, #{intro_plan}, #{intro_purpose}, #{intro_effect}, #{intro_refund}, #{intro_project}, #{app_index}, #{appro_index})
 	</insert>
 	
 	<!-- 기획자 정보 내용 등록 -->
@@ -82,12 +82,23 @@
 			(planner_seq.nextval, #{plan_image}, #{plan_name}, #{plan_area}, #{plan_account}, introduction_seq.currval)
 	</insert>
 	
+	<!-- 프로젝트 승인 내용 등록 -->
+	<insert id="introApprovalInsert" parameterType="introApproval">
+		/* Introduction - introApprovalInsert */
+		INSERT INTO introApproval
+			(intapp_index, intapp_check, intapp_reason, intapp_note, intro_index, us_index)
+		VALUES
+			(introApproval_seq.nextval, #{intapp_check}, #{intapp_reason}, #{intapp_note}, introduction_seq.currval, #{us_index})
+	</insert>
+	
+	
+	
 	
 	<!-- 프로젝트 소개 상세 페이지를 위한 조회 -->
 	<select id="introductionDetail" parameterType="introduction" resultType="introduction">
 		/* Introduction - introductionDetail */
 		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate, intro_details,
-			 intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, appro_index
+			 intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index
 		FROM	   introduction
 		WHERE intro_index = #{intro_index}
 	</select>
@@ -149,6 +160,18 @@
 				  WHERE us_index = #{us_index}
     			  ORDER BY intapp_index DESC) list
 		WHERE rownum BETWEEN 0 AND 1
+	</select>
+	
+	
+	
+	
+	
+	<!-- 승인 여부 조회 -->
+	<select id="getIntroIndex" parameterType="introduction" resultType="int">
+		/* Introduction - getIntroIndex */
+		SELECT intro_index
+		FROM	   introduction
+		WHERE app_index = #{app_index}
 	</select>
 	
 	

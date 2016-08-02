@@ -18,37 +18,42 @@
 		<!-- <link rel="stylesheet" type="text/css" href="/include/css/common.css">
 		<link rel="stylesheet" type="text/css" href="/include/css/board.css"> -->
 		
+		<style type="text/css">
+			div#tabBtn {
+			    margin-bottom: 25px;
+			}
+		</style>
+		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				/* 검색 후 검색 대상과 검색 단어 출력 */
-				if ("<c:out value='${data.keyword}' />" != "") {
-					$("#keyword").val("<c:out value='${data.keyword}' />")
-					$("#search").val("<c:out value='${data.search}' />")
-				}
-				
-				/* 한페이지에 보여줄 레코드 수 조회 후 선택한 값 그대로 유지하도록 */
-				if ("<c:out value='${data.pageSize}' />" != "") {
-					$("#pageSize").val("<c:out value='${data.pageSize}' />")
-				}
-				
-
-				
+				/* 검색화면 초기화 */
 				$("#keyword_text").show();
 				$("#keyword_field").hide();
 				$("#keyword_check").hide();
 				
+				/* 검색 후 검색 대상과 검색 단어 출력 */
+				if ("<c:out value='${data.keyword}' />" != "") {
+					$("#keyword").val("${data.keyword}");
+					$("#searchCombo").val("${data.searchCombo}");
+				}
+				
+				/* 한페이지에 보여줄 레코드 수 조회 후 선택한 값 그대로 유지하도록 */
+				if ("<c:out value='${data.pageSize}' />" != "") {
+					$("#pageSize").val("<c:out value='${data.pageSize}' />");
+				}
+				
 				/* 검색 대상이 변경될 때마다 처리 이벤트 */
-				$("#search").change(function() {
-					if ($("#search").val() == "all") {
+				$("#searchCombo").change(function() {
+					if ($("#searchCombo").val() == "all") {
 						$("#keyword_text").show();
 						$("#keyword_field").hide();
 						$("#keyword_check").hide();
 						
 						$("#keyword").val("전체 데이터 조회합니다.");
 						
-					} else if ($("#search").val() == "app_topic") {
+					} else if ($("#searchCombo").val() == "app_topic") {
 						$("#keyword_text").show();
 						$("#keyword_field").hide();
 						$("#keyword_check").hide();
@@ -56,24 +61,21 @@
 						$("#keyword").val("");
 						$("#keyword").focus();
 						
-					} else if ($("#search").val() == "app_field") {
+					} else if ($("#searchCombo").val() == "app_field") {
 						$("#keyword_text").hide();
 						$("#keyword_field").show();
 						$("#keyword_check").hide();
 						
-					} else if ($("#search").val() == "appro_check") {
+					} else if ($("#searchCombo").val() == "appro_check") {
 						$("#keyword_text").hide();
 						$("#keyword_field").hide();
 						$("#keyword_check").show();
 					}
 				});
 				
-				
-				
-				
 				/* 검색 버튼 클릭 시 처리 이벤트 */
 				$("#searchData").click(function() {
-					if ($("#search").val() != "all") {
+					if ($("#searchCombo").val() != "all") {
 						if (!chkSubmit($("#keyword"), "검색어를")) return;
 					}
 					goPage(1);
@@ -87,6 +89,11 @@
 				/* 글쓰기 버튼 클릭 시 처리 이벤트 */
 				$("#InsertFormBtn").click(function() {
 					location.href = "/board/writeForm.do";
+				});
+				
+				/* 프로젝트 승인 리스트 버튼 클릭 시 처리 이벤트 */
+				$("#projectBtn").click(function() {
+					location.href = "/establish/projectAdminList.do";
 				});
 				
 				/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
@@ -116,22 +123,32 @@
 			
 			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 */
 			function goPage(page) {
-				if ($("#search").val() == "all") {
+				if ($("#searchCombo").val() == "all") {
 					$("#keyword").val("");
 				}
 				$("#page").val(page);
 				$("#f_search").attr({
 					"method":"get",
-					"action":"/establish/applicationAdminDetail.do"
+					"action":"/establish/applicationAdminList.do"
 				});
 				$("#f_search").submit();
+			}
+			
+			/* 검색 대상 상세 내용이 변경될 때마다 처리 이벤트 */
+			function selectComboEvent(selectObj) {
+				$("#keyword").val(selectObj.value);
 			}
 		</script>
 	
 	</head>
 	<body>
+		<div id="tabBtn">
+			<input type="button" value="개설신청" id="appBtn" disabled="disabled" />
+			<input type="button" value="프로젝트 승인" id="projectBtn" />
+		</div>
+		
 		<div class="contentContainer">
-			<div class="contentTit"><h3>게시판 리스트</h3></div>
+			<div class="contentTit"><h3>개설 신청 리스트</h3></div>
 			
 			<%-- ================== 상세 페이지 이동을 위한 FORM ================== --%>
 			<form name="detailForm" id="detailForm">
@@ -148,52 +165,60 @@
 					<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc}" />
 					<table summary="검색">
 						<colgroup>
-							<col width="70%"></col>
-							<col width="30%"></col>
+							<col width="10%"></col>
+							<col width="15%"></col>
+							<col width="40%"></col>
+							<col width="5%"></col>
+							<col width="5%"></col>
+							<col width="10%"></col>
+							<col width="15%"></col>
 						</colgroup>
 						<tr>
-						
-						
-							<td id="btd1">
+							<td>
 								<label>검색조건</label>
-								<select id="search" name="search">
+							</td>
+							<td>
+								 <select id="searchCombo" name="searchCombo"> 
+								<!-- <select id="search" name="search" onChange="javascript:selectEvent(this)"> -->
 									<option value="all">전체</option>
 									<option value="app_topic">주제</option>
 									<option value="app_field">분야</option>
 									<option value="appro_check">승인여부</option>
 								</select>
-								
+							</td>
+							<td>
 								<div id="keyword_text">
 									<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" />
 								</div>
 								
 								<div id="keyword_field">
-									<select id="search_field" name="search_field">
-										<option value="webtoon">만화</option>
+									<select id="search_field" name="search_field" onChange="javascript:selectComboEvent(this)">
 										<option value="movie">영화 ∙ 공연</option>
-										<option value="cooking">요리</option>
-										<option value="game">게임</option>
 										<option value="music">음악</option>
-										<option value="photo">사진</option>
-										<option value="book">출판</option>
 										<option value="design">디자인</option>
+										<option value="book">출판</option>
+										<option value="cooking">요리</option>
 									</select>
 								</div>
 								
 								<div id="keyword_check">
-									<select id="search_check" name="search_check">
+									<select id="search_check" name="search_check" onChange="javascript:selectComboEvent(this)">
 										<option value="0">심사 중</option>
 										<option value="1">기각</option>
-										<option value="2">승인 완료</option>
-										<option value="3">기간만료</option>
+										<option value="2">승인</option>
+										<option value="3">완료</option>
 									</select>
 								</div>
-								
+							</td>
+							<td>
 								<input type="button" value="검색" id="searchData" />
 							</td>
 							
-							
-							<td id="btd2">한페이지에
+							<td></td>
+							<td>
+								<label>한페이지에</label>
+							</td>
+							<td>
 								<select id="pageSize" name="pageSize">
 									<option value="5">5줄</option>
 									<option value="10">10줄</option>
@@ -250,14 +275,11 @@
 										</td>
 										<td>
 											<c:choose>
-												<c:when test="${app.app_field == 'webtoon'}">만화</c:when>
 												<c:when test="${app.app_field == 'movie'}">영화 ∙ 공연</c:when>
-												<c:when test="${app.app_field == 'cooking'}">요리</c:when>
-												<c:when test="${app.app_field == 'game'}">게임</c:when>
 												<c:when test="${app.app_field == 'music'}">음악</c:when>
-												<c:when test="${app.app_field == 'photo'}">사진</c:when>
-												<c:when test="${app.app_field == 'book'}">출판</c:when>
 												<c:when test="${app.app_field == 'design'}">디자인</c:when>
+												<c:when test="${app.app_field == 'book'}">출판</c:when>
+												<c:when test="${app.app_field == 'cooking'}">요리</c:when>
 											</c:choose>
 										</td>
 										<td>${app.app_date}</td>
@@ -265,8 +287,8 @@
 											<c:choose>
 												<c:when test="${app.appro_check == '0'}">심사 중</c:when>
 												<c:when test="${app.appro_check == '1'}">기각</c:when>
-												<c:when test="${app.appro_check == '2'}">승인 완료</c:when>
-												<c:otherwise>보류</c:otherwise>
+												<c:when test="${app.appro_check == '2'}">승인</c:when>
+												<c:when test="${app.appro_check == '3'}">완료</c:when>
 											</c:choose>
 										</td>
 									</tr>

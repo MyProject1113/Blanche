@@ -1,5 +1,7 @@
+<%@ page import="com.blanche.board.ckediter.ConfigurationHelper" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ckeditor" uri="http://ckeditor.com" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -38,7 +40,7 @@
 						
 						/* alert("승인번호 : " + $("#appro_index").val()); */
 						
-						/* $("#intro_project").val("${applicationDetail.us_index}"); */
+						$("#us_index").val("${applicationDetail.us_index}");
 						
 						$("#new_project_detail").attr({
 							"method":"POST",
@@ -63,6 +65,10 @@
 				
 					<input type="hidden" id="appro_index" name="appro_index" value="${applicationDetail.appro_index}" />
 					<input type="hidden" id="intro_project" name="intro_project" />
+					<input type="hidden" id="app_index" name="app_index" value="${applicationDetail.app_index}" />
+					
+					<!-- 프로젝트 승인 내용 입력 부분 -->
+					<input type="hidden" id="us_index" name="us_index" />
 				
 				
 					<div class="app_form_detail">
@@ -81,14 +87,11 @@
 						<label class="app_form_label" for="app_field">분야</label>
 						<label class="app_form_label_data">
 							<c:choose>
-								<c:when test="${applicationDetail.app_field == 'webtoon'}">만화</c:when>
 								<c:when test="${applicationDetail.app_field == 'movie'}">영화 ∙ 공연</c:when>
-								<c:when test="${applicationDetail.app_field == 'cooking'}">요리</c:when>
-								<c:when test="${applicationDetail.app_field == 'game'}">게임</c:when>
 								<c:when test="${applicationDetail.app_field == 'music'}">음악</c:when>
-								<c:when test="${applicationDetail.app_field == 'photo'}">사진</c:when>
-								<c:when test="${applicationDetail.app_field == 'book'}">출판</c:when>
 								<c:when test="${applicationDetail.app_field == 'design'}">디자인</c:when>
+								<c:when test="${applicationDetail.app_field == 'book'}">출판</c:when>
+								<c:when test="${applicationDetail.app_field == 'cooking'}">요리</c:when>
 							</c:choose>
 						</label>
 						
@@ -177,6 +180,7 @@
 					
 					<input type="button" id="commit_btn" value="신청하기" />
 				</form>
+				<ckeditor:replace replace="intro_details" basePath="/ckeditor/" config="<%= ConfigurationHelper.createConfig() %>" />
 			</div>
 		</div>
 

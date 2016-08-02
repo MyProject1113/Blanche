@@ -8,7 +8,7 @@ import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 
 public interface IntroductionService {
-	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo);
+	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo);
 	public IntroductionVO introductionDetail(IntroductionVO ivo);
 	public PlannerVO plannerDetail(PlannerVO pvo);
 	public DonationVO donationDetail(DonationVO dvo);
@@ -24,4 +24,5 @@ public interface IntroductionService {
 
 	public List<IntroductionVO> projectMyPageList(int us_index);
 	public IntroApprovalVO userProgressIntAppro(int us_index);
+	public int getIntroIndex(int app_index);
 }

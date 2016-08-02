@@ -12,7 +12,7 @@ public class ApplicationVO extends ApprovalVO {
 	private int 		us_index;				// 회원일련번호
 
 	// 조건 검색시 사용할 속성
-	private String search = "";
+	private String searchCombo = "";
 	private String keyword = "";
 	
 	// 정렬을 위한 속성
@@ -83,12 +83,12 @@ public class ApplicationVO extends ApprovalVO {
 		this.us_index = us_index;
 	}
 
-	public String getSearch() {
-		return search;
+	public String getSearchCombo() {
+		return searchCombo;
 	}
 
-	public void setSearch(String search) {
-		this.search = search;
+	public void setSearchCombo(String searchCombo) {
+		this.searchCombo = searchCombo;
 	}
 
 	public String getKeyword() {

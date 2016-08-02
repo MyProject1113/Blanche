@@ -81,8 +81,17 @@
 						<c:otherwise>
 							<form name="formLogout" id="formLogout">
 								<li>${sessionScope.blancheUser.us_nickname}님. 환영합니다.</li>
-								<li>${sessionScope.blancheUser.us_rank}님. 환영합니다.</li>
-								<li><li><a href="/user/exit.do" class="button big fit">Log Out</a></li></li>
+								<li><%-- ${sessionScope.blancheUser.us_rank}님. 환영합니다. --%>
+									<c:choose>
+										<c:when test="${sessionScope.blancheUser.us_rank == '0'}">
+											<a href="/user/exit.do" class="button big fit">My Page</a>
+										</c:when>
+										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
+											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a>
+										</c:when>
+									</c:choose>
+								</li>
+								<li><a href="/user/exit.do" class="button big fit">Log Out</a></li>
 								
 							</form>
 						</c:otherwise>

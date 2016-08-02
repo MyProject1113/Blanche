@@ -14,8 +14,21 @@
 		
 		<link rel="stylesheet" href="/include/css/contentDetail2.css" />
 		
+		<script type="text/javascript" src="/include/js/common.js"></script>
+		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				
+			});
+		</script>
+		
 	</head>
 	<body>
+		
+		<form class="project_intro_index" id="project_intro_index">
+			<input type="hidden" id="intro_index" name="intro_index" value="${introDetail.intro_index}" />
+		</form>
+				
 		<!-- 타이틀 -->
 		<div class="b-header b-header_centered_yes">
 			<div class="b-header__inner">
