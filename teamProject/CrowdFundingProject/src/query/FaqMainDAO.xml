@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blanche.faq.main.dao.FaqMainMapper">
-	<!-- 공지게시물 전체 조회 -->
+	<!-- 질문게시물 전체 조회 -->
 	<select id="faqList" parameterType="faqMainVO" resultType="faqMainVO">
 		/* FaqMainDAO - faqList */
 		SELECT 	fq_index
+			,	fq_category
 			,	fq_title
 			,	fq_check
 			,	(CASE WHEN (SYSDATE - fq_regdate) <![CDATA[<]]> 1 THEN
@@ -32,10 +33,14 @@
 		WHERE	rnum <![CDATA[>=]]> #{startRow}
 	</select>
 	
-	<!-- 공지게시물 검색 조건 -->
+	<!-- 질문게시물 검색 조건 -->
 	<sql id="faqSearch">
 		<where>
 			fq_delete = 0
+			<if test="fq_category != null and fq_category != ''">
+				AND
+				fq_category = #{fq_category}
+			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
 					<when test="search == 'title'">
@@ -55,18 +60,37 @@
 					</when>
 					<when test="search == 'writer'">
 						AND
-						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
+						us_index = (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
 					</when>
 				</choose>
 			</if>
 		</where>
 	</sql>
 	
-	<!-- 공지게시물 상세 조회 -->
+	<!-- 질문게시물 표시 -->
+	<select id="faqView" parameterType="faqMainVO" resultType="faqMainVO">
+		/* FaqMainDAO - faqDisplay */
+		SELECT 	fq_index
+			,	us_index
+			,	fq_category
+			,	fq_title
+		FROM 	(SELECT	*
+					FROM		faqmain
+					WHERE	fq_category = #{fq_category}
+								AND
+								fq_delete = 0
+					ORDER BY fq_index DESC 
+					)
+		WHERE rownum <![CDATA[<=]]> #{viewCount}
+		
+	</select>
+	
+	<!-- 질문게시물 상세 조회 -->
 	<select id="faqDetail" parameterType="faqMainVO" resultType="faqMainVO">
 		/* FaqMainDAO - faqDetail */
 		SELECT 	fq_index
 			,	us_index
+			,	fq_category
 			,	fq_title
 			,	fq_content
 			,	fq_check
@@ -80,7 +104,7 @@
 				fq_delete = 0
 	</select>
 	
-	<!-- 공지게시물 조회수 증가 -->
+	<!-- 질문게시물 조회수 증가 -->
 	<update id="faqCheck" parameterType="faqMainVO">
 		/* FaqMainDAO - faqCheck */
 		UPDATE	faqmain
@@ -88,31 +112,32 @@
 		WHERE	fq_index = #{fq_index}
 	</update>
 	
-	<!-- 공지게시물 본문 작성 -->
+	<!-- 질문게시물 본문 작성 -->
 	<insert id="faqInsert" parameterType="faqMainVO">
 		/* FaqMainDAO - faqInsert */
 		<selectKey keyProperty="fq_index" resultType="int" order="BEFORE">
 			SELECT faqmain_seq.NEXTVAL FROM dual
 		</selectKey>
 		INSERT INTO faqmain (
-			fq_index, us_index, fq_title
+			fq_index, fq_category, us_index, fq_title
 			<if test="fq_content != null and fq_content != ''">
 				, fq_content
 			</if>
 		)
 		VALUES (
-			#{fq_index}, #{us_index}, #{fq_title}
+			#{fq_index}, #{fq_category}, #{us_index}, #{fq_title}
 			<if test="fq_content != null and fq_content != ''">
 				, #{fq_content}
 			</if>
 		)
 	</insert>
 	
-	<!-- 공지게시물 본문 수정 -->
+	<!-- 질문게시물 본문 수정 -->
 	<update id="faqUpdate" parameterType="faqMainVO">
 		/* FaqMainDAO - faqUpdate */
 		UPDATE	faqmain
-		SET		fq_title = #{fq_title}
+		SET	fq_category = #{fq_category}
+			,	fq_title = #{fq_title}
 				<choose>
 					<when test="fq_content != null and fq_content != ''">
 			,			fq_content = #{fq_content}
@@ -127,7 +152,7 @@
 				fq_delete = 0
 	</update>
 	
-	<!-- 공지게시물 본문 삭제 -->
+	<!-- 질문게시물 본문 삭제 -->
 	<update id="faqDelete" parameterType="faqMainVO">
 		/* FaqMainDAO - faqDelete */
 		UPDATE	faqmain
@@ -136,7 +161,7 @@
 		WHERE	fq_index = #{fq_index}
 	</update>
 	
-	<!-- 공지게시물 개수 조회 -->
+	<!-- 질문게시물 개수 조회 -->
 	<select id="faqListCount" parameterType="faqMainVO" resultType="int">
 		/* FaqMainDAO - faqListCount */
 		SELECT	count(fq_index)

@@ -100,14 +100,16 @@
 		<table class="boardTable">
 			<colgroup>
 				<col width="10%" />
+				<col width="10%" />
 				<col width="50%" />
-				<col width="15%" />
-				<col width="13%" />
-				<col width="12%" />
+				<col width="10%" />
+				<col width="10%" />
+				<col width="10%" />
 			</colgroup>
 			<thead>
 				<tr>
 					<th class="columnName">번호</th>
+					<th class="columnName">범주</th>
 					<th class="columnName">제목</th>
 					<th class="columnName">작성자</th>
 					<th class="columnName">작성일</th>
@@ -121,6 +123,11 @@
 							<tr data-num="${faqData.fq_index}">
 								<td class="center">
 									${faqData.num}
+								</td>
+								<td class="center">
+									<c:if test="${not empty faqData.fq_category}">
+										${faqData.fq_category}
+									</c:if>
 								</td>
 								<td class="left">
 									<span class="goDetail">${faqData.fq_title}</span>
@@ -139,7 +146,7 @@
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<td colspan="6" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blanche.cc.service.CcService;
 import com.blanche.cc.vo.CcVO;
+import com.blanche.faq.main.service.FaqMainService;
+import com.blanche.faq.main.vo.FaqMainVO;
 
 /* 컨트롤러 */
 @Controller
@@ -23,6 +25,10 @@ public class CcController {
 /*	@Autowired
 	private CcService ccService;	// 인터페이스 구현체 생성
 */	
+	
+	@Autowired
+	private FaqMainService faqMainService;
+	
 	/****************************************************************
 	 * FAQ 구현하기
 	 ****************************************************************/
@@ -33,6 +39,21 @@ public class CcController {
 		List<CcVO> ccList = ccService.ccList();
 		model.addAttribute("ccList", ccList);
 		*/
+		
+		FaqMainVO faqParam = new FaqMainVO();
+		faqParam.setFq_category("기획");
+		List<FaqMainVO> faqList1 = faqMainService.faqView(faqParam);
+		faqParam.setFq_category("투자");
+		List<FaqMainVO> faqList2 = faqMainService.faqView(faqParam);
+		faqParam.setFq_category("운영");
+		List<FaqMainVO> faqList3 = faqMainService.faqView(faqParam);
+		faqParam.setFq_category("그외");
+		List<FaqMainVO> faqList4 = faqMainService.faqView(faqParam);
+		model.addAttribute("faqList1", faqList1);
+		model.addAttribute("faqList2", faqList2);
+		model.addAttribute("faqList3", faqList3);
+		model.addAttribute("faqList4", faqList4);
+		
 		return "cc/faq";	
 	 }
 	/*	

@@ -21,6 +21,11 @@ public class FaqMainServiceImpl implements FaqMainService {
 	}
 	
 	@Override
+	public List<FaqMainVO> faqView(FaqMainVO param) {
+		return faqMainMapper.faqView(param);
+	}
+	
+	@Override
 	public FaqMainVO faqDetail(FaqMainVO param) {
 		return faqMainMapper.faqDetail(param);
 	}

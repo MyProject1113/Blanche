@@ -202,6 +202,10 @@
 					<td>${faqData.fq_modidate}</td>
 				</tr>
 				<tr>
+					<td class="columnName center">범주</td>
+					<td colspan="3">${faqData.fq_category}</td>
+				</tr>
+				<tr>
 					<td class="columnName center">제목</td>
 					<td colspan="3">${faqData.fq_title}</td>
 				</tr>

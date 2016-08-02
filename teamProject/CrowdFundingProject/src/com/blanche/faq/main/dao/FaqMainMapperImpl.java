@@ -19,6 +19,11 @@ public class FaqMainMapperImpl implements FaqMainMapper {
 	}
 	
 	@Override
+	public List<FaqMainVO> faqView(FaqMainVO param) {
+		return session.selectList("faqView");
+	}
+	
+	@Override
 	public FaqMainVO faqDetail(FaqMainVO param) {
 		return session.selectOne("faqDetail");
 	}

@@ -97,6 +97,19 @@
 						<td>${userData.us_nickname}</td>
 					</tr>
 					<tr>
+						<td class="columnName center">범주</td>
+						<td>
+							<select name="fq_category" id="fq_category">
+								<option value=""></option>
+								<option value="기획">기획</option>
+								<option value="투자">투자</option>
+								<option value="운영">운영</option>
+								<option value="결제">결제</option>
+								<option value="그외">그외</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<td class="columnName center">제목</td>
 						<td><input type="text" name="fq_title" id="fq_title" /></td>
 					</tr>

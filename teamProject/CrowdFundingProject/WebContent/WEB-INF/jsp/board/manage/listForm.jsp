@@ -164,7 +164,7 @@
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<td colspan="6" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

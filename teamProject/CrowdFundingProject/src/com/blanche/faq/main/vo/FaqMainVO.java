@@ -9,16 +9,18 @@ import com.blanche.board.common.vo.DefaultVO;
 public class FaqMainVO extends DefaultVO {
 	private int 	fq_index		= 0;		// 본문일련번호
 	private int 	us_index		= 0;		// 회원일련번호
-	private String 	fq_title		= "";		// 제목
-	private String 	fq_content		= "";		// 내용
+	private String	fq_category		= "";		// 범주
+	private String	fq_title		= "";		// 제목
+	private String	fq_content		= "";		// 내용
 	private int 	fq_check		= 0;		// 조회수
 	private int 	fq_delete		= 0;		// 삭제여부
-	private String 	fq_regdate		= "";		// 등록일
-	private String 	fq_modidate		= "";		// 수정일
+	private String	fq_regdate		= "";		// 등록일
+	private String	fq_modidate		= "";		// 수정일
 	
 	private int 	num				= 0;		// 글번호
 	private int		pictureCount	= 0;		// 그림파일 개수
 	private int		attachCount		= 0;		// 첨부파일 개수
+	private int		viewCount		= 3;	// 표시개수
 	
 	private List<MultipartFile> attachUpload	= null;	// 첨부파일 전송
 	private List<Integer> attachDelete			= null;	// 첨부파일 삭제
@@ -34,6 +36,12 @@ public class FaqMainVO extends DefaultVO {
 	}
 	public void setUs_index(int us_index) {
 		this.us_index = us_index;
+	}
+	public String getFq_category() {
+		return fq_category;
+	}
+	public void setFq_category(String fq_category) {
+		this.fq_category = fq_category;
 	}
 	public String getFq_title() {
 		return fq_title;
@@ -89,6 +97,12 @@ public class FaqMainVO extends DefaultVO {
 	}
 	public void setAttachCount(int attachCount) {
 		this.attachCount = attachCount;
+	}
+	public int getViewCount() {
+		return viewCount;
+	}
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 	
 	public List<MultipartFile> getAttachUpload() {
