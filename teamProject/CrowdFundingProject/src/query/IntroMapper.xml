@@ -14,4 +14,14 @@
   			 #{project_invest},
  			 32, 99, 'y')
 	</insert>
+	<select id="introList" parameterType="intro" resultType="intro">
+     select intro_index,
+     	 (select app_field from application where app_index = (select app_index from introduction where intro_index = 5)) as app_field,
+  			intro_title,
+  			intro_image,
+    		(select app_fund from application where app_index in (select app_index from introduction where intro_index=intro.intro_index)) as app_fund,
+    		(select sum(sponser_invest) from sponser where sponser_index in (select sponser_index from invest where intro_index=intro.intro_index)) as sponser_invest,
+    		intro_details
+      from introduction intro
+    </select>
 </mapper>
