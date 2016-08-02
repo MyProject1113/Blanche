@@ -18,6 +18,12 @@ public class BoardInfoServiceImpl implements BoardInfoService {
 	}
 	
 	@Override
+	public int infoCheck(BoardInfoVO param) {
+		// TODO Auto-generated method stub
+		return boardInfoMapper.infoCheck(param);
+	}
+	
+	@Override
 	public int infoInsert(BoardInfoVO param) {
 		return boardInfoMapper.infoInsert(param);
 	}

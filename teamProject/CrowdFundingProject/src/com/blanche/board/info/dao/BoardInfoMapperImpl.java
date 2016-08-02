@@ -15,6 +15,11 @@ public class BoardInfoMapperImpl implements BoardInfoMapper {
 	public BoardInfoVO infoDetail(BoardInfoVO param) {
 		return (BoardInfoVO) session.selectOne("infoDetail");
 	}
+
+	@Override
+	public int infoCheck(BoardInfoVO param) {
+		return session.selectOne("infoCheck");
+	}
 	
 	@Override
 	public int infoInsert(BoardInfoVO param) {

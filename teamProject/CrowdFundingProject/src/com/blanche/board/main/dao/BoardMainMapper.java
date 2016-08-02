@@ -11,6 +11,7 @@ public interface BoardMainMapper {
 	public int boardInsert(BoardMainVO param);
 	public int boardUpdate(BoardMainVO param);
 	public int boardDelete(BoardMainVO param);
+	public int boardRestore(BoardMainVO param);
 	public int boardListCount(BoardMainVO param);
 	public List<BoardMainVO> boardReplyList(BoardMainVO param);
 	public int boardReplyCount(BoardMainVO param);
