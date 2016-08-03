@@ -56,6 +56,7 @@ $(function(){
 
 
 var intapp_index = "";
+var check = false;
 $(function() {
 	/* 수정/삭제 요청 클릭 시 요청 사유 화면을 띄우기 위한 처리 이벤트 */
 	$("#intapp_request").click(function() {
@@ -67,7 +68,12 @@ $(function() {
 		intapp_index = $(this).parents("tr").attr("data-index");
 		console.log("프로젝트 승인번호 : " + intapp_index);
 		
-		addNewItem(intro_index);
+		/* if(addNewItem(intro_index); */
+		
+		if (check == false) {
+			addNewItem(intro_index);
+			check = true;
+		}
 		
 		/* // 상세 페이지로 이동하기 위해 form 추가 (id : detailForm)
 		$("#detailForm").attr({

@@ -168,7 +168,7 @@
 									<div class="u-clear"></div> 
 									
 									<li class="b-profile_card__contacts">
-										<a href="/${introDetail.intro_project}/list.do" class="b-profile_card__contact_button js-newMessage">문의하기</a>
+										<a href="/board/${introDetail.intro_project}/list.do" class="b-profile_card__contact_button js-newMessage">문의하기</a>
 									</li>
 									
 									<div class="u-clear"></div>

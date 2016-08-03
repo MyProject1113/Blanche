@@ -26,6 +26,8 @@
 		<!-- <typeAlias type="com.blanche.establish.vo.ProjectListVO" alias="projectList" /> -->
 		
 		<typeAlias type="com.blanche.intro.vo.IntroVO" alias="intro" />
+		<typeAlias type="com.blanche.intro.vo.investVO" alias="investVO" />
+		<typeAlias type="com.blanche.intro.vo.usactVO" alias="usactVO" />
 	</typeAliases>
 	
 	<!-- <mappers>

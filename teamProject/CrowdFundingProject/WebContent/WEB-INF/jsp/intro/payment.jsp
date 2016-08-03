@@ -115,7 +115,7 @@
 	<input type="hidden" name="intro_index" id="intro_index" value="${introData.intro_index}" />
 	<input type="hidden" name="sponser_invest" id="sponser_invest" value="${introData.sponser_invest}" />
 	<input type="hidden" id="sponser_name" name="sponser_name" value="${introData.sponser_name }">
-	<input type="hidden" id="phone" name="phone" value="${introData.phone }">
+	<input type="hidden" id="sponser_phone" name="sponser_phone" value="${introData.sponser_phone }">
 	<input type="hidden" id="sponser_email" name="sponser_email" value="${introData.sponser_email }">
 	<input type="hidden" id="sponser_addnum" name="sponser_addnum" value="${introData.sponser_addnum }">
 	<input type="hidden" id="sponser_add" name="sponser_add" value="${introData.sponser_add }">
@@ -208,8 +208,8 @@
 				<td>
 					은행 선택
 				</td>
-				<td colspan="2" id="usact_bank" name="usact_bank">
-					<select>
+				<td colspan="2">
+					<select id="usact_bank" name="usact_bank">
 						<option value="농협">농협</option>
 						<option value="하나은행">하나은행</option>
 						<option value="신한은행">신한은행</option>
