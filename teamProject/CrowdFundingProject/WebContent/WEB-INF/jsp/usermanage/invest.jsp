@@ -1,20 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    --%> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta  charset="UTF-8">
 <title>회원가입</title>
 <script type="text/javascript" src="/include/js/common.js"></script>
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#switch").click(function(){
-		if(!chkSubmit($("#us_passwd"),"비밀번호를"))return;	
-		if(!chkSubmit($("con"),"비밀번호 재입력을"))return;	
-
+	$(".goDetail").click(function(){
+		var num =$(this).parents("tr").attr("data-num");
+		console.log("num : " + num);
+		 $("#intro_index").val(num); 
+		$("#detailForm").attr({
+			"method":"get","action":"/establish/contentDetail.do"
+		});
+		$("#detailForm").submit();
 	});
+	
 	$("#pwch").click(function(){
 		location.href="/usermanage/pwchange.do";
 	});
@@ -27,18 +33,25 @@ $(function(){
 	$("#invch").click(function(){
 		location.href="/usermanage/invest.do";
 	});
-	
-	$(".goDetail").click(function(){
-		location.href="/usermanage/pwchange.do";
-		/* var dona_index = $(this).parents("tr").attr("data-num");
-		$("#dona_index").val(dona_index);
-		console.log("투자번호 : "+dona_index); */
-	//상세페이지로 이동하기 위해form추가 (id:detailForm)
-		/* $("#detailForm").attr({
-			"method":"get","action":"/board/boardDetail.do"
-		});
-	$("#detailForm").submit(); */
+	var check = false;
+	$(".addchange").click(function(){
+		check = true;
+		location.href="/usermanage/investForm.do?change=" + check;
 	});
+	$(".complete").click(function(){
+		var no = $(this).parents("tr").children().eq(0).attr("data-num");
+		 var add = $(this).parent().children().eq(0).val();
+  		$("#sponser_index").val(no);
+		$("#sponser_add").val(add);
+		$("#hard").attr({
+			"method":"post", "action":"/usermanage/hard.do"
+		})
+		$("#hard").submit();
+	})
+	$("#addchange").click(function(){
+		var civa =$(this).parents("tr").attr("data-num");
+		$("")
+	})
 	
 });
 </script>
@@ -48,14 +61,14 @@ $(function(){
 </head>
 <body>
 	<div>
-		<form>
+		
 		<h1>My Page</h1>
 		<br/>
 		<input type="button" id="pwch" name="pwch" value="비밀번호 변경"/>
 		<input type="button" id="phch" name="phch" value="연락처 변경"/>
 		<input type="button" id="fundch" name="fundch" value="기획정보"/>
 		<input type="button" id="invch" name="invch" value="투자정보"/>
-			<table border=0>
+			<table>
 				
 			
 				<tr>
@@ -66,32 +79,140 @@ $(function(){
 					<td>내 투자정보</td>
 				</tr>
 				<tr>
-					<td colspan="3" align="center"><span class="goDetail">쥬시</span>
-					<%-- <c:choose>
-						<c:when test="${not empty boardList }">
-							<c:forEach var="board" items="${boardList }" varStatus="status">
-								<tr class="tac" data-num="${donation.dona_index }">
-									<td>${board.b_num }</td>
-									<td class="tal"><span class="goDetail">${board.b_title }</span></td>
-									<td>${board.b_date }</td>
-									<td>${board.b_name }</td>
+					<td colspan="3" align="center">
+					<div class="contentContainer">
+			<div class="contentTit"><h3>후원 리스트</h3></div>
+			
+			<%-- ================== 상세 페이지 이동을 위한 FORM ================== --%>
+			<form name="detailForm" id="detailForm">
+				<input type="hidden" name="intro_index" id="intro_index" />
+			</form>
+			
+			<%-- ==================== 리스트 시작 ==================== --%>
+			<form id="hard">
+				<input type="hidden" name="sponser_index" id="sponser_index" />
+				<input type="hidden" name="sponser_add" id="sponser_add" />
+			</form>
+			<div id="boardList">
+			
+				<table summary="게시판 리스트">
+					<colgroup>
+						<col width="15%" />
+						<col width="15%" />
+						<col width="20%" />
+						<col width="20%" />
+						<col width="30%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>수령인</th>
+							<th>수령자 연락처</th>
+							<th>프로젝트명</th>
+							<th>수령자이메일</th>
+							<th>수령 주소</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<!-- 데이터 출력 -->
+						
+						<c:choose>
+							<c:when test="${not empty introList}">
+								<c:forEach var="spon" items="${introList}" varStatus="status">
+									<tr data-num="${intro_index}">
+										<td data-num="${spon.sponser_index }">${spon.sponser_name}</td>
+										<td>${spon.sponser_phone}</td>
+										<td><span class="goDetail" style="text-overflow:ellipsis; overflow:hidden;">${intro_title}</span></td>
+										<td>${spon.sponser_email}</td>
+										<td data-name="${spon.sponser_add}">
+											<c:choose>
+												<c:when test="${change eq true}">
+													<input type="text" id="add" name="add" value="${spon.sponser_add}">
+													<input type="button" class="complete" value="확인"/>
+												</c:when>
+												<c:otherwise>
+													${spon.sponser_add}
+													<input type="button" class="addchange"  value="변경"/>
+													<input type="hidden" id="hide" value="${intro_index}" >
+												</c:otherwise>
+											</c:choose>
+											</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="4" class="tac">등록된 게시물이 존재하지 않습니다.</td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="4" class="tac">등록된 게시물이 없습니다.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose> --%>
-					
+							</c:otherwise>
+						</c:choose>
+						
+					</tbody>
+				</table>
+			</div>
+			<%-- ==================== 리스트 종료 ==================== --%>
+			
+		</div>
+		</td>
+				</tr>
+				<tr>
+					<td>
+					<div class="contentContainer">
+			
+			<%-- ================== 상세 페이지 이동을 위한 FORM ================== --%>
+			
+			
+			<%-- ==================== 리스트 시작 ==================== --%>
+			<div id="boardList">
+				<table summary="게시판 리스트">
+					<colgroup>
+						<col width="25%" />
+						<col width="25%" />
+						<col width="20%" />
+						<col width="30%" />
+					</colgroup>
+					<thead>
+						<tr>
+							<th>결제방법</th>
+							<th>투자금액</th>
+							<th>은행</th>
+							<th>계좌번호</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<!-- 데이터 출력 -->
+						<c:choose>
+							<c:when test="${not empty accountList}">
+								<c:forEach var="account" items="${accountList}" varStatus="status">
+									<tr>
+										<td>${account.sponser_p_method}</td>
+										<td>${account.sponser_invest}</td>
+										<td>${account.usact_bank}</td>
+										<td>${account.usact_number}</td>
+										
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="4" class="tac">등록된 게시물이 존재하지 않습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
+			<%-- ==================== 리스트 종료 ==================== --%>
+			
+		</div>
 					
 					
 					</td>
 				</tr>
 			
 			</table>
-		</form>
+		
 	</div>
 
 

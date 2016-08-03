@@ -35,7 +35,7 @@
 			<tr>
 				<td>후원 금액</td>
 				<td colspan="2">
-					<input type="text" name="project_invest" id="project_invest" value="${introData.project_invest}" readonly="readonly" />
+					<input type="text" name="sponser_invest" id="sponser_invest" value="${introData.sponser_invest}" readonly="readonly" />
 				</td>
 			</tr>
 			<tr>
@@ -83,7 +83,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<input type="button" value="메인 화면으로">
+					<input type="button" value="메인 화면으로" onclick="/intro/intro.do">
 				</td>
 			</tr>
 		</table>
