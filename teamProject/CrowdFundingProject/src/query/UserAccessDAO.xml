@@ -8,8 +8,18 @@
 			,	us_index
 			,	usacc_ip
 			,	TO_CHAR(usacc_date, 'YYYY/MM/DD HH24:MI:SS') AS usacc_date
-		FROM		(SELECT * FROM useraccess WHERE us_index = #{us_index} ORDER BY usacc_date DESC)
-		WHERE rownum <![CDATA[<=]]> 20
+		FROM		(SELECT	ROWNUM AS rnum
+					,	usacc.*
+				FROM	(
+						SELECT	*
+						FROM	useraccess
+						WHERE	us_index = #{us_index}
+						ORDER BY
+								usacc_date DESC
+						) usacc
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}
 	</select>
 	
 	<!-- 최근 접속 정보 조회-->
@@ -36,4 +46,12 @@
 			useraccess_seq.NEXTVAL, #{us_index}, #{usacc_ip}
 		)
 	</insert>
+	
+	<!-- 접속 정보 개수 조회 -->
+	<select id="accessListCount" parameterType="userAccessVO" resultType="int">
+		/* UserAccessDAO- accessListCount */
+		SELECT	count(usacc_index)
+		FROM	useraccess
+		WHERE	us_index = #{us_index}
+	</select>
 </mapper>

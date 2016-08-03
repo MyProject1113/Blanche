@@ -28,13 +28,21 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#fq_index").val(0);
-			if ("<c:out value='${faqParam.search}' />" != "") {
-				$("#search").val("<c:out value='${faqParam.search}' />");
+			if ("<c:out value='${faqParam.method}' />" != "") {
+				$("#method").val("<c:out value='${faqParam.method}' />");
 			} else {
-				$("#search").val("title");
+				$("#method").val("title");
 			}
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
+			if ($("#method").val() == "category") {
+				$("#category").val($("#keyword").val());
+				$("#keyword").hide();
+				$("#category").show();
+			} else {
+				$("#keyword").show();
+				$("#category").hide();
+			}
 			
 			/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
 			$(".goDetail").click(function() {
@@ -61,6 +69,24 @@
 				var page = $(this).attr("data-page");;
 				$("#page").val(page);
 				goPage();
+			});
+			
+			/* 검색 조건 변경 시 처리 이벤트 */
+			$("#method").change(function() {
+				if ($("#method").val() == "category") {
+					$("#keyword").val($("#category").val());
+					$("#keyword").hide();
+					$("#category").show();
+				} else {
+					$("#keyword").val("");
+					$("#keyword").show();
+					$("#category").hide();
+				}
+			});
+			
+			/* 범주 조건 변경 시 처리 이벤트 */
+			$("#category").change(function() {
+				$("#keyword").val($("#category").val());
 			});
 			
 			/* 검색 버튼 클릭 시 처리 이벤트 */
@@ -214,11 +240,20 @@
 	<div id="boardSearch">
 		<form name="formBoard" id="formBoard">
 			<input type="hidden" name="fq_index" id="fq_index" />
-			<select name="search" id="search">
+			<select name="method" id="method">
+				<option value="category">카테고리</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="both">제목+내용</option>
 				<option value="writer">작성자</option>
+			</select>
+			<select name="category" id="category">
+				<option value=""></option>
+				<option value="기획">기획</option>
+				<option value="투자">투자</option>
+				<option value="운영">운영</option>
+				<option value="결제">결제</option>
+				<option value="그외">그외</option>
 			</select>
 			<input type="text" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />

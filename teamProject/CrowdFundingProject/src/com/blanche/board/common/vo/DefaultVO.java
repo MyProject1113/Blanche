@@ -7,7 +7,7 @@ public class DefaultVO {
 	private int		editable		= 0;	// 수정가능여부
 	private int		deletable		= 0;	// 삭제가능여부
 	
-	private String	search			= "";		// 검색방법
+	private String	method			= "";		// 검색방법
 	private String	keyword			= "";		// 검색단어
 	private int		page			= 1;		// 페이지
 	private int		pageSize		= 20;		// 페이지 크기
@@ -45,11 +45,11 @@ public class DefaultVO {
 		this.deletable = deletable;
 	}
 	
-	public String getSearch() {
-		return search;
+	public String getMethod() {
+		return method;
 	}
-	public void setSearch(String search) {
-		this.search = search.trim();
+	public void setMethod(String method) {
+		this.method = method;
 	}
 	public String getKeyword() {
 		return keyword;

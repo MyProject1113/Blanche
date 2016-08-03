@@ -32,7 +32,7 @@
 			$("#fq_category").val("<c:out value='${faqData.fq_category}' />");
 			$("#fq_index").val("<c:out value='${faqData.fq_index}' />");
 			$("#us_index").val("<c:out value='${faqData.us_index}' />");
-			$("#search").val("<c:out value='${faqParam.search}' />");
+			$("#method").val("<c:out value='${faqParam.method}' />");
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
 			
@@ -98,7 +98,7 @@
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
 			<input type="hidden" name="fq_index" id="fq_index" />
 			<input type="hidden" name="us_index" id="us_index" />
-			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="method" id="method" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">

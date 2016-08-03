@@ -40,22 +40,22 @@
 			nt_delete = 0
 			<if test="keyword != null and keyword != ''">
 				<choose>
-					<when test="search == 'title'">
+					<when test="method == 'title'">
 						AND 
 						nt_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'content'">
+					<when test="method == 'content'">
 						AND
 						nt_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'both'">
+					<when test="method == 'both'">
 						AND (
 							nt_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 							OR
 							nt_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 						)
 					</when>
-					<when test="search == 'writer'">
+					<when test="method == 'writer'">
 						AND
 						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
 					</when>

@@ -132,6 +132,8 @@ public class UserMainController implements Constant {
 	public ModelAndView userExit(HttpServletRequest request) throws Exception {
 		logger.info("userExit 호출 성공");
 		
+		request.getSession().invalidate();
+		
 		UserMainVO userData = new UserMainVO();
 		Cookie[] cookieList = request.getCookies();
 		for (Cookie cookie : cookieList) {
@@ -334,7 +336,37 @@ public class UserMainController implements Constant {
 			UserAccessVO accessParam = new UserAccessVO();
 			accessParam.setUs_index(userData.getUs_index());
 			List<UserAccessVO> accessList = userAccessService.accessList(accessParam);
+			int listCount = userAccessService.accessListCount(accessParam);
+			accessParam.setListCount(listCount);
 			mav.addObject("accessList", accessList);
+			mav.addObject("accessParam", accessParam);
+			mav.setViewName("user/recordForm");
+		} else {
+			mav.addObject("result", "로그인 상태에서만 접속기록을 확인할 수 있습니다.");
+			mav.setViewName("board/common/returnError");
+		}
+		
+		return mav;
+	}
+	
+	/** 회원 접속 기록
+	 * @param UserAccessVO $param
+	 * @param	 HttpServletRequest $request for UserMainVO
+	 * @return UserAccessVO $accessList
+	 */
+	@RequestMapping(value="/record.do", method=RequestMethod.POST)
+	public ModelAndView userAccess(@ModelAttribute UserAccessVO param, HttpServletRequest request) {
+		logger.info("userAccess 호출 성공");
+		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
+		ModelAndView mav = new ModelAndView();
+		if (userData != null) {
+			param.setUs_index(userData.getUs_index());
+			List<UserAccessVO> accessList = userAccessService.accessList(param);
+			int listCount = userAccessService.accessListCount(param);
+			param.setListCount(listCount);
+			mav.addObject("accessList", accessList);
+			mav.addObject("accessParam", param);
 			mav.setViewName("user/recordForm");
 		} else {
 			mav.addObject("result", "로그인 상태에서만 접속기록을 확인할 수 있습니다.");

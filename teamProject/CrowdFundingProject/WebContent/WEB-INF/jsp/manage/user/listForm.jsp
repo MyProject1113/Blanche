@@ -60,7 +60,7 @@
 				$("#boardUri").val(boardUri);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mywrite/article.do"
+					"action" : "/manage/article.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -91,7 +91,7 @@
 			function goPage() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mywrite/list.do"
+					"action" : "/manage/list.do"
 				});
 				$("#formBoard").submit();
 			}
@@ -107,16 +107,18 @@
 				<col width="10%" />
 				<col width="15%" />
 				<col width="50%" />
-				<col width="13%" />
-				<col width="12%" />
+				<col width="10%" />
+				<col width="10%" />
+				<col width="10%" />
 			</colgroup>
 			<thead>
 				<tr>
 					<th class="columnName">번호</th>
 					<th class="columnName">게시판</th>
 					<th class="columnName">제목</th>
+					<th class="columnName">작성자</th>
 					<th class="columnName">작성일</th>
-					<th class="columnName">조회수</th>
+					<th class="columnName">삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -161,14 +163,19 @@
 										<img class="attachImage" src="/image/file.png" />
 									</c:if>
 								</td>
+								<td class="center">${boardData.nickname}</td>
 								<td class="center">${boardData.bd_regdate}</td>
-								<td class="center">${boardData.bd_check}</td>
+								<td class="center">
+									<c:if test="${boardData.bd_delete > 0}">
+										삭제
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<td colspan="6" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

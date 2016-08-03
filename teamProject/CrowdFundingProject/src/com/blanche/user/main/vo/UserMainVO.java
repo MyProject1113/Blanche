@@ -1,8 +1,9 @@
 package com.blanche.user.main.vo;
 
+import com.blanche.board.common.vo.DefaultVO;
 import com.blanche.user.common.util.EncryptionUtil;
 
-public class UserMainVO {
+public class UserMainVO extends DefaultVO {
 	private int		us_index			= 0;	// 회원일련번호
 	private String	us_email			= "";	// 이메일
 	private String	us_password	= "";	// 비밀번호

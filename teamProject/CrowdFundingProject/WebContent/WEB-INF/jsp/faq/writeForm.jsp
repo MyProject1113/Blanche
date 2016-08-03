@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#search").val("<c:out value='${faqParam.search}' />");
+			$("#method").val("<c:out value='${faqParam.method}' />");
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
 			
@@ -83,7 +83,7 @@
 	<div id="boardWrite">
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
 			<input type="hidden" name="fq_important" id="fq_important" />
-			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="method" id="method" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">

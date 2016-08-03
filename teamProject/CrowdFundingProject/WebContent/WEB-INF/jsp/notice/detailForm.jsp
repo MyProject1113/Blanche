@@ -29,7 +29,7 @@
 		$(function() {
 			$("#nt_index").val("<c:out value='${noticeData.nt_index}' />");
 			$("#us_index").val("<c:out value='${noticeData.us_index}' />");
-			$("#search").val("<c:out value='${noticeParam.search}' />");
+			$("#method").val("<c:out value='${noticeParam.method}' />");
 			$("#keyword").val("<c:out value='${noticeParam.keyword}' />");
 			$("#page").val("<c:out value='${noticeParam.page}' />");
 			
@@ -173,7 +173,7 @@
 	<form name="formBoard" id="formBoard">
 		<input type="hidden" name="nt_index" id="nt_index" />
 		<input type="hidden" name="us_index" id="us_index" />
-		<input type="hidden" name="search" id="search" />
+		<input type="hidden" name="method" id="method" />
 		<input type="hidden" name="keyword" id="keyword" />
 		<input type="hidden" name="page" id="page" />
 	</form>

@@ -27,7 +27,7 @@
 		$(function() {
 			$("#bdinf_index").val("<c:out value='${boardParam.bdinf_index}' />");
 			$("#boardUri").val("<c:out value='${boardParam.boardUri}' />");
-			$("#search").val("<c:out value='${boardParam.search}' />");
+			$("#method").val("<c:out value='${boardParam.method}' />");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
 			$("#page").val("<c:out value='${boardParam.page}' />");
 			
@@ -43,7 +43,7 @@
 <form name="formBoard" id="formBoard">
 	<input type="hidden" name="bdinf_index" id="bdinf_index" />
 	<input type="hidden" name="boardUri" id="boardUri" />
-	<input type="hidden" name="search" id="search" />
+	<input type="hidden" name="method" id="method" />
 	<input type="hidden" name="keyword" id="keyword" />
 	<input type="hidden" name="page" id="page" />
 </form>

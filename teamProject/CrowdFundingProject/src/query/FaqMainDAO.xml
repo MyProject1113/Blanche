@@ -43,22 +43,26 @@
 			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
-					<when test="search == 'title'">
+					<when test="method == 'category'">
+						AND 
+						fq_category	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="method == 'title'">
 						AND 
 						fq_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'content'">
+					<when test="method == 'content'">
 						AND
 						fq_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'both'">
+					<when test="method == 'both'">
 						AND (
 							fq_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 							OR
 							fq_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 						)
 					</when>
-					<when test="search == 'writer'">
+					<when test="method == 'writer'">
 						AND
 						us_index = (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
 					</when>
