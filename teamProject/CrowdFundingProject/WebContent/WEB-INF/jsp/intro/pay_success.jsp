@@ -83,7 +83,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<input type="button" value="메인 화면으로" onclick="/intro/intro.do">
+					<input type="button" value="메인 화면으로" onclick="location.href='/intro/intro.do';">
 				</td>
 			</tr>
 		</table>
