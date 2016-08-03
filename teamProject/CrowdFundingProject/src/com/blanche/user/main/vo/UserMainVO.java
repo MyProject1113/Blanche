@@ -1,9 +1,8 @@
 package com.blanche.user.main.vo;
 
-import com.blanche.board.common.vo.DefaultVO;
 import com.blanche.user.common.util.EncryptionUtil;
 
-public class UserMainVO extends DefaultVO {
+public class UserMainVO {
 	private int		us_index			= 0;	// 회원일련번호
 	private String	us_email			= "";	// 이메일
 	private String	us_password	= "";	// 비밀번호
@@ -21,6 +20,13 @@ public class UserMainVO extends DefaultVO {
 	private int		accreditState 	= 0;	// 인증 상태
 	private String accessIP		= "";	// 마지막 접속 IP
 	private String accessDate		= "";	// 마지막 접속 시간
+	
+	private String	method			= "";		// 검색방법
+	private String	keyword			= "";		// 검색단어
+	private int		page			= 1;		// 페이지
+	private int		pageSize		= 10;		// 페이지 크기
+	private int		pageCount		= 1;		// 페이지 개수
+	private int		pageSpare		= 3;		// 페이지 표시여분
 	
 	public int getUs_index() {
 		return us_index;
@@ -118,5 +124,67 @@ public class UserMainVO extends DefaultVO {
 	}
 	public void setAccessDate(String accessDate) {
 		this.accessDate = accessDate;
+	}
+	
+	public String getMethod() {
+		return method;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword.trim();
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		if (page > 0) {
+			this.page = page;
+		} else {
+			this.page = 1;
+		}
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		if (pageSize > 0) {
+			this.pageSize = pageSize;
+		} else {
+			this.pageSize = 1;
+		}
+	}
+	public int getPageCount() {
+		return pageCount;
+	}
+	public void setPageCount(int pageCount) {
+		if (pageCount > 0) {
+			this.pageCount = pageCount;
+		} else {
+			this.pageCount = 1;
+		}
+	}
+	public int getPageSpare() {
+		return pageSpare;
+	}
+	public void setPageSpare(int pageSpare) {
+		this.pageSpare = pageSpare;
+	}
+	public void setListCount(int listCount) {
+		if (listCount > 0) {
+			this.pageCount = ((listCount - 1) / pageSize) + 1;
+		} else {
+			this.pageCount = 1;
+		}
+	}
+	public int getStartRow() {
+		return ((page - 1) * pageSize) + 1;
+	}
+	public int getEndRow() {
+		return page * pageSize;
 	}
 }

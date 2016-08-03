@@ -10,8 +10,8 @@
 			,	us_nickname
 			,	us_rank
 			,	us_phone
+			,	TO_CHAR((SELECT MAX(usacc_date) FROM useraccess WHERE us_index = rs.us_index), 'YYYY/MM/DD') AS accessDate
 			,	(SELECT MAX(usacd_type) FROM useraccredit WHERE us_index = rs.us_index) AS accreditState
-			,	(SELECT MAX(usacc_date) FROM useraccess WHERE us_index = rs.us_index) AS accessDate
 		FROM 	(
 				SELECT	ROWNUM AS rnum
 					,	us.*

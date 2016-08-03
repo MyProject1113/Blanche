@@ -27,43 +27,13 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#bdinf_index").val("<c:out value='${boardParam.bdinf_index}' />");
-			$("#bd_index").val(0);
 			if ("<c:out value='${boardParam.method}' />" != "") {
 				$("#method").val("<c:out value='${boardParam.method}' />");
 			} else {
 				$("#method").val("title");
 			}
-			$("#boardUri").val("");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
 			$("#page").val("<c:out value='${boardParam.page}' />");
-			
-			/* 게시판이름 클릭시 게시판 이동을 위한 처리 이벤트 */
-			$(".goBoard").click(function() {
-				var bdinf_index = $(this).parents("tr").attr("data-index");
-				var boardUri = $(this).parents("tr").attr("data-uri");
-				$("#bdinf_index").val(bdinf_index);
-				$("#boardUri").val(boardUri);
-				$("#page").val(0);
-				$("#formBoard").attr({
-					"method" : "post",
-					"action" : "/board/" + boardUri + "/list.do"
-				});
-				$("#formBoard").submit();
-			});
-			
-			/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
-			$(".goDetail").click(function() {
-				var bd_index = $(this).parents("tr").attr("data-num");
-				var boardUri = $(this).parents("tr").attr("data-uri");
-				$("#bd_index").val(bd_index);
-				$("#boardUri").val(boardUri);
-				$("#formBoard").attr({
-					"method" : "post",
-					"action" : "/manage/board/article.do"
-				});
-				$("#formBoard").submit();
-			});
 			
 			/* 페이지 버튼 클릭 시 처리 이벤트 */
 			$(document).on("click", ".goPage", function() {
@@ -90,8 +60,8 @@
 			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 함수 */
 			function goPage() {
 				$("#formBoard").attr({
-					"method" : "post"
-					"action" : "/manage/board/list.do"
+					"method" : "post",
+					"action" : "/manage/user/list.do"
 				});
 				$("#formBoard").submit();
 			}
@@ -117,77 +87,45 @@
 		<table class="boardTable">
 			<colgroup>
 				<col width="10%" />
+				<col width="16%" />
+				<col width="12%" />
+				<col width="12%" />
+				<col width="10%" />
 				<col width="15%" />
-				<col width="50%" />
 				<col width="10%" />
-				<col width="10%" />
-				<col width="10%" />
+				<col width="15%" />
 			</colgroup>
 			<thead>
 				<tr>
 					<th class="columnName">번호</th>
-					<th class="columnName">게시판</th>
-					<th class="columnName">제목</th>
-					<th class="columnName">작성자</th>
-					<th class="columnName">작성일</th>
-					<th class="columnName">삭제</th>
+					<th class="columnName">이메일</th>
+					<th class="columnName">이름</th>
+					<th class="columnName">닉네임</th>
+					<th class="columnName">등급</th>
+					<th class="columnName">연락처</th>
+					<th class="columnName">최근접속</th>
+					<th class="columnName">상태</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${not empty boardList}">
-						<c:forEach var="boardData" items="${boardList}">
-							<tr data-num="${boardData.bd_index}" data-index="${boardData.bdinf_index}" data-uri="${boardData.boardUri}">
-								<td class="center">
-									<c:if test="${boardData.bd_step == 0}">
-										${boardData.num}
-									</c:if>
-								</td>
-								<td class="center">
-									<c:choose>
-										<c:when test="${fn:length(boardData.boardTitle) > 13}">
-												<span class="goBoard" title="${boardData.boardTitle}">
-													${fn:substring(boardData.boardTitle, 0, 13)}...
-												</span>
-										</c:when>
-										<c:otherwise>
-											<span class="goBoard">
-												${boardData.boardTitle}
-											</span>
-										</c:otherwise>
-									</c:choose>
-								</td>
-								<td class="left">
-									<c:if test="${boardData.bd_step > 0}">
-										<c:forEach begin="1" end="${boardData.bd_indent}">
-											&nbsp;&nbsp;
-										</c:forEach>
-										<img src="/image/re.gif" />
-									</c:if>
-									<span class="goDetail">${boardData.bd_title}</span>
-									<c:if test="${boardData.commentCount > 0}">
-										<span class="commentCount">(${boardData.commentCount})</span>
-									</c:if>
-									<c:if test="${boardData.pictureCount > 0}">
-										<img class="pictureImage" src="/image/picture.png" />
-									</c:if>
-									<c:if test="${boardData.attachCount > 0}">
-										<img class="attachImage" src="/image/file.png" />
-									</c:if>
-								</td>
-								<td class="center">${boardData.nickname}</td>
-								<td class="center">${boardData.bd_regdate}</td>
-								<td class="center">
-									<c:if test="${boardData.bd_delete > 0}">
-										삭제
-									</c:if>
-								</td>
+					<c:when test="${not empty userList}">
+						<c:forEach var="userData" items="${userList}">
+							<tr>
+								<td class="center">${userData.us_index}</td>
+								<td class="center">${userData.us_email}</td>
+								<td class="center">${userData.us_name}</td>
+								<td class="center">${userData.us_nickname}</td>
+								<td class="center">${userData.us_rank}</td>
+								<td class="center">${userData.us_phone}</td>
+								<td class="center">${userData.accessDate}</td>
+								<td class="center">${userData.accreditState}</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="6" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<td colspan="8" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -198,20 +136,20 @@
 	
 	<%-- ==================== 작성글 버튼 시작 ==================== --%>
 	<div id="boardButton" class="center">
-		<c:if test="${boardParam.pageCount > 0}">
+		<c:if test="${userParam.pageCount > 0}">
 			<c:choose>
-				<c:when test="${boardParam.page != 1}">
+				<c:when test="${userParam.page != 1}">
 					<span class="goPage" data-page="1">◀◀</span>
 				</c:when>
 				<c:otherwise>
 					<span class="disable" data-page="1">◀◀</span>
 				</c:otherwise>
 			</c:choose>
-			<c:forEach var="i" begin="1" end="${boardParam.pageCount}">
-				<c:if test="${i >= (boardParam.page - boardParam.pageSpare) && i <= (boardParam.page + boardParam.pageSpare)}">
+			<c:forEach var="i" begin="1" end="${userParam.pageCount}">
+				<c:if test="${i >= (userParam.page - userParam.pageSpare) && i <= (userParam.page + userParam.pageSpare)}">
 					|
 					<c:choose>
-						<c:when test="${i == boardParam.page}">
+						<c:when test="${i == userParam.page}">
 							<span class="goPage" id="currPage" data-page="${i}">${i}</span>
 						</c:when>
 						<c:otherwise>
@@ -222,14 +160,14 @@
 			</c:forEach>
 			|
 			<c:choose>
-				<c:when test="${boardParam.page != boardParam.pageCount}">
-					<span class="goPage" data-page="${boardParam.pageCount}">▶▶</span>
+				<c:when test="${userParam.page != userParam.pageCount}">
+					<span class="goPage" data-page="${userParam.pageCount}">▶▶</span>
 				</c:when>
 				<c:otherwise>
-					<span class="disable" data-page="${boardParam.pageCount}">▶▶</span>
+					<span class="disable" data-page="${userParam.pageCount}">▶▶</span>
 				</c:otherwise>
 			</c:choose>
-			(${boardParam.page}/${boardParam.pageCount})
+			(${userParam.page}/${userParam.pageCount})
 		</c:if>
 	</div>
 	<%-- ==================== 작성글 버튼 종료 ==================== --%>
@@ -237,9 +175,6 @@
 	<%-- ==================== 작성글 검색 시작 ==================== --%>
 	<div id="boardSearch">
 		<form name="formBoard" id="formBoard">
-			<input type="hidden" name="bdinf_index" id="bdinf_index" />
-			<input type="hidden" name="bd_index" id="bd_index" />
-			<input type="hidden" name="boardUri" id="boardUri" />
 			<select name="method" id="method">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
@@ -248,7 +183,7 @@
 			</select>
 			<input type="text" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
-			<input type="button" value="검색" name="boardSearchBtn" id="boardSearchBtn" />
+			<input type="button" value="검색" name="userSearchBtn" id="userSearchBtn" />
 		</form>
 	</div>
 	<%-- ==================== 작성글 검색 종료 ==================== --%>
