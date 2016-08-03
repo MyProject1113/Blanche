@@ -28,10 +28,10 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#nt_index").val(0);
-			if ("<c:out value='${noticeParam.search}' />" != "") {
-				$("#search").val("<c:out value='${noticeParam.search}' />");
+			if ("<c:out value='${noticeParam.method}' />" != "") {
+				$("#method").val("<c:out value='${noticeParam.method}' />");
 			} else {
-				$("#search").val("title");
+				$("#method").val("title");
 			}
 			$("#keyword").val("<c:out value='${noticeParam.keyword}' />");
 			$("#page").val("<c:out value='${noticeParam.page}' />");
@@ -214,7 +214,7 @@
 	<div id="boardSearch">
 		<form name="formBoard" id="formBoard">
 			<input type="hidden" name="nt_index" id="nt_index" />
-			<select name="search" id="search">
+			<select name="method" id="method">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="both">제목+내용</option>

@@ -28,14 +28,14 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#fq_index").val(0);
-			if ("<c:out value='${faqParam.search}' />" != "") {
-				$("#search").val("<c:out value='${faqParam.search}' />");
+			if ("<c:out value='${faqParam.method}' />" != "") {
+				$("#method").val("<c:out value='${faqParam.method}' />");
 			} else {
-				$("#search").val("title");
+				$("#method").val("title");
 			}
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
-			if ($("#search").val() == "category") {
+			if ($("#method").val() == "category") {
 				$("#category").val($("#keyword").val());
 				$("#keyword").hide();
 				$("#category").show();
@@ -72,8 +72,8 @@
 			});
 			
 			/* 검색 조건 변경 시 처리 이벤트 */
-			$("#search").change(function() {
-				if ($("#search").val() == "category") {
+			$("#method").change(function() {
+				if ($("#method").val() == "category") {
 					$("#keyword").val($("#category").val());
 					$("#keyword").hide();
 					$("#category").show();
@@ -240,7 +240,7 @@
 	<div id="boardSearch">
 		<form name="formBoard" id="formBoard">
 			<input type="hidden" name="fq_index" id="fq_index" />
-			<select name="search" id="search">
+			<select name="method" id="method">
 				<option value="category">카테고리</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>

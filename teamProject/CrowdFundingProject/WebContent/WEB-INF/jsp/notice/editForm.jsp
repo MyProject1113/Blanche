@@ -37,7 +37,7 @@
 			} else {
 				$("#important").prop("checked", false);
 			}
-			$("#search").val("<c:out value='${noticeParam.search}' />");
+			$("#method").val("<c:out value='${noticeParam.method}' />");
 			$("#keyword").val("<c:out value='${noticeParam.keyword}' />");
 			$("#page").val("<c:out value='${noticeParam.page}' />");
 			
@@ -114,7 +114,7 @@
 			<input type="hidden" name="nt_index" id="nt_index" />
 			<input type="hidden" name="us_index" id="us_index" />
 			<input type="hidden" name="nt_important" id="nt_important" />
-			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="method" id="method" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">

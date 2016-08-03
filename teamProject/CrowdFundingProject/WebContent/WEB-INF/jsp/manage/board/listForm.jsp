@@ -29,10 +29,10 @@
 		$(function() {
 			$("#bdinf_index").val("<c:out value='${boardParam.bdinf_index}' />");
 			$("#bd_index").val(0);
-			if ("<c:out value='${boardParam.search}' />" != "") {
-				$("#search").val("<c:out value='${boardParam.search}' />");
+			if ("<c:out value='${boardParam.method}' />" != "") {
+				$("#method").val("<c:out value='${boardParam.method}' />");
 			} else {
-				$("#search").val("title");
+				$("#method").val("title");
 			}
 			$("#boardUri").val("");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
@@ -228,7 +228,7 @@
 			<input type="hidden" name="bdinf_index" id="bdinf_index" />
 			<input type="hidden" name="bd_index" id="bd_index" />
 			<input type="hidden" name="boardUri" id="boardUri" />
-			<select name="search" id="search">
+			<select name="method" id="method">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="both">제목+내용</option>

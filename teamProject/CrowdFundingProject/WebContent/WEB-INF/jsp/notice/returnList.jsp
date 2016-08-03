@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#search").val("<c:out value='${noticeParam.search}' />");
+			$("#method").val("<c:out value='${noticeParam.method}' />");
 			$("#keyword").val("<c:out value='${noticeParam.keyword}' />");
 			$("#page").val("<c:out value='${noticeParam.page}' />");
 			
@@ -39,7 +39,7 @@
 </head>
 <body>
 <form name="formBoard" id="formBoard">
-	<input type="hidden" name="search" id="search" />
+	<input type="hidden" name="method" id="method" />
 	<input type="hidden" name="keyword" id="keyword" />
 	<input type="hidden" name="page" id="page" />
 </form>
