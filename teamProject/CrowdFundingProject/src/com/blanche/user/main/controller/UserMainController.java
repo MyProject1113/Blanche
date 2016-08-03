@@ -1,8 +1,12 @@
 package com.blanche.user.main.controller;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +50,25 @@ public class UserMainController implements Constant {
 	private UserAccreditService userAccreditService;
 	
 	/** 회원 접속창
+	 * @param	HttpServletRequest $request
+	 * @return UserMainVO $userData
 	 */
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
-	public ModelAndView userLogin() {
+	public ModelAndView userLogin(HttpServletRequest request) throws Exception {
 		logger.info("userLogin 호출 성공");
 		
+		UserMainVO userData = new UserMainVO();
+		Cookie[] cookieList = request.getCookies();
+		for (Cookie cookie : cookieList) {
+			if (cookie.getName().equals("blancheUserEmail")) {
+				userData.setUs_email(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			} else if (cookie.getName().equals("blancheUserRemain")) {
+				userData.setRemainCookie(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			}
+		}
+		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("userData", userData);
 		mav.setViewName("user/loginForm");
 		
 		return mav;
@@ -60,15 +77,29 @@ public class UserMainController implements Constant {
 	/** 회원 접속
 	 * @param	UserMainVO $param
 	 * @param	HttpServletRequest $request
+	 * @param	HttpServletResponse $response
 	 * @return UserMainVO $blancheUser
 	 */
 	@RequestMapping(value="/access.do", method=RequestMethod.POST)
-	public ModelAndView userAccess(@ModelAttribute UserMainVO param, HttpServletRequest request) {
+	public ModelAndView userAccess(@ModelAttribute UserMainVO param, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("userAccess 호출 성공");
 		
+		String stringDate = param.getRemainCookie();
 		param = userMainService.userAccess(param);
 		ModelAndView mav = new ModelAndView();
 		if (param != null) {
+			param.setRemainCookie(stringDate);
+			Cookie userCookie = new Cookie("blancheUserEmail", URLEncoder.encode(param.getUs_email(), "UTF-8"));
+			Cookie remainCookie = new Cookie("blancheUserRemain", URLEncoder.encode(param.getRemainCookie(), "UTF-8"));
+			if (!param.getRemainCookie().equals("")) {
+				userCookie.setMaxAge(2592000); // 30일
+				remainCookie.setMaxAge(2592000); // 30일
+			} else {
+				userCookie.setMaxAge(0);
+				remainCookie.setMaxAge(0);
+			}
+			response.addCookie(userCookie);
+			response.addCookie(remainCookie);
 			if (param.getAccreditState() == 0) {
 				UserAccessVO accessParam = new UserAccessVO();
 				accessParam.setUs_index(param.getUs_index());
@@ -98,12 +129,21 @@ public class UserMainController implements Constant {
 	 * @return UserMainVO $blancheUser
 	 */
 	@RequestMapping(value="/exit.do")
-	public ModelAndView userExit(HttpServletRequest request) {
+	public ModelAndView userExit(HttpServletRequest request) throws Exception {
 		logger.info("userExit 호출 성공");
 		
-		request.getSession().setAttribute(SESSION_USER_DATA, null);
+		UserMainVO userData = new UserMainVO();
+		Cookie[] cookieList = request.getCookies();
+		for (Cookie cookie : cookieList) {
+			if (cookie.getName().equals("blancheUserEmail")) {
+				userData.setUs_email(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			} else if (cookie.getName().equals("blancheUserRemain")) {
+				userData.setRemainCookie(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			}
+		}
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("userData", userData);
 		mav.setViewName("user/loginForm");
 		
 		return mav;

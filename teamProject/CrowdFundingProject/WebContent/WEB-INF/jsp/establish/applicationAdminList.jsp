@@ -29,14 +29,17 @@
 		<script type="text/javascript">
 			$(function() {
 				/* 검색화면 초기화 */
-				$("#keyword_text").show();
-				$("#keyword_field").hide();
-				$("#keyword_check").hide();
+				selectEvent("", "", 0);
+				/* $("#keyword_text").show();
+					$("#keyword_field").hide();
+					$("#keyword_check").hide(); */
 				
 				/* 검색 후 검색 대상과 검색 단어 출력 */
 				if ("<c:out value='${data.keyword}' />" != "") {
-					$("#keyword").val("${data.keyword}");
-					$("#searchCombo").val("${data.searchCombo}");
+					$("#keyword").val("<c:out value='${data.keyword}' />");
+					$("#searchCombo").val("<c:out value='${data.searchCombo}' />");
+					
+					selectEvent($("#searchCombo").val(), $("#keyword").val(), $("#keyword").val());
 				}
 				
 				/* 한페이지에 보여줄 레코드 수 조회 후 선택한 값 그대로 유지하도록 */
@@ -46,36 +49,22 @@
 				
 				/* 검색 대상이 변경될 때마다 처리 이벤트 */
 				$("#searchCombo").change(function() {
-					if ($("#searchCombo").val() == "all") {
-						$("#keyword_text").show();
-						$("#keyword_field").hide();
-						$("#keyword_check").hide();
-						
-						$("#keyword").val("전체 데이터 조회합니다.");
-						
-					} else if ($("#searchCombo").val() == "app_topic") {
-						$("#keyword_text").show();
-						$("#keyword_field").hide();
-						$("#keyword_check").hide();
-						
-						$("#keyword").val("");
-						$("#keyword").focus();
-						
-					} else if ($("#searchCombo").val() == "app_field") {
-						$("#keyword_text").hide();
-						$("#keyword_field").show();
-						$("#keyword_check").hide();
-						
-					} else if ($("#searchCombo").val() == "appro_check") {
-						$("#keyword_text").hide();
-						$("#keyword_field").hide();
-						$("#keyword_check").show();
-					}
+					selectEvent($("#searchCombo").val(), "", 0);
+				});
+				
+				/* 검색 대상 분야 내용이 변경될 때마다 처리 이벤트 */
+				$("#search_field").change(function() {
+					selectEvent($("#searchCombo").val(), "", $("#search_field").val());
+				});
+				
+				/* 검색 대상 승인 내용이 변경될 때마다 처리 이벤트 */
+				$("#search_check").change(function() {
+					selectEvent($("#searchCombo").val(), "", $("#search_check").val());
 				});
 				
 				/* 검색 버튼 클릭 시 처리 이벤트 */
 				$("#searchData").click(function() {
-					if ($("#searchCombo").val() != "all") {
+					if ($("#searchCombo").val() == "app_topic") {
 						if (!chkSubmit($("#keyword"), "검색어를")) return;
 					}
 					goPage(1);
@@ -84,11 +73,6 @@
 				/* 한 페이지에 보여줄 레코드 수 변경될 때마다 처리 이벤트 */
 				$("#pageSize").change(function() {
 					goPage(1);
-				});
-				
-				/* 글쓰기 버튼 클릭 시 처리 이벤트 */
-				$("#InsertFormBtn").click(function() {
-					location.href = "/board/writeForm.do";
 				});
 				
 				/* 프로젝트 승인 리스트 버튼 클릭 시 처리 이벤트 */
@@ -134,9 +118,41 @@
 				$("#f_search").submit();
 			}
 			
-			/* 검색 대상 상세 내용이 변경될 때마다 처리 이벤트 */
-			function selectComboEvent(selectObj) {
-				$("#keyword").val(selectObj.value);
+			/* 검색 대상 내용 처리 함수 */
+			function selectEvent(selectObj, keyword, value) {
+				if (selectObj == "app_topic") {
+					$("#keyword_text").show();
+					$("#keyword_field").hide();
+					$("#keyword_check").hide();
+					
+					$("#keyword").val(keyword);
+					$("#keyword").focus();
+					
+				} else if (selectObj == "app_field") {
+					$("#keyword_text").hide();
+					$("#keyword_field").show();
+					$("#keyword_check").hide();
+
+					if (value == 0)
+						value = "movie";
+					$("#search_field").val(value);
+					$("#keyword").val(value);
+					
+				} else if (selectObj == "appro_check") {
+					$("#keyword_text").hide();
+					$("#keyword_field").hide();
+					$("#keyword_check").show();
+					
+					$("#search_check").val(value);
+					$("#keyword").val(value);
+					
+				} else {
+					$("#keyword_text").show();
+					$("#keyword_field").hide();
+					$("#keyword_check").hide();
+					
+					$("#keyword").val("전체 데이터를 조회합니다.");
+				}
 			}
 		</script>
 	
@@ -192,7 +208,7 @@
 								</div>
 								
 								<div id="keyword_field">
-									<select id="search_field" name="search_field" onChange="javascript:selectComboEvent(this)">
+									<select id="search_field" name="search_field">
 										<option value="movie">영화 ∙ 공연</option>
 										<option value="music">음악</option>
 										<option value="design">디자인</option>
@@ -202,7 +218,7 @@
 								</div>
 								
 								<div id="keyword_check">
-									<select id="search_check" name="search_check" onChange="javascript:selectComboEvent(this)">
+									<select id="search_check" name="search_check">
 										<option value="0">심사 중</option>
 										<option value="1">기각</option>
 										<option value="2">승인</option>

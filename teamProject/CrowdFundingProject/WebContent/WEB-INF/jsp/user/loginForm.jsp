@@ -38,10 +38,27 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			var us_email =  "<c:out value='${userData.us_email}' />"
+			var remainCookie =  "<c:out value='${userData.remainCookie}' />"
+			if (remainCookie != "") {
+				$("#us_email").val(us_email);
+				$("#useCookie").prop("checked", true);
+				$("#useCookie").change();
+			}
+			
 			/* 엔터키 입력 시 처리 이벤트 */
 			$("#us_password").keydown(function(event) {
 				if (event.keyCode == 13) {
 					$("#loginBtn").click();
+				}
+			});
+			
+			$("#useCookie").change(function(){
+				var isCheck = $(this).is(":checked");
+				if (isCheck == true) {
+					$("#remainCookie").val("on");
+				} else {
+					$("#remainCookie").val("");
 				}
 			});
 			
@@ -86,29 +103,39 @@
 <c:choose>
 	<c:when test="${empty sessionScope.blancheUser}">
 		<form name="formLogin" id="formLogin">
+			<input type="hidden" name="remainCookie" id="remainCookie">
 			<table>
 				<colgroup>
 					<col width="20%" />
-					<col width="80%" />
+					<col width="60%" />
+					<col width="20%" />
 				</colgroup>
 				<tr>
-					<td colspan="2" class="center">로그인</td>
+					<td colspan="3" class="center">로그인</td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="email" name="us_email" id="us_email" /></td>
+					<td colspan="2"><input type="email" name="us_email" id="us_email" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="us_password" id="us_password" /></td>
+					<td colspan="2"><input type="password" name="us_password" id="us_password" /></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="center">
+					<td></td>
+					<td>
+						<input type="checkbox" name="useCookie" id="useCookie" />
+						<label for="useCookie">30일간 ID 저장</label>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3" class="center">
 						<input type="button"  name="loginBtn" id="loginBtn" value="로그인" />
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="center">
+					<td colspan="3" class="center">
 						<input type="button" name="joinBtn" id="joinBtn" value="회원가입" />
 						<input type="button" name="findBtn" id="findBtn" value="비밀번호 찾기" />
 					</td>

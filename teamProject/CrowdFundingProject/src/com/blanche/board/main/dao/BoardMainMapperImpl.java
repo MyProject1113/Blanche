@@ -44,8 +44,13 @@ public class BoardMainMapperImpl implements BoardMainMapper {
 	}
 	
 	@Override
+	public int boardRestore(BoardMainVO param) {
+		return session.update("boardRestore");
+	}
+	
+	@Override
 	public int boardListCount(BoardMainVO param) {
-		return session.update("boardListCount");
+		return session.selectOne("boardListCount");
 	}
 
 	@Override
@@ -55,7 +60,7 @@ public class BoardMainMapperImpl implements BoardMainMapper {
 	
 	@Override
 	public int boardReplyCount(BoardMainVO param) {
-		return session.update("boardReplyCount");
+		return session.selectOne("boardReplyCount");
 	}
 	
 	@Override

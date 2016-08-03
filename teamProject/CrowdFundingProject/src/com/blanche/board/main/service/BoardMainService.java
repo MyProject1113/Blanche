@@ -15,4 +15,5 @@ public interface BoardMainService {
 	public List<BoardMainVO> boardReplyList(BoardMainVO param);
 	public int boardReplyCount(BoardMainVO param);
 	public int boardReplyIndent(BoardMainVO param);
+	public int boardRestore(BoardMainVO param);
 }

@@ -60,7 +60,7 @@
 				$("#boardUri").val(boardUri);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mypage/myarticle.do"
+					"action" : "/mywrite/article.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -91,7 +91,7 @@
 			function goPage() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mypage/mylist.do"
+					"action" : "/mywrite/list.do"
 				});
 				$("#formBoard").submit();
 			}

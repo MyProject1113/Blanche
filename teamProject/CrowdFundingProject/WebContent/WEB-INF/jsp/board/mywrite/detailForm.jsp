@@ -28,6 +28,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#bd_index").val("<c:out value='${boardData.bd_index}' />");
+			$("#bdinf_index").val("<c:out value='${boardData.bdinf_index}' />");
 			$("#us_index").val("<c:out value='${boardData.us_index}' />");
 			$("#bd_root").val("<c:out value='${boardData.bd_root}' />");
 			$("#bd_parent").val("<c:out value='${boardData.bd_parent}' />");
@@ -46,11 +47,12 @@
 				});
 				$("#formBoard").submit();
 			});
+			
 			/* 목록 버튼 클릭 시 처리 이벤트 */
 			$("#boardListBtn").click(function() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mypage/mylist.do"
+					"action" : "/mywrite/list.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -62,6 +64,7 @@
 	<%-- ==================== 본문 설정 시작 ==================== --%>
 	<form name="formBoard" id="formBoard">
 		<input type="hidden" name="bd_index" id="bd_index" />
+		<input type="hidden" name="bdinf_index" id="bdinf_index" />
 		<input type="hidden" name="us_index" id="us_index" /> 
 		<input type="hidden" name="bd_root" id="bd_root" />
 		<input type="hidden" name="bd_parent" id="bd_parent" />
@@ -134,7 +137,7 @@
 	<%-- ==================== 본문 버튼 종료 ==================== --%>
 	
 	<%-- ==================== 본문 댓글 시작 ==================== --%>
-	<jsp:include page="commentView.jsp" />
+	<jsp:include page="commentForm.jsp" />
 	<%-- ==================== 본문 댓글 종료 ==================== --%>
 </div>
 </body>

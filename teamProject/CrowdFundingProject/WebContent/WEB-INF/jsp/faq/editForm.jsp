@@ -29,13 +29,9 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			$("#fq_category").val("<c:out value='${faqData.fq_category}' />");
 			$("#fq_index").val("<c:out value='${faqData.fq_index}' />");
 			$("#us_index").val("<c:out value='${faqData.us_index}' />");
-			if ($("#fq_important").val() == 1) {
-				$("#important").prop("checked", true);
-			} else {
-				$("#important").prop("checked", false);
-			}
 			$("#search").val("<c:out value='${faqParam.search}' />");
 			$("#keyword").val("<c:out value='${faqParam.keyword}' />");
 			$("#page").val("<c:out value='${faqParam.page}' />");
@@ -102,7 +98,6 @@
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
 			<input type="hidden" name="fq_index" id="fq_index" />
 			<input type="hidden" name="us_index" id="us_index" />
-			<input type="hidden" name="fq_important" id="fq_important" />
 			<input type="hidden" name="search" id="search" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
@@ -125,6 +120,19 @@
 						<td>${faqData.nickname}</td>
 						<td class="columnName center">최종수정일</td>
 						<td>${faqData.fq_modidate}</td>
+					</tr>
+					<tr>
+						<td class="columnName center">범주</td>
+						<td colspan="3">
+							<select name="fq_category" id="fq_category">
+								<option value=""></option>
+								<option value="기획">기획</option>
+								<option value="투자">투자</option>
+								<option value="운영">운영</option>
+								<option value="결제">결제</option>
+								<option value="그외">그외</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td class="columnName center">제목</td>

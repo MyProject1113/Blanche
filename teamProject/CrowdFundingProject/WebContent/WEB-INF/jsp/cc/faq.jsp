@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 
@@ -55,7 +56,7 @@ body {
 #faq_item_2{
 	width : 300px;
 	height : 200px;
-	float: left;
+	clear: both;
 	margin : 20px;
 }
 
@@ -69,7 +70,7 @@ body {
 #faq_item_4{
 	width : 300px;
 	height : 200px;
-	float: left;
+	clear: both;
 	margin : 20px;
 }
 
@@ -104,10 +105,37 @@ form.search {
 
 </style>
 
+<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$(".goCategory").click(function() {
+			$("#fq_category").val($(this).attr("data-category"));
+			$("#formFaq").attr({
+				"method" : "post",
+				"action" : "/faq/list.do"
+			});
+			$("#formFaq").submit();
+		});
+		
+		$(".goDetail").click(function() {
+			$("#fq_index").val($(this).attr("data-index"));
+			$("#formFaq").attr({
+				"method" : "post",
+				"action" : "/faq/detail.do"
+			});
+			$("#formFaq").submit();
+		});
+	});
+</script>
+
 </head>
 <body>
 
 <div id="container">
+<form name="formFaq" id="formFaq">
+	<input type="hidden" name="fq_category" id="fq_category">
+	<input type="hidden" name="fq_index" id="fq_index">
+</form>
 	
 <div  style="overflow:auto;">	
 	<header class="header" >
@@ -159,7 +187,72 @@ form.search {
 						
 						
 							<!-- ---------------------------------------------- 컨텐츠 섹션 아이템 시작 --------------------------------------------------  -->
-						
+							
+							<div id="faq_item_1">
+									<h2 class="knowledgebase-faq_title">
+										<span class="goCategory" data-category="기획">기획에 관한 질문</span>
+									</h2>
+									<ul class="list-main">
+										<c:if test="${not empty faqList1}">
+											<c:forEach var="faqData" items="${faqList1}">
+												<li class="list-main_item">
+													<span class="goDetail" data-index="${faqData.fq_index}">${faqData.fq_title}</span>
+												</li>
+											</c:forEach>
+										</c:if>
+									</ul>
+								</div>
+							</div>
+							
+							<div id="faq_item_2">
+									<h2 class="knowledgebase-faq_title">
+										<span class="goCategory" data-category="투자">투자에 관한 질문</span>
+									</h2>
+									<ul class="list-main">
+										<c:if test="${not empty faqList2}">
+											<c:forEach var="faqData" items="${faqList2}">
+												<li class="list-main_item">
+													<span class="goDetail" data-index="${faqData.fq_index}">${faqData.fq_title}</span>
+												</li>
+											</c:forEach>
+										</c:if>
+									</ul>
+								</div>
+							</div>
+							
+							<div id="faq_item_3">
+									<h2 class="knowledgebase-faq_title">
+										<span class="goCategory" data-category="운영">운영에 관한 질문</span>
+									</h2>
+									<ul class="list-main">
+										<c:if test="${not empty faqList3}">
+											<c:forEach var="faqData" items="${faqList3}">
+												<li class="list-main_item">
+													<span class="goDetail" data-index="${faqData.fq_index}">${faqData.fq_title}</span>
+												</li>
+											</c:forEach>
+										</c:if>
+									</ul>
+								</div>
+							</div>
+							
+							<div id="faq_item_4">
+									<h2 class="knowledgebase-faq_title">
+										<span class="goCategory" data-category="그외">그외에 관한 질문</span>
+									</h2>
+									<ul class="list-main">
+										<c:if test="${not empty faqList4}">
+											<c:forEach var="faqData" items="${faqList4}">
+												<li class="list-main_item">
+													<span class="goDetail" data-index="${faqData.fq_index}">${faqData.fq_title}</span>
+												</li>
+											</c:forEach>
+										</c:if>
+									</ul>
+								</div>
+							</div>
+								
+							<%--
 							<!-- FAQ 컨텐츠섹션 첫번째 아이템 -->
 							
 								<div id="faq_item_1">
@@ -278,7 +371,7 @@ form.search {
 									</ul>
 								</div>
 								
-								
+								--%>
 							<!-- ---------------------------------------------- 컨텐츠 섹션 아이템 종료 --------------------------------------------------  -->
 						
 						<!-- </ul> -->

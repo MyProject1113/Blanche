@@ -80,7 +80,7 @@ public class BoardMainController implements Constant {
 	
 	/** 게시판 전체 조회
 	 * @param	String $boardUri from PathVariable
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @return	BoardMainVO $boardList <br />
 	 * 			BoardMainVO $boardParam <br />
 	 *			BoardInfoVO $infoData
@@ -117,7 +117,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 상세 보기
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @param	HttpServletRequest $request for UserMainVO
 	 * @return	BoardMainVO $boardData <br />
 	 * 			BoardMainVO $boardParam <br />
@@ -165,7 +165,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 작성창 호출
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @param	HttpServletRequest $request for UserMainVO
 	 * @return	UserMainVO $userData <br />
 	 * 			BoardMainVO $boardParam
@@ -190,7 +190,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 작성
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @param	HttpServletRequest $request for UserMainVO and MultipartFile
 	 * @return	BoardMainVO $boardParam
 	 */
@@ -224,7 +224,7 @@ public class BoardMainController implements Constant {
 				param.setSearch("");
 				param.setKeyword("");
 				mav.addObject("boardParam", param);
-				mav.setViewName("board/common/returnList");
+				mav.setViewName("board/default/returnList");
 			} else {
 				mav.addObject("result", "글 작성에 실패하였습니다.");
 				mav.setViewName("board/common/returnError");
@@ -238,7 +238,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 수정창 호출
-	 * @param	NoticeMainMainVO $param 
+	 * @param	BoardMainVO $param 
 	 * @param	HttpServletRequest $request for UserMainVO
 	 * @return	BoardMainVO $boardData <br />
 	 * 			BoardMainVO $boardParam <br />
@@ -268,7 +268,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 수정
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @param	HttpServletRequest $request for UserMainVO and MultipartFile
 	 * @return	BoardMainVO $boardParam
 	 */
@@ -303,7 +303,7 @@ public class BoardMainController implements Constant {
 					}
 				}
 				mav.addObject("boardParam", param);
-				mav.setViewName("board/common/returnList");
+				mav.setViewName("board/default/returnList");
 			} else {
 				mav.addObject("result", "글 수정에 실패하였습니다.");
 				mav.setViewName("board/common/returnError");
@@ -317,7 +317,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 본문 삭제
-	 * @param	NoticeMainMainVO $param
+	 * @param	BoardMainVO $param
 	 * @param	HttpServletRequest $request for UserMainVO (
 	 * @return	BoardMainVO $boardParam
 	 */
@@ -337,7 +337,7 @@ public class BoardMainController implements Constant {
 				int result = boardMainService.boardDelete(param);
 				if (result == 1) {
 					mav.addObject("boardParam", param);
-					mav.setViewName("board/common/returnList");
+					mav.setViewName("board/default/returnList");
 				} else {
 					mav.addObject("result", "글 삭제에 실패하였습니다.");
 					mav.setViewName("board/common/returnError");
@@ -352,7 +352,7 @@ public class BoardMainController implements Constant {
 	}
 	
 	/** 게시판 답변 작성창 호출
-	 * @param	NoticeMainMainVO $param 
+	 * @param	BoardMainVO $param 
 	 * @param	HttpServletRequest $request for UserMainVO
 	 * @return	String
 	 */

@@ -113,4 +113,19 @@ public class IntroductionServiceImpl implements IntroductionService {
 		result = introductionDao.getIntroIndex(app_index);
 		return result;
 	}
+	
+
+	// 전체 레코드 수 구현
+	@Override
+	public int projectListCnt(IntroductionVO ivo) {
+		return introductionDao.projectListCnt(ivo);
+	}
+
+	// 회원 프로젝트 수정/삭제 요청
+	@Override
+	public int projectApprovalRequest(IntroApprovalVO intappvo) {
+		int result = 0;
+		result = introductionDao.projectApprovalRequest(intappvo);
+		return result;
+	}
 }

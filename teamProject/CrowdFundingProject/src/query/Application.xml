@@ -34,6 +34,7 @@
 				<choose>
 					<when test="order_by == 'app_index'">ORDER BY app_index</when>
 					<when test="order_by == 'app_date'">ORDER BY app_date</when>
+					<!-- <otherwise>ORDER BY app_index</otherwise> -->
 				</choose>
 				<choose>
 					<when test="order_sc == 'ASC'">ASC</when>
@@ -86,16 +87,17 @@
 		WHERE app_index = #{app_index}
 	</update>
 	
-	<!-- 게시물 삭제 -->
-	<delete id="applicationDelete" parameterType="application">
-		/* Application - applicationDelete */
-		<!-- DELETE FROM spring_board WHERE b_num = #{b_num}
-		
-		DELETE UPDATE_TAB
-		FROM TEST_TAB
-		WHERE TEST_TAB.SEQ = UPDATE_TAB.SEQ AND TEST_TAB.MANAGE = 1 -->
+	<!-- 개설승인 삭제 -->
+	<delete id="approvalDelete" parameterType="approval">
+		/* Application - approvalDelete */
+		DELETE FROM approval WHERE app_index = #{app_index}
 	</delete>
 	
+	<!-- 개설신청 삭제 -->
+	<delete id="applicationDelete" parameterType="application">
+		/* Application - applicationDelete */
+		DELETE FROM application WHERE app_index = #{app_index}
+	</delete>
 	
 	
 	

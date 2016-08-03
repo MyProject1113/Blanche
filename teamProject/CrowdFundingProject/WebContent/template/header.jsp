@@ -24,15 +24,14 @@
 				<li><a href="/cc/faq.do">고객센터</a></li>
 				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
 					<ul>
-						<li><a href="/faq/list.do">게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/faq/list.do">FAQ게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
 						<li><a href="#">Extensions</a></li>
 					</ul>
 				</li>
-			      
 				<!-- <li><a href="#">로그인</a></li> -->
 			</ul>
 			
@@ -117,11 +116,12 @@
 								<li>
 									<c:choose>
 										<c:when test="${sessionScope.blancheUser.us_rank == '0'}">
-											<a href="/user/exit.do" class="button big fit">My Page</a><br />
-											<a href="/mypage/mylist.do" class="button big fit">My Writing</a>
+											<a href="/usermanage/pwchange.do" class="button big fit">My Page</a><br />
+											<a href="/mywrite/list.do" class="button big fit">My Writing</a>
 										</c:when>
 										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
-											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a>
+											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a><br />
+											<a href="/manage/list.do" class="button big fit">게시판 관리</a>
 										</c:when>
 									</c:choose>
 								</li>
