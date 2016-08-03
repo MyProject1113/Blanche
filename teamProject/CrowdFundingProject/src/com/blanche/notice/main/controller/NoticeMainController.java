@@ -211,7 +211,7 @@ public class NoticeMainController implements Constant {
 							}
 						}
 					}
-					param.setSearch("");
+					param.setMethod("");
 					param.setKeyword("");
 					mav.addObject("noticeParam", param);
 					mav.setViewName("notice/returnList");
