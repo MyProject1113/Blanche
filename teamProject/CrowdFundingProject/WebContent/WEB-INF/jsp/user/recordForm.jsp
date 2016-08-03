@@ -32,8 +32,31 @@
 		#accessList td {
 			text-align: center;
 		}
+		#accessPage {
+			text-align: center;
+		}
 	</style>
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#page").val("<c:out value='${boardParam.page}' />");
+			/* 페이지 버튼 클릭 시 처리 이벤트 */
+			$(document).on("click", ".goPage", function() {
+				var page = $(this).attr("data-page");;
+				$("#page").val(page);
+				goPage();
+			});
+			
+			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 함수 */
+			function goPage() {
+				$("#formPage").attr({
+					"method" : "post",
+					"action" : "/user/record.do"
+				});
+				$("#formPage").submit();
+			}
+		});
+	</script>
 </head>
 <body>
 <div id="accessList">
@@ -66,6 +89,44 @@
 			</c:choose>
 		</tbody>
 	</table>
+	<div id="accessPage">
+		<form name="formPage" id="formPage">
+			<input type="hidden" name="page" id="page" />
+		</form>
+		<c:if test="${accessParam.pageCount > 0}">
+			<c:choose>
+				<c:when test="${accessParam.page != 1}">
+					<span class="goPage" data-page="1">◀◀</span>
+				</c:when>
+				<c:otherwise>
+					<span class="disable" data-page="1">◀◀</span>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="1" end="${accessParam.pageCount}">
+				<c:if test="${i >= (accessParam.page - accessParam.pageSpare) && i <= (accessParam.page + accessParam.pageSpare)}">
+					|
+					<c:choose>
+						<c:when test="${i == accessParam.page}">
+							<span class="goPage" id="currPage" data-page="${i}">${i}</span>
+						</c:when>
+						<c:otherwise>
+							<span class="goPage" data-page="${i}">${i}</span>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+			</c:forEach>
+			|
+			<c:choose>
+				<c:when test="${accessParam.page != accessParam.pageCount}">
+					<span class="goPage" data-page="${accessParam.pageCount}">▶▶</span>
+				</c:when>
+				<c:otherwise>
+					<span class="disable" data-page="${accessParam.pageCount}">▶▶</span>
+				</c:otherwise>
+			</c:choose>
+			(${accessParam.page}/${accessParam.pageCount})
+		</c:if>
+	</div>
 </div>
 </body>
 </html>

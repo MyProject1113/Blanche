@@ -29,4 +29,9 @@ public class UserAccessServiceImpl implements UserAccessService {
 	public int accessInsert(UserAccessVO param) {
 		return userAccessMapper.accessInsert(param);
 	}
+	
+	@Override
+	public int accessListCount(UserAccessVO param) {
+		return userAccessMapper.accessListCount(param);
+	}
 }

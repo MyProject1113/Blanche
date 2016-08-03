@@ -108,6 +108,8 @@ form.search {
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		$("#fq_index").val(0);
+		
 		$(".goCategory").click(function() {
 			$("#fq_category").val($(this).attr("data-category"));
 			$("#formFaq").attr({

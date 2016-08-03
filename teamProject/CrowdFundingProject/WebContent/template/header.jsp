@@ -43,7 +43,7 @@
 			<ul>
 				<li class="search">
 					<a class="fa-search" href="#search">Search</a>
-					<form id="search" method="get" action="#">
+					<form id="frmSearch" method="get" action="#"> <!-- 게시판 검색 기능과 ID 겹침 -->
 						<input type="text" name="query" placeholder="Search" />
 					</form>
 				</li>

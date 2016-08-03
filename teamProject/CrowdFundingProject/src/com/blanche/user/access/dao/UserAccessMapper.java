@@ -8,4 +8,5 @@ public interface UserAccessMapper {
 	public List<UserAccessVO> accessList(UserAccessVO param);
 	public UserAccessVO accessLast(UserAccessVO param);
 	public int accessInsert(UserAccessVO param);
+	public int accessListCount(UserAccessVO param);
 }

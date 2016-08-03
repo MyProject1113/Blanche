@@ -43,6 +43,10 @@
 			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
+					<when test="search == 'category'">
+						AND 
+						fq_category	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
 					<when test="search == 'title'">
 						AND 
 						fq_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'

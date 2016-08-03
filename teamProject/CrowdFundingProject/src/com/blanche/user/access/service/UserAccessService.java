@@ -8,4 +8,5 @@ public interface UserAccessService {
 	public List<UserAccessVO> accessList(UserAccessVO param);
 	public UserAccessVO accessLast(UserAccessVO param);
 	public int accessInsert(UserAccessVO param);
+	public int accessListCount(UserAccessVO param);
 }
