@@ -31,7 +31,7 @@
 			
 			$("#formBoard").attr({
 				"method" : "post",
-				"action" : "/manage/list.do"
+				"action" : "/manage/board/list.do"
 			});
 			$("#formBoard").submit();
 		});
