@@ -91,7 +91,7 @@ public class UserMainController implements Constant {
 			param.setRemainCookie(stringDate);
 			Cookie userCookie = new Cookie("blancheUserEmail", URLEncoder.encode(param.getUs_email(), "UTF-8"));
 			Cookie remainCookie = new Cookie("blancheUserRemain", URLEncoder.encode(param.getRemainCookie(), "UTF-8"));
-			if (param.getRemainCookie().equals("")) {
+			if (!param.getRemainCookie().equals("")) {
 				userCookie.setMaxAge(2592000); // 30일
 				remainCookie.setMaxAge(2592000); // 30일
 			} else {
@@ -129,12 +129,21 @@ public class UserMainController implements Constant {
 	 * @return UserMainVO $blancheUser
 	 */
 	@RequestMapping(value="/exit.do")
-	public ModelAndView userExit(HttpServletRequest request) {
+	public ModelAndView userExit(HttpServletRequest request) throws Exception {
 		logger.info("userExit 호출 성공");
 		
-		request.getSession().setAttribute(SESSION_USER_DATA, null);
+		UserMainVO userData = new UserMainVO();
+		Cookie[] cookieList = request.getCookies();
+		for (Cookie cookie : cookieList) {
+			if (cookie.getName().equals("blancheUserEmail")) {
+				userData.setUs_email(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			} else if (cookie.getName().equals("blancheUserRemain")) {
+				userData.setRemainCookie(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+			}
+		}
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("userData", userData);
 		mav.setViewName("user/loginForm");
 		
 		return mav;

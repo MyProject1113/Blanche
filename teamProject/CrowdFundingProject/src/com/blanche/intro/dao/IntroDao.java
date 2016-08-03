@@ -1,9 +1,29 @@
 package com.blanche.intro.dao;
 
+import java.util.List;
+
 import com.blanche.intro.vo.IntroVO;
+import com.blanche.intro.vo.investVO;
+import com.blanche.intro.vo.usactVO;
 
 public interface IntroDao {
 
 	public int pay_success(IntroVO param);
+	
+	public int  pay_success(investVO invVO);
+
+	public List<IntroVO> introList(IntroVO param);
+
+	public int pay_success(usactVO usactVO);
+	
+	public List<IntroVO> introMyPageList(IntroVO invo);
+	
+	public String projectname(int invo);
+	
+	public List<IntroVO> accountMyPageList(IntroVO invo);
+	
+	public String projectIndex(int us_index);
+	
+	public int updateAdd(IntroVO ivo);
 
 }
