@@ -6,10 +6,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.blanche.establish.vo.ApplicationVO;
 import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
+import com.blanche.establish.vo.ProjectListVO;
 
 @Repository
 public class IntroductionDaoImpl implements IntroductionDao {
@@ -36,19 +38,22 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	
 	// 프로젝트 소개 상세 구현
 	@Override
-	public IntroductionVO introductionDetail(IntroductionVO ivo) {
+	//public IntroductionVO introductionDetail(IntroductionVO ivo) {
+	public IntroductionVO introductionDetail(int intro_index) {
 		return (IntroductionVO)session.selectOne("introductionDetail");
 	}
 
 	// 기획자 정보 상세 구현
 	@Override
-	public PlannerVO plannerDetail(PlannerVO pvo) {
+	//public PlannerVO plannerDetail(PlannerVO pvo) {
+	public PlannerVO plannerDetail(int intro_index) {
 		return (PlannerVO)session.selectOne("plannerDetail");
 	}
 
 	// 기부현황 상세 구현
 	@Override
-	public DonationVO donationDetail(DonationVO dvo) {
+	//public DonationVO donationDetail(DonationVO dvo) {
+	public DonationVO donationDetail(int intro_index) {
 		return (DonationVO)session.selectOne("donationDetail");
 	}
 	
@@ -107,5 +112,26 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	@Override
 	public int projectApprovalRequest(IntroApprovalVO intappvo) {
 		return session.update("projectApprovalRequest");
+	}
+
+	@Override
+	public List<ProjectListVO> projectContentList(String app_field) {
+		return session.selectList("projectContentList");
+	}
+
+	//
+	@Override
+	public int sponserCount() {
+		return session.update("sponserCount");
+	}
+
+	@Override
+	public List<ProjectListVO> projectAllContentList(String app_field) {
+		return session.selectList("projectAllContentList");
+	}
+
+	@Override
+	public ApplicationVO getFundNField(int intro_index) {
+		return (ApplicationVO)session.selectOne("getFundNField");
 	}
 }

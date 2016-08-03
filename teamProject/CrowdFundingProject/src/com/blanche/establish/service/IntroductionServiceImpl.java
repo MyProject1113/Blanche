@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.blanche.establish.dao.IntroductionDao;
+import com.blanche.establish.vo.ApplicationVO;
 import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
+import com.blanche.establish.vo.ProjectListVO;
 
 @Service
 @Transactional
@@ -38,25 +40,31 @@ public class IntroductionServiceImpl implements IntroductionService {
 	
 	// 프로젝트 소개 상세 구현
 	@Override
-	public IntroductionVO introductionDetail(IntroductionVO ivo) {
+	//public IntroductionVO introductionDetail(IntroductionVO ivo) {
+	public IntroductionVO introductionDetail(int intro_index) {
 		IntroductionVO detail = null;
-		detail = introductionDao.introductionDetail(ivo);
+		//detail = introductionDao.introductionDetail(ivo);
+		detail = introductionDao.introductionDetail(intro_index);
 		return detail;
 	}
 	
 	// 기획자 정보 상세 구현
 	@Override
-	public PlannerVO plannerDetail(PlannerVO pvo) {
+	//public PlannerVO plannerDetail(PlannerVO pvo) {
+	public PlannerVO plannerDetail(int intro_index) {
 		PlannerVO detail = null;
-		detail = introductionDao.plannerDetail(pvo);
+		//detail = introductionDao.plannerDetail(pvo);
+		detail = introductionDao.plannerDetail(intro_index);
 		return detail;
 	}
 
 	// 기부현황 상세 구현
 	@Override
-	public DonationVO donationDetail(DonationVO dvo) {
+	//public DonationVO donationDetail(DonationVO dvo) {
+	public DonationVO donationDetail(int intro_index) {
 		DonationVO detail = null;
-		detail = introductionDao.donationDetail(dvo);
+		//detail = introductionDao.donationDetail(dvo);
+		detail = introductionDao.donationDetail(intro_index);
 		return detail;
 	}
 	
@@ -127,5 +135,34 @@ public class IntroductionServiceImpl implements IntroductionService {
 		int result = 0;
 		result = introductionDao.projectApprovalRequest(intappvo);
 		return result;
+	}
+
+	@Override
+	public List<ProjectListVO> projectContentList(String app_field) {
+		List<ProjectListVO> myList = null;
+		myList = introductionDao.projectContentList(app_field);
+		return myList;
+	}
+
+	//
+	@Override
+	public int sponserCount() {
+		int result = 0;
+		result = introductionDao.sponserCount();
+		return result;
+	}
+
+	@Override
+	public List<ProjectListVO> projectAllContentList(String app_field) {
+		List<ProjectListVO> myList = null;
+		myList = introductionDao.projectAllContentList(app_field);
+		return myList;
+	}
+
+	@Override
+	public ApplicationVO getFundNField(int intro_index) {
+		ApplicationVO detail = null;
+		detail = introductionDao.getFundNField(intro_index);
+		return detail;
 	}
 }
