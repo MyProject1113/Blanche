@@ -47,4 +47,9 @@ public class UserMainMapperImpl implements UserMainMapper {
 	public int userChangePassword(UserMainVO param) {
 		return session.update("userChangePassword");
 	}
+	
+	@Override
+	public int userListCount(UserMainVO param) {
+		return session.update("userListCount");
+	}
 }

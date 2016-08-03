@@ -211,7 +211,7 @@ public class FaqMainController implements Constant {
 							}
 						}
 					}
-					param.setSearch("");
+					param.setMethod("");
 					param.setKeyword("");
 					mav.addObject("faqParam", param);
 					mav.setViewName("faq/returnList");

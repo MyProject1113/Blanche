@@ -22,8 +22,11 @@ import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
+import com.blanche.establish.vo.ProjectListVO;
 import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
+import com.blanche.board.info.service.BoardInfoService;
+import com.blanche.board.info.vo.BoardInfoVO;
 import com.blanche.common.page.Paging;
 
 /* 컨트롤러 */
@@ -40,6 +43,9 @@ public class EstablishController {
 
 	@Autowired
 	private UserMainService userMainService;
+	
+	@Autowired
+	private BoardInfoService boardInfoService;
 	
 	/****************************************************************
 	 * 회원 진행 상태 확인
@@ -175,33 +181,37 @@ public class EstablishController {
 	 * 컨텐츠 상세 내용 출력하기
 	 ****************************************************************/
 	@RequestMapping(value="/contentDetail.do", method=RequestMethod.GET)
-	public String boardDetail(@ModelAttribute IntroductionVO ivo, PlannerVO pvo, DonationVO dvo, Model model) {
+	/*public String contentDetail(@ModelAttribute IntroductionVO ivo, PlannerVO pvo, DonationVO dvo, Model model) {*/
+	public String contentDetail(@RequestParam("intro_index") int intro_index, Model model) {
 		logger.info("contentDetail 호출 성공");
 		
 		
 		/* 프로젝트 소개 정보 */
 		IntroductionVO introDetail = new IntroductionVO();
-		introDetail = introductionService.introductionDetail(ivo);
+		//introDetail = introductionService.introductionDetail(ivo);
+		introDetail = introductionService.introductionDetail(intro_index);
 		
-		if (introDetail != null && (!introDetail.equals(""))) {
+		/*if (introDetail != null && (!introDetail.equals(""))) {
 			introDetail.setIntro_details(introDetail.getIntro_details().toString().replaceAll("\n", "<br>"));
 			introDetail.setIntro_synopsis(introDetail.getIntro_synopsis().toString().replaceAll("\n", "<br>"));
 			introDetail.setIntro_plan(introDetail.getIntro_plan().toString().replaceAll("\n", "<br>"));
 			introDetail.setIntro_purpose(introDetail.getIntro_purpose().toString().replaceAll("\n", "<br>"));
-		}
+		}*/
 		
 		model.addAttribute("introDetail", introDetail);
 		
 		/* 기획자 정보 */
 		PlannerVO plannerDetail = new PlannerVO();
-		plannerDetail = introductionService.plannerDetail(pvo);
+		//plannerDetail = introductionService.plannerDetail(pvo);
+		plannerDetail = introductionService.plannerDetail(intro_index);
 		
 		model.addAttribute("plannerDetail", plannerDetail);
 		
 		
 		/* 기부현황 정보 */
 		DonationVO donationDetail = new DonationVO();
-		donationDetail = introductionService.donationDetail(dvo);
+		//donationDetail = introductionService.donationDetail(dvo);
+		donationDetail = introductionService.donationDetail(intro_index);
 		
 		model.addAttribute("donationDetail", donationDetail);
 		
@@ -274,6 +284,16 @@ public class EstablishController {
 		
 		result = introductionService.introductionInsert(ivo, pvo, intappvo);
 		if (result == 1) {
+			
+			
+			BoardInfoVO infovo = new BoardInfoVO();
+			infovo.setBdinf_title("문의게시판 - " + ivo.getIntro_subtitle());
+			infovo.setBdinf_type(1);
+			infovo.setBdinf_uri(ivo.getIntro_project());
+			infovo.setBdinf_master(intappvo.getUs_index());
+			boardInfoService.infoInsert(infovo);
+			
+			
 			//url = "/establish/success.do";
 			
 			int intro_index = introductionService.getIntroIndex(app_index);
@@ -541,6 +561,78 @@ public class EstablishController {
 		
 		return result + "";
 	}
+	
+	
+	
+	
+
+	
+
+	/****************************************************************
+	 * 프로젝트 둘러보기 목록 구현하기
+	 ****************************************************************/
+	@RequestMapping(value="/projectContentList.do", method=RequestMethod.GET)
+	public String projectContentList(@RequestParam("app_field") String app_field, Model model) { 
+		logger.info("projectContentList 호출 성공");
+		
+		List<ProjectListVO> projectContentList = null;
+		int count = introductionService.sponserCount();
+		if (count > 0) {
+			projectContentList = introductionService.projectAllContentList(app_field);
+		} else {
+			projectContentList = introductionService.projectContentList(app_field);
+		}
+		
+		model.addAttribute("projectContentList", projectContentList);
+		
+		return "establish/projectContentList";
+	}
+	
+	
+	
+
+	/****************************************************************
+	 * 컨텐츠 수정하기 내용 출력하기
+	 ****************************************************************/
+	@RequestMapping(value="/applicationDetailUpdate.do", method=RequestMethod.GET)
+	public String applicationDetailUpdate(@RequestParam("intro_index") int intro_index, Model model) {
+		logger.info("applicationDetailUpdate 호출 성공");
+		
+		
+		/* 프로젝트 소개 정보 */
+		IntroductionVO introDetail = new IntroductionVO();
+		introDetail = introductionService.introductionDetail(intro_index);
+		
+		/*if (introDetail != null && (!introDetail.equals(""))) {
+			introDetail.setIntro_details(introDetail.getIntro_details().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_synopsis(introDetail.getIntro_synopsis().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_plan(introDetail.getIntro_plan().toString().replaceAll("\n", "<br>"));
+			introDetail.setIntro_purpose(introDetail.getIntro_purpose().toString().replaceAll("\n", "<br>"));
+		}*/
+		
+		model.addAttribute("introDetail", introDetail);
+		
+		/* 기획자 정보 */
+		PlannerVO plannerDetail = new PlannerVO();
+		plannerDetail = introductionService.plannerDetail(intro_index);
+		
+		model.addAttribute("plannerDetail", plannerDetail);
+		
+		
+		
+		/**/
+		ApplicationVO appDetail = new ApplicationVO();
+		appDetail = introductionService.getFundNField(intro_index);
+		
+		logger.info("fund : " + appDetail.getApp_fund());
+		
+		model.addAttribute("appDetail", appDetail);
+		
+		//introDetail.getApp_index()
+		
+		return "establish/applicationDetailUpdate";
+	}
+	
 	
 	
 }

@@ -60,7 +60,7 @@
 				$("#boardUri").val(boardUri);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/article.do"
+					"action" : "/manage/board/article.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -90,15 +90,27 @@
 			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 함수 */
 			function goPage() {
 				$("#formBoard").attr({
-					"method" : "post",
-					"action" : "/manage/list.do"
+					"method" : "post"
+					"action" : "/manage/board/list.do"
 				});
 				$("#formBoard").submit();
 			}
+			
+			/* 게시판 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageBoardBtn").click(function() {
+				location.href = "/manage/board/list.do"
+			});
+			
+			/* 회원 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageUserBtn").click(function() {
+				location.href = "/manage/user/list.do"
+			});
 		});
 	</script>
 </head>
 <body>
+<input type="button" id="manageBoardBtn" name="manageBoardBtn" value="게시판 관리" />
+<input type="button" id="manageUserBtn" name="manageUserBtn" value="회원 관리" />
 <div id="boardContainer">
 	<%-- ==================== 작성글 목록 시작 ==================== --%>
 	<div id="boardList">

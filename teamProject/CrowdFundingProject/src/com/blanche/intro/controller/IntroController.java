@@ -3,6 +3,7 @@ package com.blanche.intro.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,25 +114,32 @@ public class IntroController {
 	 * 결제 정보확인 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/pay_success.do")
-	public ModelAndView pay_success(@ModelAttribute IntroVO param, investVO invVO,  usactVO  usactVO,HttpServletRequest request) {
+	public ModelAndView pay_success(@ModelAttribute IntroVO param, investVO invVO,  usactVO  usactVO, HttpSession session) {
 		logger.info("pay_success 호출 성공");
 		
 		ModelAndView mav = new ModelAndView();
 		
-		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		UserMainVO userData = (UserMainVO) session.getAttribute("blancheUser");
+		param.setUs_index(userData.getUs_index());
+		
 		if (userData != null) {
 			userData = userMainService.userData(userData);
 			mav.addObject("us_index", userData.getUs_index());
+			
+			logger.info("param : " + param.getSponser_index() + ", " + param.getSponser_add() + ", " + param.getSponser_addnum() + ", " +
+					param.getSponser_p_method() + ", " + param.getSponser_name() + ", " + param.getSponser_email() + ", " + param.getSponser_phone()
+					 + ", " + param.getSponser_memo() + ", " + param.getSponser_invest() + ", " + param.getUs_index() + ", ");
+			logger.info("investVO : " + invVO.getIntro_index());
+			
+			introService.usact_success(usactVO);
+			introService.pay_success(param);
+			introService.invest_success(invVO);
+		
+			mav.addObject("introData", param);
+			mav.addObject("invVO", invVO);
+			mav.addObject("usactVO", usactVO);
+			mav.setViewName("intro/pay_success");
 		}
-
-		introService.pay_success(param);
-		introService.pay_success(invVO);
-		introService.pay_success(usactVO);
-
-		mav.addObject("introData", param);
-		mav.addObject("invVO", invVO);
-		mav.addObject("usactVO", usactVO);
-		mav.setViewName("intro/pay_success");
 		return mav;
 	}
 	

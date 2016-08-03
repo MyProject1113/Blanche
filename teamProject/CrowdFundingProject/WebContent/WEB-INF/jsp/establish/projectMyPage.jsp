@@ -260,7 +260,7 @@
 													<%-- <input type="hidden" id="storage_index" name="storage_index" value="${pro.intapp_index}" /> --%>
 												</c:when>
 												<c:when test="${pro.intapp_check == '2'}">
-													<a href="#">수정하러 가기</a>
+													<a href="/establish/applicationDetailUpdate.do?intro_index=${pro.intro_index}">수정하러 가기</a>
 												</c:when>
 												<c:otherwise>
 												</c:otherwise>

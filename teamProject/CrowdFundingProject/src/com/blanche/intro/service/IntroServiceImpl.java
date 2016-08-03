@@ -24,13 +24,13 @@ public class IntroServiceImpl implements IntroService {
 	}
 	
 	@Override
-	public int pay_success(investVO invVO){
-		return introDao.pay_success(invVO);
+	public int invest_success(investVO invVO){
+		return introDao.invest_success(invVO);
 	}
 	
 	@Override
-	public int pay_success(usactVO usactVO){
-		return introDao.pay_success(usactVO);
+	public int usact_success(usactVO usactVO){
+		return introDao.usact_success(usactVO);
 	}
 	
 	@Override

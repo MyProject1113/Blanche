@@ -18,6 +18,7 @@
 				FROM	(
 						SELECT	usermain.*
 						FROM	usermain
+						<include refid="userSearch" />
 						ORDER BY
 								us_index DESC
 						) us
@@ -25,6 +26,13 @@
 				) rs
 		WHERE	rnum <![CDATA[>=]]> #{startRow}	
 	</select>
+	
+	<!-- 회원 검색 조건 -->
+	<sql id="userSearch">
+		<where>
+			0 = 0
+		</where>
+	</sql>
 	
 	<!-- 회원 접속 -->
 	<select id="userAccess" parameterType="userMainVO" resultType="userMainVO">
@@ -108,4 +116,12 @@
 			,	us_modidate2 = sysdate
 		WHERE	us_index = #{us_index} 
 	</update>
+	
+	<!-- 회원 수 조회 -->
+	<select id="userListCount" parameterType="userMainVO" resultType="int">
+		/* UserMainDAO - userListCount */
+		SELECT	COUNT(us_index)
+		FROM	usermain
+		<include refid="userSearch" />
+	</select>
 </mapper>

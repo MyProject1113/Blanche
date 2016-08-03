@@ -165,8 +165,9 @@
 			    var tot = chk.length;
 			    for (i = 0; i < tot; i++) {
 			        if (chk[i].checked == true) {
+					    $("#intapp_index").val(chk[i].value);
 			            $("#intapp_check").val(0);
-			            updateData(chk[i].value);
+			            updateData();
 			        }
 			    }
 			}
@@ -180,9 +181,11 @@
 			            tag[sum] = chk[i].value;
 			            //sum++;
 			            
+			            $("#intapp_index").val(chk[i].value);
 			            $("#intapp_check").val(2);
 			            
-			            updateData(chk[i].value);
+			            updateData();
+
 			        }
 			    }
 			    /* str += "선택갯수 : "+sum;
@@ -193,12 +196,13 @@
 			    str += ")";
 			    
 			    alert(str); */
+			    
 			}
 			
 			
 			
 			
-			function updateData(obj) {
+			function updateData() {
 				$.ajax ({
 					url : "/establish/projectApprovalUpdate.do",	// 전송 url
 					type : "POST",	// 전송 시 method 방식
@@ -352,7 +356,7 @@
 							<c:when test="${not empty projectList}">
 								<c:forEach var="pro" items="${projectList}" varStatus="status">
 									<tr class="tac" data-num="${pro.intro_index}">
-										<td><input type="checkbox" name="chk[]" value="${pro.intro_index}" /></td>
+										<td><input type="checkbox" name="chk[]" value="${pro.intapp_index}" /></td>
 										<td>${pro.intapp_index}</td>
 										<td class="tal">
 											<span class="goDetail">${pro.intro_title}</span>
@@ -369,7 +373,8 @@
 										</td>
 										<td>
 											<form id="f_data" name="f_data">
-												<input type="hidden" name="intapp_index" id="intapp_index" value="${pro.intapp_index}" />
+												<%-- <input type="hidden" name="intapp_index" id="intapp_index" value="${pro.intapp_index}" /> --%>
+												<input type="hidden" name="intapp_index" id="intapp_index" />
 												<input type="hidden" name="intapp_check" id="intapp_check" />
 												<input type="text" id="intapp_note" name="intapp_note" value="${pro.intapp_note}" />
 											</form>

@@ -149,7 +149,7 @@
 	<!-- 공지게시물 개수 조회 -->
 	<select id="noticeListCount" parameterType="noticeMainVO" resultType="int">
 		/* NoticeMainDAO - noticeListCount */
-		SELECT	count(nt_index)
+		SELECT	COUNT(nt_index)
 		FROM	noticemain
 		<include refid="noticeSearch" />
 	</select>
