@@ -456,6 +456,7 @@ public class EstablishController {
 	 * 프로젝트 수정/삭제 요청 확인 구현하기
 	 ****************************************************************/
 	@ResponseBody	// 현재 요청값을 브라우저에 바로 출력
+	/*@RequestMapping(value="/projectApprovalUpdate.do", method = {RequestMethod.GET, RequestMethod.POST})*/
 	@RequestMapping(value="/projectApprovalUpdate.do", method=RequestMethod.POST)
 	public String projectApprovalUpdate(@ModelAttribute IntroApprovalVO intappvo) {
 		logger.info("projectApprovalUpdate 호출 성공");
@@ -494,17 +495,51 @@ public class EstablishController {
 	/****************************************************************
 	 * MyPage 프로젝트 목록 구현하기
 	 ****************************************************************/
-	@RequestMapping(value="/projectMyPage.do", method=RequestMethod.GET)
-	public String projectMyPage(@RequestParam("us_index") int us_index, @ModelAttribute IntroductionVO ivo, Model model) { 
+	/*@RequestMapping(value="/projectMyPage.do", method=RequestMethod.GET)
+	public String projectMyPage(@RequestParam("us_index") int us_index, @ModelAttribute IntroductionVO ivo, Model model) { */
+	@RequestMapping(value="/projectMyPage.do")
+	public String projectMyPage(@ModelAttribute IntroductionVO ivo, Model model, HttpServletRequest request) { 
 		logger.info("projectMyPage 호출 성공");
 		
 		
+		// 회원 등급 가져오기
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
 		
-		List<IntroductionVO> projectList = introductionService.projectMyPageList(us_index);
-		model.addAttribute("projectList", projectList);
-		model.addAttribute("data", ivo);
 		
-		return "establish/projectMyPage";
+			List<IntroductionVO> projectList = introductionService.projectMyPageList(userData.getUs_index());
+			model.addAttribute("projectList", projectList);
+			model.addAttribute("data", ivo);
+			
+			return "establish/projectMyPage";
+		}
+		
+		return "redirect:/establish/success.do?result=3";
+	}
+	
+	
+	
+
+	/****************************************************************
+	 * MyPage 프로젝트 수정/삭제 요청 구현하기
+	 ****************************************************************/
+	@ResponseBody	// 현재 요청값을 브라우저에 바로 출력
+	/*@RequestMapping(value="/projectApprovalUpdate.do", method = {RequestMethod.GET, RequestMethod.POST})*/
+	@RequestMapping(value="/projectApprovalRequest.do", method=RequestMethod.POST)
+	public String projectApprovalRequest(@ModelAttribute IntroApprovalVO intappvo) {
+		logger.info("projectApprovalRequest 호출 성공");
+		
+		logger.info("intappvo 값 확인 : " + intappvo.getIntapp_index() + ", " + intappvo.getIntapp_check());
+		
+		
+		// 아래 변수에는 입력 성공에 대한 상태값 저장 (1 or 0)
+		int result = 0;
+		result = introductionService.projectApprovalRequest(intappvo);
+		logger.info("result = " + result);
+		
+		return result + "";
 	}
 	
 	

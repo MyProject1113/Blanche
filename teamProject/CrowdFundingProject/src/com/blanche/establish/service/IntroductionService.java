@@ -26,4 +26,5 @@ public interface IntroductionService {
 	public IntroApprovalVO userProgressIntAppro(int us_index);
 	public int getIntroIndex(int app_index);
 	public int projectListCnt(IntroductionVO ivo);
+	public int projectApprovalRequest(IntroApprovalVO intappvo);
 }

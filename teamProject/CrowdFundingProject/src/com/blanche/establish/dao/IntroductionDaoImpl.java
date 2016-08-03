@@ -98,8 +98,14 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	}
 
 	// 전체 레코드 건수 구현
-		@Override
-		public int projectListCnt(IntroductionVO ivo) {
-			return (Integer)session.selectOne("projectListCnt");
-		}
+	@Override
+	public int projectListCnt(IntroductionVO ivo) {
+		return (Integer)session.selectOne("projectListCnt");
+	}
+
+	// 회원 프로젝트 수정/삭제 요청
+	@Override
+	public int projectApprovalRequest(IntroApprovalVO intappvo) {
+		return session.update("projectApprovalRequest");
+	}
 }

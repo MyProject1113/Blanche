@@ -25,7 +25,15 @@
 				});
 				
 				$('#myPage_btn').click(function(e) {
-					location.href="#";
+					//location.href="/usermanage/pwchange.do";
+					
+					/* location.href="/establish/applicationMyPage.do?us_index=3"; */
+					location.href="/establish/applicationMyPage.do";
+				});
+				
+				$('#myPage_btn2').click(function(e) {
+					/* location.href="/establish/projectMyPage.do?us_index=3"; */
+					location.href="/establish/projectMyPage.do";
 				});
 			});
 		</script>
@@ -38,12 +46,14 @@
 				My Page에서 확인 바랍니다.<br /><br />
 				<input type="button" id="main_btn" value="메인으로" />&nbsp;
 				<input type="button" id="myPage_btn" value="My Page" />
+				<input type="button" id="myPage_btn2" value="My Page2" />
 			</c:when>
 			<c:when test="${warningMsg == 2}">
 				진행중인 프로젝트가 있습니다.<br />
 				My Page에서 확인 바랍니다.<br /><br />
 				<input type="button" id="main_btn" value="메인으로" />&nbsp;
 				<input type="button" id="myPage_btn" value="My Page" />
+				<input type="button" id="myPage_btn2" value="My Page2" />
 			</c:when>
 			<c:otherwise>오류</c:otherwise>
 		</c:choose>
