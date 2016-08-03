@@ -1,4 +1,4 @@
-package com.blanche.board.manage.controller;
+package com.blanche.manage.board.controller;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
 
 @Controller
-@RequestMapping(value = "/manage")
-public class BoardManageController implements Constant{
-	private static Logger logger = Logger.getLogger(BoardManageController.class);
+@RequestMapping(value = "/manage/board")
+public class ManageBoardController implements Constant{
+	private static Logger logger = Logger.getLogger(ManageBoardController.class);
 	
 	@Autowired
 	private UserMainService userMainService;
@@ -58,7 +58,7 @@ public class BoardManageController implements Constant{
 				boardParam.setListCount(listCount);
 				mav.addObject("boardList", boardList);
 				mav.addObject("boardParam", boardParam);
-				mav.setViewName("board/manage/listForm");
+				mav.setViewName("manage/board/listForm");
 			} else {
 				mav.addObject("result", "운영자만 글을 조회할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
@@ -97,7 +97,7 @@ public class BoardManageController implements Constant{
 				param.setListCount(listCount);
 				mav.addObject("boardList", boardList);
 				mav.addObject("boardParam", param);
-				mav.setViewName("board/manage/listForm");
+				mav.setViewName("manage/board/listForm");
 			} else {
 				mav.addObject("result", "운영자만 글을 조회할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
@@ -142,7 +142,7 @@ public class BoardManageController implements Constant{
 				mav.addObject("boardData", boardData);
 				mav.addObject("boardParam", param);
 				mav.addObject("attachList", attachList);
-				mav.setViewName("board/manage/detailForm");
+				mav.setViewName("manage/board/detailForm");
 			} else {
 				mav.addObject("result", "운영자만 글을 조회할 수 있습니다.");
 				mav.setViewName("board/common/returnError");
@@ -179,7 +179,7 @@ public class BoardManageController implements Constant{
 					int result = boardMainService.boardDelete(param);
 					if (result == 1) {
 						mav.addObject("boardParam", param);
-						mav.setViewName("board/manage/returnList");
+						mav.setViewName("manage/board/returnList");
 					} else {
 						mav.addObject("result", "글 삭제에 실패하였습니다.");
 						mav.setViewName("board/common/returnError");
@@ -226,7 +226,7 @@ public class BoardManageController implements Constant{
 					int result = boardMainService.boardRestore(param);
 					if (result == 1) {
 						mav.addObject("boardParam", param);
-						mav.setViewName("board/manage/returnList");
+						mav.setViewName("manage/board/returnList");
 					} else {
 						mav.addObject("result", "글 삭제에 실패하였습니다.");
 						mav.setViewName("board/common/returnError");

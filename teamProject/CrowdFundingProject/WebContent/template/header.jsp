@@ -43,7 +43,7 @@
 			<ul>
 				<li class="search">
 					<a class="fa-search" href="#search">Search</a>
-					<form id="frmSearch" method="get" action="#"> <!-- 게시판 검색 기능과 ID 겹침 -->
+					<form id="search" method="get" action="#"> <!-- 게시판 검색 기능과 ID 겹침 -->
 						<input type="text" name="query" placeholder="Search" />
 					</form>
 				</li>
@@ -121,7 +121,7 @@
 										</c:when>
 										<c:when test="${sessionScope.blancheUser.us_rank == '3'}">
 											<a href="/establish/applicationAdminList.do" class="button big fit">프로젝트 관리</a><br />
-											<a href="/manage/list.do" class="button big fit">게시판 관리</a>
+											<a href="/manage/board/list.do" class="button big fit">홈페이지 관리</a>
 										</c:when>
 									</c:choose>
 								</li>

@@ -22,5 +22,5 @@ public class investVO {
 	}
 	public void setIntro_index(int intro_index) {
 		this.intro_index = intro_index;
-	}	
+	}
 }

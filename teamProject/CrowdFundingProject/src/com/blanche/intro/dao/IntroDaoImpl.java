@@ -16,18 +16,22 @@ public class IntroDaoImpl implements IntroDao{
 	@Autowired
 	private SqlSession session;
 	
+	@Override
 	public int pay_success(IntroVO param) {
 		return (int)session.insert("pay_success");
 	}
 	
-	public int  pay_success(investVO invVO) {
+	@Override
+	public int  invest_success(investVO invVO) {
 		return (int)session.insert("invest");
 	}
 	
-	public int pay_success(usactVO usactVO) {
+	@Override
+	public int usact_success(usactVO usactVO) {
 		return (int)session.insert("usact");
 	}
 	
+	@Override
 	public List<IntroVO> introList(IntroVO param){
 		return session.selectList("introList");
 	}

@@ -25,13 +25,13 @@
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#search").val("<c:out value='${boardParam.search}' />");
+			$("#method").val("<c:out value='${boardParam.method}' />");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
 			$("#page").val("<c:out value='${boardParam.page}' />");
 			
 			$("#formBoard").attr({
 				"method" : "post",
-				"action" : "/manage/list.do"
+				"action" : "/manage/board/list.do"
 			});
 			$("#formBoard").submit();
 		});
@@ -39,7 +39,7 @@
 </head>
 <body>
 <form name="formBoard" id="formBoard">
-	<input type="hidden" name="search" id="search" />
+	<input type="hidden" name="method" id="method" />
 	<input type="hidden" name="keyword" id="keyword" />
 	<input type="hidden" name="page" id="page" />
 </form>

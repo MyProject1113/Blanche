@@ -221,7 +221,7 @@ public class BoardMainController implements Constant {
 						}
 					}
 				}
-				param.setSearch("");
+				param.setMethod("");
 				param.setKeyword("");
 				mav.addObject("boardParam", param);
 				mav.setViewName("board/default/returnList");

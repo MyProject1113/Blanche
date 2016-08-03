@@ -33,6 +33,35 @@
 		#formJoin #userNicknameCheck {
 			color: red;
 		}
+		#loader{
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 99999;
+			background-color: #000;
+			opacity: 0.7;
+			display:none;
+		}
+		#loader .blink {
+			font-size: 20px;
+			font-weight: bold;
+			margin: 10% 20%;
+			text-align: center;
+			-webkit-animation: mymove 1s infinite;
+			animation: mymove 1s infinite;
+		} 
+		@webkit-keyframes mymove {
+			0% { color: white; }
+			50% { color: black; }
+			100% { color: white; }
+		}
+		@keyframes mymove {
+			0% { color: white; }
+			50% { color: black; }
+			100% { color: white; }
+		}
 	</style>
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript" src="/include/js/common.js"></script>
@@ -111,6 +140,7 @@
 				} else if ($("#userNicknameCheck").html() != "") {
 					alert($("#userNicknameCheck").html());
 				}
+				$('#loader').show();
 				$("#formJoin").attr({
 					"method" : "post",
 					"action" : "/user/info.do"
@@ -165,5 +195,6 @@
 		</tr>
 	</table>
 </form>
+<div id="loader"><div class="blink">인증메일을 전송하는 중입니다.</div></div>
 </body>
 </html>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.usermanage.dao.UserManageDao;
 @Service
@@ -23,4 +24,12 @@ public class UserManageServiceImpl implements UserManageService{
 		userManageDao.phChange(userMainVO);
 		
 	}
+
+	@Override
+	public void approvalUpdate(IntroApprovalVO ivo) {
+		userManageDao.approvalUpdate(ivo);
+		
+	}
+
+	
 }

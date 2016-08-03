@@ -29,10 +29,10 @@
 		$(function() {
 			$("#bdinf_index").val("<c:out value='${boardParam.bdinf_index}' />");
 			$("#bd_index").val(0);
-			if ("<c:out value='${boardParam.search}' />" != "") {
-				$("#search").val("<c:out value='${boardParam.search}' />");
+			if ("<c:out value='${boardParam.method}' />" != "") {
+				$("#method").val("<c:out value='${boardParam.method}' />");
 			} else {
-				$("#search").val("title");
+				$("#method").val("title");
 			}
 			$("#boardUri").val("");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
@@ -60,7 +60,7 @@
 				$("#boardUri").val(boardUri);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/article.do"
+					"action" : "/manage/board/article.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -91,14 +91,26 @@
 			function goPage() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/list.do"
+					"action" : "/manage/board/list.do"
 				});
 				$("#formBoard").submit();
 			}
+			
+			/* 게시판 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageBoardBtn").click(function() {
+				location.href = "/manage/board/list.do"
+			});
+			
+			/* 회원 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageUserBtn").click(function() {
+				location.href = "/manage/user/list.do"
+			});
 		});
 	</script>
 </head>
 <body>
+<input type="button" id="manageBoardBtn" name="manageBoardBtn" value="게시판 관리" />
+<input type="button" id="manageUserBtn" name="manageUserBtn" value="회원 관리" />
 <div id="boardContainer">
 	<%-- ==================== 작성글 목록 시작 ==================== --%>
 	<div id="boardList">
@@ -228,7 +240,7 @@
 			<input type="hidden" name="bdinf_index" id="bdinf_index" />
 			<input type="hidden" name="bd_index" id="bd_index" />
 			<input type="hidden" name="boardUri" id="boardUri" />
-			<select name="search" id="search">
+			<select name="method" id="method">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="both">제목+내용</option>
