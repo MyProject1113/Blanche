@@ -132,7 +132,18 @@
 									</c:if>
 								</td>
 								<td class="center">
-									<span class="goBoard">${boardData.boardTitle}</span>
+									<c:choose>
+										<c:when test="${fn:length(boardData.boardTitle) > 13}">
+												<span class="goBoard" title="${boardData.boardTitle}">
+													${fn:substring(boardData.boardTitle, 0, 13)}...
+												</span>
+										</c:when>
+										<c:otherwise>
+											<span class="goBoard">
+												${boardData.boardTitle}
+											</span>
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td class="left">
 									<c:if test="${boardData.bd_step > 0}">
