@@ -16,7 +16,7 @@ public class UserMainVO {
 	
 	private String	agreeDate1		= "";	// 개인정보이용약관 동의일
 	private String	agreeDate2		= "";	// 홈페이지이용약관 동의일
-	
+	private String remainCookie		= ""; // iD 저장
 	private int		accreditState 	= 0;	// 인증 상태
 	private String accessIP		= "";	// 마지막 접속 IP
 	private String accessDate		= "";	// 마지막 접속 시간
@@ -81,7 +81,12 @@ public class UserMainVO {
 	public void setUs_modidate2(String us_modidate2) {
 		this.us_modidate2 = us_modidate2;
 	}
-	
+	public String getRemainCookie() {
+		return remainCookie;
+	}
+	public void setRemainCookie(String remainCookie) {
+		this.remainCookie = remainCookie;
+	}
 	public String getAgreeDate1() {
 		return agreeDate1;
 	}
@@ -94,7 +99,7 @@ public class UserMainVO {
 	public void setAgreeDate2(String agreeDate2) {
 		this.agreeDate2 = agreeDate2;
 	}
-	
+
 	public int getAccreditState() {
 		return accreditState;
 	}
