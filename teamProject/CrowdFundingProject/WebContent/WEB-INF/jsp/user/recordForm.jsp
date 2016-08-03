@@ -24,22 +24,23 @@
 	
 	<link rel="stylesheet" type="text/css" href="/include/css/board.css">
 	<style type="text/css">
-		#accessList {
+		#userAccessList {
 			width: 50%;
 			margin: 0px auto;
 		}
-		#accessList th,
-		#accessList td {
+		#userAccessList th,
+		#userAccessList td {
 			text-align: center;
 		}
-		#accessPage {
+		#userAccessList#accessPage {
 			text-align: center;
 		}
 	</style>
 	<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#page").val("<c:out value='${boardParam.page}' />");
+			$("#page").val("<c:out value='${accessParam.page}' />");
+			
 			/* 페이지 버튼 클릭 시 처리 이벤트 */
 			$(document).on("click", ".goPage", function() {
 				var page = $(this).attr("data-page");;
@@ -59,7 +60,7 @@
 	</script>
 </head>
 <body>
-<div id="accessList">
+<div id="userAccessList">
 	<table>
 		<colgroup>
 			<col width="50%" />
@@ -83,12 +84,13 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td colspan="5">최근 접속 기록이 없습니다. 다시 한번 검색해 보세요</td>
+						<td colspan="2">최근 접속 기록이 없습니다. 다시 한번 검색해 보세요</td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
 		</tbody>
 	</table>
+	
 	<div id="accessPage">
 		<form name="formPage" id="formPage">
 			<input type="hidden" name="page" id="page" />
