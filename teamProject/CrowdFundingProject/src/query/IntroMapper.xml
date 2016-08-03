@@ -3,7 +3,7 @@
 <mapper namespace="com.blanche.intro.dao.IntroDao">
 	
 	<!-- userAccount 테이블 등록 -->
-	<insert id="usact" parameterType="intro">
+	<insert id="usact_success" parameterType="usactVO">
 		/* Mapper - userAccount */
 		INSERT INTO userAccount
 			(usact_index, usact_bank, usact_number)
@@ -15,24 +15,24 @@
 	<insert id="pay_success" parameterType="intro">
 		/* Mapper - pay_success */
 		INSERT INTO SPONSER
-  			(SPONSER_INDEX, SPONSER_ADD, SPONSER_ADDNUM, SPONSER_P_METHOD,
+  			(SPONSER_INDEX, SPONSER_ADD, SPONSER_ADDNUM, SPONSER_P_METHOD, SPONSER_P_CONFIRM, 
   			SPONSER_NAME, SPONSER_EMAIL, SPONSER_PHONE, SPONSER_MEMO,
   			 SPONSER_INVEST, US_INDEX, USACT_INDEX)
 			VALUES
-  			(sponser_index_seq.nextval, #{sponser_add}, #{sponser_addnum}, #{sponser_p_method},
-  			#{sponser_name}, #{sponser_email}, #{phone}, #{sponser_memo},
-  			 #{sponser_invest},
- 			 #{us_index}, usact_index_seq.currval)
+  			(sponser_index_seq.nextval, #{sponser_add}, #{sponser_addnum}, #{sponser_p_method}, 'Y', 
+  			#{sponser_name}, #{sponser_email}, #{sponser_phone}, #{sponser_memo},
+  			 #{sponser_invest}, #{us_index}, usact_index_seq.currval)
 	</insert>
 	
 	<!-- invest 테이블 등록 -->
-	<insert id="invest" parameterType="intro">
+	<insert id="invest_success" parameterType="investVO">
 		/* Mapper - invest */
 		INSERT INTO invest
 			(inv_index, sponser_index, intro_index)
 			VALUES
 			(inv_index_seq.nextval, sponser_index_seq.currval, #{intro_index})
 	</insert>
+	
 	
 	<!-- 프로젝트 둘러보기 -->
 	<select id="introList" parameterType="intro" resultType="intro">
