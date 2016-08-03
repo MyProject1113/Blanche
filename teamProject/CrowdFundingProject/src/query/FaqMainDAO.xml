@@ -168,7 +168,7 @@
 	<!-- 질문게시물 개수 조회 -->
 	<select id="faqListCount" parameterType="faqMainVO" resultType="int">
 		/* FaqMainDAO - faqListCount */
-		SELECT	count(fq_index)
+		SELECT	COUNT(fq_index)
 		FROM	faqmain
 		<include refid="faqSearch" />
 	</select>

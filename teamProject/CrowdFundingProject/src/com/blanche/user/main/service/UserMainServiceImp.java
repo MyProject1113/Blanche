@@ -49,4 +49,9 @@ public class UserMainServiceImp implements UserMainService {
 	public int userChangePassword(UserMainVO param) {
 		return userMainMapper.userChangePassword(param);
 	}
+	
+	@Override
+	public int userListCount(UserMainVO param) {
+		return userMainMapper.userListCount(param);
+	}
 }

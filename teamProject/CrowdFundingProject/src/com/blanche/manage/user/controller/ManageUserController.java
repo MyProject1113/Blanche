@@ -45,7 +45,13 @@ public class ManageUserController implements Constant{
 		ModelAndView mav = new ModelAndView();
 		if (userData != null) {
 			if (userData.getUs_rank() == ADMIN_ID_RANK) {
-				mav.setViewName("board/manage/listForm");
+				UserMainVO userParam = new UserMainVO();
+				List<UserMainVO> userList = userMainService.userList(userParam);
+				int listCount = userMainService.userListCount(userParam);
+				userParam.setListCount(listCount);
+				mav.addObject("userList", userList);
+				mav.addObject("userParam", userParam);
+				mav.setViewName("manage/user/listForm");
 			} else {
 				mav.addObject("result", "운영자만 글을 조회할 수 있습니다.");
 				mav.setViewName("board/common/returnError");

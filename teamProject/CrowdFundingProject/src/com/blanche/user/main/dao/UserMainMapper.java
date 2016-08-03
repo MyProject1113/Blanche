@@ -12,4 +12,5 @@ public interface UserMainMapper {
 	public int userInsert(UserMainVO param);
 	public int userCheck(UserMainVO param);
 	public int userChangePassword(UserMainVO param);
+	public int userListCount(UserMainVO param);
 }

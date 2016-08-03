@@ -246,7 +246,7 @@
 	
 	<!-- 게시물 답변 개수 조회 -->
 	<select id="boardReplyCount" parameterType="boardMainVO" resultType="int">
-		SELECT	count(bd_index)
+		SELECT	COUNT(bd_index)
 		FROM	boardmain
 		WHERE	bd_parent = #{bd_index}
 				AND
