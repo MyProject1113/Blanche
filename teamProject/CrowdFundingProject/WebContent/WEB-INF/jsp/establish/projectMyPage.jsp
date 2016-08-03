@@ -26,14 +26,21 @@
 			    margin-left: 25px;
 			}
 		</style>
+		
+		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
+			var intapp_index = "";
 			$(function() {
 				/* 수정/삭제 요청 클릭 시 요청 사유 화면을 띄우기 위한 처리 이벤트 */
 				$("#intapp_request").click(function() {
 					var intro_index = $(this).parents("tr").attr("data-num");
 					$("#intro_index").val(intro_index);
 					console.log("승인번호 : " + intro_index);
+					
+					
+					intapp_index = $(this).parents("tr").attr("data-index");
+					console.log("프로젝트 승인번호 : " + intapp_index);
 					
 					addNewItem(intro_index);
 					
@@ -45,20 +52,51 @@
 					$("#detailForm").submit(); */
 				});
 				
-				/* 요청 클릭 시 DB 업데이트를 위한 처리 이벤트 */
-				$("#requestBtn").click(function() {
-					if ($("#radioUp").checked == true) {
-						alert("radioUp 선택");
-					} else if ($("#radioDel").checked == true) {
-						alert("radioDel 선택");
-					}
+				/** 요청버튼 클릭시 DB 업데이트를 위한 처리 이벤트 **/
+				$(document).on("click", ".requestBtn", function() {
+					if (!chkSubmit($("#intapp_reason"), "요청이유를")) return;
+					
+					var request = $(':input[name=requestRadio]:radio:checked').val();
+					
+					console.log("프로젝트 승인번호 재확인 : " + intapp_index);
+		        	$("#intapp_index").val(intapp_index);
+			         
+			        if (request == 'update') {
+			        	$("#intapp_check").val(1);
+			        } else if (request =='delete'){
+			        	$("#intapp_check").val(3);
+			        }
+			        
+			        updateData();
 				});
 			});
 			
-			
+			/* 회원 프로젝트 수정/삭제 요청 ajax */
+			function updateData() {
+				$.ajax ({
+					url : "/establish/projectApprovalRequest.do",	// 전송 url
+					type : "POST",	// 전송 시 method 방식
+					data : $("#detailForm").serialize(),	// 폼전체 데이터 전송
+					/* dataType : "text", */
+					error : function() {	// 실행시 오류가 발생하였을 경우
+						alert('시스템 오류 입니다. 관리자에게 문의 하세요');
+					},	// 정상적으로 실행이 되었을 경우
+					success : function(resultData) {
+						if (resultData == 0) {	// 일치하지 않는 경우
+							alert('승인 실패');
+						} else if (resultData == 1) {	// 일치할 경우
+							alert('승인 성공');
+							location.href = "/establish/projectMyPage.do";
+						}
+					}
+				});
+			}
 
 			/** 새로운 글을 화면에 추가하기 위한 함수 **/
 			function addNewItem(intro_index) {
+				var data_form = $("<form>");
+				data_form.attr({"id" : "detailForm", "name" : "detailForm"});
+				
 				// 요청 버튼
 				var req_input = $("<input>");
 				req_input.attr({"type" : "button", "value" : "요청"});
@@ -82,7 +120,7 @@
 				var tr_01 = $("<tr>");
 				var th_01 = $("<th>");
 				var num_span  = $("<span>");
-				num_span.html("신청번호");
+				num_span.html("프로젝트 번호");
 				var td_01 = $("<td>");
 				var index_span  = $("<span>");
 				index_span.html(intro_index);
@@ -130,6 +168,12 @@
 				var textarea = $("<textarea>");
 				textarea.attr({"id" : "intapp_reason", "name" : "intapp_reason"});
 				
+				var hidden_index_input = $("<input>");
+				hidden_index_input.attr({"type" : "hidden", "id" : "intapp_index", "name" : "intapp_index"});
+				
+				var hidden_check_input = $("<input>");
+				hidden_check_input.attr({"type" : "hidden", "id" : "intapp_check", "name" : "intapp_check"});
+				
 				// 조립하기
 				col.append(col_01).append(col_02).append(col_03).append(col_04).append(col_05);
 				
@@ -146,16 +190,16 @@
 				tr_01.append(th_01).append(td_01).append(th_02).append(td_02).append(td_03);
 				
 				td_04.append(del_radio_span);
-				td_05.append(textarea);
+				td_05.append(textarea).append(hidden_index_input).append(hidden_check_input);
 				tr_02.append(td_04).append(td_05);
 				
 				tbody.append(tr_01).append(tr_02);
 				
 				req_table.append(col).append(tbody);
 				/* $("#request_reason").append(req_input).append(req_table); */
-				$("#request_reason").append(req_table);
+				data_form.append(req_table);
+				$("#request_reason").append(data_form);
 			}
-			
 		</script>
 		
 	</head>
@@ -164,9 +208,13 @@
 			<div class="contentTit"><h3>프로젝트 진행 리스트</h3></div>
 			
 			<%-- ================== 상세 페이지 이동을 위한 FORM ================== --%>
-			<form name="detailForm" id="detailForm">
+			<%-- <form name="detailForm" id="detailForm">
 				<input type="hidden" name="intro_index" id="intro_index" />
-			</form>
+				
+				<input type="hidden" name="intapp_index" id="intapp_index" value="${pro.intapp_index}" />
+				<input type="hidden" name="intapp_check" id="intapp_check" />
+												
+			</form> --%>
 			
 			<%-- ==================== 리스트 시작 ==================== --%>
 			<div id="boardList">
@@ -192,7 +240,7 @@
 						<c:choose>
 							<c:when test="${not empty projectList}">
 								<c:forEach var="pro" items="${projectList}" varStatus="status">
-									<tr class="tac" data-num="${pro.intro_index}">
+									<tr class="tac" data-num="${pro.intro_index}" data-index="${pro.intapp_index}">
 										<td>${pro.intapp_index}</td>
 										<td>${pro.intro_title}</td>
 										<td>
@@ -209,6 +257,7 @@
 											<c:choose>
 												<c:when test="${pro.intapp_check == '0'}">
 													<input type="button" id="intapp_request" name="intapp_request" value="수정/삭제 요청" />
+													<%-- <input type="hidden" id="storage_index" name="storage_index" value="${pro.intapp_index}" /> --%>
 												</c:when>
 												<c:when test="${pro.intapp_check == '2'}">
 													<a href="#">수정하러 가기</a>

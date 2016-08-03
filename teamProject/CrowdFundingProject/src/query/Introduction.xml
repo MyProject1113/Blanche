@@ -207,6 +207,15 @@
 	
 	
 	
+	<!-- 회원 프로젝트 수정/삭제 요청 -->
+	<update id="projectApprovalRequest" parameterType="introApproval">
+		/* Introduction - projectApprovalRequest */
+		UPDATE introApproval
+		SET intapp_check = #{intapp_check}
+			, intapp_reason = #{intapp_reason}
+		WHERE intapp_index = #{intapp_index}
+	</update>
+	
 	
 	
 	

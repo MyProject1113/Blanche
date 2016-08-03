@@ -30,6 +30,11 @@
 				개설 신청 리스트 삭제 오류 발생<br /><br />
 				<input type="button" id="main_btn" value="메인으로" />
 			</c:when>
+			<c:when test="${result == 3}">
+				알수 없는 오류 발생<br />
+				관리자에게 문의 해 주세요.<br /><br />
+				<input type="button" id="main_btn" value="메인으로" />
+			</c:when>
 			<c:otherwise>
 				개설 신청에 실패했습니다.<br />
 				관리자에게 문의 해 주세요.<br /><br />
