@@ -1,15 +1,25 @@
 package com.blanche.intro.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.intro.service.IntroService;
 import com.blanche.intro.vo.IntroVO;
+import com.blanche.intro.vo.investVO;
+import com.blanche.intro.vo.usactVO;
+import com.blanche.user.main.service.UserMainService;
+import com.blanche.user.main.vo.UserMainVO;
 
 /* 컨트롤러 */
 @Controller
@@ -20,35 +30,45 @@ public class IntroController {
 	@Autowired
 	private IntroService introService; // 인터페이스 구현체 생성
 
+	@Autowired
+	private UserMainService userMainService;
+	
 	/********************************************
 	 * 프로젝트 소개페이지 구현
 	 * *******************************************/
+	
+	/*
 	@RequestMapping(value="/intro.do")
 	public String introList(Model model) {
 		logger.info("introList 호출 성공");
-		
+	*/	
+	
 		/*List<BoardVO> boardList = boardService.introList();
 		model.addAttribute("intro", boardList);*/
-		
+	/*
 		return "intro/intro";	// View Name => 파일명 아님!!!
 	}
+	*/
 
 	/********************************************
 	 * 프로젝트 상세 페이지 이동
 	 * *******************************************/
-	@RequestMapping(value="/introDetail.do")
-	public String introDetail() {
+	@RequestMapping(value="/introDetail.do", method=RequestMethod.GET)
+	public String introDetail(@RequestParam("intro_index") int intro_index) {
 		logger.info("introList 호출 성공");
 		
-		return "redirect:/establish/contentDetail.do";
+		return "redirect:/establish/contentDetail.do?intro_index=" + intro_index;
 	}
 
 	/********************************************
 	 * 프로젝트 밀어주기 페이지 이동
 	 * *******************************************/
-	@RequestMapping(value="/reward.do")
-	public String reward() {
+	@RequestMapping(value="/reward.do", method=RequestMethod.GET)
+	public String reward(@RequestParam("intro_index") int intro_index, Model model) {
 		logger.info("reward 호출 성공");
+		
+		logger.info("intro_index : " + intro_index);
+		model.addAttribute("intro_index", intro_index);
 		
 		return "intro/reward";
 	}
@@ -93,40 +113,42 @@ public class IntroController {
 	 * 결제 정보확인 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/pay_success.do")
-	public ModelAndView pay_success(@ModelAttribute IntroVO param) {
+	public ModelAndView pay_success(@ModelAttribute IntroVO param, investVO invVO,  usactVO  usactVO,HttpServletRequest request) {
 		logger.info("pay_success 호출 성공");
 		
-		introService.pay_success(param);
-		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("introData", param);
-		mav.setViewName("intro/pay_success");
 		
-		return mav;		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			mav.addObject("us_index", userData.getUs_index());
+		}
+
+		introService.pay_success(param);
+		introService.pay_success(invVO);
+		introService.pay_success(usactVO);
+
+		mav.addObject("introData", param);
+		mav.addObject("invVO", invVO);
+		mav.addObject("usactVO", usactVO);
+		mav.setViewName("intro/pay_success");
+		return mav;
 	}
 	
 	/********************************************
-	 *  후원자 정보 DB 입력
+	 *  프로젝트 둘러보기 화면 구현
 	 * *******************************************/
-/*
-	@RequestMapping(value="/payment_su.do")
-	public ModelAndView payment_su(@ModelAttribute IntroVO param) {
-		logger.info("payment_su 호출 성공");
+	@RequestMapping(value="/intro.do")
+	public String introList(@ModelAttribute IntroVO param, Model model) {
+		logger.info("introList 호출 성공");
+
+		List<IntroVO> introList = introService.introList(param);
+		logger.info("introSize = " + introList.size());
 		
-		String resultStr = "";
-		int result = introService.payment_su(param);
-		
-		if(result > 0) resultStr = "등록 완료이 완료되었습니다.";
-		else resultStr = "등록에 문제가 있어 완료하지 못하였습니다.";
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("introData", param);
-		mav.addObject("result", resultStr);
-		mav.setViewName("result");
-		
-		return mav;
-		
+		model.addAttribute("introList", introList);
+
+		return "intro/intro";
 	}
-*/	
+
 }
 

@@ -112,7 +112,8 @@
 	<h2 id="title">리워드 & 금액 결제</h2>
 	<h3>리워드 결제 정보</h3>
 	<form id="payment" name="payment" method="post">
-	<input type="hidden" name="project_invest" id="project_invest" value="${introData.project_invest}" />
+	<input type="hidden" name="intro_index" id="intro_index" value="${introData.intro_index}" />
+	<input type="hidden" name="sponser_invest" id="sponser_invest" value="${introData.sponser_invest}" />
 	<input type="hidden" id="sponser_name" name="sponser_name" value="${introData.sponser_name }">
 	<input type="hidden" id="phone" name="phone" value="${introData.phone }">
 	<input type="hidden" id="sponser_email" name="sponser_email" value="${introData.sponser_email }">
@@ -207,12 +208,12 @@
 				<td>
 					은행 선택
 				</td>
-				<td colspan="2">
+				<td colspan="2" id="usact_bank" name="usact_bank">
 					<select>
-						<option>농협</option>
-						<option>하나은행</option>
-						<option>신한은행</option>
-						<option>국민은행</option>	
+						<option value="농협">농협</option>
+						<option value="하나은행">하나은행</option>
+						<option value="신한은행">신한은행</option>
+						<option value="국민은행">국민은행</option>	
 					</select>
 				</td>
 			</tr>
