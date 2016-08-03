@@ -208,12 +208,12 @@
 				<td>
 					은행 선택
 				</td>
-				<td colspan="2">
+				<td colspan="2" id="usact_bank" name="usact_bank">
 					<select>
-						<option>농협</option>
-						<option>하나은행</option>
-						<option>신한은행</option>
-						<option>국민은행</option>	
+						<option value="농협">농협</option>
+						<option value="하나은행">하나은행</option>
+						<option value="신한은행">신한은행</option>
+						<option value="국민은행">국민은행</option>	
 					</select>
 				</td>
 			</tr>
