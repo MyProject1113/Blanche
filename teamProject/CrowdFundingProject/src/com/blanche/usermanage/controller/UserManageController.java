@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +17,11 @@ import com.blanche.common.constant.Constant;
 import com.blanche.establish.service.ApplicationService;
 import com.blanche.establish.service.IntroductionService;
 import com.blanche.establish.vo.ApplicationVO;
+import com.blanche.establish.vo.DonationVO;
+import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
+import com.blanche.intro.service.IntroService;
+import com.blanche.intro.vo.IntroVO;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.usermanage.email.email;
 import com.blanche.usermanage.service.UserManageService;
@@ -36,6 +41,9 @@ public class UserManageController {
 	
 	@Autowired
 	private IntroductionService introductionService;
+	
+	@Autowired
+	private IntroService introService;
 	
 	@RequestMapping(value="/join.do")
 	public String join(Model model) {
@@ -109,8 +117,10 @@ public class UserManageController {
 	
 	@RequestMapping(value="/design.do",method=RequestMethod.GET)
 	public String myPage3(Model model, HttpServletRequest request) {
-		logger.info("applicationMyPage 호출 성공");
+		logger.info("projectMyPage 호출 성공");
 		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		
+		if (userMainVO != null) {
 		ApplicationVO appvo = new ApplicationVO();
 		appvo.setUs_index(userMainVO.getUs_index());
 		List<ApplicationVO> applicationList = applicationService.applicationMyPageList(appvo);
@@ -118,22 +128,114 @@ public class UserManageController {
 		model.addAttribute("data", appvo);
 		
 		
+		logger.info("javauser@oracle.com" + userMainVO.getUs_index());
+		
 		List<IntroductionVO> projectList = introductionService.projectMyPageList(userMainVO.getUs_index());
+		
 		logger.info("ssssssssssssssssssssssssssss"+projectList.size());
 		model.addAttribute("projectList", projectList);
-		
+		}
 		
 		return "usermanage/design";	// View Name => 파일명 아님!!!
 	}
 	
-	
-	
-	
-	@RequestMapping(value="/invest.do")
-	public String myPage4(Model model) {
+	@RequestMapping(value="/invest.do",method=RequestMethod.GET)
+	public String myPage4(Model model,HttpServletRequest request) {
+		logger.info("investMypage 호출성공");
+		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		IntroVO invo = new IntroVO();
+		invo.setUs_index(userMainVO.getUs_index());
+		List<IntroVO> introList = introService.introMyPageList(invo);
+		model.addAttribute("introList", introList);
+		model.addAttribute("data", invo);
+		String intro_index = introService.projectIndex(userMainVO.getUs_index());
+		String intro_title = introService.projectname(userMainVO.getUs_index());
+		DonationVO donationVO = new DonationVO();
+		
+		donationVO.setIntro_index(Integer.parseInt(intro_index));
+		donationVO = introductionService.donationDetail(donationVO);
+		
+		logger.info("title : " + intro_title);
+		
+		model.addAttribute("intro_title", intro_title);
+		model.addAttribute("donationVO", donationVO);
+		
+		List<IntroVO> accountList = introService.accountMyPageList(invo);
+		model.addAttribute("accountList", accountList);
+		
+		model.addAttribute("intro_index",intro_index);
 		
 		return "usermanage/invest";	// View Name => 파일명 아님!!!
 	}
 	
+	@RequestMapping(value="/investForm.do",method=RequestMethod.GET)
+	public String myPage5(@RequestParam("change") String change  ,Model model,HttpServletRequest request) {
+		logger.info("investMypage 호출성공");
+		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		IntroVO invo = new IntroVO();
+		invo.setUs_index(userMainVO.getUs_index());
+		List<IntroVO> introList = introService.introMyPageList(invo);
+		model.addAttribute("introList", introList);
+		model.addAttribute("data", invo);
+		
+		String intro_title = introService.projectname(userMainVO.getUs_index());
+		
+		logger.info("title : " + intro_title);
+		
+		model.addAttribute("intro_title", intro_title);
+		model.addAttribute("change", change);
+		
+		List<IntroVO> accountList = introService.accountMyPageList(invo);
+		model.addAttribute("accountList", accountList);
+		
+		String intro_index = introService.projectIndex(userMainVO.getUs_index());
+		model.addAttribute("intro_index",intro_index);
+		
+		return "usermanage/invest";	// View Name => 파일명 아님!!!
+	}
+	
+	
+
+	
+	
+	
+	
+	@RequestMapping(value="/send.do",method=RequestMethod.POST)
+	public void send(@ModelAttribute IntroApprovalVO ivo){
+		logger.info("send 페이지 호출성공");
+		
+		
+		userManageService.approvalUpdate(ivo);
+		}
+	
+	@RequestMapping(value="/hard.do",method=RequestMethod.POST)
+	public String updateAdd(@ModelAttribute IntroVO ivo, Model model, HttpServletRequest request){
+		logger.info("업데이트 호출성공");
+		
+		int result = introService.updateAdd(ivo);
+		System.out.println("ddddddddddddddddddddddddd" + result);
+		
+//		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+//		IntroVO invo = new IntroVO();
+//		invo.setUs_index(userMainVO.getUs_index());
+//		List<IntroVO> introList = introService.introMyPageList(invo);
+//		model.addAttribute("introList", introList);
+//		model.addAttribute("data", invo);
+//		
+//		String intro_title = introService.projectname(userMainVO.getUs_index());
+//		
+//		logger.info("title : " + intro_title);
+//		
+//		model.addAttribute("intro_title", intro_title);
+//		
+//		List<IntroVO> accountList = introService.accountMyPageList(invo);
+//		model.addAttribute("accountList", accountList);
+//		
+//		String intro_index = introService.projectIndex(userMainVO.getUs_index());
+//		model.addAttribute("intro_index",intro_index);
+		
+		return "redirect:/usermanage/invest.do";
+		
+	}
 	
 }
