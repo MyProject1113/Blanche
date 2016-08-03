@@ -1,5 +1,7 @@
 package com.blanche.user.main.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,18 +14,23 @@ public class UserMainMapperImpl implements UserMainMapper {
 	private SqlSession session;
 	
 	@Override
+	public List<UserMainVO> userList(UserMainVO param) {
+		return session.selectList("userList");
+	}
+	
+	@Override
 	public UserMainVO userAccess(UserMainVO param) {
-		return (UserMainVO) session.selectOne("userAccess");
+		return session.selectOne("userAccess");
 	}
 	
 	@Override
 	public UserMainVO userData(UserMainVO param) {
-		return (UserMainVO) session.selectOne("userData");
+		return session.selectOne("userData");
 	}
 	
 	@Override
 	public UserMainVO userFind(UserMainVO param) {
-		return (UserMainVO) session.selectOne("userFind");
+		return session.selectOne("userFind");
 	}
 	
 	@Override
