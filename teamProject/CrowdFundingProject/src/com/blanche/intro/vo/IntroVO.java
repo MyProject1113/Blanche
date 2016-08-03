@@ -19,8 +19,30 @@ public class IntroVO {
 	private String intro_image; //프로젝트 이미지 경로
 	private long intro_index; //프로젝트 번호
 	private long app_index; //개설신청 번호
+	private int us_index;	//회원 정보 번호
+	private long project_invest;	// 프로젝트 투자 금액
+	private String sponser_phone;//후원자 연락처
+	private int sponser_index;//기본키
 	
 	
+	public long getProject_invest() {
+		return project_invest;
+	}
+	public void setProject_invest(long project_invest) {
+		this.project_invest = project_invest;
+	}
+	public String getSponser_phone() {
+		return sponser_phone;
+	}
+	public void setSponser_phone(String sponser_phone) {
+		this.sponser_phone = sponser_phone;
+	}
+	public int getSponser_index() {
+		return sponser_index;
+	}
+	public void setSponser_index(int sponser_index) {
+		this.sponser_index = sponser_index;
+	}
 	public long getIntro_index() {
 		return intro_index;
 	}
@@ -130,4 +152,11 @@ public class IntroVO {
 	public void setApp_index(long app_index) {
 		this.app_index = app_index;
 	}
+	public int getUs_index() {
+		return us_index;
+	}
+	public void setUs_index(int us_index) {
+		this.us_index = us_index;
+	}
+	
 }

@@ -2,6 +2,8 @@ package com.blanche.intro.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blanche.intro.service.IntroService;
 import com.blanche.intro.vo.IntroVO;
+import com.blanche.intro.vo.investVO;
+import com.blanche.intro.vo.usactVO;
+import com.blanche.user.main.service.UserMainService;
+import com.blanche.user.main.vo.UserMainVO;
 
 /* 컨트롤러 */
 @Controller
@@ -24,6 +30,9 @@ public class IntroController {
 	@Autowired
 	private IntroService introService; // 인터페이스 구현체 생성
 
+	@Autowired
+	private UserMainService userMainService;
+	
 	/********************************************
 	 * 프로젝트 소개페이지 구현
 	 * *******************************************/
@@ -104,16 +113,26 @@ public class IntroController {
 	 * 결제 정보확인 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/pay_success.do")
-	public ModelAndView pay_success(@ModelAttribute IntroVO param) {
+	public ModelAndView pay_success(@ModelAttribute IntroVO param, investVO invVO,  usactVO  usactVO,HttpServletRequest request) {
 		logger.info("pay_success 호출 성공");
 		
-		introService.pay_success(param);
-		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("introData", param);
-		mav.setViewName("intro/pay_success");
 		
-		return mav;		
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			mav.addObject("us_index", userData.getUs_index());
+		}
+
+		introService.pay_success(param);
+		introService.pay_success(invVO);
+		introService.pay_success(usactVO);
+
+		mav.addObject("introData", param);
+		mav.addObject("invVO", invVO);
+		mav.addObject("usactVO", usactVO);
+		mav.setViewName("intro/pay_success");
+		return mav;
 	}
 	
 	/********************************************
