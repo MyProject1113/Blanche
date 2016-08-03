@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.user.main.vo.UserMainVO;
 @Repository
 public class UserManageDaoImpl implements UserManageDao {
@@ -20,5 +21,13 @@ public class UserManageDaoImpl implements UserManageDao {
 	public void phChange(UserMainVO userMainVO) {
 		session.update("phChange", userMainVO);
 	}
+
+	@Override
+	public void approvalUpdate(IntroApprovalVO ivo) {
+		session.update("approvalUpdate");
+		
+	}
+
+	
 
 }
