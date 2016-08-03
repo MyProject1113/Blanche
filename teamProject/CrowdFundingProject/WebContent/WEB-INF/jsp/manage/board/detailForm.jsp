@@ -35,7 +35,7 @@
 			$("#bd_step").val("<c:out value='${boardData.bd_step}' />");
 			$("#bd_indent").val("<c:out value='${boardData.bd_indent}' />");
 			$("#boardUri").val("<c:out value='${boardParam.boardUri}' />");
-			$("#search").val("<c:out value='${boardParam.search}' />");
+			$("#method").val("<c:out value='${boardParam.method}' />");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
 			$("#page").val("<c:out value='${boardParam.page}' />");
 			
@@ -55,7 +55,7 @@
 				}
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/delete.do"
+					"action" : "/manage/board/delete.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -67,7 +67,7 @@
 				}
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/restore.do"
+					"action" : "/manage/board/restore.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -76,14 +76,26 @@
 			$("#boardListBtn").click(function() {
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/manage/list.do"
+					"action" : "/manage/board/list.do"
 				});
 				$("#formBoard").submit();
+			});
+			
+			/* 게시판 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageBoardBtn").click(function() {
+				location.href = "/manage/board/list.do"
+			});
+			
+			/* 회원 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageUserBtn").click(function() {
+				location.href = "/manage/user/list.do"
 			});
 		});
 	</script>
 </head>
 <body>
+<input type="button" id="manageBoardBtn" name="manageBoardBtn" value="게시판 관리" />
+<input type="button" id="manageUserBtn" name="manageUserBtn" value="회원 관리" />
 <div id="boardContainer">
 	<%-- ==================== 본문 설정 시작 ==================== --%>
 	<form name="formBoard" id="formBoard">
@@ -95,7 +107,7 @@
 		<input type="hidden" name="bd_step" id="bd_step" />
 		<input type="hidden" name="bd_indent" id="bd_indent" />
 		<input type="hidden" name="boardUri" id="boardUri" />
-		<input type="hidden" name="search" id="search" />
+		<input type="hidden" name="method" id="method" />
 		<input type="hidden" name="keyword" id="keyword" />
 		<input type="hidden" name="page" id="page" />
 	</form>

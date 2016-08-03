@@ -36,7 +36,7 @@
 			$("#bd_step").val("<c:out value='${boardParam.bd_step}' />");
 			$("#bd_indent").val("<c:out value='${boardParam.bd_indent}' />");
 			$("#boardUri").val("<c:out value='${boardParam.boardUri}' />");
-			$("#search").val("<c:out value='${boardParam.search}' />");
+			$("#method").val("<c:out value='${boardParam.method}' />");
 			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
 			$("#page").val("<c:out value='${boardParam.page}' />");
 			
@@ -94,7 +94,7 @@
 			<input type="hidden" name="bd_step" id="bd_step" />
 			<input type="hidden" name="bd_indent" id="bd_indent" />
 			<input type="hidden" name="boardUri" id="boardUri" />
-			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="method" id="method" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">

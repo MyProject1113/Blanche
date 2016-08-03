@@ -60,7 +60,7 @@
 				$("#boardUri").val(boardUri);
 				$("#formBoard").attr({
 					"method" : "post",
-					"action" : "/mywrite/article.do"
+					"action" : "/manage/board/article.do"
 				});
 				$("#formBoard").submit();
 			});
@@ -90,15 +90,27 @@
 			/* 검색과 한 페이지에 보여줄 레코드 수 처리 및 페이징을 위한 함수 */
 			function goPage() {
 				$("#formBoard").attr({
-					"method" : "post",
-					"action" : "/mywrite/list.do"
+					"method" : "post"
+					"action" : "/manage/board/list.do"
 				});
 				$("#formBoard").submit();
 			}
+			
+			/* 게시판 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageBoardBtn").click(function() {
+				location.href = "/manage/board/list.do"
+			});
+			
+			/* 회원 관리 버튼 클릭 시 처리 이벤트 */
+			$("#manageUserBtn").click(function() {
+				location.href = "/manage/user/list.do"
+			});
 		});
 	</script>
 </head>
 <body>
+<input type="button" id="manageBoardBtn" name="manageBoardBtn" value="게시판 관리" />
+<input type="button" id="manageUserBtn" name="manageUserBtn" value="회원 관리" />
 <div id="boardContainer">
 	<%-- ==================== 작성글 목록 시작 ==================== --%>
 	<div id="boardList">
@@ -107,16 +119,18 @@
 				<col width="10%" />
 				<col width="15%" />
 				<col width="50%" />
-				<col width="13%" />
-				<col width="12%" />
+				<col width="10%" />
+				<col width="10%" />
+				<col width="10%" />
 			</colgroup>
 			<thead>
 				<tr>
 					<th class="columnName">번호</th>
 					<th class="columnName">게시판</th>
 					<th class="columnName">제목</th>
+					<th class="columnName">작성자</th>
 					<th class="columnName">작성일</th>
-					<th class="columnName">조회수</th>
+					<th class="columnName">삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -161,14 +175,19 @@
 										<img class="attachImage" src="/image/file.png" />
 									</c:if>
 								</td>
+								<td class="center">${boardData.nickname}</td>
 								<td class="center">${boardData.bd_regdate}</td>
-								<td class="center">${boardData.bd_check}</td>
+								<td class="center">
+									<c:if test="${boardData.bd_delete > 0}">
+										삭제
+									</c:if>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
+							<td colspan="6" class="center">검색된 내용이 없습니다. 다시 한번 검색해 보세요</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

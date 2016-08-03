@@ -31,7 +31,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#nt_important").val(0);
-			$("#search").val("<c:out value='${noticeParam.search}' />");
+			$("#method").val("<c:out value='${noticeParam.method}' />");
 			$("#keyword").val("<c:out value='${noticeParam.keyword}' />");
 			$("#page").val("<c:out value='${noticeParam.page}' />");
 			
@@ -94,7 +94,7 @@
 	<div id="boardWrite">
 		<form name="formWrite" id="formWrite" enctype="multipart/form-data">
 			<input type="hidden" name="nt_important" id="nt_important" />
-			<input type="hidden" name="search" id="search" />
+			<input type="hidden" name="method" id="method" />
 			<input type="hidden" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
 			<table class="boardTable">

@@ -27,4 +27,9 @@ public class UserAccessMappervImpl implements UserAccessMapper {
 	public int accessInsert(UserAccessVO param) {
 		return session.insert("accessInsert");
 	}
+	
+	@Override
+	public int accessListCount(UserAccessVO param) {
+		return session.selectOne("accessListCount");
+	}
 }

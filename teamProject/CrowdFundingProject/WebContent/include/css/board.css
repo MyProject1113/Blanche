@@ -89,20 +89,29 @@
 #boardSearch {
 	text-align: center;
 }
-#boardSearch #search {
+#boardSearch #method {
 	display: inline-block;
-	width: 100px;
-	height: 24px;
+	width: 120px;
+	height: 30px;
+	vertical-align: middle;
 }
 #boardSearch #keyword {
 	display: inline-block;
 	width: 200px;
-	height: 24px;
+	height: 30px;
+	vertical-align: middle;
+}
+#boardSearch #category {
+	display: inline-block;
+	width: 200px;
+	height: 30px;
+	vertical-align: middle;
 }
 #boardSearch #btnSearch {
 	width: 60px;
-	height: 24px;
+	height: 30px;
 	text-align: center;
+	vertical-align: middle;
 }
 #boardDetail #boardContent {
 	width: 100%;

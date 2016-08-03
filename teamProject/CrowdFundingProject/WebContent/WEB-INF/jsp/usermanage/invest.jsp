@@ -35,8 +35,8 @@ $(function(){
 	});
 	var check = false;
 	$(".addchange").click(function(){
-		check = true;
-		location.href="/usermanage/investForm.do?change=" + check;
+		var civa =$(this).parents("tr").attr("data-num");
+		location.href="/usermanage/investForm.do?change=" + civa;
 	});
 	$(".complete").click(function(){
 		var no = $(this).parents("tr").children().eq(0).attr("data-num");
@@ -48,10 +48,7 @@ $(function(){
 		})
 		$("#hard").submit();
 	})
-	$("#addchange").click(function(){
-		var civa =$(this).parents("tr").attr("data-num");
-		$("")
-	})
+	
 	
 });
 </script>
@@ -97,11 +94,12 @@ $(function(){
 			
 				<table summary="게시판 리스트">
 					<colgroup>
+						<col width="10%" />
+						<col width="10%" />
 						<col width="15%" />
 						<col width="15%" />
-						<col width="20%" />
-						<col width="20%" />
-						<col width="30%" />
+						<col width="25%" />
+						<col width="25%" />
 					</colgroup>
 					<thead>
 						<tr>
@@ -110,7 +108,7 @@ $(function(){
 							<th>프로젝트명</th>
 							<th>수령자이메일</th>
 							<th>수령 주소</th>
-							
+							<th>진행 날짜</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -126,7 +124,7 @@ $(function(){
 										<td>${spon.sponser_email}</td>
 										<td data-name="${spon.sponser_add}">
 											<c:choose>
-												<c:when test="${change eq true}">
+												<c:when test="${change eq intro_index}">
 													<input type="text" id="add" name="add" value="${spon.sponser_add}">
 													<input type="button" class="complete" value="확인"/>
 												</c:when>
@@ -137,6 +135,9 @@ $(function(){
 												</c:otherwise>
 											</c:choose>
 											</td>
+										<td>
+											${donationVO.dona_dday }
+										</td>
 									</tr>
 								</c:forEach>
 							</c:when>

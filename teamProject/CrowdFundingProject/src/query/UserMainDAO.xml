@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blanche.user.main.dao.UserMainMapper">
+	<!-- 회원 전체 조회  -->
+	<select id="userList" parameterType="userMainVO" resultType="userMainVO">
+		/* UserMainDAO - userList */
+		SELECT 	us_index
+			,	us_email
+			,	us_name
+			,	us_nickname
+			,	us_rank
+			,	us_phone
+			,	(SELECT MAX(usacd_type) FROM useraccredit WHERE us_index = rs.us_index) AS accreditState
+			,	(SELECT MAX(usacc_date) FROM useraccess WHERE us_index = rs.us_index) AS accessDate
+		FROM 	(
+				SELECT	ROWNUM AS rnum
+					,	us.*
+				FROM	(
+						SELECT	usermain.*
+						FROM	usermain
+						<include refid="userSearch" />
+						ORDER BY
+								us_index DESC
+						) us
+				WHERE	rownum <![CDATA[<=]]> #{endRow}
+				) rs
+		WHERE	rnum <![CDATA[>=]]> #{startRow}	
+	</select>
+	
+	<!-- 회원 검색 조건 -->
+	<sql id="userSearch">
+		<where>
+			0 = 0
+		</where>
+	</sql>
+	
 	<!-- 회원 접속 -->
 	<select id="userAccess" parameterType="userMainVO" resultType="userMainVO">
 		/* UserMainDAO - userAccess */
@@ -83,4 +116,12 @@
 			,	us_modidate2 = sysdate
 		WHERE	us_index = #{us_index} 
 	</update>
+	
+	<!-- 회원 수 조회 -->
+	<select id="userListCount" parameterType="userMainVO" resultType="int">
+		/* UserMainDAO - userListCount */
+		SELECT	COUNT(us_index)
+		FROM	usermain
+		<include refid="userSearch" />
+	</select>
 </mapper>

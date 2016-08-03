@@ -67,22 +67,22 @@
 			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
-					<when test="search == 'title'">
+					<when test="method == 'title'">
 						AND 
 						bd_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'content'">
+					<when test="method == 'content'">
 						AND
 						bd_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 					</when>
-					<when test="search == 'both'">
+					<when test="method == 'both'">
 						AND (
 							bd_title	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 							OR
 							bd_content	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
 						)
 					</when>
-					<when test="search == 'writer'">
+					<when test="method == 'writer'">
 						AND
 						us_index	= (SELECT us_index FROM usermain WHERE us_nickname = <![CDATA[#{keyword}]]>)
 					</when>
@@ -246,7 +246,7 @@
 	
 	<!-- 게시물 답변 개수 조회 -->
 	<select id="boardReplyCount" parameterType="boardMainVO" resultType="int">
-		SELECT	count(bd_index)
+		SELECT	COUNT(bd_index)
 		FROM	boardmain
 		WHERE	bd_parent = #{bd_index}
 				AND

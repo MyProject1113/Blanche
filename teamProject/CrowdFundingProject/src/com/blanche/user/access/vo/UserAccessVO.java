@@ -1,6 +1,8 @@
 package com.blanche.user.access.vo;
 
-public class UserAccessVO {
+import com.blanche.board.common.vo.DefaultVO;
+
+public class UserAccessVO extends DefaultVO {
 	private int usacc_index	= 0;	// 접속일련번호
 	private int us_index 		= 0;	// 회원일련번호
 	private String usacc_ip 	= "";	// 접속IP
