@@ -1,22 +1,25 @@
 package com.blanche.establish.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /** 프로젝트 소개 **/
 public class IntroductionVO extends IntroApprovalVO {
 	private int			intro_index;					// 프로젝트 번호
-	private String 	intro_title			= "";	// 제목
-	private String 	intro_subtitle		= "";	// 소제목
-	private String 	intro_image			= "";	// 프로젝트 이미지
-	private String		intro_startDate	= "";	// 프로젝트 시작일
-	private String 	intro_endDate		= "";	// 프로젝트 종료일
-	private String 	intro_details		= "";	// 프로젝트 소개
-	private String 	intro_synopsis		= "";	// 영화/공연 시놉시스
-	private String 	intro_plan			= "";	// 사업계획
-	private String 	intro_purpose		= "";	// 사업목표
-	private String		intro_effect			= "";	// 기대효과
-	private String		intro_refund		= "";	// 환불 및 교환정책
-	private String		intro_project		= "";	// 프로젝트 아이디
-	private int 		app_index;					// 개설 신청 번호
-	private int 		appro_index;				// 승인번호
+	private String 	intro_title				= "";	// 제목
+	private String 	intro_subtitle			= "";	// 소제목
+	private String 	intro_image				= "";	// 프로젝트 이미지(실제서버에 저장한 파일)
+	private String		intro_startDate		= "";	// 프로젝트 시작일
+	private String 	intro_endDate			= "";	// 프로젝트 종료일
+	private String 	intro_details			= "";	// 프로젝트 소개
+	private String 	intro_abbreviation		= "";	// 프로젝트 간략소개
+	/*private String 	intro_synopsis			= "";	// 영화/공연 시놉시스
+	private String 	intro_plan					= "";	// 사업계획
+	private String 	intro_purpose				= "";	// 사업목표
+*/	private String		intro_effect				= "";	// 기대효과
+	private String		intro_refund			= "";	// 환불 및 교환정책
+	private String		intro_project			= "";	// 프로젝트 아이디
+	private int 		app_index;						// 개설 신청 번호
+	private int 		appro_index;					// 승인번호
 
 	// 조건 검색시 사용할 속성
 	private String searchCombo = "";
@@ -25,6 +28,9 @@ public class IntroductionVO extends IntroApprovalVO {
 	// 정렬을 위한 속성
 	private String order_by;
 	private String order_sc;
+
+	// 파일 업로드를 위한 속성
+	private MultipartFile intro_file;	// 첨부파일
 	
 	public int getIntro_index() {
 		return intro_index;
@@ -82,7 +88,7 @@ public class IntroductionVO extends IntroApprovalVO {
 		this.intro_details = intro_details;
 	}
 
-	public String getIntro_synopsis() {
+	/*public String getIntro_synopsis() {
 		return intro_synopsis;
 	}
 
@@ -104,6 +110,14 @@ public class IntroductionVO extends IntroApprovalVO {
 
 	public void setIntro_purpose(String intro_purpose) {
 		this.intro_purpose = intro_purpose;
+	}*/
+
+	public String getIntro_abbreviation() {
+		return intro_abbreviation;
+	}
+
+	public void setIntro_abbreviation(String intro_abbreviation) {
+		this.intro_abbreviation = intro_abbreviation;
 	}
 
 	public String getIntro_effect() {
@@ -176,5 +190,13 @@ public class IntroductionVO extends IntroApprovalVO {
 
 	public void setOrder_sc(String order_sc) {
 		this.order_sc = order_sc;
+	}
+
+	public MultipartFile getIntro_file() {
+		return intro_file;
+	}
+
+	public void setIntro_file(MultipartFile intro_file) {
+		this.intro_file = intro_file;
 	}
 }

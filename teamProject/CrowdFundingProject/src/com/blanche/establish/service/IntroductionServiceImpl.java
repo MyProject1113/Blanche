@@ -146,9 +146,9 @@ public class IntroductionServiceImpl implements IntroductionService {
 
 	//
 	@Override
-	public int sponserCount() {
+	public int sponserCount(int intro_index) {
 		int result = 0;
-		result = introductionDao.sponserCount();
+		result = introductionDao.sponserCount(intro_index);
 		return result;
 	}
 
@@ -163,6 +163,48 @@ public class IntroductionServiceImpl implements IntroductionService {
 	public ApplicationVO getFundNField(int intro_index) {
 		ApplicationVO detail = null;
 		detail = introductionDao.getFundNField(intro_index);
+		return detail;
+	}
+
+	@Override
+	public List<Integer> introdutionCount(String app_field) {
+		List<Integer> myList = null;
+		myList = introductionDao.introdutionCount(app_field);
+		return myList;
+	}
+
+	@Override
+	public ProjectListVO lookRoundContentList(int intro_index) {
+		ProjectListVO detail = null;
+		detail = introductionDao.lookRoundContentList(intro_index);
+		return detail;
+	}
+
+	@Override
+	public ProjectListVO noOneContentList(int intro_index) {
+		ProjectListVO detail = null;
+		detail = introductionDao.noOneContentList(intro_index);
+		return detail;
+	}
+
+	@Override
+	public int introductionModifyUpdate(IntroductionVO introDetail) {
+		int result = 0;
+		result = introductionDao.introductionModifyUpdate(introDetail);
+		return result;
+	}
+
+	@Override
+	public int plannerModifyUpdate(PlannerVO plannerDetail) {
+		int result = 0;
+		result = introductionDao.plannerModifyUpdate(plannerDetail);
+		return result;
+	}
+
+	@Override
+	public DonationVO donationNoOnDetail(int intro_index) {
+		DonationVO detail = null;
+		detail = introductionDao.donationNoOnDetail(intro_index);
 		return detail;
 	}
 }
