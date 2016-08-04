@@ -24,6 +24,7 @@
 	float : right;
 	width : 300px;
 	padding : 40px;
+	
 }
 
 
@@ -51,6 +52,9 @@ body {
 	height : 200px;
 	float: left;
 	margin : 20px;
+	padding : 20px;
+	border : 3px;
+	border-style: dashed;
 }
 
 #faq_item_2{
@@ -58,6 +62,9 @@ body {
 	height : 200px;
 	float : left;
 	margin : 20px;
+	padding : 20px;
+	border : 3px;
+	border-style: dashed;
 }
 
 #faq_item_3{
@@ -65,6 +72,9 @@ body {
 	height : 200px;
 	float: left;
 	margin : 20px;
+	padding : 20px;
+	border : 3px;
+	border-style: dashed;
 }
 
 #faq_item_4{
@@ -72,6 +82,9 @@ body {
 	height : 200px;
 	float: left;
 	margin : 20px;
+	padding : 20px;
+	border : 3px;
+	border-style: dashed;
 }
 
 div#wrapper {
@@ -106,8 +119,13 @@ form.search {
     margin-left: 20px;
 }
 
+#endhr{
+	margin-bottom : 30px;
+}
 
-
+div#content {
+    margin-bottom: 50px;
+}
 
 </style>
 
@@ -173,18 +191,18 @@ form.search {
 				
 				
 				<!-- --------------------------------------------------- 검색 구획 시작 ----------------------------------------------------------- -->
-				
+				<!-- 
 					<form action="/support/kb/search" class="search">
 						
 						<div>
 							
-							<input autocomplete="off" class="field field__search js-input" maxlength="100" placeholder="검색" type="text">
+							<input autocomplete="off" class="field field__search js-input" maxlength="100" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;검색" type="text">
 							<button id="faqsearch" class="button-main button-main__search js-button-submit">찾기</button>
-							<!-- <span class="search_cancel js-button-reset" data-active-class="search_hint__active"></span> -->
+							<span class="search_cancel js-button-reset" data-active-class="search_hint__active"></span>
 						</div>
 					
 					</form>
-			
+				 -->
 				<!-- --------------------------------------------------- 검색 구획 종료 ----------------------------------------------------------- -->
 				
 				
@@ -278,28 +296,27 @@ form.search {
 						<div class="widget">
 							<h2 class="heading-2 heading-2__widget">
 								<span class="widget_icon widget_icon__news"></span>
-									"고객 지원 공지 사항을 참고해 주십시오"
-								<sup class="sup">8</sup>
+									고객센터 참고 사항
 							</h2>
 							
 							<!-- 사이드 메뉴 주항목의 하위메뉴 리스트 시작 -->
-							
+							<br/>
 							<ul class="js-list">
 								<li class="news">
 									<a class="link-second js-item-link" href="/support/news/87">
-										결제 관련 해결 방법 안내
+										기획하러 가기
 									</a>
 								</li>
 								
 								<li class="news">
 									<a class="link-second js-item-link" href="/support/news/87">
-										결제 관련 해결 방법 안내
+										투자하러 가기
 									</a>
 								</li>
 								
 								<li class="news">
 									<a class="link-second js-item-link" href="/support/news/87">
-										결제 관련 해결 방법 안내
+										질문과 답변 게시판
 									</a>
 								</li>
 								
@@ -312,8 +329,8 @@ form.search {
 							
 							<!-- 사이드 메뉴 주항목의 하위메뉴 리스트 종료 -->
 							
-							<a class="link-action js-all-link" href="/support/news">
-								직접 질문하기
+							<a class="link-action js-all-link" href="/board/qna/list.do">
+								직접 질문하기 [ Q&A ]
 							</a>
 						</div>
 					</div>
@@ -322,7 +339,12 @@ form.search {
 	</section>
 			
 				<!-- ----------------------------------------------------- 우측 사이드 메뉴 종료 ------------------------------------------------------------ -->
-
 </div>
+
+	
+		<!-- 문단 분할을 위한 가로줄 -->
+				<hr class="hr hr__main" id="endhr">
+
+
 </body>
 </html>
