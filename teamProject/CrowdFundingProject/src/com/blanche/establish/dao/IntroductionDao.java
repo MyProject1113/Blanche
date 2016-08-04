@@ -39,4 +39,5 @@ public interface IntroductionDao {
 	public int introductionModifyUpdate(IntroductionVO introDetail);
 	public int plannerModifyUpdate(PlannerVO plannerDetail);
 	public DonationVO donationNoOnDetail(int intro_index);
+	public List<Integer> introdutionAllCount(String app_field);
 }

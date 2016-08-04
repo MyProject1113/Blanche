@@ -600,8 +600,14 @@ public class EstablishController {
 	public String projectContentList(@RequestParam("app_field") String app_field, Model model) { 
 		logger.info("projectContentList 호출 성공");
 		
+		List<Integer> indexList = new ArrayList<Integer>();
 		
-		List<Integer> indexList = introductionService.introdutionCount(app_field);
+		if (app_field.equals("all")) {
+			indexList = introductionService.introdutionAllCount(app_field);
+		} else {
+			indexList = introductionService.introdutionCount(app_field);
+		}
+		
 		List<ProjectListVO> projectContentList = new ArrayList<ProjectListVO>();
 		ProjectListVO plvo = null;
 		

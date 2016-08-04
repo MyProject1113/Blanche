@@ -102,7 +102,8 @@
 	<!-- 프로젝트 소개 상세 페이지를 위한 조회 -->
 	<select id="introductionDetail" parameterType="introduction" resultType="introduction">
 		/* Introduction - introductionDetail */
-		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate, intro_details,
+		SELECT intro_index, intro_title, intro_subtitle, intro_image, TO_CHAR(intro_startDate, 'YYYY-MM-DD') AS intro_startDate, 
+			 TO_CHAR(intro_endDate, 'YYYY-MM-DD') AS intro_endDate, intro_details,
 			 intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index
 		FROM	   introduction
 		WHERE intro_index = #{intro_index}
@@ -300,6 +301,13 @@
 		WHERE app_field = #{app_field}
 	</select>
 	
+	<!-- 필드별 프로젝트 전체수 조회 -->
+	<select id="introdutionAllCount" parameterType="projectList" resultType="int">
+		/* Introduction - introdutionAllCount */
+		SELECT intro.intro_index FROM introduction intro 
+		INNER JOIN application app ON intro.app_index = app.app_index
+	</select>
+	
 	
 	<!-- 후원자 수 조회 -->
 	<select id="sponserCount" parameterType="projectList" resultType="int">
@@ -399,7 +407,9 @@
 		UPDATE introduction
 		SET intro_title = #{intro_title}
 			, intro_subtitle = #{intro_subtitle}
+			<if test="intro_image != ''">
 			, intro_image = #{intro_image}
+			</if>
 			, intro_startDate = #{intro_startDate}
 			, intro_endDate = #{intro_endDate}
 			, intro_details = #{intro_details}
@@ -414,7 +424,10 @@
 	<update id="plannerModifyUpdate" parameterType="planner">
 		/* Introduction - plannerModifyUpdate */
 		UPDATE planner
-		SET plan_image = #{plan_image}
+		SET 
+			<if test="plan_image != ''">
+			plan_image = #{plan_image}
+			</if>
 			, plan_name = #{plan_name}
 			, plan_area = #{plan_area}
 			, plan_account = #{plan_account}

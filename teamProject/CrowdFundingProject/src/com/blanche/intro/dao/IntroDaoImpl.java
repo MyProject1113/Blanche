@@ -64,5 +64,24 @@ public class IntroDaoImpl implements IntroDao{
 	public int updateAdd(IntroVO ivo) {
 		return session.update("updateAdd", ivo);
 	}
-
+	
+	@Override
+	public List<Integer> introdutionList(String app_field){
+		return session.selectList("introdutionList");
+	}
+	
+	@Override
+	public int sponserList(int intro_index){
+		return session.update("sponserList");
+	}
+	
+	@Override
+	public IntroVO lookRoundContent(int intro_index){
+		return (IntroVO)session.selectOne("lookRoundContent");
+	}
+	
+	@Override
+	public IntroVO noOneContent(int intro_index){
+		return (IntroVO)session.selectOne("noOneContent");
+	}
 }

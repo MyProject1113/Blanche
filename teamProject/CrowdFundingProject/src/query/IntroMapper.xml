@@ -46,6 +46,55 @@
       from introduction intro
     </select>
     
+    <!-- 프로젝트 수 조회 -->
+    <select id="introdutionList" parameterType="intro" resultType="intro">
+		/* Introduction - introdutionList */
+		SELECT intro.intro_index FROM introduction intro 
+		INNER JOIN application app ON intro.app_index = app.app_index 
+		WHERE app_field = #{app_field}
+	</select>
+    
+    <!-- 후원자 수 조회 -->
+	<select id="sponserList" parameterType="intro" resultType="intro">
+		/* Introduction - sponserCount */
+		SELECT count(*)
+		FROM invest
+		WHERE intro_index = #{intro_index}
+	</select>
+	
+	<!-- 프로젝트 리스트 출력 내용 조회(후원자 포함) -->
+	<select id="lookRoundContent" parameterType="intro" resultType="intro">
+		/* Introduction - lookRoundContentList */
+		SELECT * FROM 
+			(SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_abbreviation AS plist_abbreviation, intro_index,
+				(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
+				TO_CHAR(intro_startDate, 'YYYY"년" MM"월" DD"일"') AS plist_startDate,
+				TO_CHAR(intro_endDate, 'YYYY"년" MM"월" DD"일"') AS plist_endDate, 
+				TO_DATE(sysdate) - intro_startDate AS plist_dDay
+			FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
+			WHERE intro_index = #{intro_index}) prolist
+		INNER JOIN 
+			(SELECT TO_CHAR(sum(sponser_invest), '999,999,999,999,999') AS plist_collection, intro_index 
+			FROM (SELECT * FROM invest inv INNER JOIN sponser spon ON inv.sponser_index = spon.sponser_index 
+			WHERE intro_index IN (SELECT intro.intro_index FROM introduction intro 
+			INNER JOIN application app ON intro.app_index = app.app_index 
+			WHERE intro_index = #{intro_index}))
+			GROUP BY intro_index) collection
+		ON prolist.intro_index = collection.intro_index
+	</select>
+	
+	<!-- 프로젝트 리스트 출력 내용 조회(후원자 제외) -->
+	<select id="noOneContent" parameterType="intro" resultType="intro">
+		/* Introduction - noOneContentList */
+		SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_subtitle AS plist_abbreviation, intro_index,
+			(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
+			TO_CHAR(intro_startDate, 'YYYY"년" MM"월" DD"일"') AS plist_startDate,
+			TO_CHAR(intro_endDate, 'YYYY"년" MM"월" DD"일"') AS plist_endDate, 
+			TO_DATE(sysdate) - intro_startDate AS plist_dDay
+		FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
+		WHERE intro_index = #{intro_index}
+	</select>
+	
     <!-- feat.래혁 -->
     <select id="introMyPageList" parameterType="intro" resultType="intro">
 		/*   sponser  */

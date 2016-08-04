@@ -1,5 +1,6 @@
 package com.blanche.intro.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,17 +62,39 @@ public class IntroController {
 		return "redirect:/establish/contentDetail.do?intro_index=" + intro_index;
 	}
 
+
+	/********************************************
+	 * 프로젝트 상세 페이지 이동
+	 * *******************************************/
+	@RequestMapping(value="/projectContentList.do", method=RequestMethod.GET)
+	public String projectContentList(@RequestParam("app_field") int app_field) {
+		logger.info("projectContentList 호출 성공");
+		
+		return "redirect:/establish/projectContentList.do?app_field=" + app_field;
+	}
+
+	
 	/********************************************
 	 * 프로젝트 밀어주기 페이지 이동
 	 * *******************************************/
 	@RequestMapping(value="/reward.do", method=RequestMethod.GET)
-	public String reward(@RequestParam("intro_index") int intro_index, Model model) {
-		logger.info("reward 호출 성공");
+	public String reward(@RequestParam("intro_index") int intro_index, Model model, HttpServletRequest request) {
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			logger.info("회원번호 : " + userData.getUs_index() + ", 등급 : " + userData.getUs_rank());
+			logger.info("reward 호출 성공");
 		
-		logger.info("intro_index : " + intro_index);
-		model.addAttribute("intro_index", intro_index);
+			logger.info("intro_index : " + intro_index);
+			model.addAttribute("intro_index", intro_index);
+			
+			return "intro/reward";
+		}
+		else {
+			model.addAttribute("loginMessage", "로그인 상태에서만 후원을 진행할 수 있습니다.");
+			return "board/common/returnLogin";
+		}
 		
-		return "intro/reward";
 	}
 	
 	/********************************************
@@ -103,7 +126,7 @@ public class IntroController {
 			mav.addObject("introData", param);
 			mav.setViewName("intro/payment");
 		} else {
-			mav.addObject("result", "등록에 문제가 있어, 완료하지 못하였습니다.");
+			mav.addObject("result", "등록에 문제가 있어, 완료하지 못하였습니다.1	");
 			mav.setViewName("intro/returnError");
 		}
 		return mav;
@@ -146,15 +169,28 @@ public class IntroController {
 	/********************************************
 	 *  프로젝트 둘러보기 화면 구현
 	 * *******************************************/
-	@RequestMapping(value="/intro.do")
-	public String introList(@ModelAttribute IntroVO param, Model model) {
+	@RequestMapping(value="/intro.do", method=RequestMethod.GET)
+	public String introList(@RequestParam("app_field") String app_field, Model model) {
 		logger.info("introList 호출 성공");
 
-		List<IntroVO> introList = introService.introList(param);
-		logger.info("introSize = " + introList.size());
+		List<Integer> indexList = introService.introdutionList(app_field);
+		List<IntroVO> introList = new ArrayList<IntroVO>();
+		IntroVO ivo = null;
 		
-		model.addAttribute("introList", introList);
-
+		for (int intro_index : indexList) {
+			logger.info("intro_index : " + intro_index);
+			
+			int count = introService.sponserList(intro_index);
+			if (count != 0)
+				ivo = introService.lookRoundContent(intro_index);
+			else
+				ivo = introService.noOneContent(intro_index);
+			
+			introList.add(ivo);
+		}
+		
+		model.addAttribute("projectContentList", introList);
+		
 		return "intro/intro";
 	}
 

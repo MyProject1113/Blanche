@@ -30,6 +30,12 @@
 		<script type="text/javascript">
 			$(function() {
 				
+				//document.getElementById('intro_startDate').valueAsDate = new Date();
+				//document.getElementById('intro_endDate').valueAsDate = new Date();
+				document.getElementById('intro_startDate').valueAsDate = ${introDetail.intro_startDate};
+				document.getElementById('intro_endDate').valueAsDate = ${introDetail.intro_endDate};
+				
+				var d = "${introDetail.intro_startDate}";
 				
 				
 				/* 저장 버튼 클릭 시 처리 이벤트 */
@@ -119,14 +125,15 @@
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="intro_image">메인 이미지</label>
-						<input type="file" class="app_detail_item" id="intro_file" name="intro_file" value="${introDetail.intro_image}" />
+						<input type="file" class="app_detail_item" id="intro_file" name="intro_file" />
+						&nbsp;&nbsp;<span>[기존 이미지 파일명: ${introDetail.intro_image}]</span>
 						<p class="app_form_help"></p>
 					</div>
 					
 					<div class="app_form_detail">
 						<label class="app_detail_label text-strong" for="intro_date">프로젝트 기간</label>
-						<input type="date" class="app_detail_item" id="intro_startDate" name="intro_startDate" value="${introDetail.intro_startDate}" /> ~ 
-						<input type="date" class="app_detail_item" id="intro_endDate" name="intro_endDate" value="${introDetail.intro_endDate}" />
+						<input type="date" class="app_detail_item" id="intro_startDate" name="intro_startDate" /> ~ 
+						<input type="date" class="app_detail_item" id="intro_endDate" name="intro_endDate" />
 						<p class="app_detail_help"></p>
 					</div>
 					
