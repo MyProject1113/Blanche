@@ -30,7 +30,13 @@ public interface IntroductionDao {
 	public int projectListCnt(IntroductionVO ivo);
 	public int projectApprovalRequest(IntroApprovalVO intappvo);
 	public List<ProjectListVO> projectContentList(String app_field);
-	public int sponserCount();
+	public int sponserCount(int intro_index);
 	public List<ProjectListVO> projectAllContentList(String app_field);
 	public ApplicationVO getFundNField(int intro_index);
+	public List<Integer> introdutionCount(String app_field);
+	public ProjectListVO lookRoundContentList(int intro_index);
+	public ProjectListVO noOneContentList(int intro_index);
+	public int introductionModifyUpdate(IntroductionVO introDetail);
+	public int plannerModifyUpdate(PlannerVO plannerDetail);
+	public DonationVO donationNoOnDetail(int intro_index);
 }

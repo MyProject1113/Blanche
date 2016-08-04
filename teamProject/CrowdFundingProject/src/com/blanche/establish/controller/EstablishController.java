@@ -1,5 +1,7 @@
 package com.blanche.establish.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.board.info.service.BoardInfoService;
 import com.blanche.board.info.vo.BoardInfoVO;
+import com.blanche.common.file.FileUploadUtil;
 import com.blanche.common.page.Paging;
 
 /* 컨트롤러 */
@@ -213,6 +216,10 @@ public class EstablishController {
 		//donationDetail = introductionService.donationDetail(dvo);
 		donationDetail = introductionService.donationDetail(intro_index);
 		
+		if (donationDetail == null) {
+			donationDetail = introductionService.donationNoOnDetail(intro_index);
+		}
+		
 		model.addAttribute("donationDetail", donationDetail);
 		
 		
@@ -276,8 +283,26 @@ public class EstablishController {
 	 * 프로젝트 상세 쓰기 구현하기
 	 ****************************************************************/
 	@RequestMapping(value="/introductionInsert.do", method=RequestMethod.POST)
-	public String introductionInsert(@RequestParam("app_index") int app_index, @ModelAttribute IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo) {
+	public String introductionInsert(@RequestParam("app_index") int app_index, @ModelAttribute IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("introductionInsert 호출 성공");
+		
+		
+
+		if (ivo.getIntro_file().getOriginalFilename() != null) {
+			logger.info("fileName(Main Image) : " + ivo.getIntro_file().getOriginalFilename());
+			
+			String intro_file = FileUploadUtil.fileUpload(ivo.getIntro_file(), request);
+			ivo.setIntro_image(intro_file);
+		}
+		
+		if (pvo.getPlan_file().getOriginalFilename() != null) {
+			logger.info("fileName(Planner Image) : " + pvo.getPlan_file().getOriginalFilename());
+			
+			String plan_file = FileUploadUtil.fileUpload(pvo.getPlan_file(), request);
+			pvo.setPlan_image(plan_file);
+		}
+		
+		
 		
 		int result = 0;
 		String url = "";
@@ -575,13 +600,30 @@ public class EstablishController {
 	public String projectContentList(@RequestParam("app_field") String app_field, Model model) { 
 		logger.info("projectContentList 호출 성공");
 		
-		List<ProjectListVO> projectContentList = null;
-		int count = introductionService.sponserCount();
+		
+		List<Integer> indexList = introductionService.introdutionCount(app_field);
+		List<ProjectListVO> projectContentList = new ArrayList<ProjectListVO>();
+		ProjectListVO plvo = null;
+		
+		for (int intro_index : indexList) {
+			logger.info("intro_index : " + intro_index);
+			
+			int count = introductionService.sponserCount(intro_index);
+			if (count != 0)
+				plvo = introductionService.lookRoundContentList(intro_index);
+			else
+				plvo = introductionService.noOneContentList(intro_index);
+			
+			projectContentList.add(plvo);
+		}
+		
+		/*List<ProjectListVO> projectContentList = null;
+		int count = introductionService.sponserCount(app_field);
 		if (count > 0) {
 			projectContentList = introductionService.projectAllContentList(app_field);
 		} else {
 			projectContentList = introductionService.projectContentList(app_field);
-		}
+		}*/
 		
 		model.addAttribute("projectContentList", projectContentList);
 		
@@ -620,7 +662,7 @@ public class EstablishController {
 		
 		
 		
-		/**/
+		/* 개설신청 */
 		ApplicationVO appDetail = new ApplicationVO();
 		appDetail = introductionService.getFundNField(intro_index);
 		
@@ -633,6 +675,62 @@ public class EstablishController {
 		return "establish/applicationDetailUpdate";
 	}
 	
+	
+
+
+	/****************************************************************
+	 * 컨텐츠 수정하기 내용 출력하기
+	 ****************************************************************/
+	/*@ResponseBody	// 현재 요청값을 브라우저에 바로 출력*/
+	@RequestMapping(value="/introductionUpdate.do", method=RequestMethod.POST)
+	public String introductionUpdate(@ModelAttribute IntroductionVO ivo, PlannerVO pvo, HttpServletRequest request) throws IllegalStateException, IOException {
+		logger.info("introductionUpdate 호출 성공");
+		
+		int intro_index = ivo.getIntro_index();
+		logger.info("intro_index : " + intro_index);
+		
+		//introDetail.setIntro_index(intro_index);
+		pvo.setIntro_index(intro_index);
+		
+		
+		
+		if (ivo.getIntro_file().getOriginalFilename() != null) {
+			logger.info("fileName(Main Image) : " + ivo.getIntro_file().getOriginalFilename());
+			
+			String intro_file = FileUploadUtil.fileUpload(ivo.getIntro_file(), request);
+			ivo.setIntro_image(intro_file);
+		}
+		
+		if (pvo.getPlan_file().getOriginalFilename() != null) {
+			logger.info("fileName(Planner Image) : " + pvo.getPlan_file().getOriginalFilename());
+			
+			String plan_file = FileUploadUtil.fileUpload(pvo.getPlan_file(), request);
+			pvo.setPlan_image(plan_file);
+		}
+		
+		
+		
+		// 아래 변수에는 입력 성공에 대한 상태값 저장 (1 or 0)
+		int result = 0, result1 = 0, result2 = 0;
+		
+		/* 프로젝트 소개 정보 */
+		result1 = introductionService.introductionModifyUpdate(ivo);
+		
+		/* 기획자 정보 */
+		result2 = introductionService.plannerModifyUpdate(pvo);
+		
+		if (result1 != 0 && result2 != 0)
+			result = 1;
+		
+		logger.info("result = " + result);
+		
+		if (result == 1)
+			return "redirect:/establish/contentDetail.do?intro_index=" + intro_index;
+		else
+			return "redirect:/establish/success.do?result=3";
+		
+		//return result + "";
+	}
 	
 	
 }

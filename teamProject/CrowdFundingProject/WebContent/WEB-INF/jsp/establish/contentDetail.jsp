@@ -18,6 +18,22 @@
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
+
+				/* 첨부파일 이미지 보여주기 위한 속성 추가 */
+				var file = "<c:out value='${introDetail.intro_image}' />";
+				if (file != "") {
+					$("#introFileImage").attr({
+						src:"/uploadStorage/${introDetail.intro_image}",
+						width:"620px",
+						height:"465px"
+					});
+					
+					$("#planFileImage").attr({
+						src:"/uploadStorage/${plannerDetail.plan_image}",
+						width:"62px",
+						height:"62px"
+					});
+				}
 				
 			});
 		</script>
@@ -61,13 +77,20 @@
 			    <!-- 프로젝트 이미지 -->
 				<div class="b-main" id="project_show_section_js"> 
 					<figure class="b-video js-video">
-						<img class="b-video__poster js-video-poster" src="https://tumblbug-pci.imgix.net/eb663c81ddd2d3fd2824f755e800244404371d1a/ba66876acd8823742bb2b717b5d7a00a5bc39a79/a27a928b0684738485a9fa6a22cec8fb95ca922b/3ae144dbfb85dc4e499bdd329e7c28adc492e371.jpg?ixlib=rb-1.1.0&amp;w=620&amp;h=465&amp;auto=format%2Ccompress&amp;lossless=true&amp;fit=crop&amp;s=f5cfdad5027b866a486d8ab404e8728f" alt="">
+						<img id="introFileImage" alt="메인 이미지">
 					</figure>
-				
 				
 					<div class="b-content-description typeset-proto-v2 js-project_desc" style="margin-top: 28px;">
 					
+						<br />
+						<hr class="detail_form_line">
+				
 						<div id="detail_form_01">
+							<p><span>${introDetail.intro_details}</span></p>
+						</div>
+						
+						
+						<%-- <div id="detail_form_01">
 							<hr class="detail_form_line">
 							
 							<h3>▶ 프로젝트 소개</h3>
@@ -101,7 +124,7 @@
 							<p><span>${introDetail.intro_purpose}</span></p>
 						</div>
 						
-						<hr class="detail_form_line">
+						<hr class="detail_form_line"> --%>
 					
 					</div>
 					  
@@ -117,7 +140,7 @@
 				<div class="b-sidebar" role="complementary" >
 				   
 					<dl class="b-campaign_stats"> 
-						<dt class="b-campaign_stats__title">목표 ${donationDetail.dona_purpose} 중 ${donationDetail.dona_report}% 모임</dt> 
+						<dt class="b-campaign_stats__title">목표 ${donationDetail.dona_purpose}만원 중 ${donationDetail.dona_report}% 모임</dt> 
 						<dd class="b-campaign_stats__value"> 
 							<span class="b-campaign_stats__value-figure">${donationDetail.dona_fund}</span><span class="b-campaign_stats__value-unit">원</span>
 						</dd> 
@@ -135,10 +158,11 @@
 						</dd>
 					</dl>
 					
+					<br />
 					  
 					<a href="/intro/reward.do?intro_index=${introDetail.intro_index}" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
 					
-					<p class="b-pledge_blurb js-pledge_blurb">결제는 ${donationDetail.dona_endDate} 자정까지 최소 ${donationDetail.dona_purpose}원이 모여야만 다함께 진행됩니다</p>
+					<p class="b-pledge_blurb js-pledge_blurb">결제는 ${donationDetail.dona_endDate} 자정까지 최소 ${donationDetail.dona_purpose}만원이 모여야만 다함께 진행됩니다</p>
 					
 					
 					<div data-scroll='sticky' data-top-offset='13' data-bottom-offset='39'  data-remote-body='.b-sidebar' >
@@ -150,7 +174,7 @@
 									<div class="b-profile_card__identity">
 										<div class="b-avatar lfloat" style="width: 62px">
 											<div class="b-avatar__frame b-avatar__frame--bordered" style="width:62px; height:62px">
-												<img alt="B64be9e0b3922aeabf47bfac38e9baf892e7b064.jpg?ixlib=rb-1.1.0&amp;w=100&amp;h=125&amp;auto=format%2ccompress&amp;fit=facearea&amp;facepad=2" class="b-avatar__pic" src="https://tumblbug-upi.imgix.net/b64be9e0b3922aeabf47bfac38e9baf892e7b064.jpg?ixlib=rb-1.1.0&amp;w=100&amp;h=125&amp;auto=format%2Ccompress&amp;fit=facearea&amp;facepad=2.0&amp;ch=Save-Data&amp;mask=ellipse&amp;s=a1c17f2d47ad41cefeb8aec75cfa695a" />
+												<img id="planFileImage" alt="메인 이미지">
 											</div>
 										</div>
 										
