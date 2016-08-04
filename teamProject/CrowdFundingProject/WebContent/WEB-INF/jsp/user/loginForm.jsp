@@ -43,7 +43,10 @@
 			if (remainCookie != "") {
 				$("#us_email").val(us_email);
 				$("#useCookie").prop("checked", true);
-				$("#useCookie").change();
+				$("#remainCookie").val("on");
+			} else {
+				$("#useCookie").prop("checked", false);
+				$("#remainCookie").val("");
 			}
 			
 			/* 엔터키 입력 시 처리 이벤트 */
