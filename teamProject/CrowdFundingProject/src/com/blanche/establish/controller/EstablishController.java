@@ -288,18 +288,24 @@ public class EstablishController {
 		
 		
 
-		if (ivo.getIntro_file().getOriginalFilename() != null) {
+		if (ivo.getIntro_file().getOriginalFilename() != null && !ivo.getIntro_file().getOriginalFilename().equals("")) {
 			logger.info("fileName(Main Image) : " + ivo.getIntro_file().getOriginalFilename());
 			
 			String intro_file = FileUploadUtil.fileUpload(ivo.getIntro_file(), request);
 			ivo.setIntro_image(intro_file);
+		} else {
+			logger.info("intro_file null");
+			ivo.setIntro_image("");
 		}
 		
-		if (pvo.getPlan_file().getOriginalFilename() != null) {
+		if (pvo.getPlan_file().getOriginalFilename() != null && !pvo.getPlan_file().getOriginalFilename().equals("")) {
 			logger.info("fileName(Planner Image) : " + pvo.getPlan_file().getOriginalFilename());
 			
 			String plan_file = FileUploadUtil.fileUpload(pvo.getPlan_file(), request);
 			pvo.setPlan_image(plan_file);
+		} else {
+			logger.info("plan_file null");
+			pvo.setPlan_image("");
 		}
 		
 		

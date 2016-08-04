@@ -124,11 +124,11 @@
 						<td>
 							<select id="fieldSelect" name="fieldSelect">
 								<option value="all">전체</option>
-								<option value="movie">영화</option>
+								<option value="movie">영화 ∙ 공연</option>
 								<option value="music">음악</option>
 								<option value="design">디자인</option>
-								<option value="art">미술</option>
-								<option value="ani">만화</option>
+								<option value="book">출판</option>
+								<option value="cooking">요리</option>
 							</select>
 						</td>
 						

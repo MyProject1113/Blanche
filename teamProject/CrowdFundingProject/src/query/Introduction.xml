@@ -82,9 +82,17 @@
 	<insert id="plannerInsert" parameterType="planner">
 		/* Introduction - plannerInsert */
 		INSERT INTO planner
-			(plan_index, plan_image, plan_name, plan_area, plan_account, intro_index)
+			(plan_index, 
+			<if test="plan_image != ''">
+			plan_image, 
+			</if>
+			plan_name, plan_area, plan_account, intro_index)
 		VALUES
-			(planner_seq.nextval, #{plan_image}, #{plan_name}, #{plan_area}, #{plan_account}, introduction_seq.currval)
+			(planner_seq.nextval, 
+			<if test="plan_image != ''">
+			#{plan_image}, 
+			</if>
+			#{plan_name}, #{plan_area}, #{plan_account}, introduction_seq.currval)
 	</insert>
 	
 	<!-- 프로젝트 승인 내용 등록 -->
