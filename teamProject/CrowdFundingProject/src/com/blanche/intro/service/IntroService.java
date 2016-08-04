@@ -25,5 +25,13 @@ public interface IntroService {
 	public String projectIndex(int us_index);
 
 	public int updateAdd(IntroVO ivo);
+
+	public List<Integer> introdutionList(String app_field);
+
+	public int sponserList(int intro_index);
+
+	public IntroVO lookRoundContent(int intro_index);
+
+	public IntroVO noOneContent(int intro_index);
 	
 }
