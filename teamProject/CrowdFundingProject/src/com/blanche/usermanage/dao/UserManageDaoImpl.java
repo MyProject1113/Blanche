@@ -28,6 +28,11 @@ public class UserManageDaoImpl implements UserManageDao {
 		
 	}
 
+	@Override
+	public String getDonationDday(int intro_index) {
+		return (String)session.selectOne("getDonationDday");
+	}
+
 	
 
 }
