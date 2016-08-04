@@ -23,7 +23,7 @@ public class FileUploadUtil {
 		logger.info("fileUpload 호출 성공");
 		
 		String todate = new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date());
-		String folderName = "/upload/board/" + todate;
+		String folderName = "/upload/" + todate;
 		String filePath = request.getSession().getServletContext().getRealPath(folderName);
 		String fileName = file.getOriginalFilename();
 		if (fileName != null && (!fileName.equals(""))) {
