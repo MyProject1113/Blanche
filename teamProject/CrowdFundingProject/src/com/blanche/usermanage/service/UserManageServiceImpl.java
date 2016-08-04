@@ -31,5 +31,12 @@ public class UserManageServiceImpl implements UserManageService{
 		
 	}
 
+	@Override
+	public String getDonationDday(int intro_index) {
+		String result = "";
+		result = userManageDao.getDonationDday(intro_index);
+		return result;
+	}
+
 	
 }
