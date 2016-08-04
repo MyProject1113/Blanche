@@ -27,28 +27,43 @@
 	<script type="text/javascript" src="/include/js/common.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			if ("<c:out value='${boardParam.method}' />" != "") {
-				$("#method").val("<c:out value='${boardParam.method}' />");
+			if ("<c:out value='${userParam.method}' />" != "") {
+				$("#method").val("<c:out value='${userParam.method}' />");
 			} else {
-				$("#method").val("title");
+				$("#method").val("email");
 			}
-			$("#keyword").val("<c:out value='${boardParam.keyword}' />");
-			$("#page").val("<c:out value='${boardParam.page}' />");
+			$("#keyword").val("<c:out value='${userParam.keyword}' />");
+			$("#page").val("<c:out value='${userParam.page}' />");
+			$("#orderBy").val("<c:out value='${userParam.orderBy}' />");
+			$("#orderSc").val("<c:out value='${userParam.orderSc}' />");
+			
+			/* 정렬 버튼 클릭 시 처리 이벤트 */
+			$(".order").click(function() {
+				$("#page").val(1);
+				$("#orderBy").val($(this).attr("data-orderby"));
+				if ($("#orderSc").val() != "DESC") {
+					$("#orderSc").val("DESC");
+				} else {
+					$("#orderSc").val("ASC");
+				}
+				console.log($("#orderSc").val());
+				goPage();
+			});
 			
 			/* 페이지 버튼 클릭 시 처리 이벤트 */
 			$(document).on("click", ".goPage", function() {
-				var page = $(this).attr("data-page");;
+				var page = $(this).attr("data-page");
 				$("#page").val(page);
 				goPage();
 			});
 			
 			/* 검색 버튼 클릭 시 처리 이벤트 */
-			$("#boardSearchBtn").click(function() {
+			$("#userSearchBtn").click(function() {
 				$("#page").val(1);
 				goPage();
 			});
 			
-			/* 키워드 텍스 입력 시 처리 이벤트 */
+			/* 키워드 텍스트 입력 시 처리 이벤트 */
 			$("#keyword").keydown(function(event) {
 				$("#page").val(1);
 				if (event.keyCode == 13) {
@@ -97,12 +112,62 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th class="columnName">번호</th>
-					<th class="columnName">이메일</th>
-					<th class="columnName">이름</th>
-					<th class="columnName">닉네임</th>
+					<th class="columnName order" data-orderby="us_index">
+						번호
+						<c:choose>
+							<c:when test="${userParam.orderBy == 'us_index' and userParam.orderSc == 'ASC'}">
+								▲
+							</c:when>
+							<c:when test="${userParam.orderBy == 'us_index' and userParam.orderSc == 'DESC'}">
+								▼
+							</c:when>
+						</c:choose>
+					</th>
+					<th class="columnName order" data-orderby="us_email">
+						이메일
+						<c:choose>
+							<c:when test="${userParam.orderBy == 'us_email' and userParam.orderSc == 'ASC'}">
+								▲
+							</c:when>
+							<c:when test="${userParam.orderBy == 'us_email' and userParam.orderSc == 'DESC'}">
+								▼
+							</c:when>
+						</c:choose>
+					</th>
+					<th class="columnName order" data-orderby="us_name">
+						이름
+						<c:choose>
+							<c:when test="${userParam.orderBy == 'us_name' and userParam.orderSc == 'ASC'}">
+								▲
+							</c:when>
+							<c:when test="${userParam.orderBy == 'us_name' and userParam.orderSc == 'DESC'}">
+								▼
+							</c:when>
+						</c:choose>
+					</th>
+					<th class="columnName order" data-orderby="us_nickname">
+						닉네임
+						<c:choose>
+							<c:when test="${userParam.orderBy == 'us_nickname' and userParam.orderSc == 'ASC'}">
+								▲
+							</c:when>
+							<c:when test="${userParam.orderBy == 'us_nickname' and userParam.orderSc == 'DESC'}">
+								▼
+							</c:when>
+						</c:choose>
+					</th>
+					<th class="columnName order" data-orderby="us_phone">
+						연락처
+						<c:choose>
+							<c:when test="${userParam.orderBy == 'us_phone' and userParam.orderSc == 'ASC'}">
+								▲
+							</c:when>
+							<c:when test="${userParam.orderBy == 'us_phone' and userParam.orderSc == 'DESC'}">
+								▼
+							</c:when>
+						</c:choose>
+					</th>
 					<th class="columnName">등급</th>
-					<th class="columnName">연락처</th>
 					<th class="columnName">최근접속</th>
 					<th class="columnName">상태</th>
 				</tr>
@@ -116,10 +181,28 @@
 								<td class="center">${userData.us_email}</td>
 								<td class="center">${userData.us_name}</td>
 								<td class="center">${userData.us_nickname}</td>
-								<td class="center">${userData.us_rank}</td>
 								<td class="center">${userData.us_phone}</td>
+								<td class="center">
+									<c:choose>
+										<c:when test="${userData.us_rank != 3}">
+											회원
+										</c:when>
+										<c:otherwise>
+											운영자
+										</c:otherwise>
+									</c:choose>
+								</td>
 								<td class="center">${userData.accessDate}</td>
-								<td class="center">${userData.accreditState}</td>
+								<td class="center">
+									<c:choose>
+										<c:when test="${userData.accreditState == 1}">
+											인증대기
+										</c:when>
+										<c:otherwise>
+											인증완료
+										</c:otherwise>
+									</c:choose>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>
@@ -176,13 +259,15 @@
 	<div id="boardSearch">
 		<form name="formBoard" id="formBoard">
 			<select name="method" id="method">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="both">제목+내용</option>
-				<option value="writer">작성자</option>
+				<option value="email">이메일</option>
+				<option value="name">이름</option>
+				<option value="nickname">닉네임</option>
+				<option value="phone">연락처</option>
 			</select>
 			<input type="text" name="keyword" id="keyword" />
 			<input type="hidden" name="page" id="page" />
+			<input type="hidden" name="orderBy" id="orderBy" />
+			<input type="hidden" name="orderSc" id="orderSc" />
 			<input type="button" value="검색" name="userSearchBtn" id="userSearchBtn" />
 		</form>
 	</div>

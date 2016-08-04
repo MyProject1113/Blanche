@@ -27,6 +27,8 @@ public class UserMainVO {
 	private int		pageSize		= 10;		// 페이지 크기
 	private int		pageCount		= 1;		// 페이지 개수
 	private int		pageSpare		= 3;		// 페이지 표시여분
+	private String	orderBy			= "us_index";	// 정렬 컬럼
+	private String orderSc			= "DESC";		// 정렬 방식 
 	
 	public int getUs_index() {
 		return us_index;
@@ -186,5 +188,17 @@ public class UserMainVO {
 	}
 	public int getEndRow() {
 		return page * pageSize;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public String getOrderSc() {
+		return orderSc;
+	}
+	public void setOrderSc(String orderSc) {
+		this.orderSc = orderSc;
 	}
 }
