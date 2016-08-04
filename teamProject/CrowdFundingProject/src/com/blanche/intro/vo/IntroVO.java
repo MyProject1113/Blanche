@@ -23,8 +23,15 @@ public class IntroVO {
 	private long project_invest;	// 프로젝트 투자 금액
 	private String sponser_phone;//후원자 연락처
 	private int sponser_index;//기본키
+	private int usact_index; //계좌 정보 번호
 	
 	
+	public int getUsact_index() {
+		return usact_index;
+	}
+	public void setUsact_index(int usact_index) {
+		this.usact_index = usact_index;
+	}
 	public long getProject_invest() {
 		return project_invest;
 	}

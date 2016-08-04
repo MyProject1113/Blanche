@@ -13,7 +13,7 @@
 </head>
 <body>
 		<h2>결제가 완료 되었습니다!</h2>
-		</br>
+		<br />
 		<form>
 		<table id="table">
 			<colgroup>
@@ -49,7 +49,7 @@
 					연락처
 				</td>
 				<td colspan="2">
-					<input type="text" id="phone" name="phone" value="${introData.phone }" readonly="readonly">
+					<input type="text" id="phone" name="phone" value="${introData.sponser_phone}" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -83,7 +83,7 @@
 			</tr>
 			<tr>
 				<td colspan="3">
-					<input type="button" value="메인 화면으로" onclick="/intro/intro.do">
+					<input type="button" value="메인 화면으로" onclick="location.href='/intro/intro.do';">
 				</td>
 			</tr>
 		</table>

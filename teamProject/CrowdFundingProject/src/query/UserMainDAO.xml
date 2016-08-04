@@ -10,8 +10,8 @@
 			,	us_nickname
 			,	us_rank
 			,	us_phone
-			,	(SELECT MAX(usacd_type) FROM useraccredit WHERE us_index = rs.us_index) AS accreditState
-			,	(SELECT MAX(usacc_date) FROM useraccess WHERE us_index = rs.us_index) AS accessDate
+			,	TO_CHAR((SELECT MAX(usacc_date) FROM useraccess WHERE us_index = rs.us_index), 'YYYY/MM/DD') AS accessDate
+			,	(SELECT COUNT(usacd_index) FROM useraccredit WHERE us_index = rs.us_index AND usacd_type = 0) AS accreditState
 		FROM 	(
 				SELECT	ROWNUM AS rnum
 					,	us.*
@@ -19,8 +19,33 @@
 						SELECT	usermain.*
 						FROM	usermain
 						<include refid="userSearch" />
-						ORDER BY
-								us_index DESC
+						<if test="orderBy != null and orderBy != '' and orderSc != null and orderSc != ''">
+							<choose>
+								<when test="orderBy == 'us_index'">
+									ORDER BY us_index
+								</when>
+								<when test="orderBy == 'us_email'">
+									ORDER BY us_email
+								</when>
+								<when test="orderBy == 'us_name'">
+									ORDER BY us_name
+								</when>
+								<when test="orderBy == 'us_nickname'">
+									ORDER BY us_nickname
+								</when>
+								<when test="orderBy == 'us_phone'">
+									ORDER BY us_phone
+								</when>
+							</choose>
+							<choose>
+								<when test="orderSc == 'ASC'">
+									ASC
+								</when>
+								<when test="orderSc == 'DESC'">
+									DESC
+								</when>
+							</choose>
+						</if>
 						) us
 				WHERE	rownum <![CDATA[<=]]> #{endRow}
 				) rs
@@ -31,6 +56,26 @@
 	<sql id="userSearch">
 		<where>
 			0 = 0
+			<if test="keyword != null and keyword != ''">
+				<choose>
+					<when test="method == 'email'">
+						AND 
+						us_email	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="method == 'name'">
+						AND
+						us_name	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="method == 'nickname'">
+						AND
+						us_nickname	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+					<when test="method == 'phone'">
+						AND
+						us_phone	LIKE '%' || <![CDATA[#{keyword}]]> || '%'
+					</when>
+				</choose>
+			</if>
 		</where>
 	</sql>
 	

@@ -16,7 +16,7 @@
 			 if(!chkSubmit($("#sponser_name"), "받는 분을")) {
 				return;
 			}
-			else if(!chkSubmit($("#phone"), "연락처를")) {
+			else if(!chkSubmit($("#sponser_phone"), "연락처를")) {
 				return;
 			}
 			else if(!chkSubmit($("#sponser_email"), "이메일을")) {
@@ -154,7 +154,7 @@
 				연락처
 			</td>
 			<td colspan="2">
-				<input type="text" id="phone" name="phone">
+				<input type="text" id="sponser_phone" name="sponser_phone">
 				<br />
 			</td>
 		<tr>

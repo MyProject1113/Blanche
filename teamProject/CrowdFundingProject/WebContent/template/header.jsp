@@ -21,11 +21,16 @@
 				<li><a href="/intro/intro.do" class="current-page-item">프로젝트 둘러보기</a></li>
 				<!-- <li><a href="/establish/notice.do">프로젝트 올리기</a></li> -->
 				<li><a href="/establish/userProgressCheck.do">프로젝트 올리기</a></li>
-				<li><a href="/cc/faq.do">고객센터</a></li>
-				<li><a href="/board/freeboard/list.do">게시판</a>		<!-- 임시로 변경한 메뉴 -->
+				<li><a href="/cc/faq.do">고객센터</a>
 					<ul>
-						<li><a href="/board/freeboard/list.do">자유게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
-						<li><a href="/faq/list.do">FAQ게시판</a></li>		<!-- 임시로 추가한 메뉴 -->
+						<li><a href="/cc/faq.do">고객센터</a></li>
+						<li><a href="/notice/list.do">공지게시판</a></li>
+						<li><a href="/faq/list.do">FAQ게시판</a></li>
+					</ul>
+				</li>
+				<li><a href="/board/freeboard/list.do">게시판</a>
+					<ul>
+						<li><a href="/board/freeboard/list.do">자유게시판</a></li>
 						<li><a href="#">Sliders</a></li>
 						<li><a href="#">Galleries</a></li>
 						<li><a href="#">Apps</a></li>
@@ -68,31 +73,31 @@
 			<section>
 				<ul class="links">
 					<li>
-						<a href="#">
+						<a href="/establish/projectContentList.do?app_field=movie">
 							<h3>영화 / 공연</h3>
 							<p>Movie & Performance</p>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="/establish/projectContentList.do?app_field=music">
 							<h3>음악</h3>
 							<p>Music</p>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="/establish/projectContentList.do?app_field=design">
 							<h3>디자인</h3>
 							<p>Design</p>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="/establish/projectContentList.do?app_field=book">
 							<h3>출판</h3>
 							<p>Publication</p>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="/establish/projectContentList.do?app_field=cooking">
 							<h3>요리</h3>
 							<p>Cooking</p>
 						</a>

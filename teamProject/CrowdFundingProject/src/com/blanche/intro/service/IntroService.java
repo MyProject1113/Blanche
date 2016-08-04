@@ -10,11 +10,11 @@ public interface IntroService {
 	
 	public int pay_success(IntroVO param);
 
-	public int pay_success(investVO invVO);
+	public int invest_success(investVO invVO);
 
 	public List<IntroVO> introList(IntroVO param);
 
-	public int pay_success(usactVO usactVO);
+	public int usact_success(usactVO usactVO);
 
 	public List<IntroVO> introMyPageList(IntroVO invo);
 
