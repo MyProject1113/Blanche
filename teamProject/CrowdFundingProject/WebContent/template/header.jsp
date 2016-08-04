@@ -18,9 +18,9 @@
 		<h1><a href="/index.jsp">(주)너와 나의 연결고리</a></h1>
 		<nav class="links">
 			<ul>
-				<!-- <li><a href="/establish/projectContentList.do?app_field=all" class="current-page-item">프로젝트 둘러보기</a></li>  -->
+				<li><a href="/establish/projectContentList.do?app_field=all" class="current-page-item">프로젝트 둘러보기</a></li> 
 				<!-- <li><a href="/establish/notice.do">프로젝트 올리기</a></li> -->
-				<li><a href="/intro/intro.do?app_field=all" class="current-page-item"" class="current-page-item">프로젝트 둘러보기</a></li>
+				<!-- <li><a href="/intro/intro.do?app_field=all" class="current-page-item"" class="current-page-item">프로젝트 둘러보기</a></li> -->
 				<li><a href="/establish/userProgressCheck.do">프로젝트 올리기</a></li>
 				<li><a href="#">게시판</a>
 					<ul>

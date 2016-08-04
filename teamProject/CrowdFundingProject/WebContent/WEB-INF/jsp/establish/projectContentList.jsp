@@ -21,7 +21,7 @@
 		<script type="text/javascript">
 			$(function() {
 				/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
-				$(".col-md-4 portfolio-item").click(function() {
+				/* $(".col-md-4 portfolio-item").click(function() {
 					var b_num = $(this).parents("tr").attr("data-num");
 					$("#b_num").val(b_num);
 					console.log("글번호 : " + b_num);
@@ -32,26 +32,30 @@
 						"action":"/board/boardDetail.do"
 					});
 					$("#detailForm").submit();
-				});
+				}); */
+				
+				if ("${app_field}" != null) {
+					$("#fieldSelect").val("${app_field}");
+				}
+				
 				$("#title").click(function() {
-					$("#app_field").attr({
+					$("#ca_array").attr({
 						"method" : "get",
 						"action" : "/establish/contentDetail.do"
 					})
-					$("#app_field").submit();	
+					$("#ca_array").submit();	
 				});
 				
-
-				/* 첨부파일 이미지 보여주기 위한 속성 추가 */
-				/* var file = "<c:out value='${prolist.plist_image}' />";
-				if (file != "") {
-					$("#introFileImage").attr({
-						src:"/uploadStorage/${prolist.plist_image}",
-						width:"390px",
-						height:"290px"
+				/**/
+				$("#fieldSelect").change(function() {
+					$("#app_field").val($("#fieldSelect").val());
+					
+					$("#field_form").attr({
+						"method" : "get",
+						"action" : "/establish/projectContentList.do"
 					});
-				} */
-				
+					$("#field_form").submit();
+				});
 			});
 		</script>
 		
@@ -105,7 +109,10 @@
 	
 	</head>
 	<body>
-		<form id="ca_array" name="ca_array" method="post">
+		<form id="field_form" name="field_form">
+			<input type="hidden" id="app_field" name="app_field" />
+		</form>
+		<form id="ca_array" name="ca_array">
 			<table>
 				<colgroup>
 					<col width="15%">
@@ -115,7 +122,7 @@
 				<thead class="category">
 					<tr>
 						<td>
-							<select id="app_field" name="app_field">
+							<select id="fieldSelect" name="fieldSelect">
 								<option value="all">전체</option>
 								<option value="movie">영화</option>
 								<option value="music">음악</option>
