@@ -153,7 +153,10 @@ public class UserManageController {
 			String intro_title = introService.projectname(userMainVO.getUs_index());
 			DonationVO donationVO = new DonationVO();
 			
-			donationVO.setIntro_index(Integer.parseInt(intro_index));
+			logger.info("intro_index : " + intro_index + ", " + userMainVO.getUs_index());
+			
+			//donationVO.setIntro_index(Integer.parseInt(intro_index));
+			donationVO.setIntro_index(userMainVO.getUs_index());
 			donationVO = introductionService.donationDetail(donationVO.getIntro_index());
 			
 			logger.info("title : " + intro_title);
