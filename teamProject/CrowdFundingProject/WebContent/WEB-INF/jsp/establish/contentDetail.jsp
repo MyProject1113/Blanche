@@ -174,7 +174,7 @@
 									<div class="b-profile_card__identity">
 										<div class="b-avatar lfloat" style="width: 62px">
 											<div class="b-avatar__frame b-avatar__frame--bordered" style="width:62px; height:62px">
-												<img id="planFileImage" alt="메인 이미지">
+												<img id="planFileImage" alt="기획자 이미지">
 											</div>
 										</div>
 										

@@ -40,6 +40,18 @@
 					})
 					$("#app_field").submit();	
 				});
+				
+
+				/* 첨부파일 이미지 보여주기 위한 속성 추가 */
+				/* var file = "<c:out value='${prolist.plist_image}' />";
+				if (file != "") {
+					$("#introFileImage").attr({
+						src:"/uploadStorage/${prolist.plist_image}",
+						width:"390px",
+						height:"290px"
+					});
+				} */
+				
 			});
 		</script>
 		
@@ -85,6 +97,10 @@
 				float: right;
 				vertical-align: middle;
 			}
+			img#mainImage {
+				width:"390px";
+				height:"290px";
+			}
 		</style>
 	
 	</head>
@@ -125,7 +141,7 @@
 								<input type="hidden" id="intro_index" name="intro_index" value="${prolist.intro_index}" />
 								<div class="row">
 									<div class="col-md-4 portfolio-item">
-										<img class="img-responsive" src= "${prolist.plist_image}" alt="프로젝트 이미지">
+										<img class="img-responsive" id="mainImage" src= "/uploadStorage/${prolist.plist_image}" alt="프로젝트 이미지">
 										<h3>
 											<a href="/intro/introDetail.do?intro_index=${prolist.intro_index}" id="title">${prolist.plist_title}</a>
 										</h3>
