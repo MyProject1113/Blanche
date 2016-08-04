@@ -48,41 +48,41 @@ body {
 
 
 #faq_item_1{
-	width : 300px;
-	height : 200px;
+	width : 350px;
+	height : 250px;
 	float: left;
 	margin : 20px;
-	padding : 20px;
+	padding : 30px;
 	border : 3px;
 	border-style: dashed;
 }
 
 #faq_item_2{
-	width : 300px;
-	height : 200px;
+	width : 350px;
+	height : 250px;
 	float : left;
 	margin : 20px;
-	padding : 20px;
+	padding : 30px;
 	border : 3px;
 	border-style: dashed;
 }
 
 #faq_item_3{
-	width : 300px;
-	height : 200px;
+	width : 350px;
+	height : 250px;
 	float: left;
 	margin : 20px;
-	padding : 20px;
+	padding : 30px;
 	border : 3px;
 	border-style: dashed;
 }
 
 #faq_item_4{
-	width : 300px;
-	height : 200px;
+	width : 350px;
+	height : 250px;
 	float: left;
 	margin : 20px;
-	padding : 20px;
+	padding : 30px;
 	border : 3px;
 	border-style: dashed;
 }
@@ -342,9 +342,7 @@ div#content {
 </div>
 
 	
-		<!-- 문단 분할을 위한 가로줄 -->
-				<hr class="hr hr__main" id="endhr">
-
+		
 
 </body>
 </html>

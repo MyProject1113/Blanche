@@ -10,17 +10,45 @@
 /* Main-news */
 div#masscom1 {
     float: left;
-    margin: 10px;
+    margin: 20px;
+    border : 3px;
+    border-style: dashed;
 }
 
 div#masscom2 {
     float: left;
-    margin: 10px;
+    margin: 20px;
+    border : 3px;
+    border-style: dashed;
 }
 
 div#masscom3 {
-    margin: 10px;
+    margin: 20px;
     float: left;
+    border : 3px;
+    border-style: dashed;
+}
+
+
+div#hotcontent1 {
+	float: left;
+    margin: 20px;
+    border : 3px;
+    border-style: dashed;
+}
+
+div#hotcontent2 {
+	float: left;
+    margin: 20px;
+    border : 3px;
+    border-style: dashed;
+}
+
+div#hotcontent3 {
+	float: left;
+    margin: 20px;
+    border : 3px;
+    border-style: dashed;
 }
 
 hr {
