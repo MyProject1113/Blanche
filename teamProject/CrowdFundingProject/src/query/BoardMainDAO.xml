@@ -107,6 +107,7 @@
 			,	bd_delete
 			,	TO_CHAR(bd_regdate, 'YYYY/MM/DD HH24:MI:SS') AS bd_regdate
 			,	TO_CHAR(bd_modidate, 'YYYY/MM/DD HH24:MI:SS') AS bd_modidate
+			,	(SELECT bdinf_type FROM boardinfo WHERE bdinf_index = boardmain.bdinf_index) AS boardType
 			,	(SELECT us_nickname FROM usermain WHERE us_index = boardmain.us_index) AS nickname
 			,	(SELECT COUNT(bdatt_index) FROM boardattach WHERE bdatt_delete = 0 AND bd_index = boardmain.bd_index) AS attachCount
 			,	(CASE WHEN us_index = #{us_index} THEN
