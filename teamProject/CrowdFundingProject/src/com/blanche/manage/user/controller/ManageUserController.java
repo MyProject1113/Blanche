@@ -72,7 +72,7 @@ public class ManageUserController implements Constant{
 	 *			BoardInfoVO $infoData
 	 */
 	@RequestMapping(value="/list.do", method=RequestMethod.POST)
-	public ModelAndView boardList(@ModelAttribute BoardMainVO param, HttpServletRequest request) {
+	public ModelAndView boardList(@ModelAttribute UserMainVO param, HttpServletRequest request) {
 		logger.info("boardList 호출 성공");
 		
 		UserMainVO userData = (UserMainVO) request.getSession().getAttribute(SESSION_USER_DATA);
@@ -82,7 +82,12 @@ public class ManageUserController implements Constant{
 		ModelAndView mav = new ModelAndView();
 		if (userData != null) {
 			if (userData.getUs_rank() == ADMIN_ID_RANK) {
-				mav.setViewName("board/manage/listForm");
+				List<UserMainVO> userList = userMainService.userList(param);
+				int listCount = userMainService.userListCount(param);
+				param.setListCount(listCount);
+				mav.addObject("userList", userList);
+				mav.addObject("userParam", param);
+				mav.setViewName("manage/user/listForm");
 			} else {
 				mav.addObject("result", "운영자만 글을 조회할 수 있습니다.");
 				mav.setViewName("board/common/returnError");

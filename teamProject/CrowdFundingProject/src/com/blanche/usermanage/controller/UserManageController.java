@@ -143,35 +143,41 @@ public class UserManageController {
 	public String myPage4(Model model,HttpServletRequest request) {
 		logger.info("investMypage 호출성공");
 		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
-		IntroVO invo = new IntroVO();
-		invo.setUs_index(userMainVO.getUs_index());
-		List<IntroVO> introList = introService.introMyPageList(invo);
-		model.addAttribute("introList", introList);
-		model.addAttribute("data", invo);
-		String intro_index = introService.projectIndex(userMainVO.getUs_index());
-		String intro_title = introService.projectname(userMainVO.getUs_index());
-		DonationVO donationVO = new DonationVO();
+		if (userMainVO != null) {
+			IntroVO invo = new IntroVO();
+			invo.setUs_index(userMainVO.getUs_index());
+			List<IntroVO> introList = introService.introMyPageList(invo);
+			model.addAttribute("introList", introList);
+			model.addAttribute("data", invo);
+			String intro_index = introService.projectIndex(userMainVO.getUs_index());
+			String intro_title = introService.projectname(userMainVO.getUs_index());
+			DonationVO donationVO = new DonationVO();
+			
+			donationVO.setIntro_index(Integer.parseInt(intro_index));
+			donationVO = introductionService.donationDetail(donationVO.getIntro_index());
+			
+			logger.info("title : " + intro_title);
+			
+			model.addAttribute("intro_title", intro_title);
+			model.addAttribute("donationVO", donationVO);
+			
+			List<IntroVO> accountList = introService.accountMyPageList(invo);
+			model.addAttribute("accountList", accountList);
+			
+			model.addAttribute("intro_index",intro_index);
+					
+			return "usermanage/invest";
+		}else{
 		
-		donationVO.setIntro_index(Integer.parseInt(intro_index));
-		donationVO = introductionService.donationDetail(donationVO);
-		
-		logger.info("title : " + intro_title);
-		
-		model.addAttribute("intro_title", intro_title);
-		model.addAttribute("donationVO", donationVO);
-		
-		List<IntroVO> accountList = introService.accountMyPageList(invo);
-		model.addAttribute("accountList", accountList);
-		
-		model.addAttribute("intro_index",intro_index);
-		
-		return "usermanage/invest";	// View Name => 파일명 아님!!!
+		return "redirect:/index.jsp";	// View Name => 파일명 아님!!!
+	}
 	}
 	
 	@RequestMapping(value="/investForm.do",method=RequestMethod.GET)
 	public String myPage5(@RequestParam("change") String change  ,Model model,HttpServletRequest request) {
 		logger.info("investMypage 호출성공");
 		UserMainVO userMainVO =  (UserMainVO)request.getSession().getAttribute(Constant.SESSION_USER_DATA);
+		if (userMainVO != null) {
 		IntroVO invo = new IntroVO();
 		invo.setUs_index(userMainVO.getUs_index());
 		List<IntroVO> introList = introService.introMyPageList(invo);
@@ -192,6 +198,10 @@ public class UserManageController {
 		model.addAttribute("intro_index",intro_index);
 		
 		return "usermanage/invest";	// View Name => 파일명 아님!!!
+		}else{
+			
+			return "redirect:/index.jsp";	// View Name => 파일명 아님!!!
+		}
 	}
 	
 	

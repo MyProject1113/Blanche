@@ -111,7 +111,7 @@ public class UserMainController implements Constant {
 				}
 				userAccessService.accessInsert(accessParam);
 				request.getSession().setAttribute(SESSION_USER_DATA, param);
-				mav.setViewName("user/loginForm");
+				mav.setViewName("redirect:/index.jsp");
 			} else {
 				mav.addObject("userData", param);
 				mav.setViewName("user/retryForm");
@@ -146,7 +146,7 @@ public class UserMainController implements Constant {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("userData", userData);
-		mav.setViewName("user/loginForm");
+		mav.setViewName("redirect:/index.jsp");
 		
 		return mav;
 	}

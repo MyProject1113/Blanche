@@ -32,7 +32,7 @@
 		#userAccessList td {
 			text-align: center;
 		}
-		#userAccessList#accessPage {
+		#userAccessList #accessPage {
 			text-align: center;
 		}
 	</style>
