@@ -147,25 +147,41 @@ public class UserManageController {
 			IntroVO invo = new IntroVO();
 			invo.setUs_index(userMainVO.getUs_index());
 			List<IntroVO> introList = introService.introMyPageList(invo);
-			model.addAttribute("introList", introList);
-			model.addAttribute("data", invo);
+			
 			String intro_index = introService.projectIndex(userMainVO.getUs_index());
 			String intro_title = introService.projectname(userMainVO.getUs_index());
-			DonationVO donationVO = new DonationVO();
-			
+			//DonationVO donationVO = new DonationVO();
+			List<IntroVO> accountList = introService.accountMyPageList(invo);
 			logger.info("intro_index : " + intro_index + ", " + userMainVO.getUs_index());
 			
+			if(intro_index != null){
+				model.addAttribute("introList", introList);
+				String dday = userManageService.getDonationDday(Integer.parseInt(intro_index));
+				logger.info("dday : "+ dday);
+				model.addAttribute("dday", dday);
+			}
+			if(intro_index != null){
+				model.addAttribute("accountList", accountList);
+			}
+			logger.info(intro_index);
+			logger.info(introList);
+			
+			model.addAttribute("data", invo);
 			//donationVO.setIntro_index(Integer.parseInt(intro_index));
-			donationVO.setIntro_index(userMainVO.getUs_index());
-			donationVO = introductionService.donationDetail(donationVO.getIntro_index());
+			//donationVO.setIntro_index(userMainVO.getUs_index());
+			//donationVO = introductionService.donationDetail(donationVO.getIntro_index());
+			
+			
+			
 			
 			logger.info("title : " + intro_title);
-			
+			//logger.info("donationVO : "+donationVO);
 			model.addAttribute("intro_title", intro_title);
-			model.addAttribute("donationVO", donationVO);
+			//model.addAttribute("donationVO", donationVO);
 			
-			List<IntroVO> accountList = introService.accountMyPageList(invo);
-			model.addAttribute("accountList", accountList);
+			
+			
+			
 			
 			model.addAttribute("intro_index",intro_index);
 					
@@ -183,6 +199,7 @@ public class UserManageController {
 		if (userMainVO != null) {
 		IntroVO invo = new IntroVO();
 		invo.setUs_index(userMainVO.getUs_index());
+		String intro_index = introService.projectIndex(userMainVO.getUs_index());
 		List<IntroVO> introList = introService.introMyPageList(invo);
 		model.addAttribute("introList", introList);
 		model.addAttribute("data", invo);
@@ -191,13 +208,18 @@ public class UserManageController {
 		
 		logger.info("title : " + intro_title);
 		
+		
+		
 		model.addAttribute("intro_title", intro_title);
 		model.addAttribute("change", change);
 		
 		List<IntroVO> accountList = introService.accountMyPageList(invo);
+		
+		
+		
 		model.addAttribute("accountList", accountList);
 		
-		String intro_index = introService.projectIndex(userMainVO.getUs_index());
+	
 		model.addAttribute("intro_index",intro_index);
 		
 		return "usermanage/invest";	// View Name => 파일명 아님!!!
