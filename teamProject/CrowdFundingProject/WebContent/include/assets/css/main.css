@@ -2,6 +2,28 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Raleway:400,800,900");
 
 
+
+div#main {
+    background-color: white;
+    padding: 25px;
+    width: 1150px;
+    border: 3px;
+    border-style: double;
+}
+
+
+div#mainpage {
+    padding: 35px;
+}
+
+#mainhot {
+	width : 1200px;
+}
+
+#mainmasscom {
+	width : 1200px;
+}
+
 /* Footer */
 #footer {
 	margin: 30px;

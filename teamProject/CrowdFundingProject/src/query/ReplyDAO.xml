@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blanche.establish.dao.ReplyMapper">
+	<select id="replyList" parameterType="com.blanche.establish.vo.ReplyVO" resultType="com.blanche.establish.vo.ReplyVO">
+		SELECT re_index
+			,	re_name
+			,	re_content
+			,	re_date
+		FROM reply
+		WHERE intro_index = #{intro_index}
+		ORDER BY re_index DESC
+	</select>
+	
+	<insert id="replyInsert" parameterType="com.blanche.establish.vo.ReplyVO">
+		INSERT INTO reply
+			(re_index, re_name, re_password, re_content, intro_index)
+		VALUES
+			(reply_seq.nextval, #{re_name}, #{re_password}, #{re_content}, #{intro_index})
+	</insert>
+	
+	<select id="replyCheck" parameterType="com.blanche.establish.vo.ReplyVO" resultType="int">
+		SELECT COUNT(re_index)
+		FROM reply
+		WHERE re_index = #{re_index}
+				AND
+				re_password = #{re_password}
+	</select>
+</mapper>
