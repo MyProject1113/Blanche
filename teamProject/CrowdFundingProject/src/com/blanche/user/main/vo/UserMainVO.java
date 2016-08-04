@@ -24,7 +24,7 @@ public class UserMainVO {
 	private String	method			= "";		// 검색방법
 	private String	keyword			= "";		// 검색단어
 	private int		page			= 1;		// 페이지
-	private int		pageSize		= 10;		// 페이지 크기
+	private int		pageSize		= 20;		// 페이지 크기
 	private int		pageCount		= 1;		// 페이지 개수
 	private int		pageSpare		= 3;		// 페이지 표시여분
 	private String	orderBy			= "us_index";	// 정렬 컬럼
