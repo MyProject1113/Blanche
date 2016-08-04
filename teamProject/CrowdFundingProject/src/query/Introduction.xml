@@ -5,7 +5,7 @@
 
 	<sql id="listCommon">
 		SELECT intro.intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
-			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+			 intro_details, intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index,
 		     intapp_index, intapp_check, intapp_reason, intapp_note
 		FROM introduction intro INNER JOIN introApproval intApp ON intro.intro_index = intApp.intro_index
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -19,7 +19,7 @@
 	<select id="projectAdminList" parameterType="introduction" resultType="introduction">
 		/* Introduction - projectAdminList */
 		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
-			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+			 intro_details, intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index,
 		     intapp_index, intapp_check, intapp_reason, intapp_note
 		FROM
 		(	SELECT list.*, ROWNUM AS RNUM
@@ -72,10 +72,10 @@
 		/* Introduction - introductionInsert */
 		INSERT INTO introduction
 			(intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
-			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index)
+			 intro_details, intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index)
 		VALUES
 			(introduction_seq.nextval, #{intro_title}, #{intro_subtitle}, #{intro_image}, #{intro_startDate}, #{intro_endDate},
-			 #{intro_details}, #{intro_synopsis}, #{intro_plan}, #{intro_purpose}, #{intro_effect}, #{intro_refund}, #{intro_project}, #{app_index}, #{appro_index})
+			 #{intro_details}, #{intro_abbreviation}, #{intro_effect}, #{intro_refund}, #{intro_project}, #{app_index}, #{appro_index})
 	</insert>
 	
 	<!-- 기획자 정보 내용 등록 -->
@@ -103,7 +103,7 @@
 	<select id="introductionDetail" parameterType="introduction" resultType="introduction">
 		/* Introduction - introductionDetail */
 		SELECT intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate, intro_details,
-			 intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index
+			 intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index
 		FROM	   introduction
 		WHERE intro_index = #{intro_index}
 	</select>
@@ -118,20 +118,35 @@
 	
 	<!-- 투자금액과 투자자 수 조회 -->
 	<select id="donationDetail" parameterType="donation" resultType="donation">
+		/* Introduction - donationDetail */
 		<!-- SELECT (ROUND((dona_fund / ((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000)), 0) * 100) dona_report, 
 			dona_fund, dona_count, (SELECT (intro_enddate - intro_startdate) dona_dday FROM introduction WHERE intro_index = #{intro_index}) dona_dday
 		FROM (SELECT sum(sponser_invest) dona_fund, count(*) dona_count
 			FROM (SELECT * FROM invest inv inner join sponser spon ON inv.sponser_index = spon.sponser_index WHERE intro_index = #{intro_index})) -->
 			
-		SELECT TO_CHAR(((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000), '999,999,999,999,999') dona_purpose,
-  			(ROUND((dona_fund / ((SELECT app_fund FROM application WHERE app_index = (SELECT app_index FROM approval WHERE app_index = (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000)), 0) * 100) dona_report, 
+		SELECT TO_CHAR((SELECT sum(app_fund) AS app_fund FROM application WHERE app_index IN (SELECT app_index FROM approval WHERE appro_index IN (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))), '999,999,999,999,999') dona_purpose,
+  			(ROUND((dona_fund / ((SELECT app_fund FROM application WHERE app_index IN (SELECT app_index FROM approval WHERE appro_index IN (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) * 10000)), 0) * 100) dona_report, 
   			TO_CHAR(dona_fund, '999,999,999,999,999') dona_fund, dona_count, dona_dday,
-  			TO_CHAR(dona_endDate, 'YYYY"년"MM"월"DD"일"') dona_endDate, intro.intro_index
+  			TO_CHAR(dona_endDate, 'YYYY"년" MM"월" DD"일"') dona_endDate, intro.intro_index
 		FROM (SELECT count(*) dona_count, sum(sponser_invest) dona_fund, intro_index FROM (SELECT * FROM invest inv inner join sponser spon ON inv.sponser_index = spon.sponser_index WHERE intro_index = #{intro_index}) GROUP BY intro_index) dona
 		INNER JOIN (SELECT (intro_enddate - TO_DATE(sysdate)) dona_dday, intro_endDate AS dona_endDate, intro_index FROM introduction WHERE intro_index = #{intro_index}) intro
 		ON dona.intro_index = intro.intro_index
 	</select>
 	
+	
+	<!-- 투자금액과 투자자 수 조회 -->
+	<select id="donationNoOnDetail" parameterType="donation" resultType="donation">
+		/* Introduction - donationNoOnDetail */
+		SELECT * 
+		FROM (SELECT TO_CHAR(app_fund, '999,999,999,999,999') AS dona_purpose, app_index 
+				  FROM application 
+				  WHERE app_index 
+				  IN (SELECT app_index FROM approval 
+				  	   WHERE appro_index IN (SELECT appro_index FROM introduction WHERE intro_index = #{intro_index}))) app
+					   INNER JOIN (SELECT (intro_enddate - TO_DATE(sysdate)) dona_dday, TO_CHAR(intro_endDate, 'YYYY"년" MM"월" DD"일"') AS dona_endDate, 
+					   						intro_index, app_index FROM introduction WHERE intro_index = #{intro_index}) dona
+				  ON app.app_index = dona.app_index
+	</select>
 	
 	
 	
@@ -142,7 +157,7 @@
 	<select id="projectMyPageList" parameterType="introduction" resultType="introduction">
 		/* Introduction - projectMyPageList */
 		SELECT intro.intro_index, intro_title, intro_subtitle, intro_image, intro_startDate, intro_endDate,
-			 intro_details, intro_synopsis, intro_plan, intro_purpose, intro_effect, intro_refund, intro_project, app_index, appro_index,
+			 intro_details, intro_abbreviation, intro_effect, intro_refund, intro_project, app_index, appro_index,
 		     intapp_index, intapp_check, intapp_reason, intapp_note
 		FROM introduction intro INNER JOIN introApproval intApp 
 		ON intro.intro_index = intApp.intro_index
@@ -233,8 +248,8 @@
 		FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
 		WHERE app_field = #{app_field} -->
 		
-		SELECT * FROM 
-			(SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_subtitle AS plist_abbreviation, intro_index,
+		<!-- SELECT * FROM 
+			(SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_abbreviation AS plist_abbreviation, intro_index,
 				(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
 				TO_CHAR(intro_startDate, 'YYYY"년"MM"월"DD"일"') AS plist_startDate,
 				TO_CHAR(intro_endDate, 'YYYY"년"MM"월"DD"일"') AS plist_endDate, 
@@ -248,18 +263,40 @@
 			INNER JOIN application app ON intro.app_index = app.app_index 
 			WHERE app_field = #{app_field}))
 			GROUP BY intro_index) collection
-		ON prolist.intro_index = collection.intro_index
+		ON prolist.intro_index = collection.intro_index -->
 	</select>
 	
 	<!-- 프로젝트 리스트 출력 내용 조회(후원자 제외) -->
 	<select id="projectContentList" parameterType="projectList" resultType="projectList">
 		/* Introduction - projectContentList */
-		SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_subtitle AS plist_abbreviation, intro_index,
+		<!-- SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_subtitle AS plist_abbreviation, intro_index,
 			(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
 			TO_CHAR(intro_startDate, 'YYYY"년"MM"월"DD"일"') AS plist_startDate,
 			TO_CHAR(intro_endDate, 'YYYY"년"MM"월"DD"일"') AS plist_endDate, 
 			TO_DATE(sysdate) - intro_startDate AS plist_dDay
 		FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
+		WHERE app_field = #{app_field} -->
+	</select>
+	
+	
+	<!-- 후원자 수 조회 -->
+	<!-- <select id="sponserCount" parameterType="projectList" resultType="int">
+		/* Introduction - sponserCount */
+		SELECT count(*)
+		FROM invest
+		WHERE intro_index IN (SELECT intro.intro_index FROM introduction intro 
+									   INNER JOIN application app ON intro.app_index = app.app_index 
+									   WHERE app_field = #{app_field})
+	</select> -->
+	
+	
+	
+	
+	<!-- 필드별 프로젝트 수 조회 -->
+	<select id="introdutionCount" parameterType="projectList" resultType="int">
+		/* Introduction - introdutionCount */
+		SELECT intro.intro_index FROM introduction intro 
+		INNER JOIN application app ON intro.app_index = app.app_index 
 		WHERE app_field = #{app_field}
 	</select>
 	
@@ -267,8 +304,47 @@
 	<!-- 후원자 수 조회 -->
 	<select id="sponserCount" parameterType="projectList" resultType="int">
 		/* Introduction - sponserCount */
-		SELECT count(*) FROM sponser
+		SELECT count(*)
+		FROM invest
+		WHERE intro_index = #{intro_index}
 	</select>
+	
+	<!-- 프로젝트 리스트 출력 내용 조회(후원자 포함) -->
+	<select id="lookRoundContentList" parameterType="projectList" resultType="projectList">
+		/* Introduction - lookRoundContentList */
+		SELECT * FROM 
+			(SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_abbreviation AS plist_abbreviation, intro_index,
+				(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
+				TO_CHAR(intro_startDate, 'YYYY"년" MM"월" DD"일"') AS plist_startDate,
+				TO_CHAR(intro_endDate, 'YYYY"년" MM"월" DD"일"') AS plist_endDate, 
+				TO_DATE(sysdate) - intro_startDate AS plist_dDay
+			FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
+			WHERE intro_index = #{intro_index}) prolist
+		INNER JOIN 
+			(SELECT TO_CHAR(sum(sponser_invest), '999,999,999,999,999') AS plist_collection, intro_index 
+			FROM (SELECT * FROM invest inv INNER JOIN sponser spon ON inv.sponser_index = spon.sponser_index 
+			WHERE intro_index IN (SELECT intro.intro_index FROM introduction intro 
+			INNER JOIN application app ON intro.app_index = app.app_index 
+			WHERE intro_index = #{intro_index}))
+			GROUP BY intro_index) collection
+		ON prolist.intro_index = collection.intro_index
+	</select>
+	
+	<!-- 프로젝트 리스트 출력 내용 조회(후원자 제외) -->
+	<select id="noOneContentList" parameterType="projectList" resultType="projectList">
+		/* Introduction - noOneContentList */
+		SELECT intro.app_index, TO_CHAR(app_fund, '999,999,999,999,999') AS plist_fund, intro_image AS plist_image, intro_title AS plist_title, intro_subtitle AS plist_abbreviation, intro_index,
+			(intro_enddate - TO_DATE(sysdate)) AS plist_startCheck,
+			TO_CHAR(intro_startDate, 'YYYY"년" MM"월" DD"일"') AS plist_startDate,
+			TO_CHAR(intro_endDate, 'YYYY"년" MM"월" DD"일"') AS plist_endDate, 
+			TO_DATE(sysdate) - intro_startDate AS plist_dDay
+		FROM introduction intro INNER JOIN application app ON intro.app_index = app.app_index
+		WHERE intro_index = #{intro_index}
+	</select>
+	
+	
+	
+	
 	
 	
 	<!-- 프로젝트 별 모금 금액 조회 -->
@@ -304,12 +380,46 @@
 	
 	
 	<!-- 후원자 수 조회 -->
-	<select id="getFundNField" parameterType="approval" resultType="approval">
+	<select id="getFundNField" parameterType="application" resultType="application">
 		/* Introduction - getFundNField */
 		SELECT TO_CHAR(app_fund, '999,999,999,999,999') AS app_fund, app_field
 		FROM application
 		WHERE app_index = (SELECT app_index FROM introduction WHERE intro_index = #{intro_index})
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 프로젝트 소개 수정 -->
+	<update id="introductionModifyUpdate" parameterType="introduction">
+		/* Introduction - introductionModifyUpdate */
+		UPDATE introduction
+		SET intro_title = #{intro_title}
+			, intro_subtitle = #{intro_subtitle}
+			, intro_image = #{intro_image}
+			, intro_startDate = #{intro_startDate}
+			, intro_endDate = #{intro_endDate}
+			, intro_details = #{intro_details}
+			, intro_abbreviation = #{intro_abbreviation}
+			, intro_effect = #{intro_effect}
+			, intro_refund = #{intro_refund}
+		WHERE intro_index = #{intro_index}
+	</update>
+	
+	
+	<!-- 기획자 정보 수정 -->
+	<update id="plannerModifyUpdate" parameterType="planner">
+		/* Introduction - plannerModifyUpdate */
+		UPDATE planner
+		SET plan_image = #{plan_image}
+			, plan_name = #{plan_name}
+			, plan_area = #{plan_area}
+			, plan_account = #{plan_account}
+		WHERE intro_index = #{intro_index}
+	</update>
 	
 	
 	

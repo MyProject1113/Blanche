@@ -29,19 +29,41 @@
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
+				
+				
+				
 				/* 저장 버튼 클릭 시 처리 이벤트 */
 				$("#commit_btn").click(function() {
 					if (!chkSubmit($("#intro_title"), "제목을")) return;
+					else if (!chkSubmit($("#intro_abbreviation"), "프로젝트 간략소개를")) return;
 					else if (!chkSubmit($("#intro_refund"), "환불 및 교환정책을")) return;
 					else if (!chkSubmit($("#plan_name"), "기획자 이름을")) return;
 					else if (!chkSubmit($("#plan_area"), "프로젝트 실행 지역을")) return;
 					else if (!chkSubmit($("#plan_account"), "계좌번호를")) return;
 					else {
-						$("#new_project_detail").attr({
+						$("#update_project_detail").attr({
 							"method":"POST",
-							"action":"/establish/introductionInsert.do"
+							"action":"/establish/introductionUpdate.do"
 						});
-						$("#new_project_detail").submit();
+						$("#update_project_detail").submit();
+						
+						/* $("#update_project_detail").attr("enctype","multipart/form-data");
+					 	 $.ajax ({
+							url : "/establish/introductionUpdate.do",	// 전송 url
+							type : "POST",	// 전송 시 method 방식
+							data : $("#update_project_detail").serialize(),	// 폼전체 데이터 전송 
+							 error : function() {	// 실행시 오류가 발생하였을 경우
+								alert('시스템 오류 입니다. 관리자에게 문의 하세요');
+							},	// 정상적으로 실행이 되었을 경우
+							success : function(resultData) {
+								if (resultData == 0) {	// 일치하지 않는 경우
+									alert('수정 실패');
+								} else if (resultData == 1) {	// 일치할 경우
+									alert('수정 성공');
+									location.href = "/establish/contentDetail.do?intro_index=${introDetail.intro_index}";
+								}
+							}
+						}); */
 					}
 				});
 			});
@@ -56,7 +78,11 @@
 			<div class="box">
 				<h2>프로젝트 상세 내용 수정하기</h2>
 				
-				<form class="new_project_detail" id="new_project_detail">
+				<form class="update_project_detail" id="update_project_detail" enctype="multipart/form-data">
+					<input type="hidden" id="intro_index" name="intro_index" value="${introDetail.intro_index}" />
+					<input type="hidden" id="intro_image" name="intro_image" value="${introDetail.intro_image}" />
+					<input type="hidden" id="plan_image" name="plan_image" value="${plannerDetail.plan_image}" />
+					
 					<div class="app_form_detail">
 						<label class="app_detail_label text-strong" for="intro_title">프로젝트 명</label>
 						<input type="text" class="app_detail_item" id="intro_title" name="intro_title" value="${introDetail.intro_title}" />
@@ -93,7 +119,7 @@
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="intro_image">메인 이미지</label>
-						<input type="file" class="app_detail_item" id="intro_image" name="intro_image" value="${introDetail.intro_image}" />
+						<input type="file" class="app_detail_item" id="intro_file" name="intro_file" value="${introDetail.intro_image}" />
 						<p class="app_form_help"></p>
 					</div>
 					
@@ -110,11 +136,11 @@
 						<p class="app_form_help"></p>
 					</div>
 					
-					<%-- <div class="app_form_question">
+					<div class="app_form_question">
 						<label class="app_form_label" for="intro_abbreviation">프로젝트 간략소개</label>
 						<textarea class="app_form_item" cols="40" id="intro_abbreviation" name="intro_abbreviation" placeholder="" rows="3">${introDetail.intro_abbreviation}</textarea>
 						<p class="app_form_help"></p>
-					</div> --%>
+					</div>
 					
 					<%-- <div class="app_form_question">
 						<label class="app_form_label" for="intro_plan">프로젝트 계획</label>
@@ -136,7 +162,7 @@
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="plan_image">기획자 사진</label>
-						<input type="file" class="app_detail_item" id="plan_image" name="plan_image" value="${plannerDetail.plan_image}" />
+						<input type="file" class="app_detail_item" id="plan_file" name="plan_file" value="${plannerDetail.plan_image}" />
 						<p class="app_form_help"></p>
 					</div>
 					

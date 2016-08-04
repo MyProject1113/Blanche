@@ -31,7 +31,9 @@
 			$(function() {
 				/* 저장 버튼 클릭 시 처리 이벤트 */
 				$("#commit_btn").click(function() {
-					if (!chkSubmit($("#intro_title"), "제목을")) return;
+					if (!chkSubmit($("#intro_file"), "메인 이미지를")) return;
+					else if (!chkSubmit($("#intro_title"), "제목을")) return;
+					else if (!chkSubmit($("#intro_abbreviation"), "프로젝트 간략소개를")) return;
 					else if (!chkSubmit($("#intro_refund"), "환불 및 교환정책을")) return;
 					else if (!chkSubmit($("#plan_name"), "기획자 이름을")) return;
 					else if (!chkSubmit($("#plan_area"), "프로젝트 실행 지역을")) return;
@@ -64,7 +66,7 @@
 			<div class="box">
 				<h2>프로젝트 상세 내용 작성하기</h2>
 				
-				<form class="new_project_detail" id="new_project_detail">
+				<form class="new_project_detail" id="new_project_detail" enctype="multipart/form-data">
 				
 					<input type="hidden" id="appro_index" name="appro_index" value="${applicationDetail.appro_index}" />
 					<input type="hidden" id="intro_project" name="intro_project" />
@@ -110,7 +112,7 @@
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="intro_image">메인 이미지</label>
-						<input type="file" class="app_detail_item" id="intro_image" name="intro_image" />
+						<input type="file" class="app_detail_item" id="intro_file" name="intro_file" />
 						<p class="app_form_help"></p>
 					</div>
 					
@@ -128,6 +130,12 @@
 					</div>
 					
 					<div class="app_form_question">
+						<label class="app_form_label" for="intro_abbreviation">프로젝트 간략소개</label>
+						<textarea class="app_form_item" cols="40" id="intro_abbreviation" name="intro_abbreviation" placeholder="" rows="3"></textarea>
+						<p class="app_form_help"></p>
+					</div>
+					
+					<!-- <div class="app_form_question">
 						<label class="app_form_label" for="intro_synopsis">Synopsis</label>
 						<textarea class="app_form_item" cols="40" id="intro_synopsis" name="intro_synopsis" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
@@ -143,7 +151,7 @@
 						<label class="app_form_label" for="intro_purpose">프로젝트 목표</label>
 						<textarea class="app_form_item" cols="40" id="intro_purpose" name="intro_purpose" placeholder="" rows="3"></textarea>
 						<p class="app_form_help"></p>
-					</div>
+					</div> -->
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="intro_refund">환불 및 교환정책</label>
@@ -153,7 +161,7 @@
 					
 					<div class="app_form_question">
 						<label class="app_form_label" for="plan_image">기획자 사진</label>
-						<input type="file" class="app_detail_item" id="plan_image" name="plan_image" />
+						<input type="file" class="app_detail_item" id="plan_file" name="plan_file" />
 						<p class="app_form_help"></p>
 					</div>
 					

@@ -3,12 +3,12 @@ package com.blanche.establish.vo;
 /** 기부현황 **/
 public class DonationVO {
 	/*private int 		dona_index;			// 기부번호*/
-	private String 	dona_purpose	= "";	// 투자받은 금액
-	private int 		dona_report;			// 모금현황
-	private String 	dona_fund		= "";	// 투자받은 금액
-	private int 		dona_count;			// 후원자 수
-	private int 		dona_dday;				// 남은 시간
-	private String 	dona_endDate	= "";	// 투자받은 금액
+	private String 	dona_purpose	= "0";	// 목표자금
+	private int 		dona_report	= 0;	// 모금현황
+	private String 	dona_fund		= "0";	// 투자받은 금액
+	private int 		dona_count		= 0;	// 후원자 수
+	private int 		dona_dday		= 0;	// 남은 시간
+	private String 	dona_endDate	= "";	// 프로젝트 종료일
 	/*private int 		app_index;				// 신청번호*/
 	private int 		intro_index;				// 프로젝트 번호
 	

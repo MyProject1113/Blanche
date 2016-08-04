@@ -108,7 +108,7 @@ $(function(){
 							<th>프로젝트명</th>
 							<th>수령자이메일</th>
 							<th>수령 주소</th>
-							<th>진행 날짜</th>
+							<th>남은 날짜</th>
 						</tr>
 					</thead>
 					<tbody>

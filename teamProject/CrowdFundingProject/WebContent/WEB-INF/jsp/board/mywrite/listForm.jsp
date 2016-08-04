@@ -78,7 +78,7 @@
 				goPage();
 			});
 			
-			/* 키워드 텍스 입력 시 처리 이벤트 */
+			/* 키워드 텍스트 입력 시 처리 이벤트 */
 			$("#keyword").keydown(function(event) {
 				$("#page").val(1);
 				if (event.keyCode == 13) {

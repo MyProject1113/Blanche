@@ -121,7 +121,7 @@ public class IntroductionDaoImpl implements IntroductionDao {
 
 	//
 	@Override
-	public int sponserCount() {
+	public int sponserCount(int intro_index) {
 		return session.update("sponserCount");
 	}
 
@@ -133,5 +133,35 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	@Override
 	public ApplicationVO getFundNField(int intro_index) {
 		return (ApplicationVO)session.selectOne("getFundNField");
+	}
+
+	@Override
+	public List<Integer> introdutionCount(String app_field) {
+		return session.selectList("introdutionCount");
+	}
+
+	@Override
+	public ProjectListVO lookRoundContentList(int intro_index) {
+		return (ProjectListVO)session.selectOne("lookRoundContentList");
+	}
+
+	@Override
+	public ProjectListVO noOneContentList(int intro_index) {
+		return (ProjectListVO)session.selectOne("noOneContentList");
+	}
+
+	@Override
+	public int introductionModifyUpdate(IntroductionVO introDetail) {
+		return session.update("introductionModifyUpdate");
+	}
+
+	@Override
+	public int plannerModifyUpdate(PlannerVO plannerDetail) {
+		return session.update("plannerModifyUpdate");
+	}
+
+	@Override
+	public DonationVO donationNoOnDetail(int intro_index) {
+		return (DonationVO)session.selectOne("donationNoOnDetail");
 	}
 }
