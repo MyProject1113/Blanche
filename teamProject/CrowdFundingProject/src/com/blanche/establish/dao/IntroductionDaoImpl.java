@@ -164,4 +164,9 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	public DonationVO donationNoOnDetail(int intro_index) {
 		return (DonationVO)session.selectOne("donationNoOnDetail");
 	}
+
+	@Override
+	public List<Integer> introdutionAllCount(String app_field) {
+		return session.selectList("introdutionAllCount");
+	}
 }

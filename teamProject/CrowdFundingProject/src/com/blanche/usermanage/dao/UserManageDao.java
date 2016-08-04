@@ -11,6 +11,8 @@ public interface UserManageDao {
 
 	public void approvalUpdate(IntroApprovalVO ivo);
 
+	public String getDonationDday(int intro_index);
+
 	
 
 }

@@ -67,5 +67,31 @@ public class IntroServiceImpl implements IntroService {
 	public int updateAdd(IntroVO ivo) {
 		return introDao.updateAdd(ivo);
 	}
+	
+	@Override
+	public List<Integer> introdutionList(String app_field){
+		List<Integer> myList = null;
+		myList = introDao.introdutionList(app_field);
+		return myList;
+	}
+	
+	@Override
+	public int sponserList(int intro_index){
+		int result = 0;
+		result = introDao.sponserList(intro_index);
+		return result;
+	}
+	
+	public IntroVO lookRoundContent(int intro_index){
+		IntroVO detail = null;
+		detail = introDao.lookRoundContent(intro_index);
+		return detail;
+	}
+	
+	public IntroVO noOneContent(int intro_index){
+		IntroVO detail = null;
+		detail = introDao.noOneContent(intro_index);
+		return detail;
+	}
 
 }

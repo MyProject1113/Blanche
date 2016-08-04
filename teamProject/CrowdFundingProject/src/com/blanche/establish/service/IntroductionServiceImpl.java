@@ -207,4 +207,11 @@ public class IntroductionServiceImpl implements IntroductionService {
 		detail = introductionDao.donationNoOnDetail(intro_index);
 		return detail;
 	}
+
+	@Override
+	public List<Integer> introdutionAllCount(String app_field) {
+		List<Integer> myList = null;
+		myList = introductionDao.introdutionAllCount(app_field);
+		return myList;
+	}
 }

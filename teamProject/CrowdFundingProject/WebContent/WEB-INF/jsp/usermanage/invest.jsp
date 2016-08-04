@@ -115,6 +115,7 @@ $(function(){
 						<!-- 데이터 출력 -->
 						
 						<c:choose>
+							
 							<c:when test="${not empty introList}">
 								<c:forEach var="spon" items="${introList}" varStatus="status">
 									<tr data-num="${intro_index}">
@@ -136,11 +137,12 @@ $(function(){
 											</c:choose>
 											</td>
 										<td>
-											${donationVO.dona_dday }
+											${dday}
 										</td>
 									</tr>
 								</c:forEach>
 							</c:when>
+							
 							<c:otherwise>
 								<tr>
 									<td colspan="4" class="tac">등록된 게시물이 존재하지 않습니다.</td>

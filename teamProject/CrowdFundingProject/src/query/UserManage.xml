@@ -15,4 +15,15 @@
 		WHERE	us_index = #{us_index}
 </update>
 
+
+
+
+	<!-- 투자금액과 투자자 수 조회 -->
+	<select id="getDonationDday" parameterType="donation" resultType="String">
+		/* UserManage - getDonationDday */
+		<!-- SELECT (intro_enddate - TO_DATE(sysdate)) dona_dday FROM introduction WHERE intro_index = (SELECT intro_index FROM introApproval WHERE us_index = #{us_index}) -->
+		SELECT (intro_enddate - TO_DATE(sysdate)) dona_dday FROM introduction WHERE intro_index = #{intro_index}
+	</select>
+	
+
 </mapper>

@@ -134,6 +134,12 @@ public class BoardMainController implements Constant {
 			param.setUs_index(0);
 		}
 		BoardMainVO boardData = boardMainService.boardDetail(param);
+		if (boardData != null) {
+			if (boardData.getBoardType() == 1 && boardData.getBd_parent() != 0) {
+				param.setBd_index(boardData.getBd_parent());
+				boardData = boardMainService.boardDetail(param);
+			}
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		if (boardData != null) {
@@ -142,7 +148,7 @@ public class BoardMainController implements Constant {
 			attachParam.setBd_index(param.getBd_index());
 			List<BoardAttachVO> attachList = boardAttachService.attachList(attachParam);
 			BoardInfoVO infoData = new BoardInfoVO();
-			infoData.setBdinf_index(param.getBdinf_index());
+			infoData.setBdinf_index(boardData.getBdinf_index());
 			infoData = boardInfoService.infoDetail(infoData);
 			if (infoData != null) {
 				boardData.setBoardType(infoData.getBdinf_type());
