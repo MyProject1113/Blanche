@@ -41,6 +41,7 @@
 				})
 				$("#app_field").submit();	
 			});
+
 		});
 	</script>
 	
@@ -96,7 +97,7 @@
    		<col width="85%">
    </colgroup>   
    	<thead class="category">
-  <form id="ca_array" name="ca_array" method="post">
+  <form id="ca_array" name="ca_array" method="get">
    			<tr>
 				<td>
 					<select id="app_field" name="app_field">
