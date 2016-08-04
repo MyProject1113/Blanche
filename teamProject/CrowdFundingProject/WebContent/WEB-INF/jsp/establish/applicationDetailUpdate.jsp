@@ -29,14 +29,8 @@
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				
-				//document.getElementById('intro_startDate').valueAsDate = new Date();
-				//document.getElementById('intro_endDate').valueAsDate = new Date();
-				document.getElementById('intro_startDate').valueAsDate = ${introDetail.intro_startDate};
-				document.getElementById('intro_endDate').valueAsDate = ${introDetail.intro_endDate};
-				
-				var d = "${introDetail.intro_startDate}";
-				
+				$("#intro_startDate").val("${introDetail.intro_startDate}");
+				$("#intro_endDate").val("${introDetail.intro_endDate}");
 				
 				/* 저장 버튼 클릭 시 처리 이벤트 */
 				$("#commit_btn").click(function() {

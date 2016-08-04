@@ -631,7 +631,10 @@ public class EstablishController {
 			projectContentList = introductionService.projectContentList(app_field);
 		}*/
 		
+		
+		
 		model.addAttribute("projectContentList", projectContentList);
+		model.addAttribute("app_field", app_field);
 		
 		return "establish/projectContentList";
 	}
