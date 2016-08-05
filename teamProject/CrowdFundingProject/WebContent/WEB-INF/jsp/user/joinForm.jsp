@@ -133,7 +133,7 @@
 					return;
 				} else if (!checkSubmit($("#us_nickname"), 30, "닉네임")) {
 					return;
-				} else if (!checkSubmit($("#us_phone"), 11, "연락처")) {
+				} else if (!checkSubmit($("#us_phone"), 15, "연락처")) {
 					return;
 				} else if ($("#userEmailCheck").html() != "") {
 					alert($("#userEmailCheck").html());
