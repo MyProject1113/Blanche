@@ -20,7 +20,7 @@
 			    font-size: 1em;
 			}
 			h1.headline {
-			    font-size: 2.5em;
+			    font-size: 2em;
 			    word-spacing: -10px;
 			}
 			p.deck.text-size_xl {
@@ -384,7 +384,7 @@
 						</dd>
 					</dl>
 					
-					<br />
+					<br /><br />
 					
 					<!-- 프로젝트 밀어주기 버튼 생성 -->
 					<c:choose>

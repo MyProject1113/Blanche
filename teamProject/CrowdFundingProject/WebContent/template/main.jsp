@@ -9,13 +9,13 @@
 	<div id="mainhot">
 		<section>
 			<div id="hotcontent1">
-				<a href="http://www.ddaily.co.kr/news/article.html?no=142890" target="blank"><img src="/include/images/news01.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=39"><img src="/include/images/content04.png" width="300" height="300"></a>
 			</div>
 			<div id="hotcontent2">
-				<a href="http://www.sedaily.com/NewsView/1KUZGFNI6X" target="blank"><img src="/include/images/news02.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=29"><img src="/include/images/content02.png" width="300" height="300"></a>
 			</div>
 			<div id="hotcontent3">
-				<a href="http://www.thebell.co.kr/front/free/contents/news/article_view.asp?key=201512170100035300002095&svccode=&page=1" target="blank"><img src="/include/images/news03.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=28"><img src="/include/images/content03.png" width="300" height="300"></a>
 			</div>
 		</section>
 	</div>
