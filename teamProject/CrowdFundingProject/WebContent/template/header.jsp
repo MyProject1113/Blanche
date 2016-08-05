@@ -22,11 +22,12 @@
 				<!-- <li><a href="/establish/notice.do">프로젝트 올리기</a></li> -->
 				<!-- <li><a href="/intro/intro.do?app_field=all" class="current-page-item"" class="current-page-item">프로젝트 둘러보기</a></li> -->
 				<li><a href="/establish/userProgressCheck.do">프로젝트 올리기</a></li>
-				<li><a href="#">게시판</a>
+				<li><a href="">게시판</a>
 					<ul>
 						<li><a href="/notice/list.do">공지게시판</a></li>
 						<li><a href="/faq/list.do">FAQ게시판</a></li>
 						<li><a href="/board/freeboard/list.do">자유게시판</a></li>
+						<li><a href="/board/qna/list.do">질문게시판</a></li>
 					</ul>
 				</li>
 				<li><a href="/cc/faq.do">고객센터</a></li>

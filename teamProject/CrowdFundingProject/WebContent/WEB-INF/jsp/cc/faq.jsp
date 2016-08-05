@@ -48,8 +48,8 @@ body {
 
 
 #faq_item_1{
-	width : 350px;
-	height : 250px;
+	width : 330px;
+	height : 230px;
 	float: left;
 	margin : 20px;
 	padding : 30px;
@@ -58,8 +58,8 @@ body {
 }
 
 #faq_item_2{
-	width : 350px;
-	height : 250px;
+	width : 330px;
+	height : 230px;
 	float : left;
 	margin : 20px;
 	padding : 30px;
@@ -68,8 +68,8 @@ body {
 }
 
 #faq_item_3{
-	width : 350px;
-	height : 250px;
+	width : 330px;
+	height : 230px;
 	float: left;
 	margin : 20px;
 	padding : 30px;
@@ -78,8 +78,8 @@ body {
 }
 
 #faq_item_4{
-	width : 350px;
-	height : 250px;
+	width : 330px;
+	height : 230px;
 	float: left;
 	margin : 20px;
 	padding : 30px;
@@ -127,31 +127,43 @@ div#content {
     margin-bottom: 50px;
 }
 
+div#main {
+    background-color: white;
+    padding: 60px;
+    width: 1300px;
+    border: 3px;
+    border-style: double;
+}
+
+#faqtitle {
+	font-size: 25px;
+}
 </style>
 
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$("#fq_index").val(0);
-		
-		$(".goCategory").click(function() {
-			$("#fq_category").val($(this).attr("data-category"));
-			$("#formFaq").attr({
-				"method" : "post",
-				"action" : "/faq/list.do"
-			});
-			$("#formFaq").submit();
+$(function() {
+	$("#fq_index").val(0);
+	
+	$(".goCategory").click(function() {
+		$("#method").val("category");
+		$("#keyword").val($(this).attr("data-category"));
+		$("#formFaq").attr({
+			"method" : "post",
+			"action" : "/faq/list.do"
 		});
-		
-		$(".goDetail").click(function() {
-			$("#fq_index").val($(this).attr("data-index"));
-			$("#formFaq").attr({
-				"method" : "post",
-				"action" : "/faq/detail.do"
-			});
-			$("#formFaq").submit();
-		});
+		$("#formFaq").submit();
 	});
+	
+	$(".goDetail").click(function() {
+		$("#fq_index").val($(this).attr("data-index"));
+		$("#formFaq").attr({
+			"method" : "post",
+			"action" : "/faq/detail.do"
+		});
+		$("#formFaq").submit();
+	});
+});
 </script>
 
 </head>
@@ -159,18 +171,19 @@ div#content {
 
 <div id="container">
 <form name="formFaq" id="formFaq">
-	<input type="hidden" name="fq_category" id="fq_category">
+	<input type="hidden" name="method" id="method">
+	<input type="hidden" name="keyword" id="keyword">
 	<input type="hidden" name="fq_index" id="fq_index">
 </form>
 	
 	
-	
-<section>
+<!-- 	
+<section> -->
 
 <div  style="overflow:auto;" id="content">	
 	<header class="header" >
-    	<div class="header_inner">
-        	<a class="logo" href="/WEB-INF/jsp/cc/faq.jsp">고객 센터</a>
+    	<div class="header_inner" id="faqtitle">
+        	고객센터
             <nav class="menu-main">
     			<ul class="menu-main_list js-main-menu"></ul>
 			</nav>
@@ -291,7 +304,7 @@ div#content {
 				
 				<!-- ----------------------------------------------------- 우측 사이드 메뉴 시작 ------------------------------------------------------------ -->
 			
-			<aside id="sidemenu">
+			<!-- <aside id="sidemenu">
 					<div data-region="news.widget.announcements">
 						<div class="widget">
 							<h2 class="heading-2 heading-2__widget">
@@ -299,7 +312,7 @@ div#content {
 									고객센터 참고 사항
 							</h2>
 							
-							<!-- 사이드 메뉴 주항목의 하위메뉴 리스트 시작 -->
+							사이드 메뉴 주항목의 하위메뉴 리스트 시작
 							<br/>
 							<ul class="js-list">
 								<li class="news">
@@ -327,7 +340,7 @@ div#content {
 								</li>
 							</ul>
 							
-							<!-- 사이드 메뉴 주항목의 하위메뉴 리스트 종료 -->
+							사이드 메뉴 주항목의 하위메뉴 리스트 종료
 							
 							<a class="link-action js-all-link" href="/board/qna/list.do">
 								직접 질문하기 [ Q&A ]
@@ -337,7 +350,7 @@ div#content {
 			</aside>
 			
 	</section>
-			
+			 -->
 				<!-- ----------------------------------------------------- 우측 사이드 메뉴 종료 ------------------------------------------------------------ -->
 </div>
 
