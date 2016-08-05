@@ -5,11 +5,16 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 public class IPConfigUtil {
-	/** IP 주소 얻기
+	/** Server IP 주소 얻기
 	* @return	<strong>String</strong>
 	*/
-	public static String getIP() {
+	public static String getServerIP() {
 		String IP = null;
 		try {
 			for (Enumeration en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
@@ -35,7 +40,6 @@ public class IPConfigUtil {
 		return IP;
 	}
 	
-	/*
 	public static String getIP() {
 		// 톰캣에서 따로 설정하지 않으면 IPv4 주소가 아닌 IPv6 주소를 얻는다.
 		String IP = null;
@@ -59,5 +63,4 @@ public class IPConfigUtil {
 		}
 		return IP;
 	}
-	*/
 }
