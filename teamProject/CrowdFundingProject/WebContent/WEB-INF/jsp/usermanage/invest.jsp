@@ -65,9 +65,8 @@ $(function(){
 		<input type="button" id="phch" name="phch" value="연락처 변경"/>
 		<input type="button" id="fundch" name="fundch" value="기획정보"/>
 		<input type="button" id="invch" name="invch" value="투자정보"/>
+		<br /><br />
 			<table>
-				
-			
 				<tr>
 					<td colspan="3" align="center">투자정보</td>
 				</tr>
@@ -95,19 +94,19 @@ $(function(){
 				<table summary="게시판 리스트">
 					<colgroup>
 						<col width="10%" />
+						<col width="25%" />
+						<col width="15%" />
+						<col width="32%" />
 						<col width="10%" />
-						<col width="15%" />
-						<col width="15%" />
-						<col width="25%" />
-						<col width="25%" />
+						<col width="8%" />
 					</colgroup>
 					<thead>
 						<tr>
 							<th>수령인</th>
-							<th>수령자 연락처</th>
 							<th>프로젝트명</th>
-							<th>수령자이메일</th>
+							<th>수령자 연락처</th>
 							<th>수령 주소</th>
+							<th></th>
 							<th>남은 날짜</th>
 						</tr>
 					</thead>
@@ -120,24 +119,27 @@ $(function(){
 								<c:forEach var="spon" items="${introList}" varStatus="status">
 									<tr data-num="${intro_index}">
 										<td data-num="${spon.sponser_index }">${spon.sponser_name}</td>
-										<td>${spon.sponser_phone}</td>
 										<td><span class="goDetail" style="text-overflow:ellipsis; overflow:hidden;">${intro_title}</span></td>
-										<td>${spon.sponser_email}</td>
+										<td>${spon.sponser_email}<br />${spon.sponser_phone}</td>
 										<td data-name="${spon.sponser_add}">
 											<c:choose>
 												<c:when test="${change eq intro_index}">
 													<input type="text" id="add" name="add" value="${spon.sponser_add}">
-													<input type="button" class="complete" value="확인"/>
+													<td>
+														<input type="button" class="complete" value="확인"/>
+													</td>
 												</c:when>
 												<c:otherwise>
 													${spon.sponser_add}
-													<input type="button" class="addchange"  value="변경"/>
-													<input type="hidden" id="hide" value="${intro_index}" >
+													<td>
+														<input type="button" class="addchange"  value="변경"/>
+														<input type="hidden" id="hide" value="${intro_index}" >
+													</td>
 												</c:otherwise>
 											</c:choose>
 											</td>
 										<td>
-											${dday}
+											${dday} 일
 										</td>
 									</tr>
 								</c:forEach>
@@ -145,7 +147,7 @@ $(function(){
 							
 							<c:otherwise>
 								<tr>
-									<td colspan="4" class="tac">등록된 게시물이 존재하지 않습니다.</td>
+									<td colspan="6" class="tac">등록된 게시물이 존재하지 않습니다.</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

@@ -26,15 +26,14 @@
 				
 				$('#myPage_btn').click(function(e) {
 					//location.href="/usermanage/pwchange.do";
-					
-					/* location.href="/establish/applicationMyPage.do?us_index=3"; */
-					location.href="/establish/applicationMyPage.do";
+					location.href="/usermanage/design.do";
+					//location.href="/establish/applicationMyPage.do";
 				});
 				
-				$('#myPage_btn2').click(function(e) {
-					/* location.href="/establish/projectMyPage.do?us_index=3"; */
+				/* $('#myPage_btn2').click(function(e) {
+					//location.href="/establish/projectMyPage.do?us_index=3";
 					location.href="/establish/projectMyPage.do";
-				});
+				}); */
 			});
 		</script>
 		
@@ -44,18 +43,22 @@
 			<c:when test="${warningMsg == 1}">
 				개설 신청중인 프로젝트가 있습니다.<br />
 				My Page에서 확인 바랍니다.<br /><br />
-				<input type="button" id="main_btn" value="메인으로" />&nbsp;
+				<input type="button" id="main_btn" value="Main" />&nbsp;
 				<input type="button" id="myPage_btn" value="My Page" />
-				<input type="button" id="myPage_btn2" value="My Page2" />
+				<!-- <input type="button" id="myPage_btn2" value="My Page2" /> -->
 			</c:when>
 			<c:when test="${warningMsg == 2}">
 				진행중인 프로젝트가 있습니다.<br />
 				My Page에서 확인 바랍니다.<br /><br />
-				<input type="button" id="main_btn" value="메인으로" />&nbsp;
+				<input type="button" id="main_btn" value="Main" />&nbsp;
 				<input type="button" id="myPage_btn" value="My Page" />
-				<input type="button" id="myPage_btn2" value="My Page2" />
+				<!-- <input type="button" id="myPage_btn2" value="My Page2" /> -->
 			</c:when>
-			<c:otherwise>오류</c:otherwise>
+			<c:otherwise>
+				접속자가 많은 관계로<br />
+				잠시 후 다시 시도해 주시기 바랍니다.<br /><br />
+				<input type="button" id="main_btn" value="Main" />
+			</c:otherwise>
 		</c:choose>
 	</body>
 </html>

@@ -12,6 +12,7 @@ import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 import com.blanche.establish.vo.ProjectListVO;
+import com.blanche.establish.vo.ReplyVO;
 
 @Repository
 public class IntroductionDaoImpl implements IntroductionDao {
@@ -168,5 +169,25 @@ public class IntroductionDaoImpl implements IntroductionDao {
 	@Override
 	public List<Integer> introdutionAllCount(String app_field) {
 		return session.selectList("introdutionAllCount");
+	}
+
+	@Override
+	public IntroductionVO projectDateCheck(int intro_index) {
+		return (IntroductionVO)session.selectOne("projectDateCheck");
+	}
+
+	@Override
+	public List<ReplyVO> replyDetail(int intro_index) {
+		return session.selectList("replyDetail");
+	}
+
+	@Override
+	public int replyInsert(ReplyVO rvo) {
+		return session.insert("replyInsert", rvo);
+	}
+
+	@Override
+	public int replySponser(ReplyVO rvo) {
+		return (int)session.selectOne("replySponser");
 	}
 }

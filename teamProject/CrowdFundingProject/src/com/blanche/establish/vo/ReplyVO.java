@@ -10,6 +10,7 @@ public class ReplyVO {
 	private String	re_content		= "";	// 글내용
 	private String	re_date			= "";	// 작성일
 	private int		intro_index		= 0;	// 프로젝트 번호
+	private int		us_index;
 	
 	private int		page				= 1;		// 페이지
 	private int		pageSize		= 20;		// 페이지 크기
@@ -53,6 +54,12 @@ public class ReplyVO {
 		this.intro_index = intro_index;
 	}
 	
+	public int getUs_index() {
+		return us_index;
+	}
+	public void setUs_index(int us_index) {
+		this.us_index = us_index;
+	}
 	public int getPage() {
 		return page;
 	}

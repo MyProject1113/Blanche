@@ -8,6 +8,7 @@ import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 import com.blanche.establish.vo.ProjectListVO;
+import com.blanche.establish.vo.ReplyVO;
 
 public interface IntroductionService {
 	public int introductionInsert(IntroductionVO ivo, PlannerVO pvo, IntroApprovalVO intappvo);
@@ -51,4 +52,10 @@ public interface IntroductionService {
 	public DonationVO donationNoOnDetail(int intro_index);
 
 	public List<Integer> introdutionAllCount(String app_field);
+
+	public List<ReplyVO> replyDetail(int intro_index);
+
+	public int replyInsert(ReplyVO rvo);
+
+	public int replySponser(ReplyVO rvo);
 }

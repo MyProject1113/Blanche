@@ -22,6 +22,12 @@
 			div#tabBtn {
 			    margin-bottom: 25px;
 			}
+			form#f_data {
+			    margin: 0 0 0 0;
+			}
+			table td {
+			    vertical-align: middle;
+			}
 		</style>
 		
 		<script type="text/javascript" src="/include/js/common.js"></script>

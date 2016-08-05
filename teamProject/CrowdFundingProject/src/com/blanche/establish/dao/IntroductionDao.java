@@ -7,6 +7,7 @@ import com.blanche.establish.vo.DonationVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 import com.blanche.establish.vo.ProjectListVO;
+import com.blanche.establish.vo.ReplyVO;
 import com.blanche.establish.vo.IntroApprovalVO;
 
 public interface IntroductionDao {
@@ -40,4 +41,8 @@ public interface IntroductionDao {
 	public int plannerModifyUpdate(PlannerVO plannerDetail);
 	public DonationVO donationNoOnDetail(int intro_index);
 	public List<Integer> introdutionAllCount(String app_field);
+	public IntroductionVO projectDateCheck(int intro_index);
+	public List<ReplyVO> replyDetail(int intro_index);
+	public int replyInsert(ReplyVO rvo);
+	public int replySponser(ReplyVO rvo);
 }

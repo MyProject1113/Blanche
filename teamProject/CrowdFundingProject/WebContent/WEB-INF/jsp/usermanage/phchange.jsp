@@ -52,6 +52,7 @@ $(function(){
 		<input type="button" id="phch" name="phch" value="연락처 변경"/>
 		<input type="button" id="fundch" name="fundch" value="기획정보"/>
 		<input type="button" id="invch" name="invch" value="투자정보"/>
+		<br /><br />
 			<table>
 				<tr>
 					<td colspan="3" align="center">연락처 변경</td>

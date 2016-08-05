@@ -16,7 +16,44 @@
 		
 		<!-- <link rel="stylesheet" type="text/css" href="/include/css/common.css">
 		<link rel="stylesheet" type="text/css" href="/include/css/board.css"> -->
+		
+		<style type="text/css">
+			.category {
+				width: 200px;
+				heigth: 120px;
+				float: center;
+				margin: 5px 5px;
+			}
 			
+			.row {
+				/* width: 400px; */
+				width: 327px;
+				heigth: 900px;
+				float: left;
+				margin: 10px 10px;
+			}
+			#project {
+				width: 200px;
+				heigth: 120px;
+				float: center;
+				margin: 5px 5px;
+			}
+			#array {
+				width: 200px;
+				heigth: 120px;
+				float: center;
+				margin: 5px 5px;
+			}
+			#pj_text {
+				float: right;
+				vertical-align: middle;
+			}
+			img#mainImage {
+				width:"390px";
+				height:"290px";
+			}
+		</style>
+	
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
@@ -46,6 +83,7 @@
 					$("#ca_array").submit();	
 				});
 				
+				
 				/**/
 				$("#fieldSelect").change(function() {
 					$("#app_field").val($("#fieldSelect").val());
@@ -71,42 +109,6 @@
 		<!-- Bootstrap Core JavaScript -->
 		<script src="/include/js/bootstrap.min.js"></script>
 		
-		<style type="text/css">
-			.category {
-				width: 200px;
-				heigth: 120px;
-				float: center;
-				margin: 5px 5px;
-			}
-			
-			.row {
-				width: 400px;
-				heigth: 900px;
-				float: left;
-				margin: 10px 10px;
-			}
-			#project {
-				width: 200px;
-				heigth: 120px;
-				float: center;
-				margin: 5px 5px;
-			}
-			#array {
-				width: 200px;
-				heigth: 120px;
-				float: center;
-				margin: 5px 5px;
-			}
-			#pj_text {
-				float: right;
-				vertical-align: middle;
-			}
-			img#mainImage {
-				width:"390px";
-				height:"290px";
-			}
-		</style>
-	
 	</head>
 	<body>
 		<form id="field_form" name="field_form">
@@ -133,10 +135,10 @@
 						</td>
 						
 						<td>
-							<select id="array" name="array">
+							<!-- <select id="array" name="array">
 								<option value="">최신순</option>
 								<option value="">이름순</option>
-							</select>
+							</select> -->
 						</td>
 					</tr>
 				</thead>
@@ -148,7 +150,7 @@
 								<input type="hidden" id="intro_index" name="intro_index" value="${prolist.intro_index}" />
 								<div class="row">
 									<div class="col-md-4 portfolio-item">
-										<img class="img-responsive" id="mainImage" src= "/uploadStorage/${prolist.plist_image}" alt="프로젝트 이미지">
+										<img class="img-responsive" id="mainImage" width="327px" height="250px" src= "/uploadStorage/${prolist.plist_image}" alt="프로젝트 이미지">
 										<h3>
 											<a href="/intro/introDetail.do?intro_index=${prolist.intro_index}" id="title">${prolist.plist_title}</a>
 										</h3>

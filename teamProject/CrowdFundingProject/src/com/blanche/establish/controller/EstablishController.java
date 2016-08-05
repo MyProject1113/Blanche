@@ -25,6 +25,7 @@ import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 import com.blanche.establish.vo.ProjectListVO;
+import com.blanche.establish.vo.ReplyVO;
 import com.blanche.user.main.service.UserMainService;
 import com.blanche.user.main.vo.UserMainVO;
 import com.blanche.board.info.service.BoardInfoService;
@@ -221,7 +222,9 @@ public class EstablishController {
 		}
 		
 		model.addAttribute("donationDetail", donationDetail);
-		
+
+		// 프로젝트 날짜 체크
+		//introDetail = introductionService.projectDateCheck(intro_index);
 		
 		return "establish/contentDetail";
 	}
@@ -229,13 +232,79 @@ public class EstablishController {
 	/****************************************************************
 	 * 댓글 내용 출력하기
 	 ****************************************************************/
-	@RequestMapping(value="/contentReply.do")
-	public String contentReply() {
+	@RequestMapping(value="/contentReply.do", method=RequestMethod.GET)
+	public String contentReply(@RequestParam("intro_index") int intro_index, Model model, HttpServletRequest request) {
 		logger.info("contentReply 호출 성공");
+		
+		int count = 0;
+		String us_name = "";
+		
+		/* 프로젝트 소개 정보 */
+		IntroductionVO introDetail = new IntroductionVO();
+		introDetail = introductionService.introductionDetail(intro_index);
+		
+		model.addAttribute("introDetail", introDetail);
+		
+		/* 기획자 정보 */
+		PlannerVO plannerDetail = new PlannerVO();
+		plannerDetail = introductionService.plannerDetail(intro_index);
+		
+		model.addAttribute("plannerDetail", plannerDetail);
+		
+		
+		/* 기부현황 정보 */
+		DonationVO donationDetail = new DonationVO();
+		donationDetail = introductionService.donationDetail(intro_index);
+		
+		if (donationDetail == null) {
+			donationDetail = introductionService.donationNoOnDetail(intro_index);
+		}
+		
+		model.addAttribute("donationDetail", donationDetail);
+
+		/* 댓글 목록 */
+		List<ReplyVO> replyDetail = introductionService.replyDetail(intro_index);
+		
+		model.addAttribute("replyDetail", replyDetail);
+		
+		
+
+		// 회원번호 가져오기
+		UserMainVO userData = (UserMainVO) request.getSession().getAttribute("blancheUser");
+		if (userData != null) {
+			userData = userMainService.userData(userData);
+			logger.info("회원번호 : " + userData.getUs_index() + ", 회원이름 : " + userData.getUs_name());
+			
+			ReplyVO rvo = new ReplyVO();
+			rvo.setIntro_index(intro_index);
+			rvo.setUs_index(userData.getUs_index());
+			count = introductionService.replySponser(rvo);
+			
+			us_name = userData.getUs_name();
+		}
+		
+		model.addAttribute("sponserCheck", count);
+		model.addAttribute("us_name", us_name);
 		
 		return "establish/contentReply";
 	}
 
+	/****************************************************************
+	 * 댓글 쓰기
+	 ****************************************************************/
+	@ResponseBody	// 현재 요청값을 브라우저에 바로 출력
+	@RequestMapping(value="/replyInsert.do", method=RequestMethod.POST)
+	public String replyInsert(@ModelAttribute ReplyVO rvo) {
+		logger.info("replyInsert 호출 성공");
+		
+		// 아래 변수에는 입력 성공에 대한 상태값 저장 (1 or 0)
+		int result = 0;
+		result = introductionService.replyInsert(rvo);
+		logger.info("result = " + result);
+		
+		return result + "";
+	}
+	
 	/********************************************
 	 * 프로젝트 밀어주기 페이지 이동
 	 * *******************************************/

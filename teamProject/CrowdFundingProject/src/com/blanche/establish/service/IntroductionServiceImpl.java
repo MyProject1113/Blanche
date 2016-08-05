@@ -14,6 +14,7 @@ import com.blanche.establish.vo.IntroApprovalVO;
 import com.blanche.establish.vo.IntroductionVO;
 import com.blanche.establish.vo.PlannerVO;
 import com.blanche.establish.vo.ProjectListVO;
+import com.blanche.establish.vo.ReplyVO;
 
 @Service
 @Transactional
@@ -45,6 +46,7 @@ public class IntroductionServiceImpl implements IntroductionService {
 		IntroductionVO detail = null;
 		//detail = introductionDao.introductionDetail(ivo);
 		detail = introductionDao.introductionDetail(intro_index);
+		//detail = introductionDao.projectDateCheck(intro_index);
 		return detail;
 	}
 	
@@ -213,5 +215,26 @@ public class IntroductionServiceImpl implements IntroductionService {
 		List<Integer> myList = null;
 		myList = introductionDao.introdutionAllCount(app_field);
 		return myList;
+	}
+
+	@Override
+	public List<ReplyVO> replyDetail(int intro_index) {
+		List<ReplyVO> myList = null;
+		myList = introductionDao.replyDetail(intro_index);
+		return myList;
+	}
+
+	@Override
+	public int replyInsert(ReplyVO rvo) {
+		int result = 0;
+		result = introductionDao.replyInsert(rvo);
+		return result;
+	}
+
+	@Override
+	public int replySponser(ReplyVO rvo) {
+		int result = 0;
+		result = introductionDao.replySponser(rvo);
+		return result;
 	}
 }

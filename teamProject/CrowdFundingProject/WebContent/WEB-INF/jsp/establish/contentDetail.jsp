@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,6 +15,25 @@
 		
 		<link rel="stylesheet" href="/include/css/contentDetail2.css" />
 		
+		<style type="text/css">
+			span.pSize {
+			    font-size: 1em;
+			}
+			h1.headline {
+			    font-size: 2.5em;
+			    word-spacing: -10px;
+			}
+			p.deck.text-size_xl {
+			    word-spacing: 7px;
+			    font-weight: bold;
+			    font-style: italic;
+			}
+			span.donationSpan {
+			    font-style: italic;
+			    font-weight: bold;
+			}
+		</style>
+		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript">
@@ -28,13 +48,23 @@
 						height:"465px"
 					});
 					
-					$("#planFileImage").attr({
-						src:"/uploadStorage/${plannerDetail.plan_image}",
-						width:"62px",
-						height:"62px"
-					});
+					var imageSrc = "${plannerDetail.plan_image}";
+					if (imageSrc != null && imageSrc != "") {
+						$("#planFileImage").attr({
+							src:"/uploadStorage/${plannerDetail.plan_image}",
+							width:"62px",
+							height:"62px"
+						});
+					} else {
+						$("#planFileImage").attr({
+							src:"../image/common/noimage.gif",
+							width:"62px",
+							height:"62px"
+						});
+					}
 				}
 				
+				/* $(".pStart").prop("disabled", true); */
 			});
 		</script>
 		
@@ -62,8 +92,8 @@
 					</li>
 					
 					<li class="b-menu__item" >
-						<a href="/establish/contentReply.do" data-ps="true" class="b-menu__item__link">
-							<span>댓글 ( <span class="js-channelCounter">0</span> )</span>
+						<a href="/establish/contentReply.do?intro_index=${introDetail.intro_index}" data-ps="true" class="b-menu__item__link">
+							<span>댓글<!--  ( <span class="js-channelCounter">0</span> ) --></span>
 						</a>
 					</li>
 				</ul>
@@ -77,7 +107,7 @@
 			    <!-- 프로젝트 이미지 -->
 				<div class="b-main" id="project_show_section_js"> 
 					<figure class="b-video js-video">
-						<img id="introFileImage" alt="메인 이미지">
+						<img id="introFileImage" alt="프로젝트 이미지">
 					</figure>
 				
 					<div class="b-content-description typeset-proto-v2 js-project_desc" style="margin-top: 28px;">
@@ -140,7 +170,7 @@
 				<div class="b-sidebar" role="complementary" >
 				   
 					<dl class="b-campaign_stats"> 
-						<dt class="b-campaign_stats__title">목표 ${donationDetail.dona_purpose}만원 중 ${donationDetail.dona_report}% 모임</dt> 
+						<dt class="b-campaign_stats__title">목표 <span class="donationSpan">${donationDetail.dona_purpose}만원</span> 중 <span class="donationSpan">${donationDetail.dona_report}%</span> 모임</dt> 
 						<dd class="b-campaign_stats__value"> 
 							<span class="b-campaign_stats__value-figure">${donationDetail.dona_fund}</span><span class="b-campaign_stats__value-unit">원</span>
 						</dd> 
@@ -159,9 +189,19 @@
 					</dl>
 					
 					<br />
-					  
-					<a href="/intro/reward.do?intro_index=${introDetail.intro_index}" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
 					
+					<!-- 프로젝트 밀어주기 버튼 생성 -->
+					<c:choose>
+						<c:when test="${introDetail.start_check < 0}">
+							<a href="#" class="c-pledge_button js-show-pledge-button" onclick="return false;"><span class="c-pledge_button__label pSize">프로젝트 기간이 아닙니다.</span><span class="c-pledge_button__help">시작일 : ${introDetail.intro_startDate}</span></a>
+						</c:when>
+						<c:when test="${introDetail.end_check < 0}">
+							<a href="#" class="c-pledge_button js-show-pledge-button" onclick="return false;"><span class="c-pledge_button__label pSize">종료된 프로젝트입니다.</span><span class="c-pledge_button__help">마감일 : ${introDetail.intro_endDate}</span></a>
+						</c:when>
+						<c:otherwise>
+							<a href="/intro/reward.do?intro_index=${introDetail.intro_index}" class="c-pledge_button js-show-pledge-button"><span class="c-pledge_button__label">프로젝트 밀어주기</span><span class="c-pledge_button__help"> 최소금액은 1,000원입니다.</span></a>
+						</c:otherwise>
+					</c:choose>
 					<p class="b-pledge_blurb js-pledge_blurb">결제는 ${donationDetail.dona_endDate} 자정까지 최소 ${donationDetail.dona_purpose}만원이 모여야만 다함께 진행됩니다</p>
 					
 					

@@ -20,6 +20,10 @@ public class IntroductionVO extends IntroApprovalVO {
 	private String		intro_project			= "";	// 프로젝트 아이디
 	private int 		app_index;						// 개설 신청 번호
 	private int 		appro_index;					// 승인번호
+	
+	// 프로젝트 시작/종료 날짜 체크
+	private int		start_check	;						// 프로젝트 시작일 체크
+	private int 	end_check;							// 프로젝트 종료일 체크
 
 	// 조건 검색시 사용할 속성
 	private String searchCombo = "";
@@ -158,6 +162,22 @@ public class IntroductionVO extends IntroApprovalVO {
 
 	public void setAppro_index(int appro_index) {
 		this.appro_index = appro_index;
+	}
+
+	public int getStart_check() {
+		return start_check;
+	}
+
+	public void setStart_check(int start_check) {
+		this.start_check = start_check;
+	}
+
+	public int getEnd_check() {
+		return end_check;
+	}
+
+	public void setEnd_check(int end_check) {
+		this.end_check = end_check;
 	}
 
 	public String getSearchCombo() {
