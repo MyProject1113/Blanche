@@ -84,4 +84,14 @@ public class IntroDaoImpl implements IntroDao{
 	public IntroVO noOneContent(int intro_index){
 		return (IntroVO)session.selectOne("noOneContent");
 	}
+	
+	@Override
+	public List<Integer> introAllCount(String app_field){
+		return session.selectList("introAllCount");
+	}
+	
+	@Override
+	public List<Integer> introCount(String app_field){
+		return session.selectList("introCount");
+	}
 }

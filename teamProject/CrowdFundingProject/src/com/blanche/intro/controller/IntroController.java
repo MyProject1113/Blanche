@@ -173,7 +173,14 @@ public class IntroController {
 	public String introList(@RequestParam("app_field") String app_field, Model model) {
 		logger.info("introList 호출 성공");
 
-		List<Integer> indexList = introService.introdutionList(app_field);
+		List<Integer> indexList = new ArrayList<Integer>();
+		
+		if (app_field.equals("all")) {
+			indexList = introService.introAllCount(app_field);
+		} else {
+			indexList = introService.introCount(app_field);
+		}
+		
 		List<IntroVO> introList = new ArrayList<IntroVO>();
 		IntroVO ivo = null;
 		
@@ -189,7 +196,7 @@ public class IntroController {
 			introList.add(ivo);
 		}
 		
-		model.addAttribute("projectContentList", introList);
+		model.addAttribute("introList", introList);
 		
 		return "intro/intro";
 	}

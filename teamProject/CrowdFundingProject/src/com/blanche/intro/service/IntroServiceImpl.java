@@ -93,5 +93,19 @@ public class IntroServiceImpl implements IntroService {
 		detail = introDao.noOneContent(intro_index);
 		return detail;
 	}
+	
+	@Override
+	public List<Integer> introAllCount(String app_field){
+		List<Integer> myList = null;
+		myList = introDao.introAllCount(app_field);
+		return myList;
+	}
+	
+	@Override
+	public List<Integer> introCount(String app_field){
+		List<Integer> myList = null;
+		myList = introDao.introCount(app_field);
+		return myList;
+	}
 
 }

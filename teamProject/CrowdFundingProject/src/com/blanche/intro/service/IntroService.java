@@ -33,5 +33,9 @@ public interface IntroService {
 	public IntroVO lookRoundContent(int intro_index);
 
 	public IntroVO noOneContent(int intro_index);
+
+	public List<Integer> introAllCount(String app_field);
+
+	public List<Integer> introCount(String app_field);
 	
 }

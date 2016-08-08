@@ -34,4 +34,8 @@ public interface IntroDao {
 
 	public IntroVO noOneContent(int intro_index);
 
+	public List<Integer> introAllCount(String app_field);
+
+	public List<Integer> introCount(String app_field);
+
 }
