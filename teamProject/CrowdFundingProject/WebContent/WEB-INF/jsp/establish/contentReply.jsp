@@ -76,6 +76,13 @@
 				
 				/* 수정 버튼 클릭 시 처리 이벤트 */
 				$("#replyInsertBtn").click(function() {
+					var sponserCheck = "${sponserCheck}";
+					if (sponserCheck <= 0) {
+						alert("댓글은 후원자만 작성할 수 있습니다.");
+						$("#re_content").val("");
+						return;
+					}
+				
 					if (!chkSubmit($("#re_content"), "작성할 내용을")) return;
 					else {
 						$.ajax ({

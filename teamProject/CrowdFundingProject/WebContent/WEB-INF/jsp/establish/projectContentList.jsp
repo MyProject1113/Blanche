@@ -27,7 +27,7 @@
 			
 			.row {
 				/* width: 400px; */
-				width: 327px;
+				width: 320px;
 				heigth: 900px;
 				float: left;
 				margin: 10px 10px;
@@ -48,9 +48,28 @@
 				float: right;
 				vertical-align: middle;
 			}
-			img#mainImage {
+			/* img#mainImage {
 				width:"390px";
 				height:"290px";
+			} */
+			h3 {
+			    height: 60px;
+			}
+			table#pj_text {
+			    height: 130px;
+			}
+			td {
+			    height: 85px;
+			}
+			.col-md-4.portfolio-item {
+			    border: 1px;
+			    border-style: solid;
+			    padding: 5px;
+			    color: #dedede;
+			}
+			textarea {
+			    color: black;
+			    font-size: 12px;
 			}
 		</style>
 	
@@ -150,11 +169,15 @@
 								<input type="hidden" id="intro_index" name="intro_index" value="${prolist.intro_index}" />
 								<div class="row">
 									<div class="col-md-4 portfolio-item">
-										<img class="img-responsive" id="mainImage" width="327px" height="250px" src= "/uploadStorage/${prolist.plist_image}" alt="프로젝트 이미지">
+										<img class="img-responsive" id="mainImage" width="320px" height="250px" src= "/uploadStorage/${prolist.plist_image}" alt="프로젝트 이미지">
 										<h3>
 											<a href="/intro/introDetail.do?intro_index=${prolist.intro_index}" id="title">${prolist.plist_title}</a>
 										</h3>
 										<table id="pj_text">
+											<colgroup>
+												<col width="51%">
+												<col width="49%">
+											</colgroup>
 											<tr>
 												<td>
 													<h4>목표 금액</h4>

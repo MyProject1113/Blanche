@@ -138,6 +138,10 @@ div#main {
 #faqtitle {
 	font-size: 25px;
 }
+
+div#content {
+    padding: 10px;
+}
 </style>
 
 <script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>

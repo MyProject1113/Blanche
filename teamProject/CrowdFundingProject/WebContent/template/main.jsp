@@ -5,17 +5,17 @@
 
 <div id="mainpage">
 
-	<h2>최신 컨텐츠</h2>
+	<h2>인기 컨텐츠</h2>
 	<div id="mainhot">
 		<section>
 			<div id="hotcontent1">
-				<a href="/establish/contentDetail.do?intro_index=39"><img src="/include/images/content04.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=39"><img src="/uploadStorage/content04.png" width="300" height="300"></a>
 			</div>
 			<div id="hotcontent2">
-				<a href="/establish/contentDetail.do?intro_index=29"><img src="/include/images/content02.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=28"><img src="/uploadStorage/content05.png" width="300" height="300"></a>
 			</div>
 			<div id="hotcontent3">
-				<a href="/establish/contentDetail.do?intro_index=28"><img src="/include/images/content03.png" width="300" height="300"></a>
+				<a href="/establish/contentDetail.do?intro_index=43"><img src="/uploadStorage/content03.png" width="300" height="300"></a>
 			</div>
 		</section>
 	</div>
