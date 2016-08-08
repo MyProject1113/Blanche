@@ -46,31 +46,31 @@
 					if($("#app_field").val()=="movie"){
 						$("#ca_array").attr({
 							"method" : "get",
-							"action" : "/establish/projectContentList.do?app_field=movie"
+							"action" : "/intro/intro.do?app_field=movie"
 						});
 					} else if($("#app_field").val()=="music"){
 						$("#ca_array").attr({
 							"method" : "get",
-							"action" : "/establish/projectContentList.do?app_field=music"
+							"action" : "/intro/intro.do?app_field=music"
 						});
 					} else if($("#app_field").val()=="design"){
 						$("#ca_array").attr({
 							"method" : "get",
-							"action" : "/establish/projectContentList.do?app_field=design"
+							"action" : "/intro/intro.do?app_field=design"
 						});
 					} else if($("#app_field").val()=="pub"){
 						$("#ca_array").attr({
 							"method" : "get",
-							"action" : "/establish/projectContentList.do?app_field=book"	
+							"action" : "/intro/intro.do?app_field=book"	
 						});
 					} else if($("#app_field").val()=="cook"){
 						$("#ca_array").attr({
 						"method" : "get",
-						"action" : "/establish/projectContentList.do?app_field=cooking"	});
-					} else {
+						"action" : "/intro/intro.do?app_field=cooking"	});
+					} else if($("#app_field").val()=="all"){
 						$("#ca_array").attr({
 							"method" : "get",
-							"action" : "/establish/projectContentList.do?app_field=all"
+							"action" : "/intro/intro.do?app_field=all"
 						});
 					}
 					$("#ca_array").submit();
@@ -165,7 +165,7 @@
         			
         			<div class="row">
            			 <div class="col-md-4 portfolio-item">
-                    <img class="img-responsive" src= "${intro.intro_image}" alt="프로젝트 이미지">
+                    <img class="img-responsive" src= "${intro.intro_image}" alt="프로젝트 이미지" width="400" height="300">
                 		<h3>
                     		<a href="/intro/introDetail.do" id="title">${intro.intro_title}</a>
                     		<a href="/intro/introDetail.do?intro_index=${intro.intro_index}" id="title">${intro.intro_title}</a>

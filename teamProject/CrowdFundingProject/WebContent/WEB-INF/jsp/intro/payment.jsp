@@ -236,10 +236,8 @@
 		<table>
 		<tr>
 			<td colspan="3">
-			<textarea rows="10" cols="50" name="area2"></textarea>
-				&nbsp;		
 				<input type="checkbox" name="agree" id="agree">
-					<span>위의 사항에 동의합니다.</span>
+					<span>위의 사항을 확인하고, 결제 진행에 동의합니다.</span>
 			</td>
 		</tr>
 		<tr>
