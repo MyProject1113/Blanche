@@ -95,6 +95,21 @@
 		WHERE intro_index = #{intro_index}
 	</select>
 	
+	<!-- 필드별 프로젝트 전체수 조회 -->
+	<select id="introAllCount" parameterType="intro" resultType="intro">
+		/* Introduction - introdutionAllCount */
+		SELECT intro.intro_index FROM introduction intro 
+		INNER JOIN application app ON intro.app_index = app.app_index
+	</select>
+	
+	<!-- 필드별 프로젝트 수 조회 -->
+	<select id="introCount" parameterType="intro" resultType="intro">
+		/* Introduction - introdutionCount */
+		SELECT intro.intro_index FROM introduction intro 
+		INNER JOIN application app ON intro.app_index = app.app_index 
+		WHERE app_field = #{app_field}
+	</select>
+	
     <!-- feat.래혁 -->
     <select id="introMyPageList" parameterType="intro" resultType="intro">
 		/*   sponser  */
