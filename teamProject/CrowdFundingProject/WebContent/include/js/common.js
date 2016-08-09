@@ -49,7 +49,7 @@ function checkEmail(item) {
 function checkPassword(item) {
 	regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
 	if (!regExp.test(item.val())) {
-		alert("패스워드 형식이 맞지 않습니다.\n6자리~20자리의 영문 대소문자로 구성되어야 하며\n최소 1개의 숫자 혹은 특수 문자를 포함해야 합니다.");
+		alert("비밀번호 형식이 맞지 않습니다.\n6자리~20자리의 영문 대소문자로 구성되어야 하며\n최소 1개의 숫자 혹은 특수 문자를 포함해야 합니다.");
 		item.focus();
 		return false;
 	} else {
