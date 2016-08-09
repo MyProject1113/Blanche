@@ -3,7 +3,7 @@
 
 <tiles-definitions>
 	<definition name="main" template="/template/mainLayout.jsp">
-		<put-attribute name="title" value="사이트" />
+		<put-attribute name="title" value="Blanche" />
 		<put-attribute name="header" value="/template/header.jsp" />
 		<put-attribute name="body" value="/template/main.jsp" />
 		<put-attribute name="footer" value="/template/footer.jsp" />
@@ -11,7 +11,7 @@
 	
 	<!-- 기본 화면 설정 -->
 	<definition name="content" template="/template/contentLayout.jsp">
-		<put-attribute name="title" value="기본" />
+		<put-attribute name="title" value="Blanche" />
 		<put-attribute name="header" value="/template/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/template/footer.jsp" />
