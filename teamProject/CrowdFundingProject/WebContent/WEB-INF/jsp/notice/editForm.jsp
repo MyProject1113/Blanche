@@ -143,7 +143,7 @@
 					</tr>
 					<tr>
 						<td class="columnName center">제목</td>
-						<td colspan="3"><input type="text" name="nt_title" id="nt_title" value="${noticeData.nt_title}" /></td>
+						<td colspan="3"><input type="text" name="nt_title" id="nt_title" value="${noticeData.nt_title}" maxlength="40" /></td>
 					</tr>
 					<tr>
 						<td class="columnName center">내용</td>

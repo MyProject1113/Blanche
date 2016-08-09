@@ -118,7 +118,7 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td colspan="2"><input type="email" name="us_email" id="us_email" /></td>
+					<td colspan="2"><input type="email" name="us_email" id="us_email" maxlength="40" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>

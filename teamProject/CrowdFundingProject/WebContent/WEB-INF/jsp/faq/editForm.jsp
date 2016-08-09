@@ -136,7 +136,7 @@
 					</tr>
 					<tr>
 						<td class="columnName center">제목</td>
-						<td colspan="3"><input type="text" name="fq_title" id="fq_title" value="${faqData.fq_title}" /></td>
+						<td colspan="3"><input type="text" name="fq_title" id="fq_title" value="${faqData.fq_title}" maxlength="40" /></td>
 					</tr>
 					<tr>
 						<td class="columnName center">내용</td>

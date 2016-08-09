@@ -129,11 +129,15 @@
 					return;
 				} else if (!checkSubmit($("#us_password"), 100, "비밀번호")) {
 					return;
+				} else if (!checkPassword($("#us_password"))) {
+					return;
 				} else if (!checkSubmit($("#us_name"), 30, "이름")) {
 					return;
 				} else if (!checkSubmit($("#us_nickname"), 30, "닉네임")) {
 					return;
 				} else if (!checkSubmit($("#us_phone"), 15, "연락처")) {
+					return;
+				} else if (!checkPhone($("#us_phone"))) {
 					return;
 				} else if ($("#userEmailCheck").html() != "") {
 					alert($("#userEmailCheck").html());
@@ -165,7 +169,7 @@
 		<tr>
 			<td>이메일</td>
 			<td>
-				<input type="email" name="us_email" id="us_email" />
+				<input type="email" name="us_email" id="us_email" maxlength="40" />
 				<span id="userEmailCheck"></span>
 			</td>
 		</tr>
@@ -175,18 +179,18 @@
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input type="text" name="us_name" id="us_name" /></td>
+			<td><input type="text" name="us_name" id="us_name" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>닉네임</td>
 			<td>
-				<input type="text" name="us_nickname" id="us_nickname" />
+				<input type="text" name="us_nickname" id="us_nickname" maxlength="10" />
 				<span id="userNicknameCheck"></span>
 			</td>
 		</tr>
 		<tr>
 			<td>연락처</td>
-			<td><input type="text" name="us_phone" id="us_phone" /></td>
+			<td><input type="text" name="us_phone" id="us_phone" maxlength="15" /></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">

@@ -113,7 +113,7 @@
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="email" name="us_email" id="us_email" /></td>
+			<td><input type="email" name="us_email" id="us_email" maxlength="40" /></td>
 		</tr>
 		<tr>
 			<td colspan="2" class="center">

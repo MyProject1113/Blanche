@@ -34,9 +34,34 @@ function stringByteLength(string) {
 
 /* checkEmail(유효성 대상) */
 function checkEmail(item) {
-	regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	// regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	regExp = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
 	if (!regExp.test(item.val())) {
-		alert("이메일 형식이 맞지 않습니다.");
+		alert("이메일 형식이 맞지 않습니다.\nemail@domain.com 형식으로 입력해야 합니다..");
+		item.focus();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* checkPassword(유효성 대상) */
+function checkPassword(item) {
+	regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
+	if (!regExp.test(item.val())) {
+		alert("패스워드 형식이 맞지 않습니다.\n6자리~20자리의 영문 대소문자로 구성되어야 하며\n최소 1개의 숫자 혹은 특수 문자를 포함해야 합니다.");
+		item.focus();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* checkPhone(유효성 대상) */
+function checkPhone(item) {
+	regExp = /(\d{3}).*(\d{3}).*(\d{4})/;
+	if (!regExp.test(item.val())) {
+		alert("전화번호 형식이 맞지 않습니다.\n000-0000-0000 형식으로 입력해야 합니다.");
 		item.focus();
 		return false;
 	} else {

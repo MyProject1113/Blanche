@@ -109,7 +109,7 @@
 					</tr>
 					<tr>
 						<td class="columnName center">제목</td>
-						<td><input type="text" name="bd_title" id="bd_title" /></td>
+						<td><input type="text" name="bd_title" id="bd_title" maxlength="40" /></td>
 					</tr>
 					<tr>
 						<td class="columnName center">내용</td>
