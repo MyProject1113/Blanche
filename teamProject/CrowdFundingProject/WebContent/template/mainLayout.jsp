@@ -27,6 +27,13 @@
 		<script src="/include/assets/js/skel.min.js"></script>
 		<script src="/include/assets/js/util.js"></script>
 		<script src="/include/assets/js/main.js"></script>
+		
+		<style type="text/css">
+			div#main {
+			    height: 1000px;
+			    width: 1150px;
+			}
+		</style>
 			
 	</head>
 	<body>	

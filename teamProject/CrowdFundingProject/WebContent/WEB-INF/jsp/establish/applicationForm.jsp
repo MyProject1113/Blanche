@@ -14,6 +14,7 @@
 		
 		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript" src="/include/js/jquery-1.12.2.min.js"></script>
+		<script type="text/javascript" src="/include/js/common.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				/* 저장 버튼 클릭 시 처리 이벤트 */
